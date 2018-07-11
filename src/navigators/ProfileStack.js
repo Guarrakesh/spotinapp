@@ -1,12 +1,12 @@
-import Profile from '../components/ProfileComponents/Profile';
+import ProfileScreen from '../screens/ProfileScreen'
 import { createStackNavigator } from 'react-navigation';
 
 export default ProfileStack = createStackNavigator(
     {
-    'Profile': Profile
+        'Profile': ProfileScreen
     },
     {
-        cardStyle: {backgroundColor: '#000000'}
+        cardStyle: {backgroundColor: '#FAFAFA'}
     });
 
 

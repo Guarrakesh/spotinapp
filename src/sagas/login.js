@@ -1,6 +1,6 @@
 import React from 'react';
 import { take, put, call, fork, race } from 'redux-saga/effects';
-import { NavigationActions } from 'react-navigation';
+import NavigationService from '../navigators/NavigationService';
 import { delay } from 'redux-saga';
 
 import { wait } from './helpers';
@@ -38,20 +38,20 @@ export function* authorize({email, password, isRegistering}) {
         let response;
         if (!isRegistering) {
             response = yield call(auth.login, email, password);
+
             if (response && response.token && response.user) { //logged in {
                 //Salvo la token e le info utente nello storage
                 yield call(auth.setAuthToken,response.token);
                 yield call(auth.setUserInfo,response.user);
                 //Informo redux che ho finito la richiesta
                 yield put(setAuthState(true, response.token));
-                yield put(sendingRequest(false));
+
                 //Dico a redux di cambiare schermata
-                yield put(NavigationActions.navigate({ routeName: "Business" }));
+                yield call(NavigationService.navigate, 'SignedIn');
                 return response.token;
             } else {
                 //Informo redux dell'errore
                 yield put(loginFailure(response))
-                // yield put(requestError(response));
                 return null;
             }
 
@@ -108,11 +108,9 @@ export function* refresh(username, token) {
         yield put(sendingRequest(false));
     }
 }
-export function* redirectToLogin() {
-    yield put(NavigationActions.navigate({
-        routeName: 'SignedOut',
-        action: NavigationActions.navigate({ routeName: 'SignIn'})
-    }));
+export function redirectToLogin() {
+
+     NavigationService.navigate('SignIn');
 }
 /**
  * Saga effect che gestisce il logout dell'utente
@@ -130,7 +128,7 @@ export function* logout() {
 
     yield put(setAuthState(false, null));
     yield call(auth.removeAuthToken);
-    yield put(NavigationActions.navigate({ routeName: "SignedOut" }));
+    yield call(redirectToLogin);
 }
 
 
@@ -138,10 +136,11 @@ export function* logout() {
 /**
  * AuthFlow Saga
  */
-function *authentication() {
+function* authentication() {
 
     //Null se non è loggato
     let token = yield call(auth.getAuthToken);
+
     const storedUser = yield call(auth.getUserInfo);
     if (token) {
         //La token è già nello storage, la imposto come scaduta e la refresho
@@ -149,9 +148,11 @@ function *authentication() {
     }
     while (true) {
         if (!token) {
+            // C'è stato un logouit in precedenza, o l'app è stata aperta per la prima volta
             yield call(redirectToLogin);
             const request = yield take(LOGIN.REQUEST);
             const {email, password} = request;
+
             token = yield call(authorize, {email, password, isRegistering: false});
             if (!token) {
                 // Login fallito, resto in attesa di altre LOGIN.REQUEST
@@ -162,11 +163,6 @@ function *authentication() {
         //A questo punto l'utente è loggato
 
 
-
-
-        // Potrebbe accadere un 'LOGOUT' mentre l'effect Authorize è in corso,
-        //il che potrebbe portare ad una RACE CONDITION. E' molto raro, ma onde evitare
-        //chiamiamo 'race', che restituisce 'winner' (cioè colui che ha vinto la corsa)
         let userSignedOut;
         while (!userSignedOut) {
 
@@ -176,6 +172,10 @@ function *authentication() {
             const tokenExpire = Date.parse(token.expiresIn);
             const delayTime = token.expiresIn == 0 ? 0 : tokenExpire-dateNow;
 
+
+            // Potrebbe accadere un 'LOGOUT' mentre l'effect Authorize è in corso,
+            //il che potrebbe portare ad una RACE CONDITION. E' molto raro, ma onde evitare
+            //chiamiamo 'race', che restituisce 'winner' (cioè colui che ha vinto la corsa)
             const {expired} = yield race({
                 expired: call(delay,delayTime, true),
                 logout: take(LOGOUT)
@@ -193,6 +193,7 @@ function *authentication() {
 
                 }
             } else {
+
                 //L'utente è uscito prima che la token scadesse
                 userSignedOut = true;
                 yield call(logout);

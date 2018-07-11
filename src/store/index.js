@@ -6,12 +6,13 @@ import {offline} from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
-import {middleware as navMiddleware} from '../navigators/AppNavigator';
+
+
 
 const sagaMiddleware = createSagaMiddleware();
 //Array dei middleware da usare
 
-let middleware = [sagaMiddleware]
+
 
 /*
 if (__DEV__)
@@ -21,14 +22,15 @@ else
 
 
 
-export default function configureStore(initialState, middleware) {
+export default function configureStore(initialState) {
 
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const store = createStore(
     rootReducer,
     initialState,
-    compose(
-      applyMiddleware(sagaMiddleware, logger, navMiddleware),
+    composeEnhancers(
+      applyMiddleware(sagaMiddleware, logger),
       offline(offlineConfig)
     )
   );

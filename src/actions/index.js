@@ -2,19 +2,6 @@ import {
   SENDING_REQUEST, REQUEST_ERROR,
 } from './types';
 
-export function setText(text) { //eslint-disable-line
-  return {
-    type: CHANGE_TEXT,
-    text
-  }
-}
-
-export function getGoogle() { //eslint-disable-line
-  return {
-    type: GET_GOOGLE
-  }
-
-}
 /**
 * Setta lo stato 'currentlySending', che mostra un indicatore durante le richieste
 * @param {boolean} sending True significa che stiamo inviando una richieste, falso altrimenti

@@ -4,10 +4,10 @@ import { getAllSports, getFavoriteSports } from '../actions/sports';
 import SportList from '../components/SpotComponents/SportList';
 
 
-class SportContainer extends React.Component {
+class SportScreen extends React.Component {
 
     componentDidMount() {
-        this.props.navigation.dispatch(getAllSports());
+        this.props.dispatch(getAllSports());
     }
     render() {
         const { sports } = this.props;
@@ -29,4 +29,4 @@ const mapStateToProps = state => {
     })
 };
 
-export default connect(mapStateToProps)(SportContainer)
+export default connect(mapStateToProps)(SportScreen)

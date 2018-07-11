@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStackNavigator, createTabNavigator, TabBarBottom} from 'react-navigation';
-import {
-    reduxifyNavigator,
-    createReactNavigationReduxMiddleware,
-} from 'react-navigation-redux-helpers';
 
-import LoginScreen from '../components/LoginScreen';
+import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
+
+import LoginScreen from '../screens/LoginScreen';
 import BusinessScreen from '../components/BusinessScreen';
 import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
 import SpotScreen from '../components/SpotScreen';
 import NewsScreen from '../components/NewsScreen';
-import ProfileScreen from '../components/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 import SpotStack from './SpotStack';
 import ProfileStack from './ProfileStack';
@@ -89,8 +85,9 @@ export const SignedIn = createTabNavigator(
 export const SignedOut = createStackNavigator(
     {
         SignIn: {
-            screen: LoginScreen
+            screen: LoginScreen,
         },
+
 
 
     }
@@ -114,27 +111,9 @@ const RootNavigator = createStackNavigator(
         mode: "modal",
         initialRouteName: 'SignedIn',
 
-
     }
 );
 
 
 
-const middleware = createReactNavigationReduxMiddleware(
-    'root',
-    state => state.nav
-);
-
-
-const AppWithNavigationState = reduxifyNavigator(RootNavigator, 'root');
-
-const mapStateToProps = state => {
-
-    return ({
-        state: state.nav,
-    });
-}
-
-const AppNavigator = connect(mapStateToProps)(AppWithNavigationState);
-
-export { RootNavigator, AppNavigator, middleware };
+export default RootNavigator;

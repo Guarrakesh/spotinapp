@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Button } from 'react-native-elements';
 import {
@@ -9,17 +10,19 @@ import {
 
 } from 'react-native';
 
-import {LOGIN} from '../actions/types';
+import {loginRequest} from '../actions/login';
 class LoginScreen extends React.Component {
 
     constructor() {
+
+
         super();
         this.login = this.login.bind(this);
     }
 
     login() {
 
-        this.props.navigation.dispatch({type: LOGIN.REQUEST, email: "dario.guarracino2@gmail.com", password: "blabla"});
+        this.props.dispatch(loginRequest("dario.guarracino2@gmail.com","blabla"));
     }
     render() {
 
@@ -27,7 +30,8 @@ class LoginScreen extends React.Component {
         return (
 
             <View style={styles.container}>
-
+                <Text>{this.props.auth.error  ? "C'è stato un errore" : ""}</Text>
+                <Text>{this.props.auth.currentlySending ? "LOADING": "NOT LOADING"}</Text>
                 <Button
                     buttonStyle={{backgroundColor: 'red'}}
                     onPress={this.login} title="Login"/>
@@ -52,6 +56,10 @@ const styles = StyleSheet.create({
     }
 });
 
-
-export default LoginScreen;
+const mapStateToProps = (state) => {
+    return ({
+        auth: state.auth
+    });
+};
+export default connect(mapStateToProps)(LoginScreen);
 

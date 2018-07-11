@@ -16,7 +16,7 @@ const initialNavState = RootNavigator.router.getStateForAction(
     tempNavState
 );
 
-
+console.log(initialNavState);
 
 export default function navReducer(state = initialNavState, action) {
     let nextState;

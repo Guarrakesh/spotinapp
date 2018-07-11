@@ -16,10 +16,10 @@ export function loginSuccess({token, user}) {
     }
 }
 
-export function loginFailure(err) {
+export function loginFailure(error) {
     return {
         type: LOGIN.FAILURE,
-        err,
+        error
     }
 }
 

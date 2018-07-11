@@ -1,12 +1,13 @@
 import React from 'react';
-import { userLogout } from '../../actions/login';
+import { userLogout } from '../actions/login';
 import {
     View,
     Text,
     Button
 } from 'react-native';
 
-export default class Profile extends React.Component {
+import { connect } from 'react-redux';
+class ProfileScreen extends React.Component {
 
     constructor() {
         super();
@@ -14,7 +15,7 @@ export default class Profile extends React.Component {
     }
 
     handleLogout() {
-        this.props.navigation.dispatch(userLogout());
+        this.props.dispatch(userLogout());
     }
     render() {
         return (
@@ -25,4 +26,12 @@ export default class Profile extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return ({
+
+    });
+}
+
+export default connect(mapStateToProps)(ProfileScreen);
 
