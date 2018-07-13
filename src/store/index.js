@@ -31,7 +31,7 @@ export default function configureStore(initialState) {
     initialState,
     composeEnhancers(
       applyMiddleware(sagaMiddleware, logger),
-      offline(offlineConfig)
+      //offline(offlineConfig)
     )
   );
   sagaMiddleware.run(rootSaga);

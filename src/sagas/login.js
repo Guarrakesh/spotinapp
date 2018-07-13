@@ -128,7 +128,7 @@ export function* logout() {
 
     yield put(setAuthState(false, null));
     yield call(auth.removeAuthToken);
-    yield call(redirectToLogin);
+
 }
 
 
@@ -139,6 +139,7 @@ export function* logout() {
 function* authentication() {
 
     //Null se non è loggato
+
     let token = yield call(auth.getAuthToken);
 
     const storedUser = yield call(auth.getUserInfo);
@@ -146,6 +147,7 @@ function* authentication() {
         //La token è già nello storage, la imposto come scaduta e la refresho
         token.expiresIn = 0;
     }
+
     while (true) {
         if (!token) {
             // C'è stato un logouit in precedenza, o l'app è stata aperta per la prima volta
@@ -196,6 +198,7 @@ function* authentication() {
 
                 //L'utente è uscito prima che la token scadesse
                 userSignedOut = true;
+                token = null;
                 yield call(logout);
             }
         }

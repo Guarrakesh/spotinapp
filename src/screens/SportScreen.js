@@ -7,9 +7,12 @@ import SportList from '../components/SpotComponents/SportList';
 class SportScreen extends React.Component {
 
     componentDidMount() {
+
         this.props.dispatch(getAllSports());
+
     }
     render() {
+
         const { sports } = this.props;
 
         return (

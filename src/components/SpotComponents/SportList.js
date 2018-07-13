@@ -20,6 +20,10 @@ const sportSlugIconMap = (slug) => {
 };
 const SportList = (props) => {
 
+    if (props.sports.length <= 0) {
+        return null;
+    }
+
     const rows = [...Array(Math.ceil(props.sports.length / 3))];
     const sportRows = rows.map( (row, idx) => {
         return props.sports.slice(idx * 3, idx * 3 + 3);

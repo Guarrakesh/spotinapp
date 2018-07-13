@@ -30,6 +30,9 @@ build/
 local.properties
 *.iml
 
+
+package-lock.json
+yarn.lock
 # node.js
 #
 node_modules/
