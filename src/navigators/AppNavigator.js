@@ -14,6 +14,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import SpotStack from './SpotStack';
 import ProfileStack from './ProfileStack';
 
+import themes from '../styleTheme';
+
 const BusinessStack = createStackNavigator({
     Business: BusinessScreen,
 
@@ -86,11 +88,20 @@ export const SignedOut = createStackNavigator(
     {
         SignIn: {
             screen: LoginScreen,
+
         },
+    },
+    {
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: themes.base.colors.primary.default,
+                borderBottomWidth: 0
+            },
+            headerTintColor: themes.base.colors.primary.default
 
-
-
+        }
     }
+
 );
 const RootNavigator = createStackNavigator(
     {

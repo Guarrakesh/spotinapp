@@ -22,6 +22,10 @@ const themes = {
 
         }
 
+    },
+
+    commonColors: {
+        facebook: '#3F51B5'
     }
 }
 
