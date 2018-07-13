@@ -1,4 +1,4 @@
 export default {
 
-    apiUrl: 'http://localhost:3000/v1'
+    apiUrl: 'https://spotin.herokuapp.com/v1'
 };
