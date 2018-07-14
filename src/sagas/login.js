@@ -141,7 +141,7 @@ function* authentication() {
     //Null se non è loggato
 
     let token = yield call(auth.getAuthToken);
-
+    console.log("token is", token);
     const storedUser = yield call(auth.getUserInfo);
     if (token) {
         //La token è già nello storage, la imposto come scaduta e la refresho

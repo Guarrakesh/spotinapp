@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
-    View,
+
     Text,
     Image,
     StyleSheet,
@@ -11,15 +11,18 @@ import {
 
 
 } from 'react-native';
+import View  from '../components/common/View';
+
 
 import { Animated } from 'react-native';
+import { Transition } from 'react-navigation-fluid-transitions';
 
 import { Input, Button } from 'react-native-elements';
 import themes from '../styleTheme';
 
 const colors = themes.base.colors;
-
 import {loginRequest} from '../actions/login';
+
 class LoginScreen extends React.Component {
 
     constructor() {
@@ -49,14 +52,17 @@ class LoginScreen extends React.Component {
         return (
 
             <View style={styles.container}>
-                <Image
-                    source={require('../images/SpotInIcon.png')}
-                    style={{marginTop: 20, alignSelf: 'center'}}
-                />
-                <View style={styles.middleContainerStyle}>
+
+
+                <View elevation={15} style={styles.middleContainerStyle}>
+                    <Image
+                        source={require('../images/SpotInIconWhite.png')}
+                        style={{marginTop: 10, alignSelf: 'center'}}
+                    />
+                    <Text style={{marginTop: 30, marginBottom: 30, fontSize: 20, fontWeight: '700', color: colors.text.light, textAlign: 'center'}}>Entra nel tuo account</Text>
                     <Input
                         placeholder="username"
-                        leftIcon={<Icon name="user" color={colors.text.default} size={21}/>}
+                        leftIcon={<Icon name="user" color={colors.text.light} size={21}/>}
                         leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                         containerStyle={styles.inputOuterContainer}
                         inputContainerStyle={{borderBottomWidth: 0}}
@@ -70,12 +76,12 @@ class LoginScreen extends React.Component {
                     <Input
                         placeholder="password"
                         ref="password"
-                        leftIcon={<Icon name="key" color={colors.text.default} size={21}/>}
+                        leftIcon={<Icon name="key" color={colors.text.light} size={21}/>}
                         containerStyle={styles.inputOuterContainer}
                         leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                         inputContainerStyle={{borderBottomWidth: 0}}
                         inputStyle={styles.textInputStyle}
-                        errorMessage={this.props.auth.error && this.props.auth.error.message}
+                        errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
                         shake={true}
                         onChangeText={(text) => this.setState({password: text})}
                         secureTextEntry={true}
@@ -85,12 +91,13 @@ class LoginScreen extends React.Component {
 
                     <Button
                         disabled={this.state.username == "" || this.state.password == ""}
-                        disabledStyle={{opacity: 0.8}}
+                        disabledStyle={{opacity: 0.8, borderRadius: 100}}
                         title='Sign In'
                         onPress={ this.login }
                         buttonStyle={styles.signInButton}
-                        titleStyle={{color: colors.text.dark, fontSize: 16}}
-                        icon={<ActivityIndicator style={{position: 'absolute', left: 10}} animating={this.props.auth.currentlySending} hidesWhenStopped={true} size="small" color="#0000ff" />}
+                        titleStyle={{color: colors.text.light, fontSize: 16}}
+                        loading={this.props.auth.currentlySending}
+
 
 
                     />
@@ -99,27 +106,33 @@ class LoginScreen extends React.Component {
                         title='Sign in with Facebook'
                         buttonStyle={styles.fbSignInButton}
                         icon={<Icon
-                                      name='facebook'
-                                      size={18}
-                                      color='white'
-                                />
-                         }
+                                          name='facebook'
+                                          size={18}
+                                          color='white'
+                                    />
+                             }
                         iconContainerStyle={{alignSelf: 'flex-start'}}
                     />
 
 
                     <Button
                         title='Forgot your password?'
-                        titleStyle={{ color: colors.text.default, fontSize: 16 }}
-                        buttonStyle={{marginTop: 20, backgroundColor: 'transparent'}}
+                        titleStyle={{ color: colors.text.light, fontSize: 16 }}
+                        buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
+                        clear={true}
 
                     />
                 </View>
+
+
                 <Button
                     title={['Do not have an account? ', <Text style={{fontWeight: '700'}}>Create one</Text>]}
-                    titleStyle={{ color: colors.white.dark, fontSize: 14}}
+                    titleStyle={{ color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
                     buttonStyle={styles.signUpButton}
-                    />
+                    onPress={() => this.props.navigation.navigate('SignUp')}
+                />
+
+
             </View>
 
 
@@ -127,14 +140,16 @@ class LoginScreen extends React.Component {
     }
 }
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex:1,
 
-        alignItems: 'stretch',
-        backgroundColor: colors.primary.default,
+        alignItems: 'center',
+
         flexDirection: 'column',
-        justifyContent: 'space-between',
+
         width: '100%',
 
     },
@@ -146,30 +161,39 @@ const styles = StyleSheet.create({
 
     textInputStyle: {
         paddingBottom: 8,
-        fontWeight: '300',
+        fontWeight: '500',
         borderBottomWidth: 1,
-        borderBottomColor: colors.text.default,
+        borderBottomColor: colors.text.light,
+        color: colors.text.light
 
     },
     middleContainerStyle: {
-        width: '80%',
-        backgroundColor: '#B2FF59',
+        width: '100%',
+        paddingLeft: 24,
+        paddingRight: 24,
+        height: '85%',
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+
+        backgroundColor: colors.primary.default,
         justifyContent: 'center',
         alignItems: 'stretch',
-        alignSelf: 'center',
         flexDirection: 'column',
+        ...themes.base.elevations.depth2
     },
     signInButton: {
         position: 'relative',
-        borderRadius: 4,
-        backgroundColor: colors.primary.dark,
-        marginTop: 8,
+        borderRadius: 100,
+        backgroundColor: colors.accent.default,
+
+        marginTop: 0,
         height: 43,
         justifyContent: 'center',
 
+
     },
     fbSignInButton: {
-        borderRadius: 4,
+        borderRadius: 100,
         backgroundColor: themes.commonColors.facebook,
         marginTop: 8,
         height: 43,
@@ -177,11 +201,14 @@ const styles = StyleSheet.create({
     signUpButton: {
 
         //marginTop: 20,
-        backgroundColor: colors.primary.dark,
+        backgroundColor: colors.white.light,
         height: 47,
-
+        marginTop: 24,
         width: '100%',
-        borderRadius: 0
+        borderRadius: 100,
+        borderWidth: 1,
+        borderColor: colors.accent.default,
+        ...themes.base.elevations.depth0
     }
 });
 

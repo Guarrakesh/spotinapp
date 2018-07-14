@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
 
-import LoginScreen from '../screens/LoginScreen';
+
+import SignedOut from './SignedOut';
 import BusinessScreen from '../components/BusinessScreen';
 import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
@@ -84,25 +85,7 @@ export const SignedIn = createTabNavigator(
 
     }
 );
-export const SignedOut = createStackNavigator(
-    {
-        SignIn: {
-            screen: LoginScreen,
 
-        },
-    },
-    {
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: themes.base.colors.primary.default,
-                borderBottomWidth: 0
-            },
-            headerTintColor: themes.base.colors.primary.default
-
-        }
-    }
-
-);
 const RootNavigator = createStackNavigator(
     {
         SignedIn: {
@@ -120,7 +103,7 @@ const RootNavigator = createStackNavigator(
     }, {
         headerMode: 'none',
         mode: "modal",
-        initialRouteName: 'SignedIn',
+        initialRouteName: 'SignedOut',
 
     }
 );

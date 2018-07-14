@@ -52,7 +52,9 @@ function* fetchSports(accessToken) {
 function* watchGetSports() {
 
     while(true) {
+
        const request = yield take(FETCH_ALL_SPORTS.REQUEST);
+
         let token = yield select(getToken);
 
        //Non proseguo finché non ho un token. Posso farlo perché la login saga (./login.js), se non trova una token
