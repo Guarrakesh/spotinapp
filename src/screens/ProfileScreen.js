@@ -18,9 +18,16 @@ class ProfileScreen extends React.Component {
         this.props.dispatch(userLogout());
     }
     render() {
+        const { loggedIn } = this.props.auth;
+
         return (
             <View>
-                <Button title="Logout" onPress={this.handleLogout}/>
+                {loggedIn
+                    ?  <Button title="Logout" onPress={this.handleLogout}/>
+                    :  <Button title="Accedi" onPress={() => {this.props.navigation.navigate('SignIn')}}/>
+                }
+
+
             </View>
 
         )
@@ -29,7 +36,7 @@ class ProfileScreen extends React.Component {
 
 const mapStateToProps = state => {
     return ({
-
+        auth: state.auth
     });
 }
 

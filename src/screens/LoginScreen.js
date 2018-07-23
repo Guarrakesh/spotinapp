@@ -1,27 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-import {
-
-    Text,
-    Image,
-    StyleSheet,
-    ActivityIndicator
-
-
-} from 'react-native';
-import View  from '../components/common/View';
-
-
-import { Animated } from 'react-native';
-import { Transition } from 'react-navigation-fluid-transitions';
-
-import { Input, Button } from 'react-native-elements';
-import themes from '../styleTheme';
+import React from "react";
+import {connect} from "react-redux";
+import Icon from "react-native-vector-icons/FontAwesome";
+import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground, Platform, Animated, StatusBar} from "react-native";
+import View from "../components/common/View";
+import {Input, Button} from "react-native-elements";
+import themes from "../styleTheme";
+import {loginRequest} from "../actions/login";
 
 const colors = themes.base.colors;
-import {loginRequest} from '../actions/login';
+
 
 class LoginScreen extends React.Component {
 
@@ -52,7 +39,11 @@ class LoginScreen extends React.Component {
         return (
 
             <View style={styles.container}>
-
+                <StatusBar
+                    backgroundColor="blue"
+                    barStyle="light-content"
+                />
+                <ImageBackground source={require('../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
 
                 <View elevation={15} style={styles.middleContainerStyle}>
                     <Image
@@ -126,13 +117,14 @@ class LoginScreen extends React.Component {
 
 
                 <Button
+                    clear={true}
                     title={['Do not have an account? ', <Text style={{fontWeight: '700'}}>Create one</Text>]}
                     titleStyle={{ color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
                     buttonStyle={styles.signUpButton}
                     onPress={() => this.props.navigation.navigate('SignUp')}
                 />
 
-
+                </ImageBackground>
             </View>
 
 
@@ -175,7 +167,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
 
-        backgroundColor: colors.primary.default,
+
         justifyContent: 'center',
         alignItems: 'stretch',
         flexDirection: 'column',
@@ -204,8 +196,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white.light,
         height: 47,
         marginTop: 24,
-        width: '100%',
+        width: '90%',
         borderRadius: 100,
+        alignSelf: 'center',
         borderWidth: 1,
         borderColor: colors.accent.default,
         ...themes.base.elevations.depth0

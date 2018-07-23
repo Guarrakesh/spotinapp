@@ -6,7 +6,8 @@ import { delay } from 'redux-saga';
 import { wait } from './helpers';
 import {
     LOGIN,
-    LOGOUT } from '../actions/types';
+    LOGOUT,
+    REGISTER } from '../actions/types';
 import {
     loginSuccess,
     loginFailure,
@@ -28,38 +29,39 @@ import auth from '../api/auth';
  * @param {string} password                    La password dell'utente
  * @param {object} options                     Opzioni (possono sempre servire...)
  * @param {boolean} options.isRegistering      E' una registrazione?
+ * @param {string} name                        Nome del nuovo utente, valido solo se è una registrazione
  * @return {Object} Restituisce un oggetto token se ha successo, altrimenti null
  */
-export function* authorize({email, password, isRegistering}) {
+export function* authorize({email, password, isRegistering, name}) {
     //Mandiamo un'azione per dire a Redux che stiamo per inviare una richiesta
     yield put(sendingRequest(true));
+
     //Stiamo registrando o autenticando l'utente, dipende da "isRegistering"
     try {
         let response;
         if (!isRegistering) {
             response = yield call(auth.login, email, password);
-
-            if (response && response.token && response.user) { //logged in {
-                //Salvo la token e le info utente nello storage
-                yield call(auth.setAuthToken,response.token);
-                yield call(auth.setUserInfo,response.user);
-                //Informo redux che ho finito la richiesta
-                yield put(setAuthState(true, response.token));
-
-                //Dico a redux di cambiare schermata
-                yield call(NavigationService.navigate, 'SignedIn');
-                return response.token;
-            } else {
-                //Informo redux dell'errore
-                yield put(loginFailure(response))
-                return null;
-            }
-
-
         } else {
-            //TODO: register
-            //response = yield auth.login(...)
+            response = yield call(auth.register, {email, password, name});
         }
+
+        if (response && response.token && response.user) { //logged in {
+            //Salvo la token e le info utente nello storage
+            yield call(auth.setAuthToken, response.token);
+            yield call(auth.setUserInfo, response.user);
+            //Informo redux che ho finito la richiesta
+            yield put(setAuthState(true, response.token));
+
+            //Dico a redux di cambiare schermata
+            yield call(NavigationService.navigate, 'SignedIn');
+            return response.token;
+        } else {
+            //Informo redux dell'errore
+            yield put(requestError(response))
+            return null;
+        }
+
+
 
     } catch (error) {
         //In caso di errore, informiamo Redux che c'è stato un errore
@@ -110,7 +112,7 @@ export function* refresh(username, token) {
 }
 export function redirectToLogin() {
 
-     NavigationService.navigate('SignIn');
+    NavigationService.navigate('SignIn');
 }
 /**
  * Saga effect che gestisce il logout dell'utente
@@ -141,7 +143,7 @@ function* authentication() {
     //Null se non è loggato
 
     let token = yield call(auth.getAuthToken);
-    console.log("token is", token);
+
     const storedUser = yield call(auth.getUserInfo);
     if (token) {
         //La token è già nello storage, la imposto come scaduta e la refresho
@@ -151,7 +153,7 @@ function* authentication() {
     while (true) {
         if (!token) {
             // C'è stato un logouit in precedenza, o l'app è stata aperta per la prima volta
-            yield call(redirectToLogin);
+            // Resto in attesa di una richiesta di Login
             const request = yield take(LOGIN.REQUEST);
             const {email, password} = request;
 
@@ -213,30 +215,31 @@ function* authentication() {
  * Register saga
  * Molto simile a Login Saga
  */
-/*export function * registerFlow () {
- while (true) {
+export function * registerFlow () {
+    while (true) {
 
- const request = yield take(REGISTER.REQUEST)
- const {email, password} = request.data
+        const request = yield take(REGISTER.REQUEST);
 
- // Chiamo l'authorize dicendogli che è una registrazione
- // Restituisce `true` se la registrazione ha successo, `false` altrimenti
- const wasSuccessful = yield call(authorize, {email, password, isRegistering: true})
+        const {email, password, name} = request;
 
- // If we could register a user, we send the appropiate actions
- if (wasSuccessful) {
- yield put(setAuthState(true)) // User is logged in (authorized) after being registered
- //  yield put({type: CHANGE_FORM, newFormState: {username: '', password: ''}}) // Clear form
- //  forwardTo('/dashboard') // Go to dashboard page
- }
- }
- }*/
+        // Validazione dei dati (magari in seguito la spostiamo altrove, ma credo sia necessario eseguirla dalla saga)
+
+
+        // Chiamo l'authorize dicendogli che è una registrazione
+        // Restituisce `true` se la registrazione ha successo, `false` altrimenti
+        const wasSuccessful = yield call(authorize, {email, password, isRegistering: true, name});
+
+        if (wasSuccessful) {
+            NavigationService.navigate('SignedIn');
+        }
+
+    }
+}
 
 
 
 
 export default function* root() {
     yield fork(authentication);
-
-    // yield fork(registerFlow);
+    yield fork(registerFlow);
 }

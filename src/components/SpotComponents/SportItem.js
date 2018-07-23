@@ -11,6 +11,7 @@ const SportItem = (props) => {
     return (
 
        <FloatingCard
+            onPress={props.onPress}
             contentStyle={styles.cardContent}
             footContent={props.name}
             footStyle={styles.cardFooter}
@@ -19,10 +20,7 @@ const SportItem = (props) => {
                 fontWeight: 'bold',
                 }}
        >
-           <Icon name={props.iconName}
-                 size={64} color={themes.base.colors.text.default}
-                 style={{padding:3}}
-
+           {props.icon}
            />
        </FloatingCard>
     );

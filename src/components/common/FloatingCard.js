@@ -1,21 +1,23 @@
 import React from 'react';
 
 import {Card as NativeCard} from 'react-native-elements';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import themes from '../../styleTheme';
 
 const FloatingCard = (props) => {
     return (
-        <View style={[
+
+        <TouchableOpacity style={[
             styles.card,
             props.containerStyle && props.containerStyle
             ]}
+                          onPress={props.onPress}
         >
             <View style={[
                 styles.contentStyle,
                 props.contentStyle && props.contentStyle
             ]}>
-            {props.children}
+                {props.children}
             </View>
 
 
@@ -30,7 +32,8 @@ const FloatingCard = (props) => {
                     {props.footContent}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
+
     )
 }
 

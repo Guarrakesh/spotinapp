@@ -1,185 +1,146 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
+import SignupForm from '../components/forms/SignupForm';
+import signup from '../validations/signup';
+import validate from 'validate.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {View} from 'react-native';
 import {
 
     Text,
     Image,
     StyleSheet,
     ActivityIndicator,
-    Dimensions
+    Dimensions,
+    ImageBackground,
+    Platform,
+    StatusBar
 } from 'react-native';
-import View  from '../components/common/View';
+
 
 
 import { Animated } from 'react-native';
 
-import { Input, Button } from 'react-native-elements';
-import themes from '../styleTheme';
 
+
+import themes from '../styleTheme';
 const colors = themes.base.colors;
 
-import {loginRequest} from '../actions/login';
+import {registerRequest} from '../actions/login';
 
-import { Transition } from 'react-navigation-fluid-transitions';
+
 class SignupScreen extends React.Component {
 
     constructor() {
-
-
         super();
         this.state = {
-            username: "",
-            password: ""
+            name: "",
+            password: "",
+            email: "",
+            errors: {}
+
         };
 
-        // this.login = this.login.bind(this);
+        this.register = this.register.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangePass = this.onChangePass.bind(this);
+        this.onChangePassConfirm = this.onChangePassConfirm.bind(this);
     }
 
-    /* login() {
-     if (this.state.username == "" || this.state.password == "")
-     return;
+    onChangeEmail(text) {
+        this.setState({email: text});
+    }
+    onChangeName(text) {
+        this.setState({name: text});
+    }
+    onChangePass(text) {
+        this.setState({password: text});
+    }
+    onChangePassConfirm(text) {
+        this.setState({passwordConfirm: text});
+    }
 
 
-     this.props.dispatch(loginRequest(this.state.username,this.state.password));
-     }*/
+    register() {
+
+
+        const {email, password, name, passwordConfirm} = this.state;
+        this.setState({errors: {}});
+
+        const validationErrors = validate({
+            name: name,
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm
+        }, signup);
+
+
+        if (validationErrors) {
+            this.setState({errors: validationErrors});
+        } else {
+            this.props.dispatch(registerRequest(email, password, name));
+        }
+
+        console.log(this.state.errors);
+    }
     render() {
+        //Eventuali errori dati dal server (email già esistente o altri)
+        //Sono diversi da quelli in this.state.errors, quelli sono errori di convalida fatti lato client
+        const { error } = this.props.auth;
+        let usedEmailMessage = false;
+        console.log("error is", error);
+        if (error && error.code == 409) {
+            //L'email esiste già
+            usedEmailMessage = "Questa email è già stata usata";
 
-        const {navigation} = this.props;
-
-
+        }
+        // TODO: Gestire tutti gli eventuali errori del server (per ora gestiamo solo il Conflict: Email già esistente)
         return (
-            <Transition shared="middleContainer">
-                <View style={styles.container}>
+            <ImageBackground source={require('../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
+                <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
+            <View style={styles.container}>
 
-                    <Input
-                        placeholder="Fullname"
-                        ref="password"
+            <SignupForm
+                onChangeTextName={this.onChangeName}
+                onChangeTextPassword={this.onChangePass}
+                onChangeTextEmail={this.onChangeEmail}
+                onChangeTextPasswordConfirm={this.onChangePassConfirm}
+                emailError={this.state.errors.email ? this.state.errors.email[0] : usedEmailMessage}
+                nameError={this.state.errors.name ? this.state.errors.name[0] : ""}
+                passwordError={this.state.errors.password ? this.state.errors.password[0] : ""}
+                passConfirmError={this.state.errors.passwordConfirm ? this.state.errors.passwordConfirm[0]: ""}
+                onSubmit={this.register}
+            />
 
-                        containerStyle={styles.inputOuterContainer}
-                        leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                        inputStyle={styles.textInputStyle}
-
-                        shake={true}
-                        onChangeText={(text) => this.setState({password: text})}
-
-                        onSubmitEditing={this.login}
-                        blurOnSubmit={true}
-                    />
-                    <Input
-                        placeholder="Username"
-                        ref="username"
-                        containerStyle={styles.inputOuterContainer}
-                        leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                        inputStyle={styles.textInputStyle}
-
-                        shake={true}
-                        onChangeText={(text) => this.setState({password: text})}
-
-
-                        blurOnSubmit={true}
-                    />
-                    <Input
-                        placeholder="Email"
-                        ref="email"
-                        containerStyle={styles.inputOuterContainer}
-                        leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                        inputStyle={styles.textInputStyle}
-
-                        shake={true}
-                        onChangeText={(text) => this.setState({password: text})}
-
-
-                        blurOnSubmit={true}
-                    />
-                    <Input
-                        placeholder="Password"
-                        ref="password"
-                        containerStyle={styles.inputOuterContainer}
-                        leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                        inputStyle={styles.textInputStyle}
-
-                        shake={true}
-                        onChangeText={(text) => this.setState({password: text})}
-                        secureTextEntry={true}
-
-                        blurOnSubmit={true}
-                    />
-                    <Input
-                        placeholder="Confirm password"
-                        ref="passwordConfirm"
-                        containerStyle={styles.inputOuterContainer}
-                        leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                        inputStyle={styles.textInputStyle}
-                        errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
-                        shake={true}
-                        onChangeText={(text) => this.setState({password: text})}
-                        secureTextEntry={true}
-
-                        blurOnSubmit={true}
-                    />
-                    <Transition shared="signupButton">
-                        <Button
-                            title='Sign Up'
-                            titleStyle={{ color: colors.accent.default, fontSize: 14}}
-                            buttonStyle={styles.signUpButton}
-                        />
-                    </Transition>
-
-                </View>
-            </Transition>
-
+            </View>
+            </ImageBackground>
 
         )
     }
 }
 
+
+
+
+
+
+
+
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: colors.primary.default,
+
         flexDirection: 'column',
 
         padding: 35,
+        marginTop: 100,
         height: '100%',
         width: '100%',
 
     },
-    inputOuterContainer: {
-        width:'100%',
-        borderWidth: 0,
-        marginBottom: 26
-    },
 
-    textInputStyle: {
-        paddingBottom: 8,
-        fontWeight: '500',
-        borderBottomWidth: 1,
-        borderBottomColor: colors.text.light,
-        color: colors.text.light,
-        marginLeft:0,
-
-    },
-    signUpButton: {
-
-        //marginTop: 20,
-        backgroundColor: colors.white.light,
-        height: 47,
-
-        width: '100%',
-        borderRadius: 100,
-        marginTop: 32,
-        borderWidth: 1,
-        borderColor: colors.accent.default,
-        flexGrow: 5,
-        alignSelf: 'flex-end'
-    }
 });
 
 const mapStateToProps = (state) => {

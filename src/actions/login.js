@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, SET_AUTH} from './types';
+import {LOGIN, LOGOUT, SET_AUTH, REGISTER} from './types';
 
 export function loginRequest(email, password) {
     return {
@@ -29,6 +29,14 @@ export function userLogout() {
     }
 }
 
+
+export function registerRequest(email, password, name) {
+    return {
+        type: REGISTER.REQUEST,
+        email, password, name
+
+    }
+}
 /**
  * Imposta lo stato d'autenticazione dell'app
  * @param  {boolean} newAuthState Vero se l'utente è loggato, falso altrimenti

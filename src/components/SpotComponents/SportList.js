@@ -1,9 +1,10 @@
 import React from 'react';
 
 import SportItem from './SportItem';
-import {View, StyleSheet, Dimensions} from 'react-native'
+import {View, StyleSheet, Dimensions, Image} from 'react-native'
 import { Col, Row, Grid } from 'react-native-easy-grid';
-
+import Images from '../../assets/images';
+import PropTypes from 'prop-types';
 
 const sportSlugIconMap = (slug) => {
     const map = {
@@ -12,7 +13,7 @@ const sportSlugIconMap = (slug) => {
         'basket': 'basket',
         'baseball': 'baseball',
         'swimming': 'pool',
-        'american-football': 'football-helmet'
+        'american-football': 'rugby'
     };
 
     return map[slug] || null;
@@ -29,11 +30,13 @@ const SportList = (props) => {
         return props.sports.slice(idx * 3, idx * 3 + 3);
     });
 
+
     const content = sportRows.map((row, idx) => (
        <Row style={{height:150}} key={idx}>{
+
            row.map(sport => <Col>
-               <SportItem key={sport._id}
-                   iconName={sportSlugIconMap(sport.slug)}
+               <SportItem key={sport._id} onPress={() => props.onItemPress(sport)}
+                   icon={<Image source={Images.icons.sports[sportSlugIconMap(sport.slug)]} style={{width: 72, height: 72}}/>}
                    {...sport}/></Col>)
        }</Row>
     ));
@@ -46,7 +49,9 @@ const SportList = (props) => {
 
 };
 
-
+SportList.propTypes = {
+    onItemPress: PropTypes.func.isRequired,
+};
 const styles = StyleSheet.create({
 
 });

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
 
 
-import SignedOut from './SignedOut';
+import AuthNavigator from './AuthNavigator';
 import BusinessScreen from '../components/BusinessScreen';
 import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
@@ -76,12 +76,12 @@ export const SignedIn = createTabNavigator(
         tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
         tabBarOptions: {
-            activeTintColor: 'red',
+            activeTintColor: themes.base.colors.text.default,
             inactiveTintColor: 'gray',
         },
         animationEnabled: false,
         swipeEnabled: false,
-        cardStyle: {backgroundColor: 'red'}
+
 
     }
 );
@@ -91,19 +91,21 @@ const RootNavigator = createStackNavigator(
         SignedIn: {
             screen: SignedIn,
             navigationOptions: {
-                gesturesEnabled: false
+                gesturesEnabled: false,
+
             }
         },
-        SignedOut: {
-            screen: SignedOut,
+        Auth: {
+            screen: AuthNavigator,
             navigationOptions: {
                 gesturesEnabled: false
+
             }
         }
     }, {
         headerMode: 'none',
         mode: "modal",
-        initialRouteName: 'SignedOut',
+        initialRouteName: 'SignedIn',
 
     }
 );

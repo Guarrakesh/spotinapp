@@ -46,7 +46,21 @@ const auth = {
         }
 
     },
+    async register(userData) {
+        const config = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+        }
+        try {
+            let response = await fetch(`${vars.apiUrl}/auth/register`, config);
+            let data = await response.json();
+            return data;
 
+        } catch (err) {
+            throw new Error(err);
+        }
+    },
     async refresh(username, token) {
 
         const config = {

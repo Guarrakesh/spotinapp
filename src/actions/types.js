@@ -21,4 +21,4 @@ export const REGISTER = createRequestTypes('REGISTER');
 export const SET_AUTH = 'SET_AUTH';
 export const FETCH_ALL_SPORTS = createRequestTypes('GET_ALL_SPORTS');
 export const FETCH_FAVORITE_SPORTS = createRequestTypes('GET_FAVORITE_SPORTS');
-
+export const FETCH_COMPETITIONS = createRequestTypes('GET_COMPETITIONS');

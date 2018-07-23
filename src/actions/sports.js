@@ -2,6 +2,7 @@ import {
 
     FETCH_ALL_SPORTS,
     FETCH_FAVORITE_SPORTS,
+    FETCH_COMPETITIONS
 
 } from './types';
 
@@ -25,11 +26,23 @@ export function getAllSportsSuccess(sports) {
 }
 
 
-export function getFavoriteSportsSuccess(error) {
+export function getFavoriteSportsSuccess(sports) {
     return {
         type: FETCH_FAVORITE_SPORTS.SUCCESS,
-        sports: error
+        sports
     }
 }
 
-
+export function getSportCompetitionsRequest(sport) {
+    return {
+        type: FETCH_COMPETITIONS.REQUEST,
+        sport
+    }
+}
+export function getSportCompetitionsSuccess(sportId, competitions) {
+    return {
+        type: FETCH_COMPETITIONS.SUCCESS,
+        competitions,
+        sportId
+    }
+}
