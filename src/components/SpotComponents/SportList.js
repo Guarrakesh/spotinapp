@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SportItem from './SportItem';
+import SportItem from './SportCard';
 import {View, StyleSheet, Dimensions, Image} from 'react-native'
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Images from '../../assets/images';

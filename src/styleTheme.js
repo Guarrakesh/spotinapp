@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 
 const themes = {
     base: {
+        borderRadius: 8,
         colors: {
 
             primary: {

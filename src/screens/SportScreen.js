@@ -7,10 +7,15 @@ import { View, Text } from 'react-native';
 
 class SportScreen extends React.Component {
 
+    constructor() {
+        super();
+        this.handleItemPress = this.handleItemPress.bind(this);
+    }
+
     componentDidMount() {
 
         this.props.dispatch(getAllSports());
-        this.handleItemPress = this.handleItemPress.bind(this);
+
 
     }
     handleItemPress(item) {
@@ -40,6 +45,6 @@ const mapStateToProps = state => {
         sports: state.entities.sports,
         loggedIn: state.auth.loggedIn
     })
-};
+}
 
 export default connect(mapStateToProps)(SportScreen)

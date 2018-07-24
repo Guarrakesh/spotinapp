@@ -38,9 +38,7 @@ const AuthNavigator = createStackNavigator(
         },
         SignUp: {
             screen: SignupScreen,
-            cardStyle: {
-                backgroundColor: "red",
-            },
+
             navigationOptions: ({navigation}) => ({
                 title: 'Sign Up',
                 headerMode: 'screen',
