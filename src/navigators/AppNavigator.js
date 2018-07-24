@@ -55,20 +55,21 @@ export const SignedIn = createTabNavigator(
 
              let image = '';
 
-             if (routeName === 'Business') {
-             image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
-             }
-             else if (routeName === 'Favorite') {
-             image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
-             }
-             else if (routeName === 'Spot') {
-             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
-             }
-             else if (routeName === 'News') {
-             image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
-             }
-             else if (routeName === 'Profile') {
-             image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
+             switch (routeName){
+                 case 'Business':
+                     image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
+                     break;
+                 case 'Favorite':
+                     image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
+                     break;
+                 case 'Spot':
+                     image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
+                     break;
+                 case 'News':
+                     image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
+                     break;
+                 case 'Profile':
+                     image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
              }
 
              return <Image source={image} style={{height: 30, width: 30}} />;
@@ -79,10 +80,10 @@ export const SignedIn = createTabNavigator(
         tabBarPosition: 'bottom',
         tabBarOptions: {
             activeTintColor: themes.base.colors.text.default,
-            inactiveTintColor: 'gray',
+            inactiveTintColor: 'grey',  //da definire colore nei themes
         },
         animationEnabled: false,
-        swipeEnabled: true,
+        swipeEnabled: false,
 
 
     }
