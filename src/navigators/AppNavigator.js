@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
@@ -11,6 +12,7 @@ import FavoriteScreen from '../components/FavoriteScreen';
 import SpotScreen from '../components/SpotScreen';
 import NewsScreen from '../components/NewsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import Images from '../assets/images';
 
 import SpotStack from './SpotStack';
 import ProfileStack from './ProfileStack';
@@ -47,30 +49,30 @@ export const SignedIn = createTabNavigator(
     },
     {
         navigationOptions: ({ navigation }) => ({
-            /* tabBarIcon: ({ focused, tintColor }) => {
+             tabBarIcon: ({ focused, tintColor }) => {
+
              const { routeName } = navigation.state;
+
              let image = '';
-             if (routeName === 'Local') {
-             image = focused ? require('../BarIcons/LocalIcon.png') : require('../BarIcons/LocalIcon-outline.png');
+
+             if (routeName === 'Business') {
+             image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
              }
              else if (routeName === 'Favorite') {
-             image = focused ? require('../BarIcons/FavoriteIcon.png') : require('../BarIcons/FavoriteIcon-outline.png');
+             image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
              }
              else if (routeName === 'Spot') {
-             image = focused ? require('../BarIcons/SpotinIcon.png') : require('../BarIcons/SpotinIcon-outline.png');
+             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
              }
              else if (routeName === 'News') {
-             image = focused ? require('../BarIcons/NewsIcon.png') : require('../BarIcons/NewsIcon-outline.png');
+             image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
              }
              else if (routeName === 'Profile') {
-             image = focused ? require('../BarIcons/ProfileIcon.png') : require('../BarIcons/ProfileIcon-outline.png');
+             image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
              }
 
-             //const img = require('./BarIcons/NewsIcon.png');
-             // You can return any component that you like here! We usually use an
-             // icon component from react-native-vector-icons
              return <Image source={image} style={{height: 30, width: 30}} />;
-             },*/
+             },
         }),
         initialRouteName: "Spot",
         tabBarComponent: TabBarBottom,
@@ -80,7 +82,7 @@ export const SignedIn = createTabNavigator(
             inactiveTintColor: 'gray',
         },
         animationEnabled: false,
-        swipeEnabled: false,
+        swipeEnabled: true,
 
 
     }
