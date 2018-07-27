@@ -32,9 +32,10 @@ export default class View extends React.Component {
             );
         }
 
-        // iOS non supporta la prop 'elevation', per cui me la calcolo e applico i csse
+        // iOS non supporta la prop 'elevation', per cui me la calcolo e applico i css
 
         const iosShadowElevation = {
+
             shadowOpacity: 0.0015 * elevation + 0.18,
             shadowRadius: 0.54 * elevation,
             shadowOffset: {
@@ -42,12 +43,14 @@ export default class View extends React.Component {
             },
 
         };
+
+
         return (
-            <BaseView style={[iosShadowElevation, style]} {...this.props}>
+            <BaseView style={[iosShadowElevation, style && style]}>
                 {this.props.children}
             </BaseView>
         )
-
+ù
     }
 
 

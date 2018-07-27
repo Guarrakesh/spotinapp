@@ -48,6 +48,7 @@ export const SignedIn = createTabNavigator(
         Profile: ProfileStack
     },
     {
+        screenBackgroundColor: 'red',
         navigationOptions: ({ navigation }) => ({
              tabBarIcon: ({ focused, tintColor }) => {
 
@@ -85,7 +86,6 @@ export const SignedIn = createTabNavigator(
         animationEnabled: false,
         swipeEnabled: false,
 
-
     }
 );
 
@@ -96,12 +96,15 @@ const RootNavigator = createStackNavigator(
             navigationOptions: {
                 gesturesEnabled: false,
 
-            }
+            },
+
+
         },
         Auth: {
             screen: AuthNavigator,
             navigationOptions: {
-                gesturesEnabled: false
+                gesturesEnabled: false,
+
 
             }
         }
