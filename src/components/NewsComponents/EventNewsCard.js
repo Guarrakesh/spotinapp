@@ -29,7 +29,7 @@ const styles = {
   },
   thumbnailContainerStyle: {
     borderColor: '#33CC33',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'column',
@@ -37,7 +37,7 @@ const styles = {
     width: 60,
   },
   EventDetailContainerStyle: {
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'flex-start',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
@@ -45,7 +45,7 @@ const styles = {
     width: 219
   },
   ArrowContainerStyle: {
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-evenly',

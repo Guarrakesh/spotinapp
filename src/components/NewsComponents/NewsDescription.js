@@ -13,15 +13,16 @@ const styles = {
     height: 276,
     marginLeft: 8,
     marginRight: 8,
+    backgroundColor: 'white'
   },
   imageStyle: {
     borderRadius: 5,
     height: 189,
     width: screenwidth - 16,
-    justifycontent: 'center',
+    //justifycontent: 'center',
     alignItems: 'center',
     marginLeft: 8,
-    marginRight: 8
+    marginRight: 8,
   },
   backgroundImage: {
       flex: 1,
@@ -43,15 +44,11 @@ const NewsDescription = () => {
           >
             <View style={{flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%'}}>
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Image
-                  source={require('./newsimages/soccerIcon.png')}
-                  style={{marginTop: 12, marginLeft: 20}}
-                />
-                <Text style={{ color: 'white', textAlign: 'right', fontSize: 23, marginRight: 10, marginTop: 20}}>13 Gen 20:45</Text>
+
               </View>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{color: 'white', fontSize: 23, marginLeft: 20, marginBottom: 10}}>Pizza e Bibita</Text>
-                <Text style={{color: 'white', fontSize: 23,  marginRight: 20, marginBottom: 10}}>10 €</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                <Text style={{color: 'white', fontSize: 24, marginLeft: 20, marginBottom: 15}}>Pizza e Bibita</Text>
+                <Text style={{color: 'white', fontSize: 36,  marginRight: 20, marginBottom: 15, fontWeight: '800'}}>10 €</Text>
               </View>
             </View>
           </ImageBackground>
