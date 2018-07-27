@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
-import NewsCard from './NewsCard';
+import NewsCard from './OfferCard';
 
 //  create components
 

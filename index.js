@@ -3,7 +3,6 @@ import React from 'react';
 import App from './src';
 
 
+//import NewsCard from "./src/components/NewsComponents/OfferCard";
 
-
-import NewsCard from "./src/components/NewsComponents/NewsCard";
-AppRegistry.registerComponent('spotinapp', () => NewsCard);
+AppRegistry.registerComponent('spotinapp', () => App);
