@@ -26,7 +26,7 @@ const AuthNavigator = createStackNavigator(
             screen: LoginScreen,
             navigationOptions: ({navigation}) => {
                 return {
-                    headerLeft: ( <DismissButton onPress={() => {navigation.navigate('SignedIn')}} color={themes.base.colors.white.default}/>),
+                    headerLeft: ( <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.white.default}/>),
                     headerTransparent: true,
                     headerStyle: {
                         shadowColor: 'transparent',

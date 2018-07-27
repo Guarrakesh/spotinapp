@@ -16,7 +16,7 @@ let deviceHeight = Dimensions.get('window').height;
 
 
 let offer = {
-    name: "Ragno e bene",
+    name: "Birra e pizza",
     type: 0, //prezzo fisso
     value: '10',
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac urna elementum, euismod ligula eget, malesuada justo. In elementum lorem ligula, at pulvinar dolor congue a.",
@@ -60,48 +60,48 @@ let offer = {
 const OfferCard = () => {
     return (
 
-        <View elevation={1} style={styles.containerStyle}>
+        <View elevation={1} style={styles.container}>
 
-                <View style={styles.imageStyle}>
-                    <ImageBackground
-                        source={offer.image_url ? {uri: offer.image_url} : require('./newsimages/NewsImageOffer.png')}
-                        style={{width: '100%', height: '100%'}}
-                        resizeMode={"stretch"}
-                    >
-                        <View style={{flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%'}}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={styles.imageStyle}>
+                <ImageBackground
+                    source={offer.image_url ? {uri: offer.image_url} : require('./newsimages/NewsImageOffer.png')}
+                    style={{width: '100%', height: '100%'}}
+                    resizeMode={"stretch"}
+                >
+                    <View style={{flexDirection: 'column', justifyContent: 'space-between', width: '100%', height: '100%'}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
-                                <Text style={styles.offerName}>{offer.name}</Text>
-                                <Text style={styles.offerValue}>
-                                    {offer.type == 1 ? offer.value + "€" : "-" + offer.value + "%"}
-                                </Text>
-                            </View>
                         </View>
-                    </ImageBackground>
-                </View>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                            <Text style={styles.offerName}>{offer.name}</Text>
+                            <Text style={styles.offerValue}>
+                                {offer.type == 1 ? offer.value + "€" : "-" + offer.value + "%"}
+                            </Text>
+                        </View>
+                    </View>
+                </ImageBackground>
+            </View>
+            <View style={styles.infoContainer}>
+
+
                 <Text style={styles.offerDescription}>{offer.description}</Text>
 
 
-            <View style={{
-                height: 0.5,
-                width: '100%',
-                backgroundColor: Themes.base.colors.text.default,
+                <View style={{height: 0.5,width: '100%',backgroundColor: Themes.base.colors.text.default,}}/>
 
-            }}/>
-            <OfferEvent />
-            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                <Button
-                    title={"Prenota Offerta".toUpperCase()}
-                    titleStyle={{
+                <OfferEvent />
+                <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <Button
+                        title={"Prenota Offerta".toUpperCase()}
+                        titleStyle={{
                         fontSize: 14,
                         fontWeight: '500',
 
 
                     }}
-                    buttonStyle={styles.bookOfferButton}
-                />
+                        buttonStyle={styles.bookOfferButton}
+                    />
+                </View>
             </View>
         </View>
     )
@@ -158,11 +158,7 @@ const OfferEvent = () => {
                 <Text style={{fontSize: 14, fontWeight: '200', marginTop: 8}}>{dayString}</Text>
                 <Text style={{fontSize: 20, fontWeight: '100'}}>{timeString}</Text>
             </View>
-            <View style={{
-                flexDirection: 'column',
-
-                marginLeft: 50
-            }}>
+            <View style={{marginLeft: 50}}>
                 <Image
                     source={Images.icons.sports[Helpers.sportSlugIconMap(offer.event.sport.slug)]}
                     style={{height: 60, width: 60, marginTop: 16, marginRight: 32 }}
@@ -173,7 +169,7 @@ const OfferEvent = () => {
 }
 
 const styles = {
-    containerStyle:{
+    container:{
         borderRadius: 8,
         borderColor: 'white',
         alignItems: 'center',
@@ -181,11 +177,14 @@ const styles = {
         position: 'relative',
         flexDirection: 'column',
         width: '100%',
-        padding: 16,
-        marginTop: 10,
+
+
         height: null,
         backgroundColor: 'white',
 
+    },
+    infoContainer: {
+        padding: 16,
     },
     bookOfferButton: {
         backgroundColor: Themes.base.colors.accent.default,

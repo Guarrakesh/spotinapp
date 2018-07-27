@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import CompetitionList from '../components/SpotComponents/CompetitionList';
 import { getSportCompetitionsRequest } from '../actions/sports';
 
@@ -31,10 +31,10 @@ class CompetitionsScreen extends React.Component {
 
         return (
 
-            <View>
+            <ScrollView>
                 <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona la competizione</Text>
                 <CompetitionList competitions={sport.competitions} onItemPress={this.handleItemPress}/>
-            </View>
+            </ScrollView>
         );
 
     }

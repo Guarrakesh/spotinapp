@@ -24,7 +24,7 @@ const CompetitionCard = (props) => {
 
                 <View style={styles.image}>
                         { props.image_url ? <Image source={props.image_url}/> : <Icon name="sports-club" size={42}/> }
-                        <Text>aasssssssasaa</Text>
+
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.name}>{name}</Text>
