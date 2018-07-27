@@ -21,8 +21,11 @@ export default function entityReducer(state = initialState, action) {
         case FETCH_ALL_SPORTS.SUCCESS:
         case FETCH_FAVORITE_SPORTS.SUCCESS:
             return {...state, error:'', sports: action.sports};
+
+
         case FETCH_COMPETITIONS.SUCCESS:
             let sports = state.sports.map((sport) => {
+
             if (sport._id == action.sportId)
                     sport['competitions'] = action.competitions;
                 return sport;
@@ -32,8 +35,12 @@ export default function entityReducer(state = initialState, action) {
 
         case SENDING_REQUEST:
             return {...state, currentlySending: action.sending};
+
+
         case REQUEST_ERROR:
             return {...state, error: action.error};
+
+
         default:
             return state;
     }

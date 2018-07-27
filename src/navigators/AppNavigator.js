@@ -38,7 +38,7 @@ const NewsStack = createStackNavigator({
 
 
 
-export const SignedIn = createTabNavigator(
+export const MainNavigation = createTabNavigator(
     {
 
         Business: BusinessStack,
@@ -91,8 +91,8 @@ export const SignedIn = createTabNavigator(
 
 const RootNavigator = createStackNavigator(
     {
-        SignedIn: {
-            screen: SignedIn,
+        Main: {
+            screen: MainNavigation,
             navigationOptions: {
                 gesturesEnabled: false,
 
@@ -111,7 +111,7 @@ const RootNavigator = createStackNavigator(
     }, {
         headerMode: 'none',
         mode: "modal",
-        initialRouteName: 'SignedIn',
+        initialRouteName: 'Main',
 
     }
 );

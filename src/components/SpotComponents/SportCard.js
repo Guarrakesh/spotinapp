@@ -6,7 +6,7 @@ import  FloatingCard  from '../common/FloatingCard';
 import { Text, StyleSheet } from 'react-native';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const SportItem = (props) => {
+const SportCard = (props) => {
 
     return (
 
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SportItem;
+export default SportCard;
 
 

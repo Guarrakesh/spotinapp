@@ -15,8 +15,8 @@ class CompetitionsScreen extends React.Component {
     componentDidMount() {
 
         const { sport } = this.props.navigation.state.params;
-
-        this.props.dispatch(getSportCompetitionsRequest(sport));
+        if (sport && !sport.competitions)
+            this.props.dispatch(getSportCompetitionsRequest(sport));
     }
 
     handleItemPress(item) {
@@ -25,7 +25,7 @@ class CompetitionsScreen extends React.Component {
     }
     render() {
         const { sport } = this.props.navigation.state.params;
-
+     
         if (!sport || !sport.competitions)
             return null;
 

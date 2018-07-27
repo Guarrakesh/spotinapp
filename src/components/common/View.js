@@ -46,7 +46,7 @@ export default class View extends React.Component {
 
 
         return (
-            <BaseView style={[iosShadowElevation, style && style]}>
+            <BaseView {...this.props} style={[iosShadowElevation, style && style]}>
                 {this.props.children}
             </BaseView>
         )

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 
         alignItems: 'stretch',
-        padding: 16,
+        padding: 8,
     }
 });
 

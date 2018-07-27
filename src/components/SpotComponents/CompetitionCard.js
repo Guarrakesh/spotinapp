@@ -19,20 +19,23 @@ const CompetitionCard = (props) => {
     } = props;
 
     return (
+        <TouchableOpacity onPress={props.onPress}>
+            <View elevation={1} style={styles.container}>
 
-        <View elevation={1} style={styles.container}>
+                <View style={styles.image}>
+                        { props.image_url ? <Image source={props.image_url}/> : <Icon name="sports-club" size={42}/> }
+                        <Text>aasssssssasaa</Text>
+                </View>
+                <View style={styles.info}>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.country}>{country}</Text>
+                    { week_events.length > 0 ? <Text style={styles.extra}>{week_events.length} eventi questa settimana </Text> : ""}
 
-            <View style={styles.image}>
-                { props.image_url ? <Image source={props.image_url}/> : <Icon name="sports-club" size={42}/> }
+                </View>
+
+
             </View>
-            <View style={styles.info}>
-                <Text style={styles.name}>{name}</Text>
-                <Text style={styles.country}>{country}</Text>
-                { week_events.length > 0 ? <Text style={styles.extra}>{week_events.length} eventi quest settimana </Text> : ""}
-
-            </View>
-
-        </View>
+        </TouchableOpacity>
 
     );
 };

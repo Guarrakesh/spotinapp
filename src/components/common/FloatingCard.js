@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {Card as NativeCard} from 'react-native-elements';
-import { View, Text, TouchableOpacity } from 'react-native';
+import View from '../common/View';
+import { Text, TouchableOpacity } from 'react-native';
 import themes from '../../styleTheme';
 
 const FloatingCard = (props) => {

@@ -231,6 +231,7 @@ export function * registerFlow () {
 
         if (wasSuccessful) {
             NavigationService.navigate('SignedIn');
+
         }
 
     }
