@@ -1,16 +1,16 @@
 const images = {
     icons: {
         barIcons: {
-            business: require('./img/barIcons/LocalIcon-outline.png'),
-            businessSelected: require('./img/barIcons/LocalIcon.png'),
-            favorite: require('./img/barIcons/FavoriteIcon-outline.png'),
-            favoriteSelected: require('./img/barIcons/FavoriteIcon.png'),
-            spot: require('./img/barIcons/SpotinIcon-outline.png'),
-            spotSelected: require('./img/barIcons/SpotinIcon.png'),
-            news: require('./img/barIcons/NewsIcon-outline.png'),
-            newsSelected: require('./img/barIcons/NewsIcon.png'),
-            profile: require('./img/barIcons/ProfileIcon-outline.png'),
-            profileSelected: require('./img/barIcons/ProfileIcon.png')
+            business: require('./img/barIcons/local/LocalIcon-outline.png'),
+            businessSelected: require('./img/barIcons/local/LocalIcon.png'),
+            favorite: require('./img/barIcons/favorite/FavoriteIcon-outline.png'),
+            favoriteSelected: require('./img/barIcons/favorite/FavoriteIcon.png'),
+            spot: require('./img/barIcons/spot/SpotinIcon-outline.png'),
+            spotSelected: require('./img/barIcons/spot/SpotinIcon.png'),
+            news: require('./img/barIcons/news/NewsIcon-outline.png'),
+            newsSelected: require('./img/barIcons/news/NewsIcon.png'),
+            profile: require('./img/barIcons/profile/ProfileIcon-outline.png'),
+            profileSelected: require('./img/barIcons/profile/ProfileIcon.png')
         },
         sports: {
             soccer: require('./img/soccer/Soccer.png'),
