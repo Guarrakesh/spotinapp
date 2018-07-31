@@ -3,7 +3,7 @@ import {
     FETCH_FAVORITE_SPORTS,
     REQUEST_ERROR,
     SENDING_REQUEST,
-    FETCH_COMPETITIONS
+    FETCH_COMPETITIONS, FETCH_EVENTS
 } from '../actions/types';
 
 
@@ -11,6 +11,7 @@ import {
 let initialState = {
 
     sports: [],
+    events: [],
     currentlySending: false,
     error: ''
 
@@ -32,6 +33,9 @@ export default function entityReducer(state = initialState, action) {
             });
 
             return { ...state, error:'', sports: sports};
+
+        case FETCH_EVENTS.SUCCESS:
+            return {...state, error:'', events: action.events};
 
         case SENDING_REQUEST:
             return {...state, currentlySending: action.sending};

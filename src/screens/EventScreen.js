@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
-import { getSportCompetitionsRequest } from '../actions/sports';
+import { getEventsRequest } from '../actions/events';
+import EventNewsCard from '../components/NewsComponents/EventNewsCard';
 
 class EventScreen extends React.Component {
 
@@ -14,9 +15,11 @@ class EventScreen extends React.Component {
     }
     componentDidMount() {
 
-        //const { sport } = this.props.navigation.state.params;
-     //   if (sport && !sport.competitions)
-           // this.props.dispatch(getSportCompetitionsRequest(sport));
+        const { competition } = this.props.navigation.state.params;
+        let events = this.props.events;
+        if (competition && events.length === 0)
+            this.props.dispatch(getEventsRequest(competition._id));
+
     }
 
     handleItemPress(item) {
@@ -24,26 +27,29 @@ class EventScreen extends React.Component {
 
     }
     render() {
-        // const { sport } = this.props.navigation.state.params;
-        //
-        // if (!sport || !sport.competitions)
-        //     return null;
-        //
-        // return (
-        //
-        //     <View>
-        //         <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona la competizione</Text>
-        //         <CompetitionList competitions={sport.competitions} onItemPress={this.handleItemPress}/>
-        //     </View>
-        // );
+        const { competition } = this.props.navigation.state.params;
+        const { events, currentlySending } = this.props;
 
-     return <Text>ciao nana'</Text>
+        let filteredEvents = events.filter(event => event.competition._id == competition._id);
+
+        if (!competition || filteredEvents.length === 0)
+            return null;
+
+        return (
+
+                <EventNewsCard/>
+
+        )
+
+
     }
 }
 
 const mapStateToProps = (state) => {
+    const { events, currentlySending, error} = state.entities;
     return {
-        entities: state.entities
+        events, currentlySending, error
     }
+
 };
 export default connect(mapStateToProps)(EventScreen);

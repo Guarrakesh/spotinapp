@@ -58,6 +58,8 @@ let offer = {
 
 
 const OfferCard = () => {
+
+
     return (
 
         <View elevation={1} style={styles.container}>

@@ -4,12 +4,12 @@ import { NavigationActions } from 'react-navigation';
 import { delay } from 'redux-saga';
 import { getToken, getSports } from './selectors';
 import  sports  from '../api/sports';
-
+import  events from '../api/events';
 import {
     FETCH_FAVORITE_SPORTS,
     FETCH_ALL_SPORTS,
     SET_AUTH,
-    FETCH_COMPETITIONS
+    FETCH_COMPETITIONS, FETCH_EVENTS
 
 } from '../actions/types';
 import {
@@ -21,6 +21,7 @@ import {
     sendingRequest,
     requestError
 } from '../actions';
+import {getEventsSuccess} from "../actions/events";
 
 
 
@@ -58,6 +59,29 @@ function* fetchCompetitions(sport) {
         yield put(sendingRequest(false));
     }
 }
+
+function* fetchEvents(competitionId) {
+
+    yield put(sendingRequest(true));
+
+    try {
+
+        let response;
+
+        if (competitionId)
+            response = yield call(events.fetchByCompetition, competitionId);
+        else
+            response = yield call(events.fetchAll);
+
+
+        yield put(getEventsSuccess(response));
+
+    } catch (err) {
+        yield put(requestError(err));
+    } finally {
+        yield put(sendingRequest(false));
+    }
+}
 // ==================
 // WATCHERS
 // ==================
@@ -69,8 +93,9 @@ function* watchGetSports() {
 
         const request = yield take(FETCH_ALL_SPORTS.REQUEST);
 
-       // let token = yield select(getToken);
-        const response = yield call(fetchSports);
+        // let token = yield select(getToken);
+        yield call(fetchSports);
+
 
     }
 }
@@ -80,10 +105,17 @@ function* watchGetCompetitions() {
         const req = yield take(FETCH_COMPETITIONS.REQUEST);
 
         //let token = yield select(getToken);
-        const response = yield call(fetchCompetitions, req.sport);
+        yield call(fetchCompetitions, req.sport);
     }
 }
 
+function* watchGetEvents() {
+    while (true) {
+        const req = yield take(FETCH_EVENTS.REQUEST);
+        console.log("aaaaa", req);
+        const response = yield call(fetchEvents, req.competitionId);
+    }
+}
 
 export default function* root() {
     /*//Non proseguo finché non ho un token. Posso farlo perché la login saga (./login.js), se non trova una token
@@ -99,6 +131,8 @@ export default function* root() {
 
     yield all([
         fork(watchGetSports),
-        fork(watchGetCompetitions)
+        fork(watchGetCompetitions),
+        fork(watchGetEvents)
+
     ])
 }
