@@ -73,7 +73,7 @@ export const MainNavigation = createTabNavigator(
                      image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
              }
 
-             return <Image source={image} style={{height: 30, width: 30}} />;
+             return <Image source={image} style={{height: 24, width: 24}} />;
              },
         }),
         initialRouteName: "Spot",

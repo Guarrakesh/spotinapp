@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.3.3",
     "babel-jest": "^23.2.0",
     "prop-types": "^15.6.2",
     "react": "16.4.1",
-    "react-native": "0.55.4",
+    "react-native": "^0.56.0",
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^1.0.0-beta5",
     "react-native-vector-icons": "^4.6.0",
@@ -25,7 +26,7 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
-    "babel-preset-react-native": "^4",
+    "babel-preset-react-native": "^5.0.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jest": "^21.17.0",

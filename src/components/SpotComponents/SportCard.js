@@ -21,7 +21,7 @@ const SportCard = (props) => {
                 }}
        >
            {props.icon}
-           />
+
        </FloatingCard>
     );
 };

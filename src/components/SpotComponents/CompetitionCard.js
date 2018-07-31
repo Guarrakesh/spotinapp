@@ -29,7 +29,7 @@ const CompetitionCard = (props) => {
                 <View style={styles.info}>
                     <Text style={styles.name}>{name}</Text>
                     <Text style={styles.country}>{country}</Text>
-                    { week_events.length > 0 ? <Text style={styles.extra}>{week_events.length} eventi questa settimana </Text> : ""}
+                    { week_events.length > 0 && <Text style={styles.extra}>{week_events.length} eventi questa settimana </Text> }
 
                 </View>
 
