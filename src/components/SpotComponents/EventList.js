@@ -4,7 +4,7 @@ import EventCard from './EventCard';
 
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 const EventList = (props) => {
 
   const events = props.events;

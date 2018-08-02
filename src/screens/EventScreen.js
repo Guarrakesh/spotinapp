@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Text, ScrollView} from 'react-native';
+import { Text, ScrollView, StyleSheet} from 'react-native';
 
 import { getEventsRequest } from '../actions/events';
 import EventList from '../components/SpotComponents/EventList';
