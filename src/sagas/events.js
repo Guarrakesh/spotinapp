@@ -112,7 +112,7 @@ function* watchGetCompetitions() {
 function* watchGetEvents() {
     while (true) {
         const req = yield take(FETCH_EVENTS.REQUEST);
-        console.log("aaaaa", req);
+
         const response = yield call(fetchEvents, req.competitionId);
     }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { Text, ScrollView} from 'react-native';
 
 import { getEventsRequest } from '../actions/events';
-import EventNewsCard from '../components/NewsComponents/EventNewsCard';
+import EventList from '../components/SpotComponents/EventList';
 
 class EventScreen extends React.Component {
 
@@ -16,7 +16,9 @@ class EventScreen extends React.Component {
     componentDidMount() {
 
         const { competition } = this.props.navigation.state.params;
-        let events = this.props.events;
+        let events = this.props.events.filter(event => event.competition._id == competition._id);
+
+        //Ora events ha solo eventi della competizione attuale
         if (competition && events.length === 0)
             this.props.dispatch(getEventsRequest(competition._id));
 
@@ -36,8 +38,9 @@ class EventScreen extends React.Component {
             return null;
 
         return (
-
-                <EventNewsCard/>
+            <ScrollView>
+              <EventList events={filteredEvents} onItemPress={this.handleItemPress} />
+            </ScrollView>
 
         )
 
