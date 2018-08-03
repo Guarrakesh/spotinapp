@@ -15,7 +15,8 @@ const EventList = (props) => {
   const eventList = events.map(event =>
     <EventCard
       key={event._id}
-      onPress={()=> props.onItemPress(event)}
+      onPress={ ()=> props.onItemPress(event)}
+      onFavoritePress={ () => props.onFavoritePress(event)}
       {...event}
 
     />
@@ -31,7 +32,8 @@ const EventList = (props) => {
 
 EventList.propTypes = {
     onItemPress: PropTypes.func.isRequired,
-    events: PropTypes.array.isRequired
+    events: PropTypes.array.isRequired,
+    onFavoritePress: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

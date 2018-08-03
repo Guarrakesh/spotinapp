@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, Text, Dimensions, StyleSheet} from 'react-native';
+import { TouchableOpacity, Image, Text, Dimensions, StyleSheet} from 'react-native';
+import View from '../common/View';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/Entypo';
 const colors = themes.base.colors
@@ -54,11 +55,19 @@ const EventCard = (props) => {
     let imageUrl;
     let competitors = props.competitors;
     if (!props.competitorHasLogo || props.competitorHasLogo) {
-        competitorsComponent =
-            <View style={styles.competitors}>
-                { competitors[0].image_url ? <Image source={{uri: competitors[0].image_url}}/> : <Icon name="sports-club" size={36}/> }
-                { competitors[1].image_url ? <Image source={{uri: competitors[1].image_url}}/> : <Icon name="sports-club" size={36}/> }
+
+        competitorsComponent = competitors.map(comp => {
+            console.log(comp)
+            return <View style={styles.competitors}>
+
+                { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} resizeMethod={'contain'}/> : <Icon name="sports-club" size={36}/> }
+
             </View>
+        });
+
+
+
+
     } else {
         competitorsComponent =
             <View style={{marginTop: 32}}>
@@ -75,26 +84,31 @@ const EventCard = (props) => {
     }
 
     return (
-        <TouchableOpacity onPress={props.onPress}>
-            <View style={styles.containerStyle}>
-                <View style={styles.favorite}>
 
-                    {props.isFavorite ?   <Icon name="heart" size={24}/> :  <Icon name="heart-outlined" size={24}/>}
+        <View elevation={1} style={styles.containerStyle}>
+
+            <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
+
+                {props.isFavorite ?   <Icon name="heart" size={24} color={colors.accent.default}/> :  <Icon name="heart-outlined" size={24} color={colors.accent.default}/>}
 
 
-                </View>
-                <View style={styles.teamLogosContainer}>
-                    {competitorsComponent}
-                </View>
+            </TouchableOpacity>
+
+            <View style={styles.competitorsLogosContainer}>
+                {competitorsComponent}
+            </View>
+            <TouchableOpacity style={styles.eventInfo} onPress={props.onPress}>
+
 
                 <View style={styles.detailContainer}>
                     <Text style={{fontSize: 21}}>{props.name}</Text>
-                    <Text style={{fontSize: 14, color: colors.primary.default}}># Numero Locali </Text>
-                    <Text style={{fontSize: 16, fontWeight: '100'}}>{timeString}</Text>
-                </View>
+                    <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
+                    <Text style={{fontSize: 14, fontWeight: '200'}}>{dayString} - {timeString} </Text>
 
-            </View>
-        </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+        </View>
+
     );
 }
 const styles = {
@@ -104,45 +118,55 @@ const styles = {
         marginRight: 8,
         borderRadius: 8,
         borderColor: '#33CC33',
-        justifyContent: 'flex-start',
+
         flexDirection: 'row',
-        position: 'relative',
+        justifyContent: 'flex-start',
         height: 116,
-        width: '100%',
-        backgroundColor: 'white',
+
+        backgroundColor: colors.white.default,
         //shadowOpacity: 1
     },
     favorite: {
         borderRightColor: colors.text.light,
         borderRightWidth: 1,
-
-
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: 16,
-        width: 62,
+
+        flexGrow: 0,
+        flexBasis: 63,
         paddingBottom: 16
+    },
+    eventInfo: {
+        flexGrow: 3,
     },
     competitorsLogosContainer: {
         alignItems: 'center',
         flexDirection: 'column',
+        flexGrow: 0,
+        flexBasis: 54,
+        paddingTop: 16
 
     },
     competitors: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 8,
 
-        paddingTop: 16,
     },
     detailContainer: {
-        paddingTop: 16,
+
+        paddingTop: 24,
         paddingLeft: 16,
         //justifyContent: 'center',
-        alignItems: 'flex-start',
+
         flexDirection: 'column',
 
-        flexGrow: 2
+
+
+
+
     },
 
 };

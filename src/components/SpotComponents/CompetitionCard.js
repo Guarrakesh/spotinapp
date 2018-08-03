@@ -56,7 +56,9 @@ CompetitionCard.propTypes = {
 const styles = StyleSheet.create({
 
     image: {
-        flexGrow: 1,
+        width: 64,
+        marginLeft: 16,
+        marginRight: 16,
         alignItems: 'center',
         justifyContent: 'center',
     },

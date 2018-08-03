@@ -11,7 +11,8 @@ class EventScreen extends React.Component {
     constructor() {
         super();
 
-        this.handleItemPress = this.handleItemPress.bind(this);
+        this.handleEventPress = this.handleEventPress.bind(this);
+        this.handleEventFavoritePress = this.handleEventFavoritePress.bind(this);
     }
     componentDidMount() {
 
@@ -24,9 +25,14 @@ class EventScreen extends React.Component {
 
     }
 
-    handleItemPress(item) {
+    handleEventPress(item) {
         //this.props.navigation.navigate('Events', {competition: item});
 
+    }
+    handleEventFavoritePress(event) {
+        //Se l'utente non è loggato, rimanda alla schermata login
+        if (!this.props.loggedIn)
+            this.props.navigation.navigate('Auth');
     }
     render() {
         const { competition } = this.props.navigation.state.params;
@@ -39,7 +45,7 @@ class EventScreen extends React.Component {
 
         return (
             <ScrollView>
-              <EventList events={filteredEvents} onItemPress={this.handleItemPress} />
+              <EventList events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
             </ScrollView>
 
         )
@@ -50,8 +56,9 @@ class EventScreen extends React.Component {
 
 const mapStateToProps = (state) => {
     const { events, currentlySending, error} = state.entities;
+    const { loggedIn } = state.auth;
     return {
-        events, currentlySending, error
+        events, currentlySending, error, loggedIn
     }
 
 };
