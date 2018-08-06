@@ -11,7 +11,8 @@ import {
 let initialState = {
 
     sports: [],
-    events: [],
+    events: [], //contiene tutti gli eventi di ogni competizione,
+    //businesses: [],
     currentlySending: false,
     error: ''
 
@@ -43,6 +44,18 @@ export default function entityReducer(state = initialState, action) {
 
         case REQUEST_ERROR:
             return {...state, error: action.error};
+
+        case FETCH_BUSINESSES.SUCCESS:
+
+           let events = state.events.map((event) {
+             if (event._id == action.eventId) {
+               event['businesses'] = action.businessess;
+             }
+
+             return event;
+           });
+
+           return{...state, error: '', events: events }
 
 
         default:

@@ -112,14 +112,6 @@ const OfferCard = () => {
 const OfferEvent = () => {
 
 
-    let date = new Date(offer.event.start_at);
-    let dayString, timeString;
-    if (date) {
-
-        dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
-        timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-    }
-
     let competitors = offer.event.competitors;
     let competitorsComponent;
     if (offer.event.competitorHasLogo) {
