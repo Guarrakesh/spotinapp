@@ -2,7 +2,7 @@
 
 import React from 'react';
 import View  from '../common/View';
-import { Input, Button } from 'react-native-elements';
+import {Input, Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 const colors = themes.base.colors;
@@ -12,10 +12,8 @@ const SignupForm = props => {
 
     return (
         <View>
-
             <Input
                 placeholder="Nome"
-
                 id="name"
                 containerStyle={styles.inputOuterContainer}
                 leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}

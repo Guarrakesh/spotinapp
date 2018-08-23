@@ -114,8 +114,8 @@ const EventCard = (props) => {
 const styles = {
     containerStyle: {
         marginTop: 10,
-        marginLeft: 8,
-        marginRight: 8,
+
+
         borderRadius: 8,
         borderColor: '#33CC33',
 

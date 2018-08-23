@@ -17,7 +17,9 @@ const CompetitionCard = (props) => {
         image_versions
 
     } = props;
+
     let imageUrl;
+
     if (image_versions && image_versions.length > 0) {
         //Prendo la prima versione dell'immagine (fullwidth)
         imageUrl = image_versions[0].url;

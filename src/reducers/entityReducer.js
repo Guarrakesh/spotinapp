@@ -3,7 +3,9 @@ import {
     FETCH_FAVORITE_SPORTS,
     REQUEST_ERROR,
     SENDING_REQUEST,
-    FETCH_COMPETITIONS, FETCH_EVENTS
+    FETCH_COMPETITIONS,
+    FETCH_EVENTS,
+    FETCH_BUSINESSES
 } from '../actions/types';
 
 
@@ -47,9 +49,9 @@ export default function entityReducer(state = initialState, action) {
 
         case FETCH_BUSINESSES.SUCCESS:
 
-           let events = state.events.map((event) {
+           let events = state.events.map((event) => {
              if (event._id == action.eventId) {
-               event['businesses'] = action.businessess;
+               event['businesses'] = action.businesses;
              }
 
              return event;

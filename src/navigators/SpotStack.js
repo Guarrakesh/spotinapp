@@ -1,8 +1,15 @@
 import SportScreen from "../screens/SportScreen";
 import EventScreen from '../screens/EventScreen';
+import BusinessListScreen from '../screens/BusinessListScreen';
 import CompetitionsScreen from "../screens/CompetitionsScreen";
 import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
+import BusinessScreen from "../components/BusinessScreen";
+
+
+
+import { View, Text } from 'react-native';
+
 
 const SpotStack = createStackNavigator({
         SportList: {
@@ -16,8 +23,16 @@ const SpotStack = createStackNavigator({
         },
         Events: {
             screen: EventScreen,
-            navigationOptions: ({navigation}) => ({ title: navigation.state.params.competition.name})
-        }
+            navigationOptions: ({navigation}) => ({
+                title: navigation.state.params.competition.name,
+                headerBackTitle: null,
+            })
+        },
+        BusinessList: {
+            screen: BusinessListScreen,
+
+
+        },
     },{
         navigationOptions: {
 
