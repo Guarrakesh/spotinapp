@@ -31,7 +31,7 @@ const CompetitionCard = (props) => {
             <View elevation={1} style={styles.container}>
 
                 <View style={styles.image}>
-                        { imageUrl ? <Image resizeMode={'contain'} source={{uri: imageUrl, width: 42, height: 43}}/> : <Icon name="sports-club" size={42}/> }
+                        { imageUrl ? <Image source={{uri: imageUrl, width: 42, height: 43}}/> : <Icon name="sports-club" size={42}/> }
 
                 </View>
                 <View style={styles.info}>

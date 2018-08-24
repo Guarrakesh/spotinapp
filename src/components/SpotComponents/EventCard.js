@@ -60,7 +60,7 @@ const EventCard = (props) => {
             console.log(comp)
             return <View style={styles.competitors}>
 
-                { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} resizeMethod={'contain'}/> : <Icon name="sports-club" size={36}/> }
+                { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} /> : <Icon name="sports-club" size={36}/> }
 
             </View>
         });

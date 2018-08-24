@@ -1,7 +1,6 @@
 const images = {
     icons: {
         barIcons: {
-
             business: require('./img/barIcons/local/LocalIcon-outline.png'),
             businessSelected: require('./img/barIcons/local/LocalIcon.png'),
             favorite: require('./img/barIcons/favorite/FavoriteIcon-outline.png'),

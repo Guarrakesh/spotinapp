@@ -50,7 +50,7 @@ export default class View extends React.Component {
                 {this.props.children}
             </BaseView>
         )
-ù
+
     }
 
 
