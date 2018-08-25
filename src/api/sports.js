@@ -15,7 +15,9 @@ const sports = {
 
     async fetchCompetitions(sport) {
         try {
-            let response = await request(`${vars.apiUrl}/sports/${sport._id}/competitions`, {}, 'GET');
+            let url = `${vars.apiUrl}/competitions`;
+            url.search = new URLSearchParams({sport_id: sport._id});
+            let response = await request(url, {}, 'GET');
             let data = await response.json();
             return data;
         } catch (err) {
