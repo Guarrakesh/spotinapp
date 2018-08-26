@@ -5,6 +5,7 @@ import SportList from '../components/SpotComponents/SportList';
 import PropTypes from 'prop-types';
 
 import { View, Text } from 'react-native';
+import { getLocationRequest } from "../actions/location";
 
 class SportScreen extends React.Component {
 
@@ -23,6 +24,7 @@ class SportScreen extends React.Component {
             this.props.dispatch(getAllSports());
         }
 
+        this.props.dispatch(getLocationRequest());
 
 
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BusinessCard from './BusinessCard';
-import {View, StyleSheet, Dimensions, Image, ScrollView} from 'react-native';
+import {View, StyleSheet, Dimensions, Image, ScrollView, Button} from 'react-native';
 
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';

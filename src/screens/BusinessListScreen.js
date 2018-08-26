@@ -1,8 +1,10 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 import BusinessList from '../components/SpotComponents/BusinessList';
+import Icon from 'react-native-vector-icons/Feather';
 import { getBusinessRequest } from '../actions/businesses';
 
 import themes from "../styleTheme";
@@ -104,17 +106,36 @@ class BusinessScreen extends React.Component {
             timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
 
         }
-
+        console.log(this.props);
         return (
             <View>
+                <View style={styles.subHeader}>
 
-                    <View style={styles.subHeader}>
-                        <Text style={styles.competitionName}>{event.competition.name}</Text>
-                        <Text style={styles.eventName}>{event.name}</Text>
-                        <Text style={styles.date}>{`${weekOfDayString} ${dayString} - ${timeString}`}</Text>
-                    </View>
-
+                    <Text style={styles.competitionName}>{event.competition.name}</Text>
+                    <Text style={styles.eventName}>{event.name}</Text>
+                    <Text style={styles.date}>{`${weekOfDayString} ${dayString} - ${timeString}`}</Text>
+                </View>
                 <BusinessList businesses={businesses} onItemPress={this.handleBusinessPress}/>
+                <Button
+                    title=''
+                    buttonStyle={{
+                        backgroundColor: themes.base.colors.accent.default,
+                        width: 52,
+                        height: 52,
+                        position: "absolute",
+                        right: 24,
+                        bottom: 32,
+                        borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 60,
+                        shadowColor: '#000',
+                        ...themes.base.elevations.depth2,
+                        shadowRadius: 5,
+
+                    }}
+                    icon={<Icon name="map" size={24}
+                        style={{color: themes.base.colors.white.default}}/>}
+                />
             </View>
 
         )
@@ -124,9 +145,10 @@ class BusinessScreen extends React.Component {
 }
 const mapStateToProps = (state) => {
     const { currentlySending, error} = state.entities;
+    const { latitude, longitude } = state.location;
     const { loggedIn } = state.auth;
     return {
-        currentlySending, error, loggedIn
+        currentlySending, error, loggedIn, latitude, longitude,
     }
 
 }
@@ -134,8 +156,6 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
     subHeader: {
-
-
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -160,6 +180,9 @@ const styles = StyleSheet.create({
     },
     date: {
         color: themes.base.colors.text.default,
+
+    },
+    mapIcon: {
 
     }
 });
