@@ -89,6 +89,7 @@ class BusinessScreen extends React.Component {
     }
 
     render() {
+
         const {event} = this.props.navigation.state.params;
         //let businesses = event.businesses;
         const {currentlySending} = this.props;
@@ -110,7 +111,7 @@ class BusinessScreen extends React.Component {
         return (
             <View>
                 <View style={styles.subHeader}>
-
+                    {(this.props.latitude && this.props.longitude) ? <Text>{this.props.latitude}</Text> : null}
                     <Text style={styles.competitionName}>{event.competition.name}</Text>
                     <Text style={styles.eventName}>{event.name}</Text>
                     <Text style={styles.date}>{`${weekOfDayString} ${dayString} - ${timeString}`}</Text>
@@ -133,6 +134,7 @@ class BusinessScreen extends React.Component {
                         shadowRadius: 5,
 
                     }}
+                    onPress={() => {this.props.navigation.navigate('BusinessMap')}}
                     icon={<Icon name="map" size={24}
                         style={{color: themes.base.colors.white.default}}/>}
                 />

@@ -17,10 +17,12 @@ import {
     getFavoriteSportsSuccess,
     getSportCompetitionsSuccess
 } from '../actions/sports';
+
 import {
     sendingRequest,
     requestError
 } from '../actions';
+
 import {getEventsSuccess} from "../actions/events";
 
 

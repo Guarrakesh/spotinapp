@@ -24,3 +24,6 @@ export const FETCH_FAVORITE_SPORTS = createRequestTypes('GET_FAVORITE_SPORTS');
 export const FETCH_COMPETITIONS = createRequestTypes('GET_COMPETITIONS');
 export const FETCH_EVENTS = createRequestTypes('GET_EVENTS');
 export const FETCH_BUSINESSES = createRequestTypes('GET_BUSINESSES');
+
+//Location
+export const GET_CURRENT_LOCATION = createRequestTypes('GET_CURRENT_LOCATION');

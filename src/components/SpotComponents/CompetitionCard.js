@@ -1,12 +1,13 @@
 
 
 import React from 'react';
-
 import View from '../common/View';
 import { Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/Entypo';
+
+
 const CompetitionCard = (props) => {
 
     const {
@@ -81,7 +82,6 @@ const styles = StyleSheet.create({
         paddingBottom: 25,
         flexDirection: 'column',
         flexGrow: 2,
-
     },
     container: {
         width: '100%',

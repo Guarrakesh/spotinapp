@@ -9,12 +9,11 @@ import AuthNavigator from './AuthNavigator';
 import BusinessScreen from '../components/BusinessScreen';
 import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
-import SpotScreen from '../components/SpotScreen';
 import NewsScreen from '../components/NewsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Images from '../assets/images';
 
-import SpotStack from './SpotStack';
+import {SpotStack, BusinessMapNavigator} from './SpotStack';
 import ProfileStack from './ProfileStack';
 
 import themes from '../styleTheme';
@@ -45,7 +44,7 @@ export const MainNavigation = createTabNavigator(
         Favorite: FavoriteStack,
         Spot: SpotStack,
         News: NewsStack,
-        Profile: ProfileStack
+        Profile: ProfileStack,
     },
     {
         screenBackgroundColor: 'red',
@@ -107,7 +106,9 @@ const RootNavigator = createStackNavigator(
 
 
             }
-        }
+        },
+
+        BusinessMap: BusinessMapNavigator
     }, {
         headerMode: 'none',
         mode: "modal",

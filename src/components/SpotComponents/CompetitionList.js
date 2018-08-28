@@ -1,10 +1,6 @@
 import React from 'react';
-
 import CompetitionCard from './CompetitionCard';
-import {View, StyleSheet, Dimensions, Image} from 'react-native'
-import { Col, Row, Grid } from 'react-native-easy-grid';
-
-import Images from '../../assets/images';
+import {View, StyleSheet, Dimensions, Image} from 'react-native';
 import PropTypes from 'prop-types';
 
 
@@ -16,7 +12,6 @@ const CompetitionList = (props) => {
     }
 
     const competitionList = competitions.map((comp) =>
-
 
             <CompetitionCard
                 key={comp._id}
@@ -38,8 +33,6 @@ CompetitionList.propTypes = {
 };
 const styles = StyleSheet.create({
     container: {
-
-
         alignItems: 'stretch',
         padding: 8,
     }

@@ -4,7 +4,8 @@ import View from '../common/View';
 import {Text, StyleSheet, TouchableOpacity, ImageBackground, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MateriaIcon from 'react-native-vector-icons/MaterialIcons';
 
 
 const BusinessCard = (props) => {
@@ -22,8 +23,6 @@ const BusinessCard = (props) => {
 
     let absoluteDiscount = false;
     let discount = "10";
-    let wifiIcon =  require('./wifi.png');
-
 
     return (
         <TouchableOpacity onPress={props.onPress}>
@@ -41,10 +40,7 @@ const BusinessCard = (props) => {
                             </View>
                             <View style={{flexDirection: 'column', justifyContent: 'flex-end', flex: 1, borderTopRightRadius: themes.base.borderRadius}}>
                                 <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                    <Image
-                                        source={require('./geoFence.png')}
-                                        style={styles.geoFenceImg}
-                                    />
+                                    <Icon name="map-marker-radius" color={'#FFF'} style={styles.geoFenceImg} size={21}/>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                                     <Text style={styles.distance}>{props.distance} km</Text>
@@ -55,19 +51,12 @@ const BusinessCard = (props) => {
                     </ImageBackground>
                 </View>
                 <View style={styles.bottomContainer}>
-                    <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center'}}>
-                        <Image
-                            source={require('./seats.png')}
-                            style={styles.seatsImg}
-                        />
+                    <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
+                        <MateriaIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
                         <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
                             {props.seats}
                         </Text>
-                        {props.wifi ? <Image
-                            source={wifiIcon}
-                            style={styles.wifiImg}
-                        />
-                        : null}
+                        {props.wifi ? <MateriaIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
                     </View>
                     <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{props.discount.absoluteDiscount ? '' : '-'}{discount}{props.discount.absoluteDiscount ? '€' : '%'}</Text>
@@ -132,8 +121,6 @@ const styles = StyleSheet.create({
 
     },
     geoFenceImg: {
-        width: 21,
-        height: 21,
         marginRight: 30
     },
     wifiImg: {
@@ -142,8 +129,6 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     seatsImg: {
-        width: 30,
-        height: 30,
         marginLeft: 20
     },
     topContainer: {
@@ -160,6 +145,11 @@ const styles = StyleSheet.create({
         height: 80,
         flexDirection: 'row',
         borderWidth: 0,
+    },
+    divisor: {
+        height: '100%',
+        width: 1,
+        backgroundColor: themes.base.colors.text.default
     }
 })
 

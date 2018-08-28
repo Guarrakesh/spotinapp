@@ -127,15 +127,15 @@ const styles = {
         //shadowOpacity: 1
     },
     favorite: {
-        borderRightColor: colors.text.light,
-        borderRightWidth: 1,
+        borderRightColor: colors.text.default,
+        borderRightWidth: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 16,
-
+        marginTop: 16,
+        marginRight: 16,
         flexGrow: 0,
         flexBasis: 63,
-        paddingBottom: 16
+        marginBottom: 16
     },
     eventInfo: {
         flexGrow: 3,
@@ -159,14 +159,7 @@ const styles = {
 
         paddingTop: 24,
         paddingLeft: 16,
-        //justifyContent: 'center',
-
         flexDirection: 'column',
-
-
-
-
-
     },
 
 };

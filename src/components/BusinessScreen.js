@@ -1,19 +1,17 @@
 
 import React from 'react';
 
-import {
-  View,
-  Button
+import {View, Button} from 'react-native';
+import DetailsScreen from './DetailsScreen';
 
-} from 'react-native'
 class BusinessScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {/* other code from before here */}
         <Button
-          title="Go to Details"
-          onPress={() => this.props.navigation.navigate('Details')}
+          title="Business Screen"
+          onPress={() => this.props.navigation.navigate({DetailsScreen})}
         />
       </View>
     );

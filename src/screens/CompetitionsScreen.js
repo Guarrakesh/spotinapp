@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { Text, View, ScrollView } from 'react-native';
 import CompetitionList from '../components/SpotComponents/CompetitionList';

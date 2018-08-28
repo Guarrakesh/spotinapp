@@ -1,8 +1,6 @@
 import React from 'react';
 
 import EventCard from './EventCard';
-
-import Images from '../../assets/images';
 import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 const EventList = (props) => {
@@ -18,7 +16,6 @@ const EventList = (props) => {
       onPress={ ()=> props.onItemPress(event)}
       onFavoritePress={ () => props.onFavoritePress(event)}
       {...event}
-
     />
 
    )

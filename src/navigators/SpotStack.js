@@ -5,13 +5,26 @@ import CompetitionsScreen from "../screens/CompetitionsScreen";
 import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
 import BusinessScreen from "../components/BusinessScreen";
-
+import BusinessMapScreen from "../screens/BusinessMapScreen";
 
 
 import { View, Text } from 'react-native';
 
 
-const SpotStack = createStackNavigator({
+export const BusinessMapNavigator = createStackNavigator({
+    BusinessMapScreen: {
+        screen: BusinessMapScreen,
+        navigationOptions: {
+            title: "Locali nelle vicinanze",
+
+        },
+    }
+    }, {
+        mode: 'modal',
+
+    }
+);
+export const SpotStack = createStackNavigator({
         SportList: {
             screen: SportScreen,
             navigationOptions: {  title: 'Sport' }
@@ -32,7 +45,8 @@ const SpotStack = createStackNavigator({
             screen: BusinessListScreen,
 
 
-        },
+        }
+
     },{
         navigationOptions: {
 
@@ -43,7 +57,5 @@ const SpotStack = createStackNavigator({
         }
     }
 );
-
-export default SpotStack;
 
 
