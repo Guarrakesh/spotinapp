@@ -10,40 +10,46 @@ import MateriaIcon from 'react-native-vector-icons/MaterialIcons';
 
 const BusinessCard = (props) => {
 
-    let business = {
-        _id: 1,
-        name: "PizzaHot",
-        address: "Via Lago Patria 71, Giugliano (NA)",
-        image: "https://file.videopolis.com/D/9dc9f4ba-0b2d-4cbb-979f-fee7be8a4198/8485.11521.brussels.the-hotel-brussels.amenity.restaurant-AD3WAP2L-13000-853x480.jpeg",
-        kind: "American Pub",
-        distance: "3,4",
-        wifi: false,
-        seats: 56
+    let absoluteDiscount = false;
+    console.log(props)
+    const { business, offer } = props;
+
+    let roundedDistance = Math.round(business.dist.calculated*10)/10;
+    roundedDistance = roundedDistance.toString().replace(".",",");
+
+    const discount = (type) => {
+        switch (parseInt(type)) {
+            case 0:
+                return `${offer.value}€`;
+            case 1:
+                return `-${offer.value}%`;
+            case 2:
+                return `-${offer.value}€`;
+            default:
+                return null;
+        }
     };
 
-    let absoluteDiscount = false;
-    let discount = "10";
-
     return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity onPress={props.onItemPress}>
             <View elevation={1} style={styles.innerContainer}>
                 <View style={styles.topContainer}>
                     <ImageBackground
                         imageStyle={{ borderRadius: themes.base.borderRadius }}
-                        source={{uri: props.image}}
+                        source={{uri: business.image_url[0].url}}
                         style={styles.imgBackground}
                     >
                         <View style={styles.overlayView}>
                             <View style={{flexDirection: 'column', justifyContent: 'flex-end', borderTopLeftRadius: themes.base.borderRadius}}>
-                                <Text style={styles.name}>{props.name} - {props.kind}</Text>
-                                <Text style={styles.address}>{props.address}</Text>
+                                <Text style={styles.name}>{business.name} - {business.type}</Text>
+                                <Text style={styles.address}>Via {business.address.street} {business.address.number}, {business.address.city} ({business.address.province})</Text>
                             </View>
                             <View style={{flexDirection: 'column', justifyContent: 'flex-end', flex: 1, borderTopRightRadius: themes.base.borderRadius}}>
                                 <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                    <Icon name="map-marker-radius" color={'#FFF'} style={styles.geoFenceImg} size={21}/>
+                                    <Icon name="map-marker-radius" color={themes.base.colors.white.light} style={styles.geoFenceImg} size={21}/>
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                    <Text style={styles.distance}>{props.distance} km</Text>
+                                    <Text style={styles.distance}>{roundedDistance} km</Text>
                                 </View>
 
                             </View>
@@ -54,12 +60,16 @@ const BusinessCard = (props) => {
                     <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
                         <MateriaIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
                         <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
-                            {props.seats}
+                            {business.seats}
                         </Text>
-                        {props.wifi ? <MateriaIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
+                        <MateriaIcon name="tv" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
+                        <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
+                            {business.tvs}
+                        </Text>
+                        {business.wifi ? <MateriaIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
                     </View>
                     <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{props.discount.absoluteDiscount ? '' : '-'}{discount}{props.discount.absoluteDiscount ? '€' : '%'}</Text>
+                        <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{discount(offer.type)}</Text>
                         <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
                     </View>
                 </View>
@@ -74,7 +84,8 @@ const styles = StyleSheet.create({
     innerContainer: {
         marginBottom: 16,
         borderRadius: themes.base.borderRadius,
-        backgroundColor: themes.base.colors.white.light
+        backgroundColor: themes.base.colors.white.light,
+        ...themes.base.elevations.depth1
 
     },
     overlayView: {

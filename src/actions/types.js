@@ -27,3 +27,7 @@ export const FETCH_BUSINESSES = createRequestTypes('GET_BUSINESSES');
 
 //Location
 export const GET_CURRENT_LOCATION = createRequestTypes('GET_CURRENT_LOCATION');
+
+//Broadcast
+export const FETCH_BROADCASTS = createRequestTypes('GET_BROADCASTS');
+export const RESERVE_BROADCAST = createRequestTypes('RESERVE_BROADCAST');

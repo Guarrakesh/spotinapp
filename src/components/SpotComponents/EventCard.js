@@ -94,18 +94,18 @@ const EventCard = (props) => {
 
             </TouchableOpacity>
 
-            <View style={styles.competitorsLogosContainer}>
-                {competitorsComponent}
-            </View>
             <TouchableOpacity style={styles.eventInfo} onPress={props.onPress}>
 
+                <View style={styles.competitorsLogosContainer}>
+                    {competitorsComponent}
+                </View>
 
                 <View style={styles.detailContainer}>
                     <Text style={{fontSize: 21}}>{props.name}</Text>
                     <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
                     <Text style={{fontSize: 14, fontWeight: '200'}}>{dayString} - {timeString} </Text>
-
                 </View>
+
             </TouchableOpacity>
         </View>
 
@@ -114,17 +114,12 @@ const EventCard = (props) => {
 const styles = {
     containerStyle: {
         marginTop: 10,
-
-
         borderRadius: 8,
-        borderColor: '#33CC33',
-
         flexDirection: 'row',
         justifyContent: 'flex-start',
         height: 116,
-
         backgroundColor: colors.white.default,
-        //shadowOpacity: 1
+        ...themes.base.elevations.depth1
     },
     favorite: {
         borderRightColor: colors.text.default,
@@ -139,6 +134,7 @@ const styles = {
     },
     eventInfo: {
         flexGrow: 3,
+        flexDirection: 'row'
     },
     competitorsLogosContainer: {
         alignItems: 'center',

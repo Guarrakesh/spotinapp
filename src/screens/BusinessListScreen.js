@@ -2,10 +2,11 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
+import ActionButton from 'react-native-action-button';
 import { Button } from 'react-native-elements';
 import BusinessList from '../components/SpotComponents/BusinessList';
 import Icon from 'react-native-vector-icons/Feather';
-import { getBusinessRequest } from '../actions/businesses';
+import { getBroadcastsRequest } from '../actions/broadcasts';
 
 import themes from "../styleTheme";
 
@@ -19,6 +20,7 @@ const businesses = [
         distance: "3,4",
         wifi: true,
         seats: 56,
+        tv: 5,
         discount: {
             value: 10,
             absoluteDiscount: true
@@ -33,10 +35,28 @@ const businesses = [
         distance: "4,4",
         wifi: false,
         seats: 30,
+        tv: 6,
         discount: {
             value: 10,
             absoluteDiscount: false
         },
+
+    },
+    {
+        _id: 3,
+        name: "A' Pummarulella",
+        address: "Via Ripuaria 173, Giugliano (NA)",
+        image: "https://dt-petpassion.s3.amazonaws.com/s/user/384/192461/photo/68385/LND/192461_68385_a-pummarulella.jpg",
+        kind: "Pizzeria",
+        distance: "5,4",
+        wifi: true,
+        seats: 30,
+        tv: 4,
+        discount: {
+            value: 10,
+            absoluteDiscount: false
+        },
+
     }
 ];
 class BusinessScreen extends React.Component {
@@ -80,6 +100,14 @@ class BusinessScreen extends React.Component {
     componentDidMount() {
 
         const {event} = this.props.navigation.state.params;
+        const position = {
+            lat: this.props.latitude,
+            lng: this.props.longitude
+        };
+
+        if (!event.broadcasts) {
+            this.props.dispatch(getBroadcastsRequest(event._id, position));
+        }
 
     }
 
@@ -91,11 +119,11 @@ class BusinessScreen extends React.Component {
     render() {
 
         const {event} = this.props.navigation.state.params;
-        //let businesses = event.businesses;
+        let broadcasts = event.broadcasts;
         const {currentlySending} = this.props;
 
-        if (!businesses || businesses.length === 0)
-            return null;
+        // if (!broadcasts || !broadcasts.docs || broadcasts.docs.length === 0)
+        //     return null;
 
 
         let date = new Date(event.start_at);
@@ -109,31 +137,19 @@ class BusinessScreen extends React.Component {
         }
         console.log(this.props);
         return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.subHeader}>
-                    {(this.props.latitude && this.props.longitude) ? <Text>{this.props.latitude}</Text> : null}
                     <Text style={styles.competitionName}>{event.competition.name}</Text>
                     <Text style={styles.eventName}>{event.name}</Text>
                     <Text style={styles.date}>{`${weekOfDayString} ${dayString} - ${timeString}`}</Text>
                 </View>
-                <BusinessList businesses={businesses} onItemPress={this.handleBusinessPress}/>
-                <Button
+                <BusinessList broadcasts={broadcasts} onItemPress={this.handleBusinessPress}/>
+                <ActionButton
                     title=''
-                    buttonStyle={{
-                        backgroundColor: themes.base.colors.accent.default,
-                        width: 52,
-                        height: 52,
-                        position: "absolute",
-                        right: 24,
-                        bottom: 32,
-                        borderColor: "transparent",
-                        borderWidth: 0,
-                        borderRadius: 60,
-                        shadowColor: '#000',
-                        ...themes.base.elevations.depth2,
-                        shadowRadius: 5,
-
-                    }}
+                    position={"right"}
+                    buttonColor={themes.base.colors.accent.default}
+                    size={52}
+                    offsetY={32}
                     onPress={() => {this.props.navigation.navigate('BusinessMap')}}
                     icon={<Icon name="map" size={24}
                         style={{color: themes.base.colors.white.default}}/>}
@@ -157,6 +173,13 @@ const mapStateToProps = (state) => {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+        // top: 0,
+        // bottom: 0,
+        // right: 0,
+        // left: 0,
+    },
     subHeader: {
         alignItems: 'center',
         justifyContent: 'center',

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SportCard from './SportCard';
-import {View, StyleSheet, Dimensions, Image} from 'react-native'
+import {View, StyleSheet, ScrollView, Image} from 'react-native'
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';
@@ -32,9 +32,12 @@ const SportList = (props) => {
 
 
     return (
-        <Grid>
-            {content}
-        </Grid>);
+        <ScrollView style={{marginBottom: 60}}>
+            <Grid>
+                {content}
+            </Grid>
+        </ScrollView>
+    );
 
 };
 

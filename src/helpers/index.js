@@ -7,12 +7,13 @@ const helpers = {
             'basket': 'basket',
             'baseball': 'baseball',
             'swimming': 'pool',
-            'american-football': 'rugby',
-            'formula-1': 'formula',
+            'american-football': 'football',
             'moto': 'moto',
             'volley': 'volley',
             'martial-arts': 'martial',
-            'golf': 'golf'
+            'golf': 'golf',
+            'rugby': 'rugby',
+            'formula-1': 'formula',
         };
 
         return map[slug] || null;

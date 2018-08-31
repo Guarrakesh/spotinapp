@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginBottom: 16,
-        borderRadius: themes.base.borderRadius
+        borderRadius: themes.base.borderRadius,
+        ...themes.base.elevations.depth1
 
     }
 })

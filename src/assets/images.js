@@ -18,10 +18,11 @@ const images = {
             tennis: require('./img/tennis/Tennis.png'),
             rugby: require('./img/rugby/Rugby.png'),
             martial: require('./img/martial/MartialArts.png'),
-            formula: require('./img/formula/Formula.png'),
             golf: require('./img/golf/Golf.png'),
             moto: require('./img/moto/Moto.png'),
-            volley: require('./img/volley/Volley.png')
+            volley: require('./img/volley/Volley.png'),
+            football: require('./img/football/Football.png'),
+            formula: require('./img/formula/Formula.png'),
         }
     }
 };

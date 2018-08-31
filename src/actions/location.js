@@ -6,7 +6,7 @@ export function getLocationRequest(){
 
 
 //response e' passato dal saga quando chiama "yield put(getLocationSuccess(response.coords));"
-//response ha dentro i valroi restituiti dalla API getCurrentLocation()
+//response ha dentro i valori restituiti dalla API getCurrentLocation()
 //tra cui Latitude e longitude, che qui passo
 export function getLocationSuccess(response){
     return {

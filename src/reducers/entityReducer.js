@@ -5,7 +5,9 @@ import {
     SENDING_REQUEST,
     FETCH_COMPETITIONS,
     FETCH_EVENTS,
-    FETCH_BUSINESSES
+    FETCH_BUSINESSES,
+    FETCH_BROADCASTS,
+    RESERVE_BROADCAST
 } from '../actions/types';
 
 
@@ -38,7 +40,8 @@ export default function entityReducer(state = initialState, action) {
             return { ...state, error:'', sports: sports};
 
         case FETCH_EVENTS.SUCCESS:
-            return {...state, error:'', events: action.events};
+            //TODO: gestire paginazione
+            return {...state, error:'', events: action.events.docs};
 
         case SENDING_REQUEST:
             return {...state, currentlySending: action.sending};
@@ -47,17 +50,18 @@ export default function entityReducer(state = initialState, action) {
         case REQUEST_ERROR:
             return {...state, error: action.error};
 
-        case FETCH_BUSINESSES.SUCCESS:
 
-           let events = state.events.map((event) => {
-             if (event._id == action.eventId) {
-               event['businesses'] = action.businesses;
-             }
+        case FETCH_BROADCASTS.SUCCESS:
+            //TODO: gestire paginazione
+            let events = state.events.map((event) => {
 
-             return event;
-           });
+                if (event._id == action.eventId)
+                    event.broadcasts = action.broadcasts.docs;
+                return event;
+            });
 
-           return{...state, error: '', events: events }
+            return { ...state, error: '', events: events };
+
 
 
         default:
