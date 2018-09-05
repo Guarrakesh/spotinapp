@@ -1,12 +1,13 @@
 import React from 'react';
 import SportScreen from "../screens/SportScreen";
 import EventScreen from '../screens/EventScreen';
-import BusinessListScreen from '../screens/BusinessListScreen';
+import BroadcastsScreen from '../screens/BroadcastsScreen';
 import CompetitionsScreen from "../screens/CompetitionsScreen";
 import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
 import BusinessScreen from "../components/BusinessScreen";
 import BusinessMapScreen from "../screens/BusinessMapScreen";
+import BusinessProfileScreen from '../screens/BusinessProfileScreen'
 
 import { View, Text, Button } from 'react-native';
 
@@ -46,11 +47,14 @@ export const SpotStack = createStackNavigator({
                 headerBackTitle: null,
             })
         },
-        BusinessList: {
-            screen: BusinessListScreen,
+        BroadcastsList: {
+            screen: BroadcastsScreen,
 
 
-        }
+        },
+        BusinessProfileScreen: {
+            screen: BusinessProfileScreen,
+        },
 
     },{
         navigationOptions: {

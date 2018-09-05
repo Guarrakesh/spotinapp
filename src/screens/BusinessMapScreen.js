@@ -5,23 +5,36 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 class BusinessMapScreen extends React.Component {
     render() {
+      const {broadcasts } = this.props.navigation.state.params;
+      if (!broadcasts) return null;
+
+
+
         return (
             <View style={{flex:1}}>
                 <MapView style={styles.map}
-                    region={{
-                        latitude: 14.0823297,
-                        longitude: 40.8627346,
-                        latitudeDelta: 0.1,
-                        longitudeDelta: 0.1
+                    initialRegion={{
+                        latitude: broadcasts[0].business.address.location.coordinates[1],
+                        longitude: broadcasts[0].business.address.location.coordinates[0],
+                        latitudeDelta: 0.5,
+                        longitudeDelta: 0.5
                     }}
                 >
+
+                  {
+
+                    broadcasts.map(broad =>
+
                     <MapView.Marker
-                        coords={{
-                            latitude: 14.0823297,
-                            longitude: 40.8627346}}
-                        title={"PizzaHot"}
-                        description={"Dario e' gay"}
+                      coordinate={{
+                        latitude: broad.business.address.location.coordinates[1],
+                        longitude: broad.business.address.location.coordinates[0]}}
+                      title={broad.business.name}
+                      description={broad.offer.title}
                     />
+                    )
+                  }
+
                 </MapView>
             </View>
         )

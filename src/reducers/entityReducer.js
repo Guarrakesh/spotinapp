@@ -55,8 +55,8 @@ export default function entityReducer(state = initialState, action) {
             //TODO: gestire paginazione
             let events = state.events.map((event) => {
 
-                if (event._id == action.eventId)
-                    event.broadcasts = action.broadcasts.docs;
+                if (event._id === action.eventId)
+                    event['broadcasts'] = action.broadcasts.docs;
                 return event;
             });
 

@@ -44,4 +44,5 @@ const mapStateToProps = (state) => {
         entities: state.entities
     }
 };
+
 export default connect(mapStateToProps)(CompetitionsScreen);
