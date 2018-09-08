@@ -45,10 +45,11 @@ class BroadcastsScreen extends React.Component {
         backgroundColor: themes.base.colors.primary.default
       },
 
-      title: "Eventi in programma"
+      title: "Locali vicini"
 
     }
   }
+
   componentDidMount() {
 
     const {event} = this.props.navigation.state.params;
@@ -64,7 +65,7 @@ class BroadcastsScreen extends React.Component {
   }
 
   handleBusinessPress(business) {
-    //this.props.navigation.navigate('Events', {competition: item});
+    this.props.navigation.navigate('BusinessProfileScreen', {business: business});
 
   }
 

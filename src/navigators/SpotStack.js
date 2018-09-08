@@ -14,57 +14,61 @@ import { View, Text, Button } from 'react-native';
 
 export const BusinessMapNavigator = createStackNavigator({
     BusinessMapScreen: {
-        screen: BusinessMapScreen,
-        navigationOptions: {
-            title: "Mappa Locali",
-            headerLeft: (
-                <Button
-                    title="Annulla"
-                    color="#555"
-                />
-            ),
-        },
+      screen: BusinessMapScreen,
+      navigationOptions: {
+        title: "Mappa Locali",
+        headerLeft: (
+          <Button
+            title="Annulla"
+            color="#555"
+          />
+        ),
+      },
     }
-    }, {
-        mode: 'modal',
+  }, {
+    mode: 'modal',
 
-    }
+  }
 );
 export const SpotStack = createStackNavigator({
-        SportList: {
-            screen: SportScreen,
-            navigationOptions: {  title: 'Sport' }
+    SportList: {
+      screen: SportScreen,
+      navigationOptions: {  title: 'Sport' }
 
-        },
-        Competitions: {
-            screen: CompetitionsScreen,
-            navigationOptions: ({navigation}) => ({ title: navigation.state.params.sport.name })
-        },
-        Events: {
-            screen: EventScreen,
-            navigationOptions: ({navigation}) => ({
-                title: navigation.state.params.competition.name,
-                headerBackTitle: null,
-            })
-        },
-        BroadcastsList: {
-            screen: BroadcastsScreen,
+    },
+    Competitions: {
+      screen: CompetitionsScreen,
+      navigationOptions: ({navigation}) => ({ title: navigation.state.params.sport.name })
+    },
+    Events: {
+      screen: EventScreen,
+      navigationOptions: ({navigation}) => ({
+        title: navigation.state.params.competition.name,
+        headerBackTitle: null,
+      })
+    },
+    BroadcastsList: {
+      screen: BroadcastsScreen,
 
 
-        },
-        BusinessProfileScreen: {
-            screen: BusinessProfileScreen,
-        },
+    },
+    BusinessProfileScreen: {
+      screen: BusinessProfileScreen,
+      navigationOptions: ({navigation}) => ({
+        title: "Profilo locale",
+        headerBackTitle: null,
+      })
+    },
 
-    },{
-        navigationOptions: {
+  },{
+    navigationOptions: {
 
-            headerStyle: {
-                backgroundColor: themes.base.colors.primary.default
-            },
-            headerTintColor: themes.base.colors.white.default,
-        }
+      headerStyle: {
+        backgroundColor: themes.base.colors.primary.default
+      },
+      headerTintColor: themes.base.colors.white.default,
     }
+  }
 );
 
 

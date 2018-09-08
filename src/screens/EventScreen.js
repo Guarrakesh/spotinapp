@@ -45,6 +45,7 @@ class EventScreen extends React.Component {
 
         return (
             <ScrollView>
+              <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona l'evento</Text>
               <EventList events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
             </ScrollView>
 

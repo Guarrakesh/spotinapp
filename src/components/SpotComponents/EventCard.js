@@ -52,111 +52,110 @@ const colors = themes.base.colors
 
 const EventCard = (props) => {
 
-    let imageUrl;
-    let competitors = props.competitors;
-    if (!props.competitorHasLogo || props.competitorHasLogo) {
+  let imageUrl;
+  let competitors = props.competitors;
+  if (!props.competitorHasLogo || props.competitorHasLogo) {
 
-        competitorsComponent = competitors.map(comp => {
-            console.log(comp)
-            return <View style={styles.competitors}>
+    competitorsComponent = competitors.map(comp => {
+      console.log(comp)
+      return <View style={styles.competitors}>
 
-                { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} /> : <Icon name="sports-club" size={36}/> }
+        { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} /> : <Icon name="sports-club" size={36}/> }
 
-            </View>
-        });
-
-
+      </View>
+    });
 
 
-    } else {
-        competitorsComponent =
-            <View style={{marginTop: 32}}>
-                { props.competition.image_url ? <Image source={{uri: offer.event.competition.image_url}} style={{width: 36, height: 36}}/>
-                    : <Icon name="sports-club" size={36}/> }
-            </View>
-    }
-    let date = new Date(props.start_at);
-    let dayString, timeString;
-    if (date) {
-
-        dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
-        timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-    }
-
-    return (
-
-        <View elevation={1} style={styles.containerStyle}>
-
-            <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
-
-                {props.isFavorite ?   <Icon name="heart" size={24} color={colors.accent.default}/> :  <Icon name="heart-outlined" size={24} color={colors.accent.default}/>}
 
 
-            </TouchableOpacity>
+  } else {
+    competitorsComponent =
+      <View style={{marginTop: 32}}>
+        { props.competition.image_url ? <Image source={{uri: offer.event.competition.image_url}} style={{width: 36, height: 36}}/>
+          : <Icon name="sports-club" size={36}/> }
+      </View>
+  }
+  let date = new Date(props.start_at);
+  let dayString, timeString;
+  if (date) {
 
-            <TouchableOpacity style={styles.eventInfo} onPress={props.onPress}>
+    dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
+    timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+  }
 
-                <View style={styles.competitorsLogosContainer}>
-                    {competitorsComponent}
-                </View>
+  return (
 
-                <View style={styles.detailContainer}>
-                    <Text style={{fontSize: 21}}>{props.name}</Text>
-                    <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
-                    <Text style={{fontSize: 14, fontWeight: '200'}}>{dayString} - {timeString} </Text>
-                </View>
+    <View elevation={1} style={styles.containerStyle}>
 
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
+
+        {props.isFavorite ?   <Icon name="heart" size={24} color={colors.accent.default}/> :  <Icon name="heart-outlined" size={24} color={colors.accent.default}/>}
+
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.eventInfo} onPress={props.onPress}>
+        <View style={styles.competitorsLogosContainer}>
+          {competitorsComponent}
         </View>
 
-    );
+        <View style={styles.detailContainer}>
+          <Text style={{fontSize: 21}}>{props.name}</Text>
+          <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
+          <Text style={{fontSize: 14, fontWeight: '200'}}>{dayString} - {timeString} </Text>
+        </View>
+
+      </TouchableOpacity>
+    </View>
+
+  );
 }
 const styles = {
-    containerStyle: {
-        marginTop: 10,
-        borderRadius: 8,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        height: 116,
-        backgroundColor: colors.white.default,
-        ...themes.base.elevations.depth1
-    },
-    favorite: {
-        borderRightColor: colors.text.default,
-        borderRightWidth: 0.5,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 16,
-        marginRight: 16,
-        flexGrow: 0,
-        flexBasis: 63,
-        marginBottom: 16
-    },
-    eventInfo: {
-        flexGrow: 3,
-        flexDirection: 'row'
-    },
-    competitorsLogosContainer: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        flexGrow: 0,
-        flexBasis: 54,
-        paddingTop: 16
+  containerStyle: {
+    marginTop: 10,
+    borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    height: 116,
+    backgroundColor: colors.white.default,
+    ...themes.base.elevations.depth1
+  },
+  favorite: {
+    borderRightColor: colors.text.default,
+    borderRightWidth: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    marginRight: 16,
+    flexGrow: 0,
+    flexBasis: 63,
+    marginBottom: 16
+  },
+  eventInfo: {
+    flexGrow: 3,
+    flexDirection: 'row'
+  },
+  competitorsLogosContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    flexGrow: 0,
+    flexBasis: 54,
+    paddingTop: 16
 
-    },
-    competitors: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingBottom: 8,
+  },
+  competitors: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 8,
 
-    },
-    detailContainer: {
+  },
+  detailContainer: {
 
-        paddingTop: 24,
-        paddingLeft: 16,
-        flexDirection: 'column',
-    },
+    marginTop: 16,
+    flexDirection: 'column',
+    marginBottom: 16,
+    justifyContent: 'space-between'
+  },
 
 };
 

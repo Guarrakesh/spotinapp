@@ -5,45 +5,79 @@ import {Image, StyleSheet, Text} from "react-native";
 
 const ImagesScrollView = (props) => {
 
-    let { business } = props;
+  let { business } = props;
+  // let business = {
+  //   "image_url": [
+  //     {
+  //       "url": "https://file.videopolis.com/D/9dc9f4ba-0b2d-4cbb-979f-fee7be8a4198/8485.11521.brussels.the-hotel-brussels.amenity.restaurant-AD3WAP2L-13000-853x480.jpeg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //     {
+  //       "url": "https://u.tfstatic.com/restaurant_photos/269/55269/169/612/sabatini-vista-ristorante-aa87f.jpg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //     {
+  //       "url": "https://u.tfstatic.com/restaurant_photos/269/55269/169/612/sabatini-vista-ristorante-aa87f.jpg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //     {
+  //       "url": "https://media-cdn.tripadvisor.com/media/photo-s/03/17/d1/d1/ristorante-svevia.jpg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //     {
+  //       "url": "https://file.videopolis.com/D/9dc9f4ba-0b2d-4cbb-979f-fee7be8a4198/8485.11521.brussels.the-hotel-brussels.amenity.restaurant-AD3WAP2L-13000-853x480.jpeg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //     {
+  //       "url": "https://www.geoproject.roma.it/immage/aprire-ristorante-bar-tavola-calda-pizzeria-scia-roma-suap.jpg",
+  //       "width": 100,
+  //       "height": 100
+  //     },
+  //   ]
+  // }
 
-    return(
-        <Swiper
-            showsButtons={true}
-            height={230}
-            dotColor={'rgba(255, 255, 255, 0.5)'}
-            activeDotColor={themes.base.colors.white.light}
-            nextButton={<Text style={styles.buttonText}>›</Text>}
-            prevButton={<Text style={styles.buttonText}>‹</Text>}
-        >
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-            <Image source={{uri: business.image_url[0].url}} style={{flex: 1}} />
-        </Swiper>
-    );
+  return(
+    <Swiper
+      showsButtons={true}
+      height={230}
+      dotColor={'rgba(255, 255, 255, 0.5)'}
+      activeDotColor={themes.base.colors.white.light}
+      nextButton={<Text style={styles.buttonText}>›</Text>}
+      prevButton={<Text style={styles.buttonText}>‹</Text>}
+    >
+      {
+        business.image_url.map(image =>
+          <Image source={{uri: image.url}} style={{flex: 1}} />
+        )
+      }
+
+    </Swiper>
+  );
 
 };
 
 const styles = StyleSheet.create({
 
-    cardContainer: {
-        marginLeft: 8,
-        marginRight: 8,
-        marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
-    },
-    buttonText: {
-        fontSize: 50,
-        color: 'rgba(255, 255, 255, 0.7)',
-        fontFamily: 'Arial'
-    },
-    text: {
-        color: '#fff',
-        fontSize: 30,
-        fontWeight: 'bold'
-    }
+  cardContainer: {
+    marginLeft: 8,
+    marginRight: 8,
+    marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
+  },
+  buttonText: {
+    fontSize: 50,
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontFamily: 'Arial'
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold'
+  }
 })
 
 export default ImagesScrollView;

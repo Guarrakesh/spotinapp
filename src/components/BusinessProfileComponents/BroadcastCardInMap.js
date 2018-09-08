@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 
-const BroadcastCard = (props) => {
+const BroadcastCardInMap = (props) => {
 
   let absoluteDiscount = false;
   console.log(props)
@@ -56,18 +56,7 @@ const BroadcastCard = (props) => {
           </ImageBackground>
         </View>
         <View style={styles.bottomContainer}>
-          <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
-            <MaterialIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
-              {business.seats}
-            </Text>
-            <MaterialIcon name="tv" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
-              {business.tvs}
-            </Text>
-            {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
-          </View>
-          <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{discount(offer.type)}</Text>
             <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
           </View>
@@ -152,9 +141,8 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     width: '100%',
-    height: 80,
     flexDirection: 'row',
-    borderWidth: 0,
+    margin: 5
   },
   divisor: {
     height: '100%',
@@ -163,4 +151,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default BroadcastCard;
+export default BroadcastCardInMap;
