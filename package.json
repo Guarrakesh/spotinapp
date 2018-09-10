@@ -10,6 +10,7 @@
   "dependencies": {
     "@redux-offline/redux-offline": "^2.3.3",
     "babel-jest": "^23.2.0",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "16.4.1",
     "react-native": "^0.56.0",

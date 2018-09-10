@@ -1,6 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Image, Text, Dimensions, StyleSheet} from 'react-native';
 import View from '../common/View';
+import moment from 'moment';
+import 'moment/locale/it';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/Entypo';
 const colors = themes.base.colors
@@ -75,13 +77,16 @@ const EventCard = (props) => {
           : <Icon name="sports-club" size={36}/> }
       </View>
   }
-  let date = new Date(props.start_at);
-  let dayString, timeString;
-  if (date) {
+  // let date = new Date(props.start_at);
+  // let dayString, timeString;
+  // if (date) {
+  //
+  //   dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
+  //   timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+  // }
 
-    dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
-    timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-  }
+  let date = moment(props.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
+
 
   return (
 
@@ -101,7 +106,7 @@ const EventCard = (props) => {
         <View style={styles.detailContainer}>
           <Text style={{fontSize: 21}}>{props.name}</Text>
           <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
-          <Text style={{fontSize: 14, fontWeight: '200'}}>{dayString} - {timeString} </Text>
+          <Text style={{fontSize: 14, fontWeight: '200'}}>{date}</Text>
         </View>
 
       </TouchableOpacity>

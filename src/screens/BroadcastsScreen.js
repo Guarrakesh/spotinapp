@@ -1,9 +1,11 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import View from '../components/common/View';
+import { Text, StyleSheet } from 'react-native';
 import ActionButton from 'react-native-action-button';
-import { Button } from 'react-native-elements';
+import moment from 'moment';
+import 'moment/locale/it';
+
 import BroadcastsList from '../components/SpotComponents/BroadcastsList';
 import Icon from 'react-native-vector-icons/Feather';
 import { getBroadcastsRequest } from '../actions/broadcasts';
@@ -79,22 +81,25 @@ class BroadcastsScreen extends React.Component {
     //     return null;
 
 
-    let date = new Date(event.start_at);
-    let dayString, timeString,weekOfDayString;
-    if (date) {
+    // let date = new Date(event.start_at);
+    // let dayString, timeString,weekOfDayString;
+    // if (date) {
+    //
+    //   weekOfDayString = date.toLocaleString('it-IT', {weekday: 'short'}).toString().toLocaleUpperCase();
+    //   dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString()}`;
+    //   timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+    //
+    // }
+    // console.log(this.props);
 
-      weekOfDayString = date.toLocaleString('it-IT', {weekday: 'short'}).toString().toLocaleUpperCase();
-      dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString()}`;
-      timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+    let date = moment(event.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
 
-    }
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <View style={styles.subHeader}>
           <Text style={styles.competitionName}>{event.competition.name}</Text>
           <Text style={styles.eventName}>{event.name}</Text>
-          <Text style={styles.date}>{`${weekOfDayString} ${dayString} - ${timeString}`}</Text>
+          <Text style={styles.date}>{date}</Text>
         </View>
         <BroadcastsList broadcasts={broadcasts} onItemPress={this.handleBusinessPress}/>
         <ActionButton

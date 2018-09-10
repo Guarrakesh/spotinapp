@@ -4,20 +4,25 @@ import {Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from '../../helpers';
+import moment from "moment";
+import 'moment/locale/it';
 
 const BroadcastCardInProfile = (props) => {
 
   let { event } = props;
 
-  let date = new Date(event.start_at);
-  let dayString, timeString,weekOfDayString;
-  if (date) {
+  let date = moment(event.start_at).locale('it').format('d MMM').toUpperCase();
+  let time = moment(event.start_at).locale('it').format('hh:mm').toUpperCase();
 
-    weekOfDayString = date.toLocaleString('it-IT', {weekday: 'short'}).toString().toLocaleUpperCase();
-    dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toUpperCase()}`;
-    timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-
-  }
+  // let date = new Date(event.start_at);
+  // let dayString, timeString,weekOfDayString;
+  // if (date) {
+  //
+  //   weekOfDayString = date.toLocaleString('it-IT', {weekday: 'short'}).toString().toLocaleUpperCase();
+  //   dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toUpperCase()}`;
+  //   timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
+  //
+  // }
 
   return (
     <View style={styles.broadcastInfoView} elevation={2}>
@@ -28,8 +33,8 @@ const BroadcastCardInProfile = (props) => {
         </View>
         <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
           <Text style={styles.eventNameText}>{event.name}</Text>
-          <Text style={styles.eventDateText}>{weekOfDayString} {dayString}</Text>
-          <Text style={styles.eventTimeText}>{timeString}</Text>
+          <Text style={styles.eventDateText}>{date}</Text>
+          <Text style={styles.eventTimeText}>{time}</Text>
         </View>
         <View style={styles.sportIconView}>
           <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
