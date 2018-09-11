@@ -6,7 +6,7 @@ const events = {
     async fetchByCompetition(competitionId) {
 
         try {
-            const endpoint = `${vars.apiUrl}/events?competition_id=${competitionId}&_end=100`
+            const endpoint = `${vars.apiUrl}/events?extend=competition,competitors.competitor&competition_id=${competitionId}&_end=100`
             let response = await request(endpoint, {}, 'GET');
             let data = await response.json();
 

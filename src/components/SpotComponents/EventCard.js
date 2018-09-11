@@ -4,6 +4,7 @@ import View from '../common/View';
 import moment from 'moment';
 import 'moment/locale/it';
 import themes from '../../styleTheme';
+import VersionedImageField from '../common/VersionedImageField';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const colors = themes.base.colors
@@ -18,19 +19,14 @@ const EventCard = (props) => {
       console.log(comp)
       return <View style={styles.competitors}>
 
-        { (comp._id.image_versions && comp._id.image_versions.length > 0) ? <Image source={{uri: comp._id.image_versions[0].url, width: 36, height: 36}} resizeMode={'contain'} /> : <Icon name="sports-club" size={36}/> }
+        { <VersionedImageField source={comp.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
 
       </View>
     });
-
-
-
-
   } else {
     competitorsComponent =
       <View style={{marginTop: 32}}>
-        { props.competition.image_url ? <Image source={{uri: offer.event.competition.image_url}} style={{width: 36, height: 36}} resizeMode={'contain'}/>
-          : <Icon name="sports-club" size={36}/> }
+        { <VersionedImageField source={competition.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
       </View>
   }
 
