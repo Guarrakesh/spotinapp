@@ -8,25 +8,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 
-const BroadcastCard = (props) => {
+const BusinessCard = (props) => {
 
-  const { business, offer } = props;
+  const { business } = props;
 
   let roundedDistance = Math.round(business.dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
-  const discount = (type) => {
-    switch (parseInt(type)) {
-      case 0:
-        return `${offer.value}€`;
-      case 1:
-        return `-${offer.value}%`;
-      case 2:
-        return `-${offer.value}€`;
-      default:
-        return null;
-    }
-  };
 
   return (
     <TouchableOpacity onPress={props.onItemPress}>
@@ -64,10 +52,6 @@ const BroadcastCard = (props) => {
               {business.tvs}
             </Text>
             {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
-          </View>
-          <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{discount(offer.type)}</Text>
-            <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
           </View>
         </View>
       </View>
@@ -161,4 +145,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default BroadcastCard;
+export default BusinessCard;

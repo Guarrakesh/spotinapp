@@ -1,17 +1,18 @@
-
 import React from 'react';
 
-import {View, Button} from 'react-native';
+import View from '../components/common/View';
+import { SearchBar } from 'react-native-elements';
 import DetailsScreen from './DetailsScreen';
 
 class BusinessScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {/* other code from before here */}
-        <Button
-          title="Business Screen"
-          onPress={() => this.props.navigation.navigate({DetailsScreen})}
+      <View style={{ flex: 1}}>
+        <SearchBar
+          round={true}
+          placeholder='Cerca Locale'
+          lightTheme={true}
+          clearIcon={{ color: 'white' }}
         />
       </View>
     );

@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   eventName: {
     fontSize: 18,
-    color: themes.base.colors.white.light,
+    color: themes.base.colors.text.default,
     marginBottom: 8,
     fontWeight: '700',
 
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   competitionName: {
     fontSize: 18,
     fontWeight: '700',
-    color: themes.base.colors.white.light,
+    color: themes.base.colors.text.default,
 
   },
   date: {

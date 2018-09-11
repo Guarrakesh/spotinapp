@@ -4,57 +4,13 @@ import View from '../common/View';
 import moment from 'moment';
 import 'moment/locale/it';
 import themes from '../../styleTheme';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const colors = themes.base.colors
-//const screenwidth = Dimensions.get('window').width;
-//const screeheight = Dimensions.get('window').height;
-
-
-/*let eventExample: {
-
- "_id": "5b340827151128db331b7091",
- "isFavorite": true,
- "sport": {
- "_id": "5b33f4f1e0cc7477e26f795f",
- "name": "Calcio",
-
- "slug": "football",
-
- },
- "competition": {
- "_id": "5b340126e0cc7477e26f7d9a",
- "name": "Serie A",
- image_url: "https://upload.wikimedia.org/wikipedia/it/thumb/b/b9/Wimbledon.svg/1024px-Wimbledon.svg.png",
- },
-
- "name": "Napoli - Juventus",
- "description": "La partita dell'anno",
- "start_at": "2016-05-18T16:00:00.000Z",
- "competitorHasLogo": true,
- "competitors": [
- {
- "name": "Federer",
- "_id": "5b340717151128db331b708f",
- "image_versions": [
- {
- "url": "http://example.com",
- "width" : 780,
- "height": 500
- }
- ]
- },
- {
- "name": "Nadal",
- "_id": "5b3407e4e0cc7477e26f7fbd"
- }
- ]
- }
- */
 
 
 const EventCard = (props) => {
 
-  let imageUrl;
   let competitors = props.competitors;
   if (!props.competitorHasLogo || props.competitorHasLogo) {
 
@@ -62,7 +18,7 @@ const EventCard = (props) => {
       console.log(comp)
       return <View style={styles.competitors}>
 
-        { (comp.image_versions && comp.image_versions.length > 0) ? <Image source={{uri: comp.image_versions[0].url, width: 36, height: 36}} /> : <Icon name="sports-club" size={36}/> }
+        { (comp._id.image_versions && comp._id.image_versions.length > 0) ? <Image source={{uri: comp._id.image_versions[0].url, width: 36, height: 36}} resizeMode={'contain'} /> : <Icon name="sports-club" size={36}/> }
 
       </View>
     });
@@ -73,17 +29,10 @@ const EventCard = (props) => {
   } else {
     competitorsComponent =
       <View style={{marginTop: 32}}>
-        { props.competition.image_url ? <Image source={{uri: offer.event.competition.image_url}} style={{width: 36, height: 36}}/>
+        { props.competition.image_url ? <Image source={{uri: offer.event.competition.image_url}} style={{width: 36, height: 36}} resizeMode={'contain'}/>
           : <Icon name="sports-club" size={36}/> }
       </View>
   }
-  // let date = new Date(props.start_at);
-  // let dayString, timeString;
-  // if (date) {
-  //
-  //   dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString().toLocaleUpperCase()}`
-  //   timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-  // }
 
   let date = moment(props.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
 
@@ -94,7 +43,7 @@ const EventCard = (props) => {
 
       <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
 
-        {props.isFavorite ?   <Icon name="heart" size={24} color={colors.accent.default}/> :  <Icon name="heart-outlined" size={24} color={colors.accent.default}/>}
+        {props.isFavorite ?   <Icon name="favorite" size={30} color={colors.accent.default}/> :  <Icon name="favorite-border" size={30} color={colors.accent.default}/>}
 
       </TouchableOpacity>
 
@@ -104,7 +53,7 @@ const EventCard = (props) => {
         </View>
 
         <View style={styles.detailContainer}>
-          <Text style={{fontSize: 21}}>{props.name}</Text>
+          <Text style={styles.eventNameText}>{props.name}</Text>
           <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
           <Text style={{fontSize: 14, fontWeight: '200'}}>{date}</Text>
         </View>
@@ -155,12 +104,16 @@ const styles = {
 
   },
   detailContainer: {
-
-    marginTop: 16,
+    marginTop: 20,
     flexDirection: 'column',
-    marginBottom: 16,
+    marginBottom: 25,
     justifyContent: 'space-between'
   },
+  eventNameText: {
+    fontSize: 21,
+    color: themes.base.colors.text.default,
+    textTransform: 'capitalize'
+  }
 
 };
 

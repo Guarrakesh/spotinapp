@@ -8,7 +8,7 @@ const themes = {
         colors: {
 
             primary: {
-                default: '#6BF97F',
+                default: '#B2FF59',
                 light: '#B2FF59',
                 dark: '#51BD60'
             },

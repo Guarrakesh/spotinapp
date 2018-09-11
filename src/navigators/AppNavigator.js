@@ -6,7 +6,7 @@ import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHe
 
 
 import AuthNavigator from './AuthNavigator';
-import BusinessScreen from '../components/BusinessScreen';
+import BusinessScreen from '../screens/BusinessScreen';
 import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
 import NewsScreen from '../components/NewsScreen';
