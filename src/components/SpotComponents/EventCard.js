@@ -13,10 +13,12 @@ const colors = themes.base.colors
 const EventCard = (props) => {
 
   let competitors = props.competitors;
-  if (!props.competitorHasLogo || props.competitorHasLogo) {
+  const competition = props.competition;
+  if (competition.competitorsHaveLogo) {
 
-    competitorsComponent = competitors.map(comp => {
-      console.log(comp)
+    competitorsComponent = competitors.map(item => {
+      const comp = item.competitor;
+      console.log(comp);
       return <View style={styles.competitors}>
 
         { <VersionedImageField source={comp.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
@@ -53,7 +55,9 @@ const EventCard = (props) => {
           <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
           <Text style={{fontSize: 14, fontWeight: '200'}}>{date}</Text>
         </View>
-
+        <View style={styles.arrowIconView}>
+          <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
+        </View>
       </TouchableOpacity>
     </View>
 
@@ -109,7 +113,16 @@ const styles = {
     fontSize: 21,
     color: themes.base.colors.text.default,
     textTransform: 'capitalize'
-  }
+  },
+  arrowIconView: {
+    justifyContent: 'center',
+    right: 0,
+    height: '100%',
+    position: 'absolute'
+  },
+  arrowImg: {
+    marginRight: 8
+  },
 
 };
 

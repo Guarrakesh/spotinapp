@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/common/View';
-import { Text, StyleSheet } from 'react-native';
+import {Text, StyleSheet, ActivityIndicator} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
@@ -77,22 +77,16 @@ class BroadcastsScreen extends React.Component {
     let broadcasts = event.broadcasts;
     const {currentlySending} = this.props;
 
-    // if (!broadcasts || !broadcasts.docs || broadcasts.docs.length === 0)
-    //     return null;
-
-
-    // let date = new Date(event.start_at);
-    // let dayString, timeString,weekOfDayString;
-    // if (date) {
-    //
-    //   weekOfDayString = date.toLocaleString('it-IT', {weekday: 'short'}).toString().toLocaleUpperCase();
-    //   dayString = `${date.getDay()} ${date.toLocaleString('it-IT', { month: 'short'}).toString()}`;
-    //   timeString = `${date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
-    //
-    // }
-    // console.log(this.props);
-
     let date = moment(event.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
+
+    while(currentlySending){
+      return(
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+        </View>
+      )
+    }
+
 
     return (
       <View style={styles.container}>
