@@ -138,15 +138,12 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-vector-icons')
+
     compile fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:27.1.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
-    compile(project(':react-native-maps')){
-        exclude group: 'com.google.android.gms', module: 'play-services-base'
-        exclude group: 'com.google.android.gms', module: 'play-services-maps'
-    }
+    implementation project(':react-native-maps')
     compile "com.google.android.gms:play-services-location:${rootProject.ext.googlePlayServicesVersion}" // disable if you don't want to use enableHighAccuracy: true in geolocation
     compile "com.google.android.gms:play-services-base:${rootProject.ext.googlePlayServicesVersion}"
     compile "com.google.android.gms:play-services-maps:${rootProject.ext.googlePlayServicesVersion}"

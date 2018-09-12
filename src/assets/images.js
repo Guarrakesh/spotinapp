@@ -19,7 +19,7 @@ const images = {
       rugby: require('./img/rugby/Rugby.png'),
       martial: require('./img/martial/MartialArts.png'),
       golf: require('./img/golf/Golf.png'),
-      motori: require('./img/motori/Motori.png'),
+    //  motori: require('./img/motori/Motori.png'),
       volley: require('./img/volley/Volley.png'),
       football: require('./img/football/Football.png'),
       formula: require('./img/formula/Formula.png'),
