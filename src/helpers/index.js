@@ -8,7 +8,7 @@ const helpers = {
             'baseball': 'baseball',
             'swimming': 'pool',
             'american-football': 'football',
-            'motori': 'motori',
+            //'motori': 'motori',
             'volley': 'volley',
             'martial-arts': 'martial',
             'golf': 'golf',

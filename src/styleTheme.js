@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 
 
 const themes = {
-    base: {
+    old: {
         borderRadius: 8,
         colors: {
 
@@ -57,7 +57,8 @@ const themes = {
 
         }
     },
-    old: {
+    base: {
+        borderRadius: 8,
         colors: {
 
             primary: {
@@ -77,6 +78,34 @@ const themes = {
             white: {
                 default: '#FAFAFA'
             }
+
+        },
+        elevations: {
+            depth1: {
+                shadowOffset: {height: 1},
+                shadowRadius: 3,
+                shadowOpacity: 0.12,
+            },
+            depth2: {
+                shadowOffset: {height: 3},
+                shadowRadius: 6,
+                shadowOpacity: 0.16,
+            },
+            depth3: {
+                shadowOffset: {height: 10},
+                shadowRadius: 20,
+                shadowOpacity: 0.19,
+            },
+            depth4: {
+                shadowOffset: {height: 14},
+                shadowRadius: 28,
+                shadowOpacity: 0.25,
+            },
+            depth5: {
+                shadowOffset: {height: 19},
+                shadowRadius: 38,
+                shadowOpacity: 0.30,
+            },
 
         }
 

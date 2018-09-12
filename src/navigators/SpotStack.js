@@ -65,6 +65,7 @@ export const SpotStack = createStackNavigator({
 
       headerStyle: {
         backgroundColor: themes.base.colors.primary.default
+
       },
       headerTintColor: themes.base.colors.text.default,
     }

@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 import {Text, ActivityIndicator, ScrollView, View} from 'react-native';
 import CompetitionList from '../components/SpotComponents/CompetitionList';
 import { getSportCompetitionsRequest } from '../actions/sports';
 import themes from '../styleTheme';
-
+import { InteractionManager } from 'react-native';
 class CompetitionsScreen extends React.Component {
 
   constructor() {
@@ -13,10 +15,12 @@ class CompetitionsScreen extends React.Component {
     this.handleItemPress = this.handleItemPress.bind(this);
   }
   componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+        const { sport } = this.props.navigation.state.params;
+        if (sport && !sport.competitions)
+            this.props.getCompetitions(sport);
+    });
 
-    const { sport } = this.props.navigation.state.params;
-    if (sport && !sport.competitions)
-      this.props.dispatch(getSportCompetitionsRequest(sport));
   }
 
   handleItemPress(item) {
@@ -25,9 +29,9 @@ class CompetitionsScreen extends React.Component {
   }
   render() {
     const { sport } = this.props.navigation.state.params;
-    const { currentlySending } = this.props;
+    const { currentlySending, getCompetitions } = this.props;
 
-    while(currentlySending){
+    if (currentlySending){
       return(
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
@@ -43,15 +47,23 @@ class CompetitionsScreen extends React.Component {
 
     return (
 
-      <ScrollView>
-        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona la competizione</Text>
-        <CompetitionList competitions={sport.competitions} onItemPress={this.handleItemPress}/>
-      </ScrollView>
+      <View>
+
+        <CompetitionList
+            onRefresh={getCompetitions}
+            refreshing={currentlySending}
+            competitions={sport.competitions} onItemPress={this.handleItemPress}/>
+      </View>
     );
 
   }
 }
 
+CompetitionsScreen.propTypes = {
+    entities: PropTypes.object,
+    currentlySending: PropTypes.bool,
+    getCompetitions: PropTypes.func
+};
 const mapStateToProps = (state) => {
   return ({
     entities: state.entities,
@@ -60,4 +72,5 @@ const mapStateToProps = (state) => {
   })
 };
 
-export default connect(mapStateToProps)(CompetitionsScreen);
+export default connect(mapStateToProps, { getCompetitions: getSportCompetitionsRequest })
+(CompetitionsScreen);

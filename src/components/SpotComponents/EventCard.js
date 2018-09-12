@@ -14,11 +14,12 @@ const EventCard = (props) => {
 
   let competitors = props.competitors;
   const competition = props.competition;
+  let competitorsComponent;
   if (competition.competitorsHaveLogo) {
 
     competitorsComponent = competitors.map(item => {
       const comp = item.competitor;
-      console.log(comp);
+
       return <View style={styles.competitors}>
 
         { <VersionedImageField source={comp.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
@@ -26,7 +27,7 @@ const EventCard = (props) => {
       </View>
     });
   } else {
-    competitorsComponent =
+
       <View style={{marginTop: 32}}>
         { <VersionedImageField source={competition.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
       </View>

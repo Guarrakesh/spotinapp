@@ -40,9 +40,14 @@ class BroadcastsScreen extends React.Component {
             <Text>Juventus ./ Napoli</Text>
         </View>)
       },*/
+      headerTitleStyle: {
+        alignSelf: 'center'
+      },
       headerStyle: {
+
         shadowOffset: {width: 0, height: 0},
         shadowColor: 'transparent',
+        elevation: 0,
         borderBottomWidth: 0,
         backgroundColor: themes.base.colors.primary.default
       },

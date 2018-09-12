@@ -39,7 +39,7 @@ class EventScreen extends React.Component {
 
     let filteredEvents = events.filter(event => event.competition._id == competition._id);
 
-    while(currentlySending){
+    if (currentlySending){
       return(
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color="#0000ff" />

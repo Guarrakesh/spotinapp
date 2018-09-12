@@ -4,8 +4,9 @@ import { getAllSports, getFavoriteSports } from '../actions/sports';
 import SportList from '../components/SpotComponents/SportList';
 import PropTypes from 'prop-types';
 
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator , InteractionManager } from 'react-native';
 import { getLocationRequest } from "../actions/location";
+
 
 import themes from '../styleTheme';
 
@@ -17,22 +18,24 @@ class SportScreen extends React.Component {
   }
 
   componentDidMount() {
+      InteractionManager.runAfterInteractions(() => {
+        const { sports } = this.props;
+        //Chiamata condizionata solo se sport non e' presente nello stato redux
 
-    const { sports } = this.props;
+        if(!sports || sports.length === 0){
+            this.props.dispatch(getAllSports());
+        }
 
-    //Chiamata condizionata solo se sport non e' presente nello stato redux
-
-    if(!sports || sports.length === 0){
-      this.props.dispatch(getAllSports());
-    }
-
-    this.props.dispatch(getLocationRequest());
+        this.props.dispatch(getLocationRequest());
+    });
 
 
   }
   handleItemPress(item) {
 
-    this.props.navigation.navigate('Competitions', {sport: item});
+        this.props.navigation.navigate('Competitions', {sport: item});
+
+
   }
   render() {
 
@@ -40,7 +43,7 @@ class SportScreen extends React.Component {
     const { currentlySending } = this.props;
 
 
-    while(currentlySending){
+    if(currentlySending){
       return(
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color={themes.base.colors.accent.default} />

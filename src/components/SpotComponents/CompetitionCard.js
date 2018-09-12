@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import View from '../common/View';
+import {View, VersionedImageField} from '../common';
 import { Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
@@ -22,17 +22,15 @@ const CompetitionCard = (props) => {
 
   let imageUrl;
 
-  if (image_versions && image_versions.length > 0) {
-    //Prendo la prima versione dell'immagine (fullwidth)
-    imageUrl = image_versions[0].url;
 
-  }
 
   return (
     <TouchableOpacity onPress={props.onPress}>
       <View elevation={1} style={styles.container}>
         <View style={styles.image}>
-          { imageUrl ? <Image source={{uri: imageUrl, width: 60, height: 60}} resizeMode={'contain'}/> : <Icon name="sports-club" size={42}/> }
+          { image_versions
+              ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 32, height: 32}} />
+              : <Icon name="sports-club" size={42}/> }
         </View>
         <View style={styles.info}>
           <Text style={styles.name}>{name}</Text>
@@ -79,20 +77,20 @@ const styles = StyleSheet.create({
     color: themes.base.colors.accent.default
   },
   info: {
-    paddingTop: 25,
-    paddingBottom: 25,
+    paddingTop: 16,
+    paddingBottom: 16,
     flexDirection: 'column',
     flexGrow: 2,
   },
   container: {
     width: '100%',
     backgroundColor: themes.base.colors.white.default,
-    height: 112,
+    height: 100,
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 8,
     borderRadius: themes.base.borderRadius,
-    ...themes.base.elevations.depth1
+
 
   },
   arrowIconView: {
