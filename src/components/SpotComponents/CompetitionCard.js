@@ -29,7 +29,7 @@ const CompetitionCard = (props) => {
       <View elevation={1} style={styles.container}>
         <View style={styles.image}>
           { image_versions
-              ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 32, height: 32}} />
+              ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
               : <Icon name="sports-club" size={42}/> }
         </View>
         <View style={styles.info}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/common/View';
-import {Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {Text, StyleSheet, ActivityIndicator, InteractionManager} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
@@ -58,21 +58,23 @@ class BroadcastsScreen extends React.Component {
   }
 
   componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      const {event} = this.props.navigation.state.params;
+      const position = {
+        lat: this.props.latitude,
+        lng: this.props.longitude
+      };
 
-    const {event} = this.props.navigation.state.params;
-    const position = {
-      lat: this.props.latitude,
-      lng: this.props.longitude
-    };
+      if (!event.broadcasts) {
+        this.props.dispatch(getBroadcastsRequest(event._id, position));
+      }
+    });
 
-    if (!event.broadcasts) {
-      this.props.dispatch(getBroadcastsRequest(event._id, position));
-    }
 
   }
 
-  handleBusinessPress(business) {
-    this.props.navigation.navigate('BusinessProfileScreen', {business: business});
+  handleBusinessPress(broadcast) {
+    this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
 
   }
 
@@ -82,7 +84,7 @@ class BroadcastsScreen extends React.Component {
     let broadcasts = event.broadcasts;
     const {currentlySending} = this.props;
 
-    let date = moment(event.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
+    let date = moment(event.start_at).locale('it').format('D MMM - hh:mm').toUpperCase();
 
     while(currentlySending){
       return(

@@ -7,26 +7,37 @@ import CompetitionList from '../components/SpotComponents/CompetitionList';
 import { getSportCompetitionsRequest } from '../actions/sports';
 import themes from '../styleTheme';
 import { InteractionManager } from 'react-native';
+
+
 class CompetitionsScreen extends React.Component {
+
+  state = { didFinishTransition: false };
 
   constructor() {
     super();
 
     this.handleItemPress = this.handleItemPress.bind(this);
   }
+
   componentDidMount() {
+
     InteractionManager.runAfterInteractions(() => {
-        const { sport } = this.props.navigation.state.params;
-        if (sport && !sport.competitions)
-            this.props.getCompetitions(sport);
+
+      const { sport } = this.props.navigation.state.params;
+      this.setState({didFinishTransition: true});
+
+      if (sport && !sport.competitions)
+        this.props.getCompetitions(sport);
     });
 
   }
 
   handleItemPress(item) {
-    this.props.navigation.navigate('Events', {competition: item});
-
+    InteractionManager.runAfterInteractions(() => {
+      this.props.navigation.navigate('Events', {competition: item});
+    });
   }
+
   render() {
     const { sport } = this.props.navigation.state.params;
     const { currentlySending, getCompetitions } = this.props;
@@ -50,9 +61,9 @@ class CompetitionsScreen extends React.Component {
       <View>
 
         <CompetitionList
-            onRefresh={getCompetitions}
-            refreshing={currentlySending}
-            competitions={sport.competitions} onItemPress={this.handleItemPress}/>
+          onRefresh={() => getCompetitions(sport)}
+          refreshing={currentlySending}
+          competitions={sport.competitions} onItemPress={this.handleItemPress}/>
       </View>
     );
 
@@ -60,9 +71,9 @@ class CompetitionsScreen extends React.Component {
 }
 
 CompetitionsScreen.propTypes = {
-    entities: PropTypes.object,
-    currentlySending: PropTypes.bool,
-    getCompetitions: PropTypes.func
+  entities: PropTypes.object,
+  currentlySending: PropTypes.bool,
+  getCompetitions: PropTypes.func
 };
 const mapStateToProps = (state) => {
   return ({

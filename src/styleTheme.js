@@ -76,7 +76,8 @@ const themes = {
                 dark: '#424242'
             },
             white: {
-                default: '#FAFAFA'
+                default: '#FAFAFA',
+                light: '#FFFFFF'
             }
 
         },

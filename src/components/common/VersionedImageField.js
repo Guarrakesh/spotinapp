@@ -47,18 +47,19 @@ export const VersionedImageField = ({
     version = sourceValue[0];
   } else {
     //Ordino l'array di immagini in ordine crescente di dimensioni in base a minSize (uso la distanza euclidea)
-    const sorted = sourceValue.sort((a,b) =>  {
-      const aToMinSizeDistance = Math.sqrt(Math.pow((a.width - minSize.width),2) + Math.pow((a.height - minSize.height), 2));
-      const bToMinSizeDistance = Math.sqrt(Math.pow((b.width - minSize.width),2) + Math.pow((b.height - minSize.height), 2));
+    const sorted = sourceValue.sort((a, b) => {
+      const aToMinSizeDistance = Math.sqrt(Math.pow((a.width - minSize.width), 2) + Math.pow((a.height - minSize.height), 2));
+      const bToMinSizeDistance = Math.sqrt(Math.pow((b.width - minSize.width), 2) + Math.pow((b.height - minSize.height), 2));
       //Se la differenza è < 0, allora la distanza di A da minSize è minore e quindi a è più vicino a minSize di quanto lo sia b
       return aToMinSizeDistance - bToMinSizeDistance;
     });
     version = sorted[0];
   }
 
-
   return (
-  <Image source={{uri: version.url, width: imgSize.width, height: imgSize.height}} resizeMode={"contain"} />
+  <Image source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
+         style={{width: imgSize.width, height: imgSize.height}}
+         resizeMode={"contain"} />
 
   );
 

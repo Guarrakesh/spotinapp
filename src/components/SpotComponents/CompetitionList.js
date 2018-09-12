@@ -36,7 +36,7 @@ const CompetitionList = (props) => {
   return (
 
       <FlatList
-          ListHeaderComponent={ <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona la competizione</Text>}
+        ListHeaderComponent={ <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona la competizione</Text>}
         contentContainerStyle={styles.container}
         data={competitions}
         keyExtractor={keyExtractor}

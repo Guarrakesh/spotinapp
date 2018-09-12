@@ -12,31 +12,39 @@ import themes from '../styleTheme';
 
 class SportScreen extends React.Component {
 
+  state = { didFinishTransition: false };
+
   constructor() {
     super();
     this.handleItemPress = this.handleItemPress.bind(this);
   }
 
   componentDidMount() {
-      InteractionManager.runAfterInteractions(() => {
-        const { sports } = this.props;
-        //Chiamata condizionata solo se sport non e' presente nello stato redux
 
-        if(!sports || sports.length === 0){
-            this.props.dispatch(getAllSports());
-        }
+    InteractionManager.runAfterInteractions(() => {
 
-        this.props.dispatch(getLocationRequest());
+      const { sports } = this.props;
+      this.setState({didFinishTransition: true});
+      //Chiamata condizionata solo se sport non e' presente nello stato redux
+
+      if(!sports || sports.length === 0){
+        this.props.dispatch(getAllSports());
+      }
+
+      this.props.dispatch(getLocationRequest());
     });
 
 
   }
+
   handleItemPress(item) {
 
-        this.props.navigation.navigate('Competitions', {sport: item});
-
+    InteractionManager.runAfterInteractions(() => {
+      this.props.navigation.navigate('Competitions', {sport: item});
+    });
 
   }
+
   render() {
 
     const { sports } = this.props;

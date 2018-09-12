@@ -7,7 +7,7 @@ import BusinessInfoCard from '../components/BusinessProfileComponents/BusinessIn
 import BroadcastInProfileList from '../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../components/BusinessProfileComponents/ImagesScrollView';
 
-const business = {
+const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
   "name": "Pizza Hot",
   "address": {
@@ -226,13 +226,13 @@ class BusinessProfileScreen extends React.Component {
 
   render(){
 
-    //const {business} = this.props.navigation.state.params;
+    const {business} = this.props.navigation.state.params;
 
     return (
 
       <ScrollView style={styles.scrollView} contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
         <View style={styles.generalContainer}>
-          <ImagesScrollView business={business}/>
+          <ImagesScrollView business={businessImg}/>
           <View style={styles.cardContainer}>
             <BusinessInfoCard business={business}/>
             <Text style={{marginLeft: 8, fontSize: 18, fontWeight: '500'}}>Eventi in programma</Text>

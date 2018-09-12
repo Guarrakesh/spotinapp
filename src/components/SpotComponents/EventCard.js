@@ -6,6 +6,7 @@ import 'moment/locale/it';
 import themes from '../../styleTheme';
 import VersionedImageField from '../common/VersionedImageField';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Fonts} from "../common/Fonts";
 
 const colors = themes.base.colors
 
@@ -33,7 +34,7 @@ const EventCard = (props) => {
       </View>
   }
 
-  let date = moment(props.start_at).locale('it').format('d MMM - hh:mm').toUpperCase();
+  let date = moment(props.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();
 
 
   return (
@@ -80,7 +81,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    marginRight: 16,
+    marginRight: 8,
     flexGrow: 0,
     flexBasis: 63,
     marginBottom: 16
@@ -94,7 +95,7 @@ const styles = {
     flexDirection: 'column',
     flexGrow: 0,
     flexBasis: 54,
-    paddingTop: 16
+    paddingTop: 22
 
   },
   competitors: {
@@ -113,7 +114,8 @@ const styles = {
   eventNameText: {
     fontSize: 21,
     color: themes.base.colors.text.default,
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    fontFamily: Fonts.Lato
   },
   arrowIconView: {
     justifyContent: 'center',

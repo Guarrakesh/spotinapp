@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text, ScrollView, ActivityIndicator, View } from 'react-native';
+import { Text, ScrollView, ActivityIndicator, View, InteractionManager} from 'react-native';
 
 import { getEventsRequest } from '../actions/events';
 import EventList from '../components/SpotComponents/EventList';
 
 class EventScreen extends React.Component {
+
+  state = { didFinishTransition: false };
 
   constructor() {
     super();
@@ -13,19 +15,26 @@ class EventScreen extends React.Component {
     this.handleEventPress = this.handleEventPress.bind(this);
     this.handleEventFavoritePress = this.handleEventFavoritePress.bind(this);
   }
+
   componentDidMount() {
 
-    const { competition } = this.props.navigation.state.params;
-    let events = this.props.events.filter(event => event.competition._id == competition._id);
+    InteractionManager.runAfterInteractions(() => {
 
-    //Ora events ha solo eventi della competizione attuale
-    if (competition && events.length === 0)
-      this.props.dispatch(getEventsRequest(competition._id));
+      const { competition } = this.props.navigation.state.params;
+      let events = this.props.events.filter(event => event.competition._id == competition._id);
+      this.setState({didFinishTransition: true});
+      //Ora events ha solo eventi della competizione attuale
+      if (competition && events.length === 0)
+        this.props.dispatch(getEventsRequest(competition._id));
+    });
+
 
   }
 
   handleEventPress(item) {
-    this.props.navigation.navigate('BroadcastsList', {event: item});
+    InteractionManager.runAfterInteractions(() => {
+      this.props.navigation.navigate('BroadcastsList', {event: item});
+    });
 
   }
   handleEventFavoritePress(event) {
@@ -47,7 +56,7 @@ class EventScreen extends React.Component {
       )
     }
 
-    if (!competition || filteredEvents.length === 0){
+    if ((!competition || filteredEvents.length === 0) && this.state.didFinishTransition){
       return (
         <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono eventi</Text>
       )
@@ -55,10 +64,9 @@ class EventScreen extends React.Component {
 
 
     return (
-      <ScrollView>
-        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona l'evento</Text>
+
         <EventList events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
-      </ScrollView>
+
 
     )
 

@@ -33,7 +33,7 @@ class BroadcastsList extends React.Component {
       <FlatList
         data={broadcasts}
         renderItem={({item}) => <BroadcastCard
-          onItemPress={this._onItemPress.bind(this)}
+          onItemPress={() => this._onItemPress(item._id)}
           {...item}/>}
 
         contentContainerStyle={styles.container}
