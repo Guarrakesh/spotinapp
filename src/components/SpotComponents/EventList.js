@@ -44,6 +44,7 @@ const EventList = (props) => {
 
     return (
       <Text style={{marginLeft: 16, marginTop: 16, fontSize: 20, color: themes.base.colors.text.default, textTransform: 'capitalize', fontFamily: Fonts.LatoBold}}>{date}</Text>
+
     )
   }
 
@@ -58,22 +59,23 @@ const EventList = (props) => {
       contentContainerStyle={styles.container}
       renderSectionHeader={headerSection}
       sections={sections}
-      ListHeaderComponent={ <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona l'evento</Text>}
+      stickySectionHeadersEnabled={false}
+      ListHeaderComponent={<Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Seleziona l'evento</Text> }
     />
   );
 }
 
 EventList.propTypes = {
-    onItemPress: PropTypes.func.isRequired,
-    events: PropTypes.array.isRequired,
-    onFavoritePress: PropTypes.func.isRequired
+  onItemPress: PropTypes.func.isRequired,
+  events: PropTypes.array.isRequired,
+  onFavoritePress: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'stretch',
-        padding: 8,
-    }
+  container: {
+    alignItems: 'stretch',
+    padding: 8,
+  }
 });
 
 export default EventList;

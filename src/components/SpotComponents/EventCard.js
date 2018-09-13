@@ -73,7 +73,6 @@ const styles = {
     justifyContent: 'flex-start',
     height: 116,
     backgroundColor: colors.white.default,
-    ...themes.base.elevations.depth1
   },
   favorite: {
     borderRightColor: colors.text.default,

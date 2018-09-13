@@ -61,7 +61,7 @@ class SportScreen extends React.Component {
 
     if(!sports || sports.length === 0){
       return (
-        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono sport</Text>
+        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono sport al momento</Text>
       )
     }
 

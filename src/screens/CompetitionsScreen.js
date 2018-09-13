@@ -52,7 +52,7 @@ class CompetitionsScreen extends React.Component {
 
     if (!sport.competitions || sport.competitions.length === 0){
       return (
-        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono competizioni</Text>
+        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono competizioni al momento</Text>
       )
     }
 

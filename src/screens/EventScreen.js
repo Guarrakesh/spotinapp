@@ -4,6 +4,7 @@ import { Text, ScrollView, ActivityIndicator, View, InteractionManager} from 're
 
 import { getEventsRequest } from '../actions/events';
 import EventList from '../components/SpotComponents/EventList';
+import themes from "../styleTheme";
 
 class EventScreen extends React.Component {
 
@@ -51,22 +52,22 @@ class EventScreen extends React.Component {
     if (currentlySending){
       return(
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
         </View>
       )
     }
 
     if ((!competition || filteredEvents.length === 0) && this.state.didFinishTransition){
       return (
-        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono eventi</Text>
+        <Text style={{alignSelf: 'center', marginTop:16, marginBottom: 16, fontSize: 20}}>Non ci sono eventi al momento</Text>
       )
     }
 
 
     return (
-
+      <View>
         <EventList events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
-
+      </View>
 
     )
 
