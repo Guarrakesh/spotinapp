@@ -33,7 +33,7 @@ const CompetitionCard = (props) => {
               : <Icon name="sports-club" size={42}/> }
         </View>
         <View style={styles.info}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
           <Text style={styles.country}>{country}</Text>
           { week_events.length > 0 && <Text style={styles.extra}>{week_events.length} eventi questa settimana </Text> }
         </View>
@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: themes.base.colors.text.default,
     fontFamily: Fonts.Lato,
-    fontStyle: 'normal'
   },
   country: {
     fontWeight: '300',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: Fonts.Lato,
   },
   extra: {
     fontWeight: '700',
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
     flexDirection: 'column',
-    flexGrow: 2,
+    flexWrap: 'wrap',
+    flex: 1
   },
   container: {
     width: '100%',
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 0,
     height: '100%',
-    position: 'absolute'
   },
   arrowImg: {
     marginRight: 8

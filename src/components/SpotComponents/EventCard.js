@@ -29,13 +29,13 @@ const EventCard = (props) => {
     });
   } else {
 
-      <View style={{marginTop: 32}}>
-        { <VersionedImageField source={competition.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
-      </View>
+    <View style={{marginTop: 32}}>
+      { <VersionedImageField source={competition.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
+    </View>
   }
 
   let date = moment(props.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();
-
+  const time = moment(props.start_at).locale('it').format('HH:mm').toUpperCase();
 
   return (
 
@@ -53,9 +53,9 @@ const EventCard = (props) => {
         </View>
 
         <View style={styles.detailContainer}>
-          <Text style={styles.eventNameText}>{props.name}</Text>
-          <Text style={{fontSize: 14, color: colors.accent.default}}># Numero Locali </Text>
-          <Text style={{fontSize: 14, fontWeight: '200'}}>{date}</Text>
+          <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{props.name}</Text>
+          <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
+          <Text style={styles.dateText}>{time}</Text>
         </View>
         <View style={styles.arrowIconView}>
           <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
@@ -108,19 +108,28 @@ const styles = {
     marginTop: 20,
     flexDirection: 'column',
     marginBottom: 25,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    flex: 1,
+    flexWrap: 'wrap'
   },
   eventNameText: {
-    fontSize: 21,
+    fontSize: 18,
     color: themes.base.colors.text.default,
-    textTransform: 'capitalize',
-    fontFamily: Fonts.Lato
+    fontFamily: Fonts.Lato,
+  },
+  businessesInfoText: {
+    fontSize: 14,
+    color: colors.accent.default,
+    fontFamily: Fonts.LatoBold,
+  },
+  dateText: {
+    fontSize: 20,
+    fontFamily: Fonts.LatoLight
   },
   arrowIconView: {
     justifyContent: 'center',
     right: 0,
     height: '100%',
-    position: 'absolute'
   },
   arrowImg: {
     marginRight: 8
