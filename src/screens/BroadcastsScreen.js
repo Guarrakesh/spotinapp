@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/common/View';
-import {Text, StyleSheet, ActivityIndicator, InteractionManager, Button} from 'react-native';
+import {Text, StyleSheet, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
@@ -29,32 +29,20 @@ class BroadcastsScreen extends React.Component {
     const { event } = params;
 
     return {
-      /*headerStyle: {
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-          height: Dimensions.get('window').width / 3,
-          backgroundColor: themes.base.colors.primary.default
-      },
-      headerTitle: (props) => {
-        return (<View>
-            <Text>Serie A</Text>
-            <Text>Juventus ./ Napoli</Text>
-        </View>)
-      },*/
+      title: "Locali vicini",
       headerTitleStyle: {
-        alignSelf: 'center'
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+        marginRight: Platform.OS === 'android' ? 75 : null,
       },
       headerStyle: {
-
         shadowOffset: {width: 0, height: 0},
         shadowColor: 'transparent',
         elevation: 0,
         borderBottomWidth: 0,
         backgroundColor: themes.base.colors.primary.default
       },
-
-      title: "Locali vicini"
-
     }
   }
 
@@ -150,10 +138,6 @@ const mapStateToProps = (state) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-    // top: 0,
-    // bottom: 0,
-    // right: 0,
-    // left: 0,
   },
   subHeader: {
     alignItems: 'center',

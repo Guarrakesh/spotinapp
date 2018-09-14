@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {Fonts} from "../common/Fonts";
 
 
 const BroadcastCard = (props) => {
@@ -56,17 +57,17 @@ const BroadcastCard = (props) => {
         <View style={styles.bottomContainer}>
           <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
             <MaterialIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
               {business.seats}
             </Text>
             <MaterialIcon name="tv" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
               {business.tvs}
             </Text>
             {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
           </View>
           <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontWeight: 'bold'}}>{discount(offer.type)}</Text>
+            <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontFamily: Fonts.LatoBlack}}>{discount(offer.type)}</Text>
             <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
           </View>
         </View>
@@ -102,19 +103,19 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     color: themes.base.colors.white.default,
-    fontWeight: 'bold',
     marginLeft: 8,
+    fontFamily: Fonts.LatoBold
   },
   address: {
-    fontWeight: 'bold',
     fontSize: 12,
     color: themes.base.colors.white.default,
     marginLeft: 8,
-    marginBottom: 8
+    marginBottom: 8,
+    fontFamily: Fonts.LatoMedium
   },
   distance: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: Fonts.LatoBold,
     color: themes.base.colors.white.default,
     marginRight: 8,
     marginBottom: 8

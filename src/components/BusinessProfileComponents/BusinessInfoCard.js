@@ -4,7 +4,8 @@ import {Text, StyleSheet, TouchableOpacity, Linking, Platform} from 'react-nativ
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
+import {Fonts} from "../common/Fonts";
+import call from 'react-native-phone-call'
 
 const BusinessInfoCard = (props) => {
 
@@ -23,10 +24,10 @@ const BusinessInfoCard = (props) => {
         <View style={styles.topContainer}>
           <View style={styles.distanceItemView}>
             <Icon name="map-marker-radius" color={themes.base.colors.accent.default} size={23}/>
-            <Text>{roundedDistance} km</Text>
+            <Text style={styles.distanceText}>{roundedDistance} km</Text>
           </View>
           <View style={styles.businessAddressView}>
-            <Text style={styles.businessStreetText}>{business.address.street} {business.address.number}</Text>
+            <Text style={styles.businessStreetText} numberOfLines={1} adjustsFontSizeToFit={true}>{business.address.street} {business.address.number}</Text>
             <Text style={styles.businessCityText}>{business.address.city} ({business.address.province})</Text>
           </View>
           <View style={styles.arrowIconView}>
@@ -35,7 +36,7 @@ const BusinessInfoCard = (props) => {
         </View>
       </TouchableOpacity>
       <View style={styles.bottomContainer}>
-        <View style={{height: '100%', flexDirection: 'row', alignItems: 'center', paddingTop: 16}}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', paddingTop: 16}}>
           <MaterialIcon name="event-seat" color={themes.base.colors.text.default} size={32}/>
           <Text style={styles.seatsTvText}>
             {business.seats}
@@ -46,6 +47,10 @@ const BusinessInfoCard = (props) => {
           </Text>
           {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.wifiIcon}/> : null}
         </View>
+        <TouchableOpacity style={styles.callButton} onPress={() => {call({number: business.phone, prompt: true}).catch(console.error)}}>
+          <MaterialIcon name="phone" color={themes.base.colors.accent.default} size={32} style={{margin: 8, marginLeft: 8}}/>
+          <MaterialIcon name="keyboard-arrow-right" color={themes.base.colors.text.default}  size={25}/>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginLeft: 16,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: Fonts.LatoBold,
     color: themes.base.colors.text.default
   },
   topContainer: {
@@ -74,23 +79,26 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginTop: 8
   },
+  distanceText:{
+    fontFamily: Fonts.Lato
+  },
   businessAddressView: {
     justifyContent: 'center',
     marginLeft: 20,
-    width: '100%'
+    flexWrap: 'wrap',
+    flex: 1
   },
   businessStreetText: {
     fontSize: 18,
-    fontStyle: 'italic'
+    fontFamily: Fonts.LatoItalic,
+    color: themes.base.colors.accent.default
   },
   businessCityText: {
-    fontStyle: 'italic'
+    fontFamily: Fonts.LatoItalic
   },
   arrowIconView: {
     justifyContent: 'center',
     right: 0,
-    height: '100%',
-    position: 'absolute'
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -105,13 +113,13 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   arrowImg: {
-    marginRight: 8
+    marginRight: 8,
   },
   seatsTvText: {
     fontSize: 18,
     color: themes.base.colors.text.default,
     marginLeft: 5,
-    fontWeight: 'bold'
+    fontFamily: Fonts.LatoMedium
   },
   buttonText: {
     fontSize: 50,
@@ -122,6 +130,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold'
+  },
+  callButton: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 16,
+    width: 80,
+    borderColor: themes.base.colors.accent.default,
+    borderWidth: 1,
+    borderRadius: 25
   }
 })
 

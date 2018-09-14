@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, FlatList } from 'react-native';
+import View from '../components/common/View';
+import { StyleSheet, FlatList } from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
 import themes from '../styleTheme';
@@ -8,11 +9,16 @@ import themes from '../styleTheme';
 import BroadcastCardInMap from '../components/BusinessProfileComponents/BroadcastCardInMap';
 
 class BusinessMapScreen extends React.Component {
+
+  constructor() {
+    super();
+
+  }
+
   render() {
+
     const { broadcasts } = this.props.navigation.state.params;
     if (!broadcasts) return null;
-
-
 
     return (
       <View style={{flex:1}}>
@@ -38,12 +44,12 @@ class BusinessMapScreen extends React.Component {
           }
 
         </MapView>
-        <View style={{backgroundColor: themes.base.colors.white.default, position: 'absolute', bottom: 0, height: '35%', width: '100%'}}>
+        <View style={{backgroundColor: themes.base.colors.white.default, position: 'absolute', bottom: 0, height: '40%', width: '100%'}}>
           <FlatList
             data={broadcasts}
             renderItem={({item}) =>
-              <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8}}>
-                <BroadcastCardInMap business={item.business} offer={item.offer}/>
+              <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
+                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={this.handleBusPress(item)}/>
               </View>
             }
             horizontal={true}
@@ -53,6 +59,13 @@ class BusinessMapScreen extends React.Component {
 
       </View>
     )
+  }
+
+
+  handleBusPress(broadcast) {
+    console.log(broadcast.business);
+    this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
+
   }
 }
 

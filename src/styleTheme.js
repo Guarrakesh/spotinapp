@@ -73,7 +73,8 @@ const themes = {
             },
             text: {
                 default: '#555555',
-                dark: '#424242'
+                dark: '#424242',
+                light: '#FAFAFA'
             },
             white: {
                 default: '#FAFAFA',

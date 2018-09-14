@@ -32,7 +32,6 @@ const BroadcastCardInMap = (props) => {
 
   return (
     <TouchableOpacity onPress={props.onItemPress}>
-      <View elevation={1} style={styles.innerContainer}>
         <View style={styles.topContainer}>
           <ImageBackground
             imageStyle={{ borderRadius: themes.base.borderRadius }}
@@ -61,7 +60,7 @@ const BroadcastCardInMap = (props) => {
             <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
           </View>
         </View>
-      </View>
+
     </TouchableOpacity>
 
   );
@@ -71,7 +70,7 @@ const BroadcastCardInMap = (props) => {
 const styles = StyleSheet.create({
   innerContainer: {
     marginBottom: 16,
-    borderRadius: themes.base.borderRadius,
+    borderRadius: 8,
     backgroundColor: themes.base.colors.white.light,
     ...themes.base.elevations.depth1
 
@@ -80,15 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'rgba(0,0,0,.4)',
-    borderTopLeftRadius: themes.base.borderRadius,
-    borderTopRightRadius: themes.base.borderRadius
-  },
-  image: {
-    width: 64,
-    marginLeft: 16,
-    marginRight: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: themes.base.borderRadius
   },
   name: {
     fontSize: 16,
@@ -117,7 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: themes.base.borderRadius,
     borderTopRightRadius: themes.base.borderRadius,
-
   },
   geoFenceImg: {
     marginRight: 30
@@ -132,17 +122,19 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     width: '100%',
-    backgroundColor: themes.base.colors.white.default,
-    height: 124,
+    height: '70%',
     flexDirection: 'row',
     borderTopLeftRadius: themes.base.borderRadius,
-    borderTopRightRadius: themes.base.borderRadius
+    borderTopRightRadius: themes.base.borderRadius,
+    borderBottomLeftRadius: 0
 
   },
   bottomContainer: {
     width: '100%',
     flexDirection: 'row',
-    margin: 5
+    margin: 5,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   divisor: {
     height: '100%',

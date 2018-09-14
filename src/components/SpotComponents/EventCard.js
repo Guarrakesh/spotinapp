@@ -107,7 +107,7 @@ const styles = {
   detailContainer: {
     marginTop: 20,
     flexDirection: 'column',
-    marginBottom: 25,
+    marginBottom: 20,
     justifyContent: 'space-between',
     flex: 1,
     flexWrap: 'wrap'

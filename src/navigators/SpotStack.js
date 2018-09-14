@@ -9,20 +9,21 @@ import BusinessScreen from "../components/BusinessScreen";
 import BusinessMapScreen from "../screens/BusinessMapScreen";
 import BusinessProfileScreen from '../screens/BusinessProfileScreen'
 
+import DismissButton from '../components/common/DismissButton';
+
 import { View, Text, Button } from 'react-native';
 
 
 export const BusinessMapNavigator = createStackNavigator({
     BusinessMapScreen: {
       screen: BusinessMapScreen,
-      navigationOptions: {
-        title: "Mappa Locali",
-        headerLeft: (
-          <Button
-            title="Annulla"
-            color="#555"
-          />
-        ),
+      navigationOptions: ({navigation}) => {
+        return {
+          title: "Mappa Locali",
+          headerRight: (
+            <DismissButton onPress={() => {navigation.navigate('BroadcastsList')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+          ),
+        }
       },
     }
   }, {

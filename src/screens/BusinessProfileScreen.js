@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, ScrollView } from 'react-native';
-import Swiper from 'react-native-swiper';
 import themes from '../styleTheme';
+import {Fonts} from "../components/common/Fonts";
 
 import BusinessInfoCard from '../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../components/BusinessProfileComponents/BroadcastInProfileList';
@@ -235,7 +235,7 @@ class BusinessProfileScreen extends React.Component {
           <ImagesScrollView business={businessImg}/>
           <View style={styles.cardContainer}>
             <BusinessInfoCard business={business}/>
-            <Text style={{marginLeft: 8, fontSize: 18, fontWeight: '500'}}>Eventi in programma</Text>
+            <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
             <BroadcastInProfileList events={event}/>
           </View>
         </View>
