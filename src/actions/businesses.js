@@ -1,13 +1,12 @@
 import { FETCH_BUSINESSES } from './types';
 
-export function getBusinessRequest(eventId, latitude, longitude){
-    return { type: FETCH_BUSINESSES.REQUEST, }
+export function getBusinessRequest(position){
+    return { type: FETCH_BUSINESSES.REQUEST, position}
 }
 
-export function getBusinessSuccess(eventId, businesses){
+export function getBusinessSuccess(businesses){
   return {
           type: FETCH_BUSINESSES.SUCCESS,
-          eventId,
           businesses
   }
 }

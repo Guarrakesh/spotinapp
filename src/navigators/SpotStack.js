@@ -7,7 +7,7 @@ import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
 import BusinessScreen from "../components/BusinessScreen";
 import BusinessMapScreen from "../screens/BusinessMapScreen";
-import BusinessProfileScreen from '../screens/BusinessProfileScreen'
+import BusinessProfileScreen from '../screens/BusinessProfileScreen';
 
 import DismissButton from '../components/common/DismissButton';
 
@@ -31,6 +31,8 @@ export const BusinessMapNavigator = createStackNavigator({
 
   }
 );
+
+
 export const SpotStack = createStackNavigator({
     SportList: {
       screen: SportScreen,

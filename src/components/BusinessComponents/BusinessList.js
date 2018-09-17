@@ -34,7 +34,7 @@ class BusinessList extends React.Component {
         data={businesses}
         renderItem={({item}) => <BusinessCard
           business={item}
-          onItemPress={this._onItemPress.bind(this)}
+          onItemPress={this._onItemPress.bind(item._id)}
         />}
 
         contentContainerStyle={styles.container}

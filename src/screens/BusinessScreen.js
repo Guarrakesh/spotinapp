@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/common/View';
-import { Text, StyleSheet } from 'react-native';
+import {Text, StyleSheet, InteractionManager} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
@@ -13,179 +13,8 @@ import { getBusinessRequest } from '../actions/businesses';
 import { getLocationRequest } from "../actions/location";
 
 import themes from "../styleTheme";
+import {Fonts} from "../components/common/Fonts";
 
-const businesses = [
-  {
-    "dist": "30",
-    "type":[
-      "Pub"
-    ],
-    "providers":[
-      "dazn",
-      "sky",
-      "digitale-terrestre"
-    ],
-    "spots":-600,
-    "_id":"5b859a0acadd70001e1917fe",
-    "address":{
-      "_id":"5b859a0acadd70001e1917ff",
-      "street":"Via Lago Patria",
-      "number":"247/15",
-      "city":"Giugliano in Campania",
-      "province":"Napoli",
-      "zip":80014,
-      "country":"Italia",
-      "location":{
-        "coordinates":[
-          14.0384399,
-          40.9292015
-        ],
-        "_id":"5b8a5ac9e510e3001e68f15f",
-        "type":"Point"
-      }
-    },
-    "name":"Pizza Hot",
-    "phone":"0818391131",
-    "user":"5b82c73bec9840001ef8c381",
-    "vat":2345234565432,
-    "tradeName":"Pizza Hot by Las Palmas",
-    "wifi":true,
-    "forFamilies":true,
-    "seats":70,
-    "tvs":10,
-    "target":"Famiglie, Tifosi, Stranieri",
-    "photos":[
-
-    ],
-    "__v":0
-  },
-  {
-    "dist": "30",
-    "type":[
-      "Trattoria"
-    ],
-    "providers":[
-      "dazn",
-      "sky"
-    ],
-    "spots":10000,
-    "_id":"5b91309770b1ad001ee4c1c3",
-    "name":"La fessa calda",
-    "phone":"3391813738",
-    "user":"5b9124c00e98fc001efc0414",
-    "address":{
-      "_id":"5b91309770b1ad001ee4c1c4",
-      "street":"Corso Vittorio Emanuele",
-      "number":"115",
-      "city":"napoli",
-      "province":"NA",
-      "country":"ITALIA",
-      "zip":80100,
-      "location":{
-        "coordinates":[
-          14.2247915,
-          40.8365616
-        ],
-        "_id":"5b91309870b1ad001ee4c1c5",
-        "type":"Point"
-      }
-    },
-    "vat":123456789,
-    "tradeName":"La fessa Calda spa",
-    "wifi":true,
-    "forFamilies":true,
-    "seats":60,
-    "tvs":5,
-    "photos":[
-
-    ],
-    "__v":0
-  },
-  {
-    "dist": "30",
-    "type":[
-      "Pizzeria"
-    ],
-    "providers":[
-      "sky",
-      "dazn"
-    ],
-    "spots":10000,
-    "_id":"5b91368270b1ad001ee4c1e7",
-    "name":"Pizza Bella",
-    "phone":"333333333",
-    "user":"5b9124c00e98fc001efc0414",
-    "address":{
-      "_id":"5b91368270b1ad001ee4c1e8",
-      "street":"via sandro pertini",
-      "city":"qualiano",
-      "province":"Napoli",
-      "country":"Italia",
-      "zip":80019,
-      "number":"5",
-      "location":{
-        "coordinates":[
-          14.1434102,
-          40.9200879
-        ],
-        "_id":"5b91368370b1ad001ee4c1e9",
-        "type":"Point"
-      }
-    },
-    "vat":123456789,
-    "tradeName":"armando catalano srl",
-    "wifi":true,
-    "forFamilies":true,
-    "seats":120,
-    "tvs":5,
-    "photos":[
-
-    ],
-    "__v":0
-  },
-  {
-    "dist": "30",
-    "type":[
-      "Pizzeria"
-    ],
-    "providers":[
-      "dazn",
-      "sky"
-    ],
-    "spots":450,
-    "_id":"5b939db3fd1c72001f4e8006",
-    "name":"Add' e Scugnizz'",
-    "phone":"333333333",
-    "user":"5b939d5efd1c72001f4e7fff",
-    "address":{
-      "_id":"5b939db3fd1c72001f4e8007",
-      "street":"Via Lago Patria ",
-      "number":"75",
-      "city":"Giugliano in Campania",
-      "province":"Na",
-      "country":"Italiana",
-      "zip":80014,
-      "location":{
-        "coordinates":[
-          14.0334942,
-          40.9225581
-        ],
-        "_id":"5b939db4fd1c72001f4e8008",
-        "type":"Point"
-      }
-    },
-    "vat":12345698,
-    "tradeName":"Mario Catalano srl",
-    "wifi":true,
-    "forFamilies":true,
-    "seats":125,
-    "tvs":3,
-    "photos":[
-
-    ],
-    "__v":0
-  }
-]
 
 class BusinessScreen extends React.Component {
 
@@ -199,8 +28,11 @@ class BusinessScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams, navigate } = navigation;
     const params = state.params || {};
+    const { businesses } = params;
 
     return {
+
+      title: "Locali vicini",
 
       headerStyle: {
         shadowOffset: {width: 0, height: 0},
@@ -208,19 +40,34 @@ class BusinessScreen extends React.Component {
         borderBottomWidth: 0,
         backgroundColor: themes.base.colors.primary.default
       },
-
-      title: "Locali vicini"
+      headerTitleStyle: {
+        fontFamily: Fonts.LatoBold,
+        color: themes.base.colors.text.default
+      }
 
     }
   }
 
   componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      const {businesses} = this.props;
+      // const position = {
+      //   lat: this.props.latitude,
+      //   lng: this.props.longitude
+      // };
 
-    const position = {
-      lat: this.props.latitude,
-      lng: this.props.longitude
-    };
 
+      let position = {
+        lat: 40.922200,
+        lng: 14.032925
+      }
+
+
+      if (!businesses || businesses.length === 0) {
+        this.props.dispatch(getBusinessRequest(position));
+      }
+      console.log(businesses);
+    });
   }
 
   handleBusinessPress(business) {
@@ -228,9 +75,11 @@ class BusinessScreen extends React.Component {
 
   }
 
+
   render() {
 
-    const {currentlySending} = this.props;
+    const { businesses } = this.props;
+    const { currentlySending } = this.props;
 
     return (
       <View style={styles.container}>
@@ -259,11 +108,12 @@ class BusinessScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { currentlySending, error} = state.entities;
+  const { currentlySending, error } = state.entities;
   const { latitude, longitude } = state.location;
   const { loggedIn } = state.auth;
   return {
     currentlySending, error, loggedIn, latitude, longitude,
+    businesses: state.entities.businesses
   }
 
 }
@@ -308,4 +158,4 @@ const styles = StyleSheet.create({
 
   }
 });
-export default BusinessScreen;
+export default connect(mapStateToProps)(BusinessScreen);
