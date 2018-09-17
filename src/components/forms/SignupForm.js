@@ -1,7 +1,8 @@
 
 
 import React from 'react';
-import View  from '../common/View';
+import  View   from '../common/View';
+import { Text } from 'react-native';
 import {Input, Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
@@ -22,7 +23,7 @@ const SignupForm = props => {
 
                 shake={true}
                 onChangeText={props.onChangeTextName}
-                errorMessage={props.nameError}
+                errorMessage={<Text>{props.nameError || ""}</Text>}
                 blurOnSubmit={true}
             />
             <Input
@@ -37,7 +38,7 @@ const SignupForm = props => {
                 autoCapitalize="none"
                 shake={true}
                 onChangeText={props.onChangeTextEmail}
-                errorMessage={props.emailError}
+                errorMessage={<Text>{props.emailError || ""}</Text>}
                 blurOnSubmit={true}
             />
             <Input
@@ -48,7 +49,7 @@ const SignupForm = props => {
                 leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                 inputContainerStyle={{borderBottomWidth: 0}}
                 inputStyle={styles.textInputStyle}
-                errorMessage={props.passwordError}
+                errorMessage={<Text>{props.passwordError || ""}</Text>}
                 shake={true}
                 onChangeText={props.onChangeTextPassword}
                 secureTextEntry={true}
@@ -63,7 +64,7 @@ const SignupForm = props => {
                 leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                 inputContainerStyle={{borderBottomWidth: 0}}
                 inputStyle={styles.textInputStyle}
-                errorMessage={props.passConfirmError}
+                errorMessage={<Text>{props.passConfirmError || "" }</Text>}
                 shake={true}
                 onChangeText={props.onChangeTextPasswordConfirm}
                 secureTextEntry={true}

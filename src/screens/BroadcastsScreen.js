@@ -67,6 +67,7 @@ class BroadcastsScreen extends React.Component {
 
   }
 
+
   bottomView = (broadcasts) => {
     if(!broadcasts || broadcasts.length === 0){
       return (

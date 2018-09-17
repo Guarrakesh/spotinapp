@@ -1,24 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../components/common/View';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
 import themes from '../styleTheme';
 
+
 import BroadcastCardInMap from '../components/BusinessProfileComponents/BroadcastCardInMap';
 
 class BusinessMapScreen extends React.Component {
-
+  state = {transitionFinished: false}
   constructor() {
     super();
 
   }
 
+  componentDidMount() {
+    //Evito la transizione a tratti (carico la mappa dopo che la transizione è finita)
+    InteractionManager.runAfterInteractions(() => this.setState({transitionFinished: true}));
+  }
   render() {
 
     const { broadcasts } = this.props.navigation.state.params;
-    if (!broadcasts) return null;
+    if (!broadcasts || !this.state.transitionFinished) return null;
 
     return (
       <View style={{flex:1}}>
@@ -49,7 +54,7 @@ class BusinessMapScreen extends React.Component {
             data={broadcasts}
             renderItem={({item}) =>
               <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
-                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={this.handleBusPress(item)}/>
+                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={() => this.handleBusPress(item._id)}/>
               </View>
             }
             horizontal={true}

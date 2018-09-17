@@ -16,7 +16,6 @@ class BusinessList extends React.Component {
 
   _onItemPress = (id) => {
     const business = this.props.businesses.find(business => business._id === id);
-
     //cerco tra i businesses quale ha l'id uguale a _id
     this.props.onItemPress(business);
   }
@@ -34,7 +33,7 @@ class BusinessList extends React.Component {
         data={businesses}
         renderItem={({item}) => <BusinessCard
           business={item}
-          onItemPress={this._onItemPress.bind(item._id)}
+          onItemPress={() => this._onItemPress(item._id)}
         />}
 
         contentContainerStyle={styles.container}

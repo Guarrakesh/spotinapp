@@ -51,25 +51,34 @@ class BusinessScreen extends React.Component {
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       const {businesses} = this.props;
-      // const position = {
-      //   lat: this.props.latitude,
-      //   lng: this.props.longitude
-      // };
 
 
-      let position = {
-        lat: 40.922200,
-        lng: 14.032925
-      }
+      //Dispatch la richiesta della posizione
+      this.props.dispatch(getLocationRequest());
+      const { lat, lng } = this.props;
 
-
-      if (!businesses || businesses.length === 0) {
+      //Questo if è eseguito dopo la richiesta di posizione quindi in questo momento la richiesta non è ancora finita
+      //Devo controllare quindi se lat e lng erano già presenti nello store, se sì allora posso fetchare i business
+      //Altrimenti lo farò in componentDidUpdate
+      if (lat && lng && (!businesses || businesses.length === 0)) {
         this.props.dispatch(getBusinessRequest(position));
       }
-      console.log(businesses);
     });
   }
+  componentDidUpdate(prevProps) {
+    //ComponentDidUpdate viene chiamato ogni volta che il componente riceve props aggiornate (es. da Redux)
+    //Quindi può essere che in questo ciclo sia stata completata la location request e quindi ho la posizione
+    //Se così, allora fetcho i business
 
+    const { lat, lng } = this.props;
+    if (prevProps.lat !== lat || prevProps.lng !== lng) {
+
+      //Se la posizione nuova è diversa da quelle precedenti (se ad esempio ora ce l'ho e prima erano null) allora
+      //posso fetchare i business
+      //E' cambiata la posizione, quindi i business li refetcho a prescindere che ci siano già o no
+      this.props.dispatch(getBusinessRequest({lat, lng}));
+    }
+  }
   handleBusinessPress(business) {
     this.props.navigation.navigate('BusinessProfileScreen', {business: business});
 
@@ -82,25 +91,25 @@ class BusinessScreen extends React.Component {
     const { currentlySending } = this.props;
 
     return (
-      <View style={styles.container}>
-        <SearchBar
-          round={true}
-          placeholder='Cerca Locale'
-          lightTheme={true}
-          clearIcon={{ color: 'white' }}
-        />
-        <BusinessList businesses={businesses} onItemPress={this.handleBusinessPress}/>
-        <ActionButton
-          title=''
-          position={"right"}
-          buttonColor={themes.base.colors.accent.default}
-          size={52}
-          offsetY={32}
-          onPress={() => {this.props.navigation.navigate('BusinessMap', {broadcasts: broadcasts})}}
-          icon={<Icon name="map" size={24}
-                      style={{color: themes.base.colors.white.default}}/>}
-        />
-      </View>
+        <View style={styles.container}>
+          <SearchBar
+              round={true}
+              placeholder='Cerca Locale'
+              lightTheme={true}
+              clearIcon={{ color: 'white' }}
+          />
+          <BusinessList businesses={businesses} onItemPress={this.handleBusinessPress}/>
+          <ActionButton
+              title=''
+              position={"right"}
+              buttonColor={themes.base.colors.accent.default}
+              size={52}
+              offsetY={32}
+              onPress={() => {this.props.navigation.navigate('BusinessMap', {broadcasts: businesses})}}
+              icon={<Icon name="map" size={24}
+                          style={{color: themes.base.colors.white.default}}/>}
+          />
+        </View>
 
     )
 
@@ -109,10 +118,10 @@ class BusinessScreen extends React.Component {
 }
 const mapStateToProps = (state) => {
   const { currentlySending, error } = state.entities;
-  const { latitude, longitude } = state.location;
+  const { latitude: lat, longitude: lng} = state.location;
   const { loggedIn } = state.auth;
   return {
-    currentlySending, error, loggedIn, latitude, longitude,
+    currentlySending, error, loggedIn, lat, lng,
     businesses: state.entities.businesses
   }
 

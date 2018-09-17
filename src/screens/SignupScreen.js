@@ -82,8 +82,6 @@ class SignupScreen extends React.Component {
         } else {
             this.props.dispatch(registerRequest(email, password, name));
         }
-
-        console.log(this.state.errors);
     }
     render() {
         //Eventuali errori dati dal server (email già esistente o altri)
