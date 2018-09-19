@@ -4,24 +4,15 @@ import PropTypes from 'prop-types';
 
 import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
 
-
 import AuthNavigator from './AuthNavigator';
-import BusinessScreen from '../screens/BusinessScreen';
-import DetailsScreen from '../components/DetailsScreen';
 import FavoriteScreen from '../components/FavoriteScreen';
 import NewsScreen from '../components/NewsScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import Images from '../assets/images';
-
+import {BusinessStack} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigator} from './SpotStack';
 import ProfileStack from './ProfileStack';
 
 import themes from '../styleTheme';
-
-const BusinessStack = createStackNavigator({
-    Business: BusinessScreen,
-
-});
 
 const FavoriteStack = createStackNavigator({
     Favorite: FavoriteScreen,

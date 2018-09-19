@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import View from '../components/common/View';
+import View from '../../components/common/View';
 import {Text, StyleSheet, InteractionManager} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
 
-import BusinessList from '../components/BusinessComponents/BusinessList';
+import BusinessList from '../../components/BusinessComponents/BusinessList';
 import Icon from 'react-native-vector-icons/Feather';
-import { getBusinessRequest } from '../actions/businesses';
-import { getLocationRequest } from "../actions/location";
+import { getBusinessRequest } from '../../actions/businesses';
+import { getLocationRequest } from "../../actions/location";
 
-import themes from "../styleTheme";
-import {Fonts} from "../components/common/Fonts";
+import themes from "../../styleTheme";
+import {Fonts} from "../../components/common/Fonts";
 
 
 class BusinessScreen extends React.Component {
@@ -61,7 +61,7 @@ class BusinessScreen extends React.Component {
       //Devo controllare quindi se lat e lng erano già presenti nello store, se sì allora posso fetchare i business
       //Altrimenti lo farò in componentDidUpdate
       if (lat && lng && (!businesses || businesses.length === 0)) {
-        this.props.dispatch(getBusinessRequest(position));
+        this.props.dispatch(getBusinessRequest(lat, lng));
       }
     });
   }
@@ -105,7 +105,7 @@ class BusinessScreen extends React.Component {
               buttonColor={themes.base.colors.accent.default}
               size={52}
               offsetY={32}
-              onPress={() => {this.props.navigation.navigate('BusinessMap', {broadcasts: businesses})}}
+              onPress={() => {this.props.navigation.navigate('BusinessMap', {businesses: businesses})}}
               icon={<Icon name="map" size={24}
                           style={{color: themes.base.colors.white.default}}/>}
           />
