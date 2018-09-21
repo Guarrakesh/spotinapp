@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from 'react-navigation';
 import BusinessScreen from '../screens/business/BusinessScreen';
 import BusinessProfileScreen from '../screens/business/BusinessProfileScreen';
-import BusinessMapScreen from '../screens/business/BusinessMapScreen';
+import BusinessMapInBusiness from '../screens/business/BusinessMapInBusiness';
 
 import themes from '../styleTheme';
 import {Fonts} from "../components/common/Fonts";
@@ -10,7 +10,7 @@ import DismissButton from "../components/common/DismissButton";
 
 export const BusinessStack = createStackNavigator({
 
-    BusinessList: {
+    BusinessScreen: {
       screen: BusinessScreen,
       navigationOption: ({navigation}) => {
         return {
@@ -46,15 +46,15 @@ export const BusinessStack = createStackNavigator({
   }
 );
 
-export const BusinessMapNavigator = createStackNavigator({
+export const BusinessMapNavigatorInBusiness = createStackNavigator({
 
-  BusinessMapScreen: {
-    screen: BusinessMapScreen,
+  BusinessMapInBusiness: {
+    screen: BusinessMapInBusiness,
     navigationOptions: ({navigation}) => {
       return {
         title: "Mappa Locali",
         headerRight: (
-          <DismissButton onPress={() => {navigation.navigate('BusinessList')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+          <DismissButton onPress={() => {navigation.navigate('BusinessScreen')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
         ),
       }
     },

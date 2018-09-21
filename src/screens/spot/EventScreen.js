@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, ScrollView, ActivityIndicator, View, InteractionManager} from 'react-native';
 
-import { getEventsRequest } from '../actions/events';
-import EventList from '../components/SpotComponents/EventList';
-import themes from "../styleTheme";
+import { getEventsRequest } from '../../actions/events';
+import EventList from '../../components/SpotComponents/EventList';
+import themes from "../../styleTheme";
 
 class EventScreen extends React.Component {
 

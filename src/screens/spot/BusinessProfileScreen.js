@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text, ScrollView } from 'react-native';
-import themes from '../styleTheme';
-import {Fonts} from "../components/common/Fonts";
+import { View, StyleSheet, Modal, Text, ScrollView } from 'react-native';
+import themes from '../../styleTheme';
+import {Fonts} from "../../components/common/Fonts";
 
-import BusinessInfoCard from '../components/BusinessProfileComponents/BusinessInfoCard';
-import BroadcastInProfileList from '../components/BusinessProfileComponents/BroadcastInProfileList';
-import ImagesScrollView from '../components/BusinessProfileComponents/ImagesScrollView';
+import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
+import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
+import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
+import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 
 const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
@@ -223,6 +224,9 @@ const event = [{
 
 class BusinessProfileScreen extends React.Component {
 
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
 
   render(){
 
@@ -233,6 +237,14 @@ class BusinessProfileScreen extends React.Component {
       <ScrollView style={styles.scrollView} contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
         <View style={styles.generalContainer}>
           <ImagesScrollView business={businessImg}/>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={false}
+            presentationStyle={'overFullScreen'}
+          >
+            <ReservationConfirmView/>
+          </Modal>
           <View style={styles.cardContainer}>
             <BusinessInfoCard business={business}/>
             <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>

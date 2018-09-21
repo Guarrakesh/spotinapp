@@ -1,5 +1,5 @@
 import React from 'react';
-import { userLogout } from '../actions/login';
+import { userLogout } from '../../actions/login';
 import {
     View,
     Text,

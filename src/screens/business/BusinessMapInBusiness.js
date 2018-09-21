@@ -1,24 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import { StyleSheet, FlatList } from 'react-native';
+import {StyleSheet, FlatList, InteractionManager} from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
 import themes from '../../styleTheme';
 
-import BroadcastCardInMap from '../../components/BusinessProfileComponents/BroadcastCardInMap';
+import BusinessCard from '../../components/BusinessComponents/BusinessCard';
 
-class BusinessMapScreen extends React.Component {
+class BusinessMapInBusiness extends React.Component {
+
+  state = {transitionFinished: false}
 
   constructor() {
     super();
 
   }
 
+  componentDidMount() {
+    //Evito la transizione a tratti (carico la mappa dopo che la transizione è finita)
+    InteractionManager.runAfterInteractions(() => this.setState({transitionFinished: true}));
+  }
+
   render() {
 
     const { businesses } = this.props.navigation.state.params;
-    //if (!businesses) return null;
+    if (!businesses || !this.state.transitionFinished) return null;
 
     return (
       <View style={{flex:1}}>
@@ -32,13 +39,13 @@ class BusinessMapScreen extends React.Component {
         >
 
           {
-            businesses.map(business =>
+            businesses.map(bus =>
               <MapView.Marker
                 coordinate={{
-                  latitude: business.address.location.coordinates[1],
-                  longitude: business.address.location.coordinates[0]}}
-                title={business.name}
-                description={`${business.address.street} ${business.address.number}`}
+                  latitude: bus.address.location.coordinates[1],
+                  longitude: bus.address.location.coordinates[0]}}
+                title={bus.name}
+                description={`${bus.address.street} ${bus.address.number}`}
               />
             )
           }
@@ -49,7 +56,7 @@ class BusinessMapScreen extends React.Component {
             data={businesses}
             renderItem={({item}) =>
               <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
-                <BroadcastCardInMap business={item} offer={item.address.number} style={{flex: 1}} onItemPress={this.handleBusPress(item)}/>
+                <BusinessCard business={item} style={{flex: 1}} onItemPress={() => this.handleBusPress(item)}/>
               </View>
             }
             horizontal={true}
@@ -103,7 +110,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(BusinessMapScreen);
+export default connect(mapStateToProps)(BusinessMapInBusiness);
 
 
 

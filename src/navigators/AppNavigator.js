@@ -8,8 +8,8 @@ import AuthNavigator from './AuthNavigator';
 import FavoriteScreen from '../components/FavoriteScreen';
 import NewsScreen from '../components/NewsScreen';
 import Images from '../assets/images';
-import {BusinessStack} from "./BusinessStack";
-import {SpotStack, BusinessMapNavigator} from './SpotStack';
+import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
+import {SpotStack, BusinessMapNavigatorInSpot} from './SpotStack';
 import ProfileStack from './ProfileStack';
 
 import themes from '../styleTheme';
@@ -30,10 +30,8 @@ const NewsStack = createStackNavigator({
 
 export const MainNavigation = createTabNavigator(
     {
-
-        Business: BusinessStack,
-        Favorite: FavoriteStack,
         Spot: SpotStack,
+        Business: BusinessStack,
         News: NewsStack,
         Profile: ProfileStack,
     },
@@ -99,7 +97,8 @@ const RootNavigator = createStackNavigator(
             }
         },
 
-        BusinessMap: BusinessMapNavigator
+        BusinessMapInSpot: BusinessMapNavigatorInSpot,
+        BusinessMapInBusiness: BusinessMapNavigatorInBusiness
     }, {
         headerMode: 'none',
         mode: "modal",

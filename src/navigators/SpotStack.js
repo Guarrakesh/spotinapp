@@ -1,20 +1,19 @@
 import React from 'react';
-import SportScreen from "../screens/SportScreen";
-import EventScreen from '../screens/EventScreen';
-import BroadcastsScreen from '../screens/BroadcastsScreen';
-import CompetitionsScreen from "../screens/CompetitionsScreen";
+import SportScreen from "../screens/spot/SportScreen";
+import EventScreen from '../screens/spot/EventScreen';
+import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
+import CompetitionsScreen from "../screens/spot/CompetitionsScreen";
 import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
-import BusinessScreen from "../components/BusinessScreen";
-import BusinessMapScreen from "../screens/BusinessMapScreen";
-import BusinessProfileScreen from '../screens/BusinessProfileScreen';
+import BusinessMapScreen from "../screens/spot/BusinessMapScreen";
+import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 
 import DismissButton from '../components/common/DismissButton';
 
 import { View, Text, Button } from 'react-native';
 
 
-export const BusinessMapNavigator = createStackNavigator({
+export const BusinessMapNavigatorInSpot = createStackNavigator({
     BusinessMapScreen: {
       screen: BusinessMapScreen,
       navigationOptions: ({navigation}) => {

@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import View from '../components/common/View';
+import View from '../../components/common/View';
 import {Text, StyleSheet, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
 
-import BroadcastsList from '../components/SpotComponents/BroadcastsList';
+import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
 import Icon from 'react-native-vector-icons/Feather';
-import {Fonts} from "../components/common/Fonts";
-import { getBroadcastsRequest } from '../actions/broadcasts';
+import {Fonts} from "../../components/common/Fonts";
+import { getBroadcastsRequest } from '../../actions/broadcasts';
 
-import themes from "../styleTheme";
+import themes from "../../styleTheme";
 
 
 class BroadcastsScreen extends React.Component {
@@ -87,7 +87,7 @@ class BroadcastsScreen extends React.Component {
             buttonColor={themes.base.colors.accent.default}
             size={52}
             offsetY={32}
-            onPress={() => {this.props.navigation.navigate('BusinessMap', {broadcasts: broadcasts})}}
+            onPress={() => {this.props.navigation.navigate('BusinessMapInSpot', {broadcasts: broadcasts})}}
             icon={<Icon name="map" size={24}
                         style={{color: themes.base.colors.white.default}}/>}
           />

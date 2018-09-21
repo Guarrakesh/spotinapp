@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import {Text, ActivityIndicator, ScrollView, View} from 'react-native';
-import CompetitionList from '../components/SpotComponents/CompetitionList';
-import { getSportCompetitionsRequest } from '../actions/sports';
-import themes from '../styleTheme';
+import CompetitionList from '../../components/SpotComponents/CompetitionList';
+import { getSportCompetitionsRequest } from '../../actions/sports';
+import themes from '../../styleTheme';
 import { InteractionManager } from 'react-native';
 
 

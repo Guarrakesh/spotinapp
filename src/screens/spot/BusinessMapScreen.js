@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import View from '../components/common/View';
+import View from '../../components/common/View';
 import { StyleSheet, FlatList, InteractionManager } from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
-import themes from '../styleTheme';
+import themes from '../../styleTheme';
 
 
-import BroadcastCardInMap from '../components/BusinessProfileComponents/BroadcastCardInMap';
+import BroadcastCardInMap from '../../components/BusinessProfileComponents/BroadcastCardInMap';
 
 class BusinessMapScreen extends React.Component {
   state = {transitionFinished: false}
@@ -54,7 +54,7 @@ class BusinessMapScreen extends React.Component {
             data={broadcasts}
             renderItem={({item}) =>
               <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
-                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={() => this.handleBusPress(item._id)}/>
+                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={() => this.handleBusPress(item)}/>
               </View>
             }
             horizontal={true}

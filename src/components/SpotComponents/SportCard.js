@@ -15,11 +15,12 @@ const SportCard = (props) => {
     <FloatingCard
       onPress={props.onPress}
       contentStyle={styles.cardContent}
+      containerStyle={styles.container}
       footContent={props.name}
       footStyle={styles.cardFooter}
       footTitleStyle={{
-        color: themes.base.colors.white.default,
-        fontSize: 18,
+        color: themes.base.colors.accent.default,
+        fontSize: 16,
         fontFamily: Fonts.LatoBold,
       }}
     >
@@ -30,15 +31,22 @@ const SportCard = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 8,
+    paddingRight: 8
+  },
 
   cardFooter: {
 
-    backgroundColor: themes.base.colors.accent.default,
+    backgroundColor: themes.base.colors.white.light,
+    borderTopWidth: 1,
+    borderColor: '#EEEEEE',
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardContent: {
 
+    paddingBottom: 8,
     justifyContent: 'center',
     alignItems:'center'
   }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SignupForm from '../components/forms/SignupForm';
-import signup from '../validations/signup';
+import SignupForm from '../../components/forms/SignupForm';
+import signup from '../../validations/signup';
 import validate from 'validate.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {View} from 'react-native';
@@ -24,10 +24,10 @@ import { Animated } from 'react-native';
 
 
 
-import themes from '../styleTheme';
+import themes from '../../styleTheme';
 const colors = themes.base.colors;
 
-import {registerRequest} from '../actions/login';
+import {registerRequest} from '../../actions/login';
 
 
 class SignupScreen extends React.Component {
@@ -96,7 +96,7 @@ class SignupScreen extends React.Component {
         }
         // TODO: Gestire tutti gli eventuali errori del server (per ora gestiamo solo il Conflict: Email già esistente)
         return (
-            <ImageBackground source={require('../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
+            <ImageBackground source={require('../../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
                 <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
             <View style={styles.container}>
 

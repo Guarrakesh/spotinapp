@@ -1,6 +1,6 @@
 import React from 'react';
 import View from '../common/View';
-import {Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from '../../helpers';
@@ -14,6 +14,18 @@ const BroadcastCardInProfile = (props) => {
 
   let date = moment(event.start_at).locale('it').format('dddd D MMMM');
   let time = moment(event.start_at).locale('it').format('hh:mm');
+
+  const showAlert = () => {
+    Alert.alert(
+      'Vuoi prenotare questa offerta?',
+      '-10% alla cassa',
+      [
+        {text: 'Annulla', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'PRENOTA!', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
+  }
 
   return (
     <View style={styles.broadcastInfoView} elevation={2}>
@@ -35,7 +47,7 @@ const BroadcastCardInProfile = (props) => {
         <View style={styles.offerContainer}>
           <Text style={styles.offerText}>-10% alla cassa</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={showAlert}>
           <View style={styles.reservationButton} elevation={2}>
             <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
           </View>
@@ -102,7 +114,7 @@ const styles = StyleSheet.create({
   offerText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
-    color: themes.base.colors.accent.default,
+    color: themes.base.colors.danger.default,
   },
   reservationButton: {
     backgroundColor: themes.base.colors.accent.default,

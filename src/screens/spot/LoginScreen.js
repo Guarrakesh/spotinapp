@@ -2,10 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground, Platform, Animated, StatusBar} from "react-native";
-import View from "../components/common/View";
+import View from "../../components/common/View";
 import {Input, Button} from "react-native-elements";
-import themes from "../styleTheme";
-import {loginRequest} from "../actions/login";
+import themes from "../../styleTheme";
+import {loginRequest} from "../../actions/login";
 
 const colors = themes.base.colors;
 
@@ -43,11 +43,11 @@ class LoginScreen extends React.Component {
           backgroundColor="blue"
           barStyle="light-content"
         />
-        <ImageBackground source={require('../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
+        <ImageBackground source={require('../../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
 
           <View style={styles.middleContainerStyle}>
             <Image
-              source={require('../images/SpotInIconWhite.png')}
+              source={require('../../images/SpotInIconWhite.png')}
               style={{marginTop: 10, alignSelf: 'center'}}
             />
             <Text style={{marginTop: 30, marginBottom: 30, fontSize: 20, fontWeight: '700', color: colors.text.light, textAlign: 'center'}}>Entra nel tuo account</Text>

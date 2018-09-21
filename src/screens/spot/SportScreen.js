@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getAllSports, getFavoriteSports } from '../actions/sports';
-import SportList from '../components/SpotComponents/SportList';
+import { getAllSports, getFavoriteSports } from '../../actions/sports';
+import SportList from '../../components/SpotComponents/SportList';
 import PropTypes from 'prop-types';
 
 import { View, Text, ActivityIndicator , InteractionManager } from 'react-native';
-import { getLocationRequest } from "../actions/location";
+import { getLocationRequest } from "../../actions/location";
 
 
-import themes from '../styleTheme';
+import themes from '../../styleTheme';
 
 class SportScreen extends React.Component {
 

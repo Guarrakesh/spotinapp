@@ -61,7 +61,7 @@ class BusinessScreen extends React.Component {
       //Devo controllare quindi se lat e lng erano già presenti nello store, se sì allora posso fetchare i business
       //Altrimenti lo farò in componentDidUpdate
       if (lat && lng && (!businesses || businesses.length === 0)) {
-        this.props.dispatch(getBusinessRequest(lat, lng));
+        this.props.dispatch(getBusinessRequest({lat, lng}));
       }
     });
   }
@@ -105,7 +105,7 @@ class BusinessScreen extends React.Component {
               buttonColor={themes.base.colors.accent.default}
               size={52}
               offsetY={32}
-              onPress={() => {this.props.navigation.navigate('BusinessMap', {businesses: businesses})}}
+              onPress={() => {this.props.navigation.navigate('BusinessMapInBusiness', {businesses: businesses})}}
               icon={<Icon name="map" size={24}
                           style={{color: themes.base.colors.white.default}}/>}
           />
