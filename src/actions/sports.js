@@ -13,6 +13,9 @@ export function getAllSports() {
         type: FETCH_ALL_SPORTS.REQUEST
     }
 }
+export function getAllSports() {
+
+}
 export function getFavoriteSports() {
     return {
         type: FETCH_FAVORITE_SPORTS.REQUEST

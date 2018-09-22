@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, ScrollView, ActivityIndicator, View, InteractionManager} from 'react-native';
 
-import { getEventsRequest } from '../../actions/events';
+import { getEventList as getEventListAction } from '../../actions/events';
 import EventList from '../../components/SpotComponents/EventList';
 import themes from "../../styleTheme";
 
@@ -43,6 +43,9 @@ class EventScreen extends React.Component {
     if (!this.props.loggedIn)
       this.props.navigation.navigate('Auth');
   }
+  handleLoadMore() {
+
+  }
   render() {
     const { competition } = this.props.navigation.state.params;
     const { events, currentlySending } = this.props;
@@ -66,7 +69,7 @@ class EventScreen extends React.Component {
 
     return (
       <View>
-        <EventList events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
+        <EventList loadMore={this.handleLoadMore.bind(this)} events={filteredEvents} onItemPress={this.handleEventPress} onFavoritePress={this.handleEventFavoritePress}/>
       </View>
 
     )
@@ -83,4 +86,6 @@ const mapStateToProps = (state) => {
   }
 
 };
-export default connect(mapStateToProps)(EventScreen);
+export default connect(mapStateToProps, {
+  getEventList: getEventListAction
+})(EventScreen);

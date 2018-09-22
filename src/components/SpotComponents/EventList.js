@@ -57,6 +57,7 @@ const EventList = (props) => {
         onFavoritePress={ () => props.onFavoritePress(item)}
         {...item}/>}
       contentContainerStyle={styles.container}
+      onEndReached={props.loadMore}
       renderSectionHeader={headerSection}
       sections={sections}
       stickySectionHeadersEnabled={false}
