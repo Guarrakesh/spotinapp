@@ -7,7 +7,7 @@ export const fetchApi = (endPoint, payload = {}, method = 'get', header = {}) =>
 
 export async function request(url, payload, method: 'GET', accessToken = null) {
     let config = {
-        method: payload.method,
+        method: method,
         headers: { 'Content-Type': 'application/json' },
 
     };
@@ -17,6 +17,7 @@ export async function request(url, payload, method: 'GET', accessToken = null) {
     if (method ==! 'HEAD' && method ==! 'GET') {
         config.body = payload;
     }
+    console.log(payload);
 
 
     let response = await fetch(url, config);

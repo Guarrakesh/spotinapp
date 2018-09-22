@@ -30,7 +30,7 @@ const sanitizeRestProps = (rest) => ({
 
 
 export const VersionedImageField = ({
-  className,
+  style,
   source,
   minSize,
   imgSize,
@@ -54,11 +54,12 @@ export const VersionedImageField = ({
       return aToMinSizeDistance - bToMinSizeDistance;
     });
     version = sorted[0];
+
   }
 
   return (
   <Image source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
-         style={{width: imgSize.width, height: imgSize.height}}
+         style={{width: imgSize.width, height: imgSize.height, ...style}}
          resizeMode={"contain"} />
 
   );
@@ -72,7 +73,7 @@ VersionedImageField.defaultProps = {
 
 VersionedImageField.propTypes = {
   imgSize: PropTypes.object,
-  className: PropTypes.string,
+  style: PropTypes.object,
   minSize: PropTypes.object,
   source: PropTypes.string.isRequired,
 };

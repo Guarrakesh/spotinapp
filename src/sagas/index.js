@@ -4,7 +4,7 @@ import eventsRoot from './events'
 import locationRoot from './location';
 import broadcastsRoot from "./broadcasts";
 import businessesRoot from './businesses'
-
+import reservationRoot from './reservation';
 
 export default function* root() {
   yield all([
@@ -12,7 +12,8 @@ export default function* root() {
     fork(eventsRoot),
     fork(locationRoot),
     fork(broadcastsRoot),
-    fork(businessesRoot)
+    fork(businessesRoot),
+    fork(reservationRoot)
   ]);
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation';
 import BusinessScreen from '../screens/business/BusinessScreen';
-import BusinessProfileScreen from '../screens/business/BusinessProfileScreen';
+import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 import BusinessMapInBusiness from '../screens/business/BusinessMapInBusiness';
 
 import themes from '../styleTheme';

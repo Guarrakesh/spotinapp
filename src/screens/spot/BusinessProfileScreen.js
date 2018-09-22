@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Modal, Text, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
+import {View, StyleSheet, Text, ScrollView, ActivityIndicator} from 'react-native';
+import Modal from "react-native-modal";
+import { connect } from 'react-redux';
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
-
+import broadcasts from '../../api/broadcasts';
+import events from '../../api/events';
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
-
+import { reserveBroadcastRequest as reserveBroadcastAction} from '../../actions/reservation';
 const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
   "name": "Pizza Hot",
@@ -89,148 +93,111 @@ const businessImg = {
   }
 }
 
-const event = [{
-  "sport":{
-    "active":true,
-    "_id":"5b33f4f1e0cc7477e26f795f",
-    "name":"Calcio",
-    "slug":"football",
-    "__v":1,
-    "image_versions":[
-
-    ]
-  },
-  "competition":{
-    "competitorsHaveLogo":true,
-    "_id":"5b34013ce0cc7477e26f7db9",
-    "sport_id":"5b33f4f1e0cc7477e26f795f",
-    "name":"Champions League",
-    "country":"Europa",
-    "image_versions":[
-      {
-        "width":"964",
-        "height":"780",
-        "url":"https://s3.eu-central-1.amazonaws.com/spotinapp/images/competition-logos/championsleague_logo.png"
-      }
-    ],
-    "sport":"5b33f4f1e0cc7477e26f795f"
-  },
-  "_id":"5b8a5831e510e3001e68f14e",
-  "competitors":[
-    {
-      "_id":{
-        "image_versions":[
-          {
-            "width":"1200",
-            "height":"1200",
-            "url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Juventus_FC_2017_logo.svg/2000px-Juventus_FC_2017_logo.svg.png"
-          }
-        ],
-        "isPerson":false,
-        "_id":"5b3407e4e0cc7477e26f7fbd",
-        "name":"Juventus",
-        "sport_id":"5b33f4f1e0cc7477e26f795f",
-        "__v":1,
-        "sport":"5b33f4f1e0cc7477e26f795f"
-      }
-    },
-    {
-      "_id":{
-        "image_versions":[
-          {
-            "width":"1200",
-            "height":"1200",
-            "url":"https://s3.eu-central-1.amazonaws.com/spotinapp/images/team-logos/napoli_logo.png"
-          }
-        ],
-        "isPerson":false,
-        "_id":"5b340717151128db331b708f",
-        "sport_id":"5b33f4f1e0cc7477e26f795f",
-        "name":"Napoli",
-        "slug":"napoli",
-        "sport":"5b33f4f1e0cc7477e26f795f"
-      }
-    }
-  ],
-  "name":"Juventus - Napoli",
-  "start_at":"2018-09-20T10:30:00.000Z"
-},{
-  "sport":{
-    "active":true,
-    "_id":"5b33f4f1e0cc7477e26f795f",
-    "name":"Tennis",
-    "slug":"tennis",
-    "__v":1,
-    "image_versions":[
-
-    ]
-  },
-  "competition":{
-    "competitorsHaveLogo":false,
-    "_id":"5b34013ce0cc7477e26f7db9",
-    "sport_id":"5b33f4f1e0cc7477e26f795f",
-    "name":"Wimbledon",
-    "country":"Europa",
-    "image_versions":[
-      {
-        "width":"964",
-        "height":"780",
-        "url":"https://upload.wikimedia.org/wikipedia/it/thumb/b/b9/Wimbledon.svg/1024px-Wimbledon.svg.png"
-      }
-    ],
-    "sport":"5b33f4f1e0cc7477e26f795f"
-  },
-  "_id":"5b8a5831e510e3001e68f14e",
-  "competitors":[
-    {
-      "_id":{
-        "image_versions":[
-          {
-            "width":"1200",
-            "height":"1200",
-            "url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Juventus_FC_2017_logo.svg/2000px-Juventus_FC_2017_logo.svg.png"
-          }
-        ],
-        "isPerson":false,
-        "_id":"5b3407e4e0cc7477e26f7fbd",
-        "name":"Juventus",
-        "sport_id":"5b33f4f1e0cc7477e26f795f",
-        "__v":1,
-        "sport":"5b33f4f1e0cc7477e26f795f"
-      }
-    },
-    {
-      "_id":{
-        "image_versions":[
-          {
-            "width":"1200",
-            "height":"1200",
-            "url":"https://s3.eu-central-1.amazonaws.com/spotinapp/images/team-logos/napoli_logo.png"
-          }
-        ],
-        "isPerson":false,
-        "_id":"5b340717151128db331b708f",
-        "sport_id":"5b33f4f1e0cc7477e26f795f",
-        "name":"Napoli",
-        "slug":"napoli",
-        "sport":"5b33f4f1e0cc7477e26f795f"
-      }
-    }
-  ],
-  "name":"R. Federer - R. Nadal",
-  "start_at":"2018-09-20T10:30:00.000Z"
-},
-]
-
 class BusinessProfileScreen extends React.Component {
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+  state = {
+    modalVisible: false,
+    modalData: {},
+    broadcasts: [],
+    eventLoaded: false,
+    currentlySending: true
+  };
+
+  static navigationOptions = () => {
+
+    return {
+
+      title: "Profilo Locale",
+      headerBackTitle: null,
+
+      headerStyle: {
+        shadowOffset: {width: 0, height: 0},
+        shadowColor: 'transparent',
+        borderBottomWidth: 0,
+        backgroundColor: themes.base.colors.primary.default
+      },
+      headerTitleStyle: {
+        fontFamily: Fonts.LatoBold,
+        color: themes.base.colors.text.default
+      },
+    }
+  }
+
+  handleReservePress(broadcast) {
+    this.setState({
+      modalVisible: true,
+      currentBroadcast: broadcast,
+      modalData: {
+        broadcast
+      }
+    });
+  }
+  handleModalDismiss() {
+    this.setState({
+      modalVisible: false,
+    });
+  }
+  handleConfirm() {
+    this.setState({
+      modalVisible: false,
+
+    });
+
+    this.props.reserveBroadcast(this.state.currentBroadcast._id);
+
+  }
+
+  componentDidMount(){
+
+    const {business} = this.props.navigation.state.params;
+
+    broadcasts.fetchByBusiness(business._id).then(response => {
+      this.setState({broadcasts: response.docs, currentlySending: true});
+      const ids = response.docs.map(broadcast => broadcast.event);
+
+      events.fetchAccumulated(ids).then(response => {
+        console.log(response);
+        let broadcastsData;
+        response.docs.forEach(event => {
+          broadcastsData = this.state.broadcasts.map(broadcast => {
+            if (broadcast.event === event._id) {
+              broadcast.event = event;
+            }
+            return broadcast;
+          });
+
+        });
+        this.setState({broadcasts: broadcastsData, eventLoaded: true, currentlySending: false})
+      });
+    }).catch(error => {
+        console.log("ERRORE FETCH BY BUSINESS:", error);
+    });
+
   }
 
   render(){
 
     const {business} = this.props.navigation.state.params;
+    const { broadcasts, eventLoaded } = this.state;
+
+    let broadcastList;
+
+    if(!eventLoaded || !broadcasts){
+      broadcastList = <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Non ci sono eventi in programma</Text>;
+    }
+    else{
+      broadcastList = <View>
+        <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
+        <BroadcastInProfileList broadcasts={broadcasts} onReservePress={this.handleReservePress.bind(this)}/>
+      </View>
+
+    }
+
+    if(this.state.currentlySending){
+      broadcastList = <View>
+        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+      </View>
+    }
 
     return (
 
@@ -238,17 +205,18 @@ class BusinessProfileScreen extends React.Component {
         <View style={styles.generalContainer}>
           <ImagesScrollView business={businessImg}/>
           <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
-            visible={false}
+            isVisible={this.state.modalVisible}
             presentationStyle={'overFullScreen'}
           >
-            <ReservationConfirmView/>
+            <ReservationConfirmView
+              onConfirmPress={this.handleConfirm.bind(this)}
+              onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
           </Modal>
           <View style={styles.cardContainer}>
             <BusinessInfoCard business={business}/>
-            <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
-            <BroadcastInProfileList events={event}/>
+            {broadcastList}
           </View>
         </View>
       </ScrollView>
@@ -265,18 +233,27 @@ const styles = StyleSheet.create({
     flex: 1
   },
   generalContainer: {
-    width: '100%',
-    backgroundColor: themes.base.colors.white.default
+    width: '100%'
   },
   cardContainer: {
+    flex: 1,
     marginLeft: 8,
     marginRight: 8,
     marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
   },
 })
 
+BusinessProfileScreen.propTypes = {
+  reserveBroadcast: PropTypes.func,
+}
 
-export default BusinessProfileScreen;
+const mapStateToProps = (state) => ({
+});
+const mapDispatchToProps = {
+  reserveBroadcast: reserveBroadcastAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BusinessProfileScreen);
 
 
 

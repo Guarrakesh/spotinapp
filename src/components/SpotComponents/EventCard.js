@@ -28,10 +28,11 @@ const EventCard = (props) => {
       </View>
     });
   } else {
-
-    <View style={{marginTop: 32}}>
-      { <VersionedImageField source={competition.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
-    </View>
+    console.log(competition.image_versions);
+    competitorsComponent =
+      <View style={styles.competitors}>
+        <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />
+      </View>
   }
 
   let date = moment(props.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();

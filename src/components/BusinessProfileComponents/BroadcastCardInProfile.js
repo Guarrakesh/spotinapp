@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import View from '../common/View';
 import {Text, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native';
 import themes from '../../styleTheme';
@@ -7,32 +8,44 @@ import Helpers from '../../helpers';
 import moment from "moment";
 import 'moment/locale/it';
 import {Fonts} from "../common/Fonts";
+import VersionedImageField from '../common/VersionedImageField';
 
 const BroadcastCardInProfile = (props) => {
 
-  let { event } = props;
-
+  let { broadcast, onReservePress } = props;
+  const {event, offer} = broadcast;
   let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-  let time = moment(event.start_at).locale('it').format('hh:mm');
+  let time = moment(event.start_at).locale('it').format('HH:mm');
 
-  const showAlert = () => {
-    Alert.alert(
-      'Vuoi prenotare questa offerta?',
-      '-10% alla cassa',
-      [
-        {text: 'Annulla', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'PRENOTA!', onPress: () => console.log('OK Pressed')},
-      ],
-      { cancelable: false }
-    )
-  }
+
+  const discount = (type) => {
+    switch (parseInt(type)) {
+      case 0:
+        return `${offer.value}€`;
+      case 1:
+        return `-${offer.value}%`;
+      case 2:
+        return `-${offer.value}€`;
+      default:
+        return null;
+    }
+  };
+
 
   return (
     <View style={styles.broadcastInfoView} elevation={2}>
       <View style={styles.eventInfoView}>
         <View style={styles.competitorsLogoView}>
-          { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._id.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
-          { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[1]._id.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null }
+          { event.competition.competitorsHaveLogo ?
+            <VersionedImageField source={event.competitors[0].competitor.image_versions} minSize={{width: 64, height: 64}} imgSize={{width: 37, height: 37}}/>
+            : <VersionedImageField source={event.competition.image_versions} minSize={{width: 64, height: 64}} imgSize={{width: 37, height: 37}} /> }
+          { event.competition.competitorsHaveLogo
+            ? <VersionedImageField
+              style={{marginTop: 8}}
+              source={event.competitors[1].competitor.image_versions}
+              minSize={{width: 64, height: 64}}
+              imgSize={{width: 37, height: 37}}/>
+            : null }
         </View>
         <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
           <Text style={styles.eventNameText}>{event.name}</Text>
@@ -45,9 +58,9 @@ const BroadcastCardInProfile = (props) => {
       </View>
       <View style={styles.offerReservationView}>
         <View style={styles.offerContainer}>
-          <Text style={styles.offerText}>-10% alla cassa</Text>
+          <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
         </View>
-        <TouchableOpacity onPress={showAlert}>
+        <TouchableOpacity onPress={() => onReservePress(broadcast)}>
           <View style={styles.reservationButton} elevation={2}>
             <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
           </View>
@@ -56,7 +69,10 @@ const BroadcastCardInProfile = (props) => {
     </View>
   );
 };
-
+BroadcastCardInProfile.propTypes ={
+  broadcast: PropTypes.object,
+  onReservePress: PropTypes.func
+};
 const styles = StyleSheet.create({
   broadcastInfoView: {
     marginTop: 8,
@@ -122,7 +138,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   reservationText: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: Fonts.LatoBold,
     color: themes.base.colors.white.light,
     marginRight: 16,
@@ -132,6 +148,6 @@ const styles = StyleSheet.create({
   }
 
 
-})
+});
 
 export default BroadcastCardInProfile;

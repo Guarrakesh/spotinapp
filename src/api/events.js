@@ -19,6 +19,20 @@ const events = {
     async fetchAll() {
         // TODO: Da definire
 
+    },
+
+    async fetchAccumulated(ids = []) {
+        const idsString = ids.join('|');
+      try {
+        const endpoint = `${vars.apiUrl}/events?id_like=${idsString}&extend=competition,competitors.competitor,sport`;
+        let response = await request(endpoint, {}, 'GET');
+        let data = await response.json();
+
+        return data;
+      } catch(err) {
+        throw new Error(err);
+      }
+
     }
 
 
