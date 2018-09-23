@@ -74,6 +74,7 @@ EventList.propTypes = {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
+    flexDirection: 'column',
     padding: 8,
   }
 });

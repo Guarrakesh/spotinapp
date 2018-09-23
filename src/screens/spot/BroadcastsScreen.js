@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import {Text, StyleSheet, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
+import {Text, StyleSheet, Animated, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import moment from 'moment';
 import 'moment/locale/it';
@@ -13,8 +13,16 @@ import { getBroadcastsRequest } from '../../actions/broadcasts';
 
 import themes from "../../styleTheme";
 
+const HEADER_HEIGHT = 100;
+
 
 class BroadcastsScreen extends React.Component {
+
+  state = {
+    scrollAnim: new Animated.Value(0),
+    offsetAnim: new Animated.Value(0)
+  };
+
 
   constructor() {
     super();
@@ -57,16 +65,46 @@ class BroadcastsScreen extends React.Component {
       if (!event.broadcasts) {
         this.props.dispatch(getBroadcastsRequest(event._id, position));
       }
+
+      this.state.scrollAnim.addListener(this._handleScroll);
     });
 
 
   }
+  _handleScroll = ({ value }) => {
+    this._previousScrollValue = this._currentScrollValue;
+    this._currentScrollValue = value;
+  };
+
+  _handleScrollEndDrag = () => {
+    this._scrollEndTimer = setTimeout(this._handleMomentumScrollEnd, 250);
+  };
+
+  _handleMomentumScrollBegin = () => {
+    clearTimeout(this._scrollEndTimer);
+  };
+  _handleMomentumScrollEnd = () => {
+    const previous = this._previousScrollValue;
+    const current = this._currentScrollValue;
+    if (previous > current && current < HEADER_HEIGHT) {
+      Animated.spring(this.state.offsetAnim, {
+        toValue: -current,
+        tension: 300,
+        friction: 35
+      }).start();
+    } else {
+      Animated.timing(this.state.offsetAnim, {
+        toValue: 0,
+        duration: 500
+      }).start();
+    }
+  };
+
 
   handleBusinessPress(broadcast) {
     this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
 
   }
-
 
   bottomView = (broadcasts) => {
     if(!broadcasts || broadcasts.length === 0){
@@ -79,25 +117,30 @@ class BroadcastsScreen extends React.Component {
     }
     else {
       return (
-        <View style={{flex: 1}}>
-          <BroadcastsList broadcasts={broadcasts} onItemPress={this.handleBusinessPress}/>
-          <ActionButton
-            title=''
-            position={"right"}
-            buttonColor={themes.base.colors.accent.default}
-            size={52}
-            offsetY={32}
-            onPress={() => {this.props.navigation.navigate('BusinessMapInSpot', {broadcasts: broadcasts})}}
-            icon={<Icon name="map" size={24}
-                        style={{color: themes.base.colors.white.default}}/>}
+
+          <BroadcastsList
+            onScroll={Animated.event(
+                [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
+
+            )}
+            onMomentumScrollBegin={ this._handleMomentumScrollBegin }
+            onMomentumScrollEnd={this._handleMomentumScrollEnd }
+            onScrollEndDrag={this._handleScrollEndDrag}
+              broadcasts={broadcasts} onItemPress={this.handleBusinessPress}
+            style={{paddingTop: HEADER_HEIGHT + 32}}
           />
-        </View>
-      )
+        )
     }
   };
 
   render() {
+    const { scrollAnim, offsetAnim } = this.state;
 
+    const translateY = Animated.add(scrollAnim, offsetAnim).interpolate({
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, -HEADER_HEIGHT],
+      extrapolate: 'clamp'
+    });
     const {event} = this.props.navigation.state.params;
     let broadcasts = event.broadcasts;
     const {currentlySending} = this.props;
@@ -110,17 +153,34 @@ class BroadcastsScreen extends React.Component {
           <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
         </View>
       )
-    }
+    }<Animated.View style={[styles.subHeader, { transform: [{translateY}]}]}>
+      <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+      <Text style={styles.eventName}>{event.name}</Text>
+      <Animated.Text style={[styles.date]}>{date}</Animated.Text>
+    </Animated.View>
 
 
     return (
       <View style={styles.container}>
-        <View style={styles.subHeader}>
-          <Text style={styles.competitionName}>{event.competition.name}</Text>
-          <Text style={styles.eventName}>{event.name}</Text>
-          <Text style={styles.date}>{date}</Text>
-        </View>
+
+
         {this.bottomView(broadcasts)}
+
+        <ActionButton
+            title=''
+            position={"right"}
+            buttonColor={themes.base.colors.accent.default}
+            size={52}
+            offsetY={32}
+            onPress={() => {this.props.navigation.navigate('BusinessMapInSpot', {broadcasts: broadcasts})}}
+            icon={<Icon name="map" size={24}
+                        style={{color: themes.base.colors.white.default}}/>}
+        />
+        <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
+          <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+          <Text style={styles.eventName}>{event.name}</Text>
+          <Animated.Text style={[styles.date]}>{date}</Animated.Text>
+        </Animated.View>
       </View>
     )
   }
@@ -138,17 +198,18 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+
   },
   subHeader: {
+    height: HEADER_HEIGHT,
     alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'column',
-    backgroundColor: themes.base.colors.primary.default,
-    paddingBottom: 48,
-    paddingTop: 16,
-    marginBottom: -32,
-    zIndex: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: themes.base.colors.primary.default
   },
   eventName: {
     fontSize: 18,
@@ -159,7 +220,7 @@ const styles = StyleSheet.create({
   },
   competitionName: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '300',
     color: themes.base.colors.text.default,
 
   },

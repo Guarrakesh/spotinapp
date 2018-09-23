@@ -1,12 +1,12 @@
 import React from 'react';
 
 import BroadcastCard from './BroadcastCard';
-import {StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList, Animated} from 'react-native';
 
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';
 //import broadcasts from "../../api/broadcasts";
-
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 //0 prezzo fisso, 1 sconto percentuale, 2 sconto assoluto
 
@@ -23,20 +23,22 @@ class BroadcastsList extends React.Component {
 
   render(){
 
-    const { broadcasts } = this.props;
+    const { broadcasts, style, ...rest} = this.props;
     if (!broadcasts || broadcasts.length <= 0) {
       return null;
     }
 
 
     return (
-      <FlatList
-        data={broadcasts}
-        renderItem={({item}) => <BroadcastCard
+      <AnimatedFlatList
+          {...rest}
+          scrollEventThrottle={15}
+          data={broadcasts}
+          renderItem={({item}) => <BroadcastCard
           onItemPress={() => this._onItemPress(item._id)}
           {...item}/>}
 
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[styles.container, style]}
       />
 
     );
@@ -47,12 +49,17 @@ class BroadcastsList extends React.Component {
 BroadcastsList.propTypes = {
   onItemPress: PropTypes.func.isRequired,
   broadcasts: PropTypes.array,
+  onScroll: PropTypes.func,
+  onMomentumScrollBegin: PropTypes.func,
+  onMomentumScrollEnd: PropTypes.func,
+  onScrollEndDrag: PropTypes.func,
+  style: PropTypes.object,
 };
 const styles = StyleSheet.create({
   container: {
 
-
     alignItems: 'stretch',
+    flexWrap: 'wrap',
     padding: 8,
   }
 });
