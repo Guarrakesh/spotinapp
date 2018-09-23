@@ -71,9 +71,15 @@ class BroadcastsScreen extends React.Component {
 
 
   }
+
+  componentWillUnmount() {
+    this.state.scrollAnim.removeListener(this._handleScroll);
+  }
   _handleScroll = ({ value }) => {
+
     this._previousScrollValue = this._currentScrollValue;
-    this._currentScrollValue = value;
+    this._currentScrollValue = Math.round(value);
+
   };
 
   _handleScrollEndDrag = () => {
@@ -86,7 +92,8 @@ class BroadcastsScreen extends React.Component {
   _handleMomentumScrollEnd = () => {
     const previous = this._previousScrollValue;
     const current = this._currentScrollValue;
-    if (previous > current && current < HEADER_HEIGHT) {
+    console.log("prev", previous, "cur",  current);
+    if (previous > current || current < HEADER_HEIGHT) {
       Animated.spring(this.state.offsetAnim, {
         toValue: -current,
         tension: 300,
