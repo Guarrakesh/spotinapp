@@ -182,7 +182,7 @@ class BusinessProfileScreen extends React.Component {
 
     let broadcastList;
 
-    if(!eventLoaded || !broadcasts){
+    if(!eventLoaded || !broadcasts || broadcasts.length == 0){
       broadcastList = <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Non ci sono eventi in programma</Text>;
     }
     else{

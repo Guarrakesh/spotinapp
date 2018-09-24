@@ -1,4 +1,4 @@
-import ProfileScreen from '../screens/spot/ProfileScreen'
+import ProfileScreen from '../screens/profile/ProfileScreen'
 import { createStackNavigator } from 'react-navigation';
 
 export default ProfileStack = createStackNavigator(

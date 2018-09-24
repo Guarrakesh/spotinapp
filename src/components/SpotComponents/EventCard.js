@@ -76,8 +76,8 @@ const styles = {
     backgroundColor: colors.white.default,
   },
   favorite: {
-    borderRightColor: colors.text.default,
-    borderRightWidth: 0.5,
+    borderRightColor: colors.white.divisor,
+    borderRightWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,

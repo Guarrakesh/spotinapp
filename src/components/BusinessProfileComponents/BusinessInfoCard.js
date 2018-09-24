@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flexDirection: 'row',
     margin: 16,
-    borderTopColor: themes.base.colors.text.default,
-    borderTopWidth: 0.5
+    borderTopColor: themes.base.colors.white.divisor,
+    borderTopWidth: 1
   },
   tvIcon: {
     marginLeft: 20,

@@ -24,7 +24,8 @@ const themes = {
       },
       white: {
         default: '#FAFAFA',
-        light: '#FFFFFF'
+        light: '#FFFFFF',
+        divisor: '#EEEEEE' //colore per le linee divisorie
       }
     },
     //Si dovrebbero calcolare diversamente su iOS ...
@@ -78,7 +79,8 @@ const themes = {
       },
       white: {
         default: '#FAFAFA',
-        light: '#FFFFFF'
+        light: '#FFFFFF',
+        divisor: '#EEEEEE' //colore per le linee divisorie
       },
       danger: {
           default: '#B80638'
