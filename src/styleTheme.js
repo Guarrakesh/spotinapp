@@ -83,7 +83,8 @@ const themes = {
         divisor: '#EEEEEE' //colore per le linee divisorie
       },
       danger: {
-          default: '#B80638'
+          default: '#B80638',
+          light: '#FF356E',
       }
     },
     elevations: {

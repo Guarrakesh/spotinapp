@@ -42,7 +42,7 @@ const EventCard = (props) => {
 
     <View elevation={1} style={styles.containerStyle}>
 
-      <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
+      <TouchableOpacity activeOpacity={0.3} style={styles.favorite} onPress={props.onFavoritePress}>
 
         {props.isFavorite ?   <Icon name="favorite" size={30} color={colors.accent.default}/> :  <Icon name="favorite-border" size={30} color={colors.accent.default}/>}
 
@@ -69,10 +69,11 @@ const EventCard = (props) => {
 const styles = {
   containerStyle: {
     marginTop: 10,
-    borderRadius: 8,
+    borderRadius: themes.base.borderRadius,
+    marginBottom: 8,
+    height: 130,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    height: 116,
+    justifyContent: 'center',
     backgroundColor: colors.white.default,
   },
   favorite: {
@@ -88,7 +89,8 @@ const styles = {
   },
   eventInfo: {
     flexGrow: 3,
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
   competitorsLogosContainer: {
     alignItems: 'center',
@@ -109,7 +111,7 @@ const styles = {
     marginTop: 20,
     flexDirection: 'column',
     marginBottom: 20,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     flex: 1,
     flexWrap: 'wrap'
   },
