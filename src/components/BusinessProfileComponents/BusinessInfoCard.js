@@ -9,13 +9,13 @@ import call from 'react-native-phone-call'
 
 const BusinessInfoCard = (props) => {
 
-  let { business } = props;
+  let { business, distance } = props;
 
-  let roundedDistance = Math.round(business.dist.calculated*10)/10;
+  let roundedDistance = Math.round(distance.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
   const mapURL = Platform.OS === 'android' ? "google.navigation:q=" : "maps://app?daddr=";
-  const businessAddr = `${business.dist.location.coordinates[1]}+${business.dist.location.coordinates[0]}`
+  const businessAddr = `${distance.location.coordinates[1]}+${distance.location.coordinates[0]}`
 
   return (
     <View style={styles.businessInfoView} elevation={2}>

@@ -2,6 +2,7 @@
 import { Platform } from 'react-native';
 
 
+
 const themes = {
   old: {
     borderRadius: 8,
@@ -111,7 +112,24 @@ const themes = {
         shadowOpacity: 0.30,
       },
 
+    },
+
+
+    listTitleStyle: {
+      fontWeight: '500',
+      textAlign: 'center',
+      fontSize: 21,
+      padding: 8,
+      marginTop: 8,
+      color: '#555555'
+    },
+
+    noContentView: {
+      flex :1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
+
 
   },
 

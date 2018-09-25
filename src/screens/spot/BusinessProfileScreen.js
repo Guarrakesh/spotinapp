@@ -3,6 +3,8 @@ import { View, StyleSheet, Modal, Text, ScrollView } from 'react-native';
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
+import ShowController from '../../controllers/ShowController';
+
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
@@ -230,29 +232,36 @@ class BusinessProfileScreen extends React.Component {
 
   render(){
 
-    const {business} = this.props.navigation.state.params;
-
+    const {business, distance} = this.props.navigation.state.params;
     return (
-
-      <ScrollView style={styles.scrollView} contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
-        <View style={styles.generalContainer}>
-          <ImagesScrollView business={businessImg}/>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={false}
-            presentationStyle={'overFullScreen'}
-          >
-            <ReservationConfirmView/>
-          </Modal>
-          <View style={styles.cardContainer}>
-            <BusinessInfoCard business={business}/>
-            <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
-            <BroadcastInProfileList events={event}/>
-          </View>
-        </View>
-      </ScrollView>
-
+        <ShowController resource="businesses"
+                        id={business._id}
+                        basePath="/businesses">
+          { ({record, isLoading}) => {
+            if (isLoading || !record)  return null;
+            return (
+              <ScrollView style={styles.scrollView}
+                          contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
+                <View style={styles.generalContainer}>
+                  <ImagesScrollView business={businessImg}/>
+                  <Modal
+                      animationType="slide"
+                      transparent={true}
+                      visible={false}
+                      presentationStyle={'overFullScreen'}
+                  >
+                    <ReservationConfirmView/>
+                  </Modal>
+                  <View style={styles.cardContainer}>
+                    <BusinessInfoCard distance={distance} business={record}/>
+                    <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
+                    <BroadcastInProfileList events={event}/>
+                  </View>
+                </View>
+              </ScrollView>
+            )}
+          }
+        </ShowController>
 
     );
   }

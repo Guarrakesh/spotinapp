@@ -22,28 +22,28 @@ class BusinessMapScreen extends React.Component {
   }
   render() {
 
-    const { broadcasts } = this.props.navigation.state.params;
-    if (!broadcasts || !this.state.transitionFinished) return null;
+    const { data, ids } = this.props.navigation.state.params;
+
 
     return (
       <View style={{flex:1}}>
         <MapView style={styles.map}
                  initialRegion={{
-                   latitude: broadcasts[0].business.address.location.coordinates[1],
-                   longitude: broadcasts[0].business.address.location.coordinates[0],
+                   latitude: data[ids[0]].business.address.location.coordinates[1],
+                   longitude: data[ids[0]].business.address.location.coordinates[0],
                    latitudeDelta: 0.5,
                    longitudeDelta: 0.5
                  }}
         >
 
           {
-            broadcasts.map(broad =>
+            ids.map(id =>
               <MapView.Marker
                 coordinate={{
-                  latitude: broad.business.address.location.coordinates[1],
-                  longitude: broad.business.address.location.coordinates[0]}}
-                title={broad.business.name}
-                description={broad.offer.title}
+                  latitude: data[id].business.address.location.coordinates[1],
+                  longitude: data[id].business.address.location.coordinates[0]}}
+                title={data[id].business.name}
+                description={data[id].offer.title}
               />
             )
           }
@@ -51,10 +51,10 @@ class BusinessMapScreen extends React.Component {
         </MapView>
         <View style={{backgroundColor: themes.base.colors.white.default, position: 'absolute', bottom: 0, height: '40%', width: '100%'}}>
           <FlatList
-            data={broadcasts}
+            data={ids}
             renderItem={({item}) =>
               <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
-                <BroadcastCardInMap business={item.business} offer={item.offer} style={{flex: 1}} onItemPress={() => this.handleBusPress(item)}/>
+                <BroadcastCardInMap business={data[item].business} offer={data[item].offer} style={{flex: 1}} onItemPress={() => this.handleBusPress(item)}/>
               </View>
             }
             horizontal={true}
@@ -82,6 +82,7 @@ const mapStateToProps = (state) => {
     longitude: state.location.longitude,
   };
 };
+
 
 const styles = StyleSheet.create({
   container: {

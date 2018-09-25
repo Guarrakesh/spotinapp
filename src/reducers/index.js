@@ -4,15 +4,20 @@ import {combineReducers} from 'redux';
 
 
 import authReducer from './authReducer';
-
-import entityReducer from './entityReducer';
-import locationReducer from './locationReducer';
+import references from './references';
+import entities from './entities';
+import location from './location';
+import loading from './loading';
+import ui from './ui';
 
 
 const rootReducer = combineReducers({
-    location: locationReducer,
+    location,
     auth: authReducer,
-    entities: entityReducer,
+    entities,
+    loading,
+    references,
+    ui
 });
 
 export default rootReducer;

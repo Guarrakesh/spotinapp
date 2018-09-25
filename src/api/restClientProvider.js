@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-import { fetchJson } from '../helpers/fetch';
 
 import { stringify } from 'query-string';
 import {
-  fetchUtils,
+
+
   GET_LIST,
   GET_ONE,
   GET_MANY,
@@ -14,8 +14,12 @@ import {
   UPDATE_MANY,
   DELETE,
   DELETE_MANY,
-} from 'react-admin';
+} from '../actions/types';
+import {fetchJson, flattenObject} from '../helpers/fetch';
 
+const convertOrder = order => {
+  return order === "ASC" ? 1 : -1;
+}
 /**
  * Maps react-admin queries to a json-server powered REST API
  *
@@ -28,7 +32,7 @@ import {
  * CREATE       => POST http://my.api.url/posts/123
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
+export default (apiUrl, httpClient = fetchJson) => {
   /**
    * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
    * @param {String} resource Name of the resource to fetch, e.g. 'posts'
@@ -43,9 +47,9 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
-          ...fetchUtils.flattenObject(params.filter),
+          ...flattenObject(params.filter),
           _sort: field,
-          _order: order,
+          _order: convertOrder(order),
           _start: (page - 1) * perPage,
           _end: page * perPage,
         };
@@ -59,10 +63,10 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
-          ...fetchUtils.flattenObject(params.filter),
+          ...flattenObject(params.filter),
           [params.target]: params.id,
           _sort: field,
-          _order: order,
+          _order: convertOrder(order),
           _start: (page - 1) * perPage,
           _end: page * perPage,
         };

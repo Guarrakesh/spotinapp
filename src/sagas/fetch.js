@@ -24,12 +24,12 @@ export function* handleFetch(dataProvider, action) {
   const restType = fetchMeta;
 
   try {
-    const isOptimistic = yield select(state => state.ui.optimistic);
+   /* const isOptimistic = yield select(state => state.ui.optimistic);
     if (isOptimistic) {
       // in optimistic mode, all fetch actions are canceled,
       // so the admin uses the store without synchronization
       return;
-    }
+    }*/
 
     yield all([
         put({ type: `${type}_LOADING`, payload, meta}),

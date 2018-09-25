@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import {Text, StyleSheet, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
-import ActionButton from 'react-native-action-button';
+import {Text, StyleSheet, ActivityIndicator, InteractionManager, Platform} from 'react-native';
 import moment from 'moment';
 import 'moment/locale/it';
 
 import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
-import Icon from 'react-native-vector-icons/Feather';
-import {Fonts} from "../../components/common/Fonts";
-import { getBroadcastsRequest } from '../../actions/broadcasts';
+import ListController from '../../controllers/ListController';
+
 
 import themes from "../../styleTheme";
 
@@ -20,13 +18,16 @@ class BroadcastsScreen extends React.Component {
     super();
 
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
+    this.handleMapPress = this.handleMapPress.bind(this);
+  }
+  handleMapPress(data) {
+    this.props.navigation.navigate('BusinessMapInSpot', {...data});
 
   }
-
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams, navigate } = navigation;
+    const { state } = navigation;
     const params = state.params || {};
-    const { event } = params;
+    const { eventId } = params;
 
     return {
       title: "Locali vicini",
@@ -46,29 +47,18 @@ class BroadcastsScreen extends React.Component {
     }
   }
 
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      const {event} = this.props.navigation.state.params;
-      const position = {
-        lat: this.props.latitude,
-        lng: this.props.longitude
-      };
 
-      if (!event.broadcasts) {
-        this.props.dispatch(getBroadcastsRequest(event._id, position));
-      }
-    });
-
-
-  }
-
-  handleBusinessPress(broadcast) {
-    this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
+  handleBusinessPress(id, broadcast, distance) {
+    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId: id, business: broadcast.business, distance});
 
   }
 
 
-  bottomView = (broadcasts) => {
+ /* bottomView = (broadcasts) => {
+
+    const { eventId } = this.props.navigation.state.params;
+
+
     if(!broadcasts || broadcasts.length === 0){
       return (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
@@ -77,42 +67,27 @@ class BroadcastsScreen extends React.Component {
         </View>
       )
     }
-    else {
-      return (
-        <View style={{flex: 1}}>
-          <BroadcastsList broadcasts={broadcasts} onItemPress={this.handleBusinessPress}/>
-          <ActionButton
-            title=''
-            position={"right"}
-            buttonColor={themes.base.colors.accent.default}
-            size={52}
-            offsetY={32}
-            onPress={() => {this.props.navigation.navigate('BusinessMapInSpot', {broadcasts: broadcasts})}}
-            icon={<Icon name="map" size={24}
-                        style={{color: themes.base.colors.white.default}}/>}
-          />
-        </View>
-      )
-    }
-  };
+  };*/
 
   render() {
 
-    const {event} = this.props.navigation.state.params;
-    let broadcasts = event.broadcasts;
-    const {currentlySending} = this.props;
-
+    const { event, eventId } = this.props.navigation.state.params;
+    const position = {
+      lat: this.props.latitude,
+      lng: this.props.longitude
+    };
     let date = moment(event.start_at).locale('it').format('D MMM - hh:mm').toUpperCase();
 
-    if(currentlySending){
-      return(
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
-        </View>
-      )
-    }
+    //TODO: Fare qualcosa qui in caso di mancata posizione!
+    if (!position) return null;
 
 
+    const filter = {
+      latitude: position.lat,
+      longitude: position.lng,
+      radius: 50,
+      event: eventId
+    };
     return (
       <View style={styles.container}>
         <View style={styles.subHeader}>
@@ -120,17 +95,23 @@ class BroadcastsScreen extends React.Component {
           <Text style={styles.eventName}>{event.name}</Text>
           <Text style={styles.date}>{date}</Text>
         </View>
-        {this.bottomView(broadcasts)}
+        <ListController
+            perPage="10"
+            resource="broadcasts"
+            filter={filter}>
+          { controllerProps => <BroadcastsList
+              onMapPress={this.handleMapPress}
+              { ...controllerProps } onItemPress={this.handleBusinessPress}/>}
+        </ListController>
       </View>
     )
   }
 }
 const mapStateToProps = (state) => {
-  const { currentlySending, error} = state.entities;
   const { latitude, longitude } = state.location;
   const { loggedIn } = state.auth;
   return {
-    currentlySending, error, loggedIn, latitude, longitude,
+    loggedIn, latitude, longitude
   }
 
 }
