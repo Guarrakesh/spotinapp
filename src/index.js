@@ -14,7 +14,7 @@ const store = configureStore();
 
 class ResourceInitializer extends Component {
 
-  resources = ['sports', 'competitions',
+  resources = ['sports', 'competitions', 'competitors',
     'events', 'broadcasts', 'businesses', 'reservations'];
   componentWillMount() {
     this.resources.map(res => this.props.register({name: res}));

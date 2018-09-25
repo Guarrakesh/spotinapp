@@ -52,12 +52,13 @@ class BusinessMapScreen extends React.Component {
   }
   render() {
 
-    const { broadcasts } = this.props.navigation.state.params;
-    if (!broadcasts || !this.state.transitionFinished) return null;
+
+    const { ids, data } = this.props.navigation.state.params;
+    if (!ids || !data || !this.state.transitionFinished) return null;
 
     const region = {
-      latitude: broadcasts[0].business.address.location.coordinates[1],
-      longitude: broadcasts[0].business.address.location.coordinates[0],
+      latitude: data[ids[0]].business.address.location.coordinates[1],
+      longitude: data[ids[0]].business.address.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
     }
@@ -70,13 +71,13 @@ class BusinessMapScreen extends React.Component {
         >
 
           {
-            broadcasts.map(broad =>
+            ids.map(ids =>
               <MapView.Marker
                 coordinate={{
-                  latitude: broad.business.address.location.coordinates[1],
-                  longitude: broad.business.address.location.coordinates[0]}}
-                title={broad.business.name}
-                description={broad.offer.title}
+                  latitude: data[id].business.address.location.coordinates[1],
+                  longitude: data[id].business.address.location.coordinates[0]}}
+                title={data[id].business.name}
+                description={data[id].offer.title}
               />
             )
           }
@@ -91,10 +92,10 @@ class BusinessMapScreen extends React.Component {
           paddingBottom: 20
         }}>
           <Carousel
-            data={broadcasts}
+            data={ids}
             renderItem={({item}) =>
-              <BroadcastFloatingCard elevation={5} business={item.business} offer={item.offer} style={{flex: 1}}
-                                     onItemPress={() => this.handleBusPress(item)}/>
+              <BroadcastFloatingCard elevation={5} business={data[item].business} offer={item.offer} style={{flex: 1}}
+                                     onItemPress={() => this.handleBusPress(item, data[item].business._id, data[item].business.dist)}/>
             }
             itemWidth={300}
             sliderWidth={400}
@@ -110,9 +111,9 @@ class BusinessMapScreen extends React.Component {
   }
 
 
-  handleBusPress(broadcast) {
+  handleBusPress(broadcastId, businessId, distance) {
 
-    this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
+    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
 
   }
 }

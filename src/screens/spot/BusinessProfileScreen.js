@@ -12,6 +12,7 @@ import BusinessInfoCard from '../../components/BusinessProfileComponents/Busines
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
+import ListController from "../../controllers/ListController";
 
 const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
@@ -158,67 +159,52 @@ class BusinessProfileScreen extends React.Component {
 
   }
 
-  componentDidMount(){
-
-    const {business} = this.props.navigation.state.params;
-
-    broadcasts.fetchByBusiness(business._id).then(response => {
-      this.setState({broadcasts: response.docs, currentlySending: true});
-      const ids = response.docs.map(broadcast => broadcast.event);
-
-      events.fetchAccumulated(ids).then(response => {
-        console.log(response);
-        let broadcastsData;
-        response.docs.forEach(event => {
-          broadcastsData = this.state.broadcasts.map(broadcast => {
-            if (broadcast.event === event._id) {
-              broadcast.event = event;
-            }
-            return broadcast;
-          });
-
-        });
-        this.setState({broadcasts: broadcastsData, eventLoaded: true, currentlySending: false})
-      });
-    }).catch(error => {
-        console.log("ERRORE FETCH BY BUSINESS:", error);
-    });
-
-  }
 
   render(){
 
-    const {business, distance} = this.props.navigation.state.params;
+    const {businessId, distance} = this.props.navigation.state.params;
     return (
-        <ShowController resource="businesses"
-                        id={business._id}
-                        basePath="/businesses">
-          { ({record, isLoading}) => {
-            if (isLoading || !record)  return null;
-            return (
-              <ScrollView style={styles.scrollView}
-                          contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
-                <View style={styles.generalContainer}>
-                  <ImagesScrollView business={businessImg}/>
-                  <Modal
-                      animationType="slide"
-                      transparent={true}
-                      visible={false}
-                      presentationStyle={'overFullScreen'}
-                  >
-                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                              onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
-                  </Modal>
-                  <View style={styles.cardContainer}>
-                    <BusinessInfoCard distance={distance} business={record}/>
-                    <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
-                    <BroadcastInProfileList events={event}/>
-                  </View>
+      <ShowController resource="businesses"
+                      id={businessId}
+                      basePath="/businesses">
+        { ({record, isLoading}) => {
+
+
+          if (isLoading) return null;
+
+          return (
+            <ScrollView style={styles.scrollView}
+                        contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
+              <View style={styles.generalContainer}>
+                <ImagesScrollView business={businessImg}/>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={false}
+                  presentationStyle={'overFullScreen'}
+                >
+                  <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                            onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
+                </Modal>
+                <View style={styles.cardContainer}>
+                  { record && <BusinessInfoCard distance={distance} business={record}/>}
+
+                    <ListController
+                      resource="broadcasts"
+                      filter={{business: businessId}}
+                      perPage={50}
+                    >
+                      {controllerProps => <BroadcastInProfileList {...controllerProps}
+                                                                  onReservePress={this.handleReservePress.bind(this)}/>}
+
+                    </ListController>
+
                 </View>
-              </ScrollView>
-            )}
-          }
-        </ShowController>
+              </View>
+            </ScrollView>
+          )}
+        }
+      </ShowController>
 
     );
   }

@@ -1,33 +1,57 @@
 import React from 'react';
 import BroadcastCardInProfile from './BroadcastCardInProfile';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import broadcasts from "../../api/broadcasts";
+import {Fonts} from "../common/Fonts";
+import themes from '../../styleTheme';
+const BroadcastInProfileList = (
+  {
+    isLoading,
+    data,
+    ids,
+    refresh,
+    isRefreshing,
+    onReservePress,
+  }
+) => {
 
-const BroadcastInProfileList = (props) => {
+  if (isLoading) return null;
 
-  const { broadcasts, onReservePress } = props;
-
-  const broadcastList = broadcasts.map(b =>
-
-    <BroadcastCardInProfile
-      key={b._id}
-      broadcast={b}
-      onReservePress={onReservePress}
-    />
-
-  )
 
   return (
-    <View>
-      {broadcastList}
-    </View>
+    <FlatList
+      ListHeaderComponent={
+        <Text style={themes.base.listTitleStyle}>
+          {ids.length === 0 ? "Nessuna offerta al momento" : "Eventi in programma"}
+        </Text>
+      }
+      data={ids}
+      renderItem={({item}) =>  <BroadcastCardInProfile
+        isLoading={isLoading}
+        broadcast={data[item]}
+        onReservePress={() => onReservePress(data[item])}
+      />}
+    />
+
   );
 };
 
+BroadcastInProfileList.propTypes = {
 
+  onReservePress: PropTypes.func.isRequired,
+  //Controller props
+  data: PropTypes.object,
+  ids: PropTypes.object,
+  isLoading: PropTypes.bool,
+  total: PropTypes.number,
+  version: PropTypes.number,
+  refresh: PropTypes.func,
+  isRefreshing: PropTypes.bool,
+}
 BroadcastCardInProfile.propTypes = {
   broadcasts: PropTypes.array.isRequired,
   onReservePress: PropTypes.func.isRequired
 };
+
 export default BroadcastInProfileList;

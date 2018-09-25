@@ -9,13 +9,13 @@ import moment from "moment";
 import 'moment/locale/it';
 import {Fonts} from "../common/Fonts";
 import VersionedImageField from '../common/VersionedImageField';
+import ReferenceField from '../common/ReferenceField'
 
 const BroadcastCardInProfile = (props) => {
 
   let { broadcast, onReservePress } = props;
-  const {event, offer} = broadcast;
-  let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-  let time = moment(event.start_at).locale('it').format('HH:mm');
+  const { offer } = broadcast;
+
 
 
   const discount = (type) => {
@@ -33,40 +33,75 @@ const BroadcastCardInProfile = (props) => {
 
 
   return (
-    <View style={styles.broadcastInfoView} elevation={2}>
-      <View style={styles.eventInfoView}>
-        <View style={styles.competitorsLogoView}>
-          { event.competition.competitorsHaveLogo ?
-            <VersionedImageField source={event.competitors[0].competitor.image_versions} minSize={{width: 64, height: 64}} imgSize={{width: 37, height: 37}}/>
-            : <VersionedImageField source={event.competition.image_versions} minSize={{width: 64, height: 64}} imgSize={{width: 37, height: 37}} /> }
-          { event.competition.competitorsHaveLogo
-            ? <VersionedImageField
-              style={{marginTop: 8}}
-              source={event.competitors[1].competitor.image_versions}
-              minSize={{width: 64, height: 64}}
-              imgSize={{width: 37, height: 37}}/>
-            : null }
-        </View>
-        <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
-          <Text style={styles.eventNameText}>{event.name}</Text>
-          <Text style={styles.eventDateText}>{date}</Text>
-          <Text style={styles.eventTimeText}>{time}</Text>
-        </View>
-        <View style={styles.sportIconView}>
-          <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-        </View>
-      </View>
-      <View style={styles.offerReservationView}>
-        <View style={styles.offerContainer}>
-          <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
-        </View>
-        <TouchableOpacity onPress={() => onReservePress(broadcast)}>
-          <View style={styles.reservationButton} elevation={2}>
-            <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+    <ReferenceField reference="events" record={broadcast} source="event">
+      {({record: event, isLoading}) => {
+
+        if (isLoading) return null;
+
+        let date = moment(event.start_at).locale('it').format('dddd D MMMM');
+        let time = moment(event.start_at).locale('it').format('HH:mm');
+
+
+        return (
+          <View style={styles.broadcastInfoView} elevation={2}>
+            <View style={styles.eventInfoView}>
+              <ReferenceField reference="competitions" source="competition" record={event}>
+                {({record: competition, isLoading}) =>
+                  isLoading ? null :
+                    <View style={styles.competitorsLogoView}>
+
+                    {competition.competitorsHaveLogo ?
+                      <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
+                        {({record: competitor, isLoading}) =>
+                          isLoading ? null :
+                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                 imgSize={{width: 37, height: 37}}/>
+                        }
+                      </ReferenceField>
+                      :
+                      <VersionedImageField source={competition.image_versions} minSize={{width: 64, height: 64}}
+                                           imgSize={{width: 37, height: 37}}/>
+                    }
+
+                    {competition.competitorsHaveLogo ?
+                      <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
+                        {({record: competitor, isLoading}) =>
+                          isLoading ? null :
+                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                 imgSize={{width: 37, height: 37}}/>
+                        }
+                      </ReferenceField>
+
+                      : null
+                    }
+                  </View>
+                }
+
+              </ReferenceField>
+
+            <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+              <Text style={styles.eventNameText}>{event.name}</Text>
+              <Text style={styles.eventDateText}>{date}</Text>
+              <Text style={styles.eventTimeText}>{time}</Text>
+            </View>
+            <View style={styles.sportIconView}>
+              <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+            </View>
           </View>
-        </TouchableOpacity>
+          <View style={styles.offerReservationView}>
+      <View style={styles.offerContainer}>
+      <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
       </View>
-    </View>
+      <TouchableOpacity onPress={onReservePress}>
+          <View style={styles.reservationButton} elevation={2}>
+          <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+      </View>
+      </TouchableOpacity>
+      </View>
+      </View>
+      )}}
+    </ReferenceField>
+
   );
 };
 BroadcastCardInProfile.propTypes ={

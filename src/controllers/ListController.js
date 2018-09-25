@@ -42,6 +42,7 @@ export class ListController extends Component {
       return;
 
     }
+
     this.updateData();
     if (Object.keys(this.props.query).length > 0) {
       this.props.changeListParams(this.props.resource, this.props.query);
@@ -64,6 +65,7 @@ export class ListController extends Component {
         !isEqual(nextProps.sort, this.props.sort) ||
         !isEqual(nextProps.perPage, this.props.perPage)
     ) {
+
       this.updateData(
           Object.keys(nextProps.query).length > 0
               ? nextProps.query
@@ -255,6 +257,7 @@ ListController.propTypes = {
 ListController.defaultProps = {
   debounce: 500,
   filter: {},
+  query: {},
   filterValues: {},
   perPage: 10,
   sort: {

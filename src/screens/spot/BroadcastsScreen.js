@@ -9,6 +9,7 @@ import 'moment/locale/it';
 import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
 import ListController from '../../controllers/ListController';
 
+import { Fonts } from "../../components/common/Fonts";
 
 import themes from "../../styleTheme";
 
@@ -59,10 +60,11 @@ class BroadcastsScreen extends React.Component {
   componentDidMount() {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
-  handleBusinessPress(id, broadcast, distance) {
-    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId: id, business: broadcast.business, distance});
-
+  handleBusinessPress(broadcastId, businessId, distance) {
+    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
+  }
   componentWillUnmount() {
+    console.log("AAAAAAA");
     this.state.scrollAnim.removeListener(this._handleScroll);
   }
   _handleScroll = ({ value }) => {
@@ -98,34 +100,7 @@ class BroadcastsScreen extends React.Component {
   };
 
 
-  }
 
-  bottomView = (broadcasts) => {
-    if(!broadcasts || broadcasts.length === 0){
-      return (
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
-          <Button title={"Contattaci"}/>
-        </View>
-      )
-    }
-    else {
-      return (
-
-          <BroadcastsList
-            onScroll={Animated.event(
-                [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
-
-            )}
-            onMomentumScrollBegin={ this._handleMomentumScrollBegin }
-            onMomentumScrollEnd={this._handleMomentumScrollEnd }
-            onScrollEndDrag={this._handleScrollEndDrag}
-              broadcasts={broadcasts} onItemPress={this.handleBusinessPress}
-            style={{paddingTop: HEADER_HEIGHT + 32}}
-          />
-        )
-    }
-  };
 
   render() {
     const { scrollAnim, offsetAnim } = this.state;
@@ -140,7 +115,7 @@ class BroadcastsScreen extends React.Component {
       outputRange: [0, -HEADER_HEIGHT],
       extrapolate: 'clamp'
     });
-    const {event} = this.props.navigation.state.params;
+
     let broadcasts = event.broadcasts;
     const {currentlySending} = this.props;
 
@@ -171,33 +146,28 @@ class BroadcastsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.subHeader}>
-          <Text style={styles.competitionName}>{event.competition.name}</Text>
-          <Text style={styles.eventName}>{event.name}</Text>
-          <Text style={styles.date}>{date}</Text>
-        </View>
+
         <ListController
             perPage="10"
             resource="broadcasts"
             filter={filter}>
-          { controllerProps => <BroadcastsList
+          { controllerProps =>
+            <BroadcastsList
+              onScroll={Animated.event(
+                [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
+
+              )}
+              { ...controllerProps }
               onMapPress={this.handleMapPress}
-              { ...controllerProps } onItemPress={this.handleBusinessPress}/>}
+              onMomentumScrollBegin={ this._handleMomentumScrollBegin }
+              onMomentumScrollEnd={this._handleMomentumScrollEnd }
+              onScrollEndDrag={this._handleScrollEndDrag}
+              onItemPress={this.handleBusinessPress}
+              style={{paddingTop: HEADER_HEIGHT + 32}}
+            />}
         </ListController>
 
 
-        {this.bottomView(broadcasts)}
-
-        <ActionButton
-            title=''
-            position={"right"}
-            buttonColor={themes.base.colors.accent.default}
-            size={52}
-            offsetY={32}
-            onPress={() => {this.props.navigation.navigate('BusinessMapInSpot', {broadcasts: broadcasts})}}
-            icon={<Icon name="map" size={24}
-                        style={{color: themes.base.colors.white.default}}/>}
-        />
         <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
           <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
           <Text style={styles.eventName}>{event.name}</Text>

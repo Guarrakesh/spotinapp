@@ -13,6 +13,10 @@ const BroadcastCard = (props) => {
 
   const { business, offer } = props;
 
+  //Mi aspetto che business sia un oggetto che contenga la distanza calcolata
+  //Se il server mi ha risposto con un ID allora non ha fatto geocoding
+  if (typeof business === "string") return null;
+
   let roundedDistance = Math.round(business.dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
@@ -28,7 +32,6 @@ const BroadcastCard = (props) => {
         return null;
     }
   };
-
   return (
     <TouchableOpacity onPress={props.onItemPress}>
       <View elevation={1} style={styles.innerContainer}>

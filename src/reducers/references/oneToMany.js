@@ -15,13 +15,13 @@ export default (previousState = initialState, { type, payload, meta }) => {
 };
 
 export const getIds = (state, relatedTo) =>
-    state.admin.references.oneToMany[relatedTo];
+    state.entities.oneToMany[relatedTo];
 
 export const getReferences = (state, reference, relatedTo) => {
     const ids = getIds(state, relatedTo);
     if (typeof ids === 'undefined') return undefined;
 
-    if (!state.admin.resources[reference]) {
+    if (!state.entities[reference]) {
         // eslint-disable-next-line no-console
         console.error(
             `Invalid Resource "${reference}"\n` +
@@ -34,7 +34,7 @@ export const getReferences = (state, reference, relatedTo) => {
 
     return ids
         .map(id => {
-            const resource = state.admin.resources[reference];
+            const resource = state.entities[reference];
 
             if (!resource) {
                 return;
@@ -52,7 +52,7 @@ export const getReferences = (state, reference, relatedTo) => {
 export const getReferencesByIds = (state, reference, ids) => {
     if (ids.length === 0) return {};
 
-    if (!state.admin.resources[reference]) {
+    if (!state.entities[reference]) {
         // eslint-disable-next-line no-console
         console.error(
             `Invalid Resource "${reference}"\n` +
@@ -65,7 +65,7 @@ export const getReferencesByIds = (state, reference, ids) => {
 
     const references = ids
         .map(id => {
-            const resource = state.admin.resources[reference];
+            const resource = state.entities[reference];
 
             if (!resource) {
                 return;

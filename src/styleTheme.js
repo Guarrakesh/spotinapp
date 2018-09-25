@@ -84,8 +84,8 @@ const themes = {
         divisor: '#EEEEEE' //colore per le linee divisorie
       },
       danger: {
-          default: '#B80638',
-          light: '#FF356E',
+        default: '#B80638',
+        light: '#FF356E',
       }
     },
     elevations: {
@@ -131,8 +131,28 @@ const themes = {
       flex :1,
       justifyContent: 'center',
       alignItems: 'center'
-    }
+    },
 
+    fonts:  {
+      Lato: 'Lato-Regular',
+      LatoBold: 'Lato-Bold',
+      LatoBoldItalic: 'Lato-BoldItalic',
+      LatoBlack: 'Lato-Black',
+      LatoBlackItalic: 'Lato-BlackItalic',
+      LatoHairline: 'Lato-Hairline',
+      LatoHairlineItalic: 'Lato-HairlineItalic',
+      LatoHeavy: 'Lato-Heavy',
+      LatoHeavyItalic: 'Lato-HeavyItalic',
+      LatoItalic: 'Lato-Italic',
+      LatoLight: 'Lato-Light',
+      LatoLightItalic: 'Lato-LightItalic',
+      LatoMedium: 'Lato-Medium',
+      LatoMediumItalic: 'Lato-MediumItalic',
+      LatoSemibold: 'Lato-Semibold',
+      LatoSemiboldItalic: 'Lato-SemiboldItalic',
+      LatoThin: 'Lato-Thin',
+      LatoThinItalic: 'Lato-ThinItalic'
+    }
 
   },
 

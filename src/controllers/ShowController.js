@@ -49,17 +49,18 @@ export class ShowController extends Component {
   componentDidMount() {
     this.updateData();
   }
-
   componentWillReceiveProps(nextProps) {
     if (
-        this.props.id !== nextProps.id ||
-        nextProps.version !== this.props.version
+      !this.props.isLoading ||
+      this.props.id !== nextProps.id ||
+      nextProps.version !== this.props.version
     ) {
       this.updateData(nextProps.resource, nextProps.id);
     }
   }
 
   updateData(resource = this.props.resource, id = this.props.id) {
+
     this.props.crudGetOne(resource, id, this.props.basePath);
   }
 
@@ -77,7 +78,6 @@ export class ShowController extends Component {
     } = this.props;
 
     if (!children) return null;
-
 
     return children({
       isLoading,
@@ -109,7 +109,7 @@ function mapStateToProps(state, props) {
     record: state.entities[props.resource]
         ? state.entities[props.resource].data[props.id]
         : null,
-    isLoading: state.loading > 0,
+    isLoading: state.loading > 0 ,
     version: state.ui.viewVersion,
   };
 }
