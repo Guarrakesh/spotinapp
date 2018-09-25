@@ -19,7 +19,8 @@ const BusinessInfoCard = (props) => {
 
   return (
     <View style={styles.businessInfoView} elevation={2}>
-      <Text style={styles.businessNameText}>{business.name} • {business.type}</Text>
+      <Text style={styles.businessNameText}>{business.name}</Text>
+      <Text style={styles.businessTypes}>{business.type.join(' • ')}</Text>
       <TouchableOpacity onPress={() => Linking.openURL(`${mapURL}${businessAddr}`)}>
         <View style={styles.topContainer}>
           <View style={styles.distanceItemView}>
@@ -68,6 +69,12 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     fontSize: 20,
     fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default
+  },
+  businessTypes: {
+    marginLeft: 16,
+    fontSize: 16,
+    fontFamily: Fonts.LatoLight,
     color: themes.base.colors.text.default
   },
   topContainer: {

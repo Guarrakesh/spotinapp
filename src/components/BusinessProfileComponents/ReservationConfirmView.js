@@ -70,7 +70,7 @@ class ReservationConfirmView extends Component {
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 16, alignItems: 'center'}}>
             <TouchableOpacity onPress={onCancelPress}>
-              <Text style={{fontFamily: Fonts.LatoBold, fontSize: 14, color: themes.base.colors.text.default, marginLeft: 16}}>ANNULLA</Text>
+              <Text style={{fontFamily: Fonts.LatoBold, fontSize: 14, color: themes.base.colors.text.default, marginLeft: 16, textDecorationLine: 'underline'}}>ANNULLA</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onConfirmPress}>
               <View style={styles.confirmButton} elevation={2}>

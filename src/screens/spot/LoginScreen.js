@@ -34,101 +34,117 @@ class LoginScreen extends React.Component {
   render() {
 
     const {navigation} = this.props;
+    const {loggedIn} = this.props.auth;
 
+    if (loggedIn) {
+      return () => this.props.navigation.navigate('ProfileScreen')
 
-    return (
+    }
+    else {
 
-      <View style={styles.container}>
-        <StatusBar
-          backgroundColor="blue"
-          barStyle="light-content"
-        />
-        <ImageBackground source={require('../../images/loginBg1.jpg')} blurRadius={ Platform.OS == "ios" ? 10 : 5} style={{width: '100%', height: '100%'}}>
+      return (
 
-          <View style={styles.middleContainerStyle}>
-            <Image
-              source={require('../../images/SpotInIconWhite.png')}
-              style={{marginTop: 10, alignSelf: 'center'}}
-            />
-            <Text style={{marginTop: 30, marginBottom: 30, fontSize: 20, fontWeight: '700', color: colors.text.light, textAlign: 'center'}}>Entra nel tuo account</Text>
-            <Input
-              placeholder="username"
-              leftIcon={<Icon name="user" color={colors.text.light} size={21}/>}
-              leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-              containerStyle={styles.inputOuterContainer}
-              inputContainerStyle={{borderBottomWidth: 0}}
-              inputStyle={styles.textInputStyle}
-              autoCapitalize="none"
-              shake={true}
-              onChangeText={(text) => this.setState({username: text})}
-              onSubmitEditing={() => {this.refs.password.focus()}}
-
-            />
-            <Input
-              placeholder="password"
-              ref="password"
-              leftIcon={<Icon name="key" color={colors.text.light} size={21}/>}
-              containerStyle={styles.inputOuterContainer}
-              leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-              inputContainerStyle={{borderBottomWidth: 0}}
-              inputStyle={styles.textInputStyle}
-              errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
-              shake={true}
-              onChangeText={(text) => this.setState({password: text})}
-              secureTextEntry={true}
-              onSubmitEditing={this.login}
-              blurOnSubmit={true}
-            />
-
-            <Button
-              disabled={this.state.username == "" || this.state.password == ""}
-              disabledStyle={{opacity: 0.8, borderRadius: 100}}
-              title='Sign In'
-              onPress={ this.login }
-              buttonStyle={styles.signInButton}
-              titleStyle={{color: colors.text.light, fontSize: 16}}
-              loading={this.props.auth.currentlySending}
-
-
-
-            />
-            <Button
-              titleStyle={{color: colors.white.default, fontSize: 16}}
-              title='Sign in with Facebook'
-              buttonStyle={styles.fbSignInButton}
-              icon={<Icon
-                name='facebook'
-                size={18}
-                color='white'
-              />
-              }
-              iconContainerStyle={{alignSelf: 'flex-start'}}
-            />
-
-
-            <Button
-              title='Forgot your password?'
-              titleStyle={{ color: colors.text.light, fontSize: 16 }}
-              buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
-              clear={true}
-
-            />
-          </View>
-
-
-          <Button
-            clear={true}
-            title={['Do not have an account? ', <Text style={{fontWeight: '700'}}>Create one</Text>]}
-            titleStyle={{ color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
-            buttonStyle={styles.signUpButton}
-            onPress={() => this.props.navigation.navigate('SignUp')}
+        <View style={styles.container}>
+          <StatusBar
+            backgroundColor="blue"
+            barStyle="light-content"
           />
+          <ImageBackground source={require('../../images/loginBg1.jpg')} blurRadius={Platform.OS == "ios" ? 10 : 5}
+                           style={{width: '100%', height: '100%'}}>
 
-        </ImageBackground>
-      </View>
+            <View style={styles.middleContainerStyle}>
+              <Image
+                source={require('../../images/SpotInIconWhite.png')}
+                style={{marginTop: 10, alignSelf: 'center'}}
+              />
+              <Text style={{
+                marginTop: 30,
+                marginBottom: 30,
+                fontSize: 20,
+                fontWeight: '700',
+                color: colors.text.light,
+                textAlign: 'center'
+              }}>Entra nel tuo account</Text>
+              <Input
+                placeholder="username"
+                leftIcon={<Icon name="user" color={colors.text.light} size={21}/>}
+                leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
+                containerStyle={styles.inputOuterContainer}
+                inputContainerStyle={{borderBottomWidth: 0}}
+                inputStyle={styles.textInputStyle}
+                autoCapitalize="none"
+                shake={true}
+                onChangeText={(text) => this.setState({username: text})}
+                onSubmitEditing={() => {
+                  this.refs.password.focus()
+                }}
+
+              />
+              <Input
+                placeholder="password"
+                ref="password"
+                leftIcon={<Icon name="key" color={colors.text.light} size={21}/>}
+                containerStyle={styles.inputOuterContainer}
+                leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
+                inputContainerStyle={{borderBottomWidth: 0}}
+                inputStyle={styles.textInputStyle}
+                errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
+                shake={true}
+                onChangeText={(text) => this.setState({password: text})}
+                secureTextEntry={true}
+                onSubmitEditing={this.login}
+                blurOnSubmit={true}
+              />
+
+              <Button
+                disabled={this.state.username == "" || this.state.password == ""}
+                disabledStyle={{opacity: 0.8, borderRadius: 100}}
+                title='Sign In'
+                onPress={this.login}
+                buttonStyle={styles.signInButton}
+                titleStyle={{color: colors.text.light, fontSize: 16}}
+                loading={this.props.auth.currentlySending}
 
 
-    )
+              />
+              <Button
+                titleStyle={{color: colors.white.default, fontSize: 16}}
+                title='Sign in with Facebook'
+                buttonStyle={styles.fbSignInButton}
+                icon={<Icon
+                  name='facebook'
+                  size={18}
+                  color='white'
+                />
+                }
+                iconContainerStyle={{alignSelf: 'flex-start'}}
+              />
+
+
+              <Button
+                title='Forgot your password?'
+                titleStyle={{color: colors.text.light, fontSize: 16}}
+                buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
+                clear={true}
+
+              />
+            </View>
+
+
+            <Button
+              clear={true}
+              title={['Do not have an account? ', <Text style={{fontWeight: '700'}}>Create one</Text>]}
+              titleStyle={{color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
+              buttonStyle={styles.signUpButton}
+              onPress={() => this.props.navigation.navigate('SignUp')}
+            />
+
+          </ImageBackground>
+        </View>
+
+
+      )
+    }
   }
 }
 
@@ -207,7 +223,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return ({
-    auth: state.auth
+    auth: state.auth,
   });
 };
 export default connect(mapStateToProps)(LoginScreen);

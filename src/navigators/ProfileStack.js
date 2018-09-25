@@ -1,12 +1,25 @@
 import ProfileScreen from '../screens/profile/ProfileScreen'
 import { createStackNavigator } from 'react-navigation';
+import themes from "../styleTheme";
 
-export default ProfileStack = createStackNavigator(
-    {
-        'Profile': ProfileScreen
+export const ProfileStack = createStackNavigator({
+    ProfileScreen: {
+      screen: ProfileScreen,
+      navigationOptions: { title: 'Profilo'}
     },
-    {
-        cardStyle: {backgroundColor: '#FAFAFA'}
-    });
 
 
+  },{
+    navigationOptions: {
+
+      headerStyle: {
+        backgroundColor: themes.base.colors.primary.default
+
+      },
+      headerTintColor: themes.base.colors.text.default,
+    }
+  }
+);
+
+
+export default ProfileStack;

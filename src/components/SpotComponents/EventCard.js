@@ -94,10 +94,12 @@ const styles = {
   },
   competitorsLogosContainer: {
     alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'column',
     flexGrow: 0,
     flexBasis: 54,
-    paddingTop: 22
+    paddingTop: 22,
+    paddingBottom: 18
 
   },
   competitors: {

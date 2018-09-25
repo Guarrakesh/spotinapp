@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {Fonts} from "../common/Fonts";
 
 
 const BusinessCard = (props) => {
@@ -27,7 +28,8 @@ const BusinessCard = (props) => {
           >
             <View style={styles.overlayView}>
               <View style={{flexDirection: 'column', justifyContent: 'flex-end', borderTopLeftRadius: themes.base.borderRadius}}>
-                <Text style={styles.name}>{business.name} • {business.type}</Text>
+                <Text style={styles.name}>{business.name}</Text>
+                <Text style={styles.types}>{business.type.join(' • ')}</Text>
                 <Text style={styles.address}>{business.address.city} ({business.address.province})</Text>
               </View>
               <View style={{flexDirection: 'column', justifyContent: 'flex-end', flex: 1, borderTopRightRadius: themes.base.borderRadius}}>
@@ -84,21 +86,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   name: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: Fonts.LatoBold,
     color: themes.base.colors.white.default,
-    fontWeight: 'bold',
     marginLeft: 8,
   },
+  types: {
+    fontSize: 16,
+    fontFamily: Fonts.Lato,
+    color: themes.base.colors.white.default,
+    marginLeft: 8
+  },
   address: {
-    fontWeight: 'bold',
-    fontSize: 12,
+    fontFamily: Fonts.LatoMedium,
+    fontSize: 14,
     color: themes.base.colors.white.default,
     marginLeft: 8,
     marginBottom: 8
   },
   distance: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: Fonts.LatoSemibold,
     color: themes.base.colors.white.default,
     marginRight: 8,
     marginBottom: 8

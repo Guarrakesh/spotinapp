@@ -15,13 +15,13 @@ import ProfileStack from './ProfileStack';
 import themes from '../styleTheme';
 
 const FavoriteStack = createStackNavigator({
-    Favorite: FavoriteScreen,
+  Favorite: FavoriteScreen,
 
 });
 
 
 const NewsStack = createStackNavigator({
-    News: NewsScreen,
+  News: NewsScreen,
 
 });
 
@@ -29,82 +29,82 @@ const NewsStack = createStackNavigator({
 
 
 export const MainNavigation = createTabNavigator(
-    {
-        Spot: SpotStack,
-        Business: BusinessStack,
-        News: NewsStack,
-        Profile: ProfileStack,
+  {
+    Spot: SpotStack,
+    Business: BusinessStack,
+    News: NewsStack,
+    Profile: ProfileStack,
+  },
+  {
+    screenBackgroundColor: 'red',
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+
+        const { routeName } = navigation.state;
+
+        let image = '';
+
+        switch (routeName){
+          case 'Business':
+            image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
+            break;
+          case 'Favorite':
+            image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
+            break;
+          case 'Spot':
+            image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
+            break;
+          case 'News':
+            image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
+            break;
+          case 'Profile':
+            image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
+        }
+
+        return <Image source={image} style={{height: 24, width: 24}} />;
+      },
+    }),
+    initialRouteName: "Spot",
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: themes.base.colors.text.default,
+      inactiveTintColor: 'grey',  //da definire colore nei themes
     },
-    {
-        screenBackgroundColor: 'red',
-        navigationOptions: ({ navigation }) => ({
-             tabBarIcon: ({ focused, tintColor }) => {
+    animationEnabled: false,
+    swipeEnabled: false,
 
-             const { routeName } = navigation.state;
-
-             let image = '';
-
-             switch (routeName){
-                 case 'Business':
-                     image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
-                     break;
-                 case 'Favorite':
-                     image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
-                     break;
-                 case 'Spot':
-                     image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
-                     break;
-                 case 'News':
-                     image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
-                     break;
-                 case 'Profile':
-                     image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
-             }
-
-             return <Image source={image} style={{height: 24, width: 24}} />;
-             },
-        }),
-        initialRouteName: "Spot",
-        tabBarComponent: TabBarBottom,
-        tabBarPosition: 'bottom',
-        tabBarOptions: {
-            activeTintColor: themes.base.colors.text.default,
-            inactiveTintColor: 'grey',  //da definire colore nei themes
-        },
-        animationEnabled: false,
-        swipeEnabled: false,
-
-    }
+  }
 );
 
 const RootNavigator = createStackNavigator(
-    {
-        Main: {
-            screen: MainNavigation,
-            navigationOptions: {
-                gesturesEnabled: false,
+  {
+    Main: {
+      screen: MainNavigation,
+      navigationOptions: {
+        gesturesEnabled: false,
 
-            },
-
-
-        },
-        Auth: {
-            screen: AuthNavigator,
-            navigationOptions: {
-                gesturesEnabled: false,
+      },
 
 
-            }
-        },
+    },
+    Auth: {
+      screen: AuthNavigator,
+      navigationOptions: {
+        gesturesEnabled: false,
 
-        BusinessMapInSpot: BusinessMapNavigatorInSpot,
-        BusinessMapInBusiness: BusinessMapNavigatorInBusiness
-    }, {
-        headerMode: 'none',
-        mode: "modal",
-        initialRouteName: 'Main',
 
-    }
+      }
+    },
+
+    BusinessMapInSpot: BusinessMapNavigatorInSpot,
+    BusinessMapInBusiness: BusinessMapNavigatorInBusiness
+  }, {
+    headerMode: 'none',
+    mode: "modal",
+    initialRouteName: 'Main',
+
+  }
 );
 
 

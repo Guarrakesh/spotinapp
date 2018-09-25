@@ -47,12 +47,12 @@ const ImagesScrollView = (props) => {
       height={230}
       dotColor={'rgba(255, 255, 255, 0.5)'}
       activeDotColor={themes.base.colors.white.light}
-      nextButton={<Text style={styles.buttonText}>›</Text>}
-      prevButton={<Text style={styles.buttonText}>‹</Text>}
+      nextButton={<Text style={styles.buttonText}></Text>}
+      prevButton={<Text style={styles.buttonText}></Text>}
     >
       {
         business.image_url.map(image =>
-          <Image source={{uri: image.url}} style={{flex: 1}} />
+          <Image source={{uri: image.url}} style={{flex: 1}} resizeMode={'cover'}/>
         )
       }
 

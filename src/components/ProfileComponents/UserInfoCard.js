@@ -1,12 +1,13 @@
 import React from 'react';
 import View from '../common/View';
-import { Text, Image, StyleSheet} from 'react-native';
+import { Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Fonts} from "../common/Fonts";
 import themes from "../../styleTheme";
 
 const UserInfoCard = (props) =>{
 
-  const {user} = props;
+  const {user, onLogoutPress} = props;
 
   return (
 
@@ -18,6 +19,9 @@ const UserInfoCard = (props) =>{
         <Text style={styles.userName}>{user.name}</Text>
         <Text style={styles.userEmail}>{user.email}</Text>
       </View>
+      <TouchableOpacity onPress={onLogoutPress}>
+        <Icon name={"logout"} size={30} color={themes.base.colors.accent.default}/>
+      </TouchableOpacity>
     </View>
   );
 
@@ -40,7 +44,9 @@ const styles = StyleSheet.create({
   userImage: {
     width: 70,
     height: 70,
-    borderRadius: 35
+    borderRadius: 35,
+    borderWidth: 1,
+    borderColor: themes.base.colors.accent.default
   },
   infoView: {
     flex: 1,
@@ -48,10 +54,11 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontFamily: Fonts.LatoBold,
-    fontSize: 18
+    fontSize: 18,
+    color: themes.base.colors.text.default
   },
   userEmail:{
-    fontFamily: Fonts.LatoMedium,
+    fontFamily: Fonts.LatoLight,
     fontSize: 16
   }
 });

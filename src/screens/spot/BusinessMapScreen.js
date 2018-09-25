@@ -62,50 +62,50 @@ class BusinessMapScreen extends React.Component {
       longitudeDelta: this.longitudeDelta
     }
     return (
-        <View style={{flex:1}}>
-          <MapView style={styles.map}
-                   region={this.state.region || region}
-                   onPress={this.slideCaoursel}
+      <View style={{flex:1}}>
+        <MapView style={styles.map}
+                 region={this.state.region || region}
+                 onPress={this.slideCaoursel}
 
-          >
+        >
 
-            {
-              broadcasts.map(broad =>
-                  <MapView.Marker
-                      coordinate={{
-                        latitude: broad.business.address.location.coordinates[1],
-                        longitude: broad.business.address.location.coordinates[0]}}
-                      title={broad.business.name}
-                      description={broad.offer.title}
-                  />
-              )
-            }
+          {
+            broadcasts.map(broad =>
+              <MapView.Marker
+                coordinate={{
+                  latitude: broad.business.address.location.coordinates[1],
+                  longitude: broad.business.address.location.coordinates[0]}}
+                title={broad.business.name}
+                description={broad.offer.title}
+              />
+            )
+          }
 
-          </MapView>
+        </MapView>
 
-          <Animated.View style={{
-            transform: [{translateY: this.state.carouselY}],
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            paddingBottom: 20
-          }}>
+        <Animated.View style={{
+          transform: [{translateY: this.state.carouselY}],
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          paddingBottom: 20
+        }}>
           <Carousel
-              data={broadcasts}
-              renderItem={({item}) =>
-                  <BroadcastFloatingCard elevation={5} business={item.business} offer={item.offer} style={{flex: 1}}
-                                      onItemPress={() => this.handleBusPress(item)}/>
-              }
-              itemWidth={300}
-              sliderWidth={400}
-              activeAnimationType={'spring'}
-
-
-              onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
+            data={broadcasts}
+            renderItem={({item}) =>
+              <BroadcastFloatingCard elevation={5} business={item.business} offer={item.offer} style={{flex: 1}}
+                                     onItemPress={() => this.handleBusPress(item)}/>
+            }
+            itemWidth={300}
+            sliderWidth={400}
+            activeAnimationType={'spring'}
+            // inactiveSlideOpacity={1}  //
+            // inactiveSlideScale={1}
+            onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
 
           />
-          </Animated.View>
-        </View>
+        </Animated.View>
+      </View>
     )
   }
 
