@@ -40,12 +40,12 @@ export const SpotStack = createStackNavigator({
     },
     Competitions: {
       screen: CompetitionsScreen,
-      navigationOptions: ({navigation}) => ({ title: navigation.state.params.sport.name })
+      navigationOptions: ({navigation}) => ({ title: navigation.state.params.title || "Spot In" })
     },
     Events: {
       screen: EventScreen,
       navigationOptions: ({navigation}) => ({
-        title: navigation.state.params.competition.name,
+        title: navigation.state.params.title || "Spot In",
         headerBackTitle: null,
       })
     },

@@ -31,3 +31,19 @@ export const GET_CURRENT_LOCATION = createRequestTypes('GET_CURRENT_LOCATION');
 //Broadcast
 export const FETCH_BROADCASTS = createRequestTypes('GET_BROADCASTS');
 export const RESERVE_BROADCAST = createRequestTypes('RESERVE_BROADCAST');
+
+
+
+/* fetch actions Generiche */
+export const GET_LIST = 'GET_LIST';
+export const GET_ONE = 'GET_ONE';
+export const GET_MANY = 'GET_MANY';
+export const GET_MANY_REFERENCE = 'GET_MANY_REFERENCE';
+export const CREATE = 'CREATE';
+export const UPDATE = 'UPDATE';
+export const UPDATE_MANY = 'UPDATE_MANY';
+export const DELETE = 'DELETE';
+export const DELETE_MANY = 'DELETE_MANY';
+
+//Usato durante il pull to refresh
+export const REFRESH_VIEW = 'REFRESH_VIEW';

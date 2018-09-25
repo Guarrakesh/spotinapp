@@ -241,6 +241,7 @@ export function * registerFlow () {
 
 
 export default function* root() {
+
     yield fork(authentication);
     yield fork(registerFlow);
 }

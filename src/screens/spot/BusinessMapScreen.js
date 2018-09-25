@@ -126,6 +126,7 @@ const mapStateToProps = (state) => {
   };
 };
 
+
 const styles = StyleSheet.create({
   carouselContainer: {
 

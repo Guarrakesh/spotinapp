@@ -2,17 +2,18 @@ import {
 
     FETCH_ALL_SPORTS,
     FETCH_FAVORITE_SPORTS,
-    FETCH_COMPETITIONS
+    FETCH_COMPETITIONS,
 
+    GET_LIST
 } from './types';
 
+import { crudGetAll } from './dataActions';
 
 // REQUEST E FAILURE sono gestiti più generalmente da requestSending e requestError (vedi actions/index.js)
-export function getAllSports() {
-    return {
-        type: FETCH_ALL_SPORTS.REQUEST
-    }
+export function getAllSports(sort = {}, filter = {}, callback = null) {
+    return crudGetAll('sports',sort, filter, 100, callback);
 }
+
 export function getFavoriteSports() {
     return {
         type: FETCH_FAVORITE_SPORTS.REQUEST

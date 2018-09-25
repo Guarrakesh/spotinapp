@@ -60,7 +60,7 @@ class BusinessScreen extends React.Component {
       //Questo if è eseguito dopo la richiesta di posizione quindi in questo momento la richiesta non è ancora finita
       //Devo controllare quindi se lat e lng erano già presenti nello store, se sì allora posso fetchare i business
       //Altrimenti lo farò in componentDidUpdate
-      if (lat && lng && (!businesses || businesses.length === 0)) {
+      if (lat && lng && (!businesses || businesses.list.ids.length === 0)) {
         this.props.dispatch(getBusinessRequest({lat, lng}));
       }
     });
@@ -86,10 +86,10 @@ class BusinessScreen extends React.Component {
 
 
   render() {
-
+  return null;
     const { businesses } = this.props;
     const { currentlySending } = this.props;
-
+    if (businesses.list.ids.length === 0) return null;
     return (
         <View style={styles.container}>
           <SearchBar

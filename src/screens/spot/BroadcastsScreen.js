@@ -7,9 +7,8 @@ import moment from 'moment';
 import 'moment/locale/it';
 
 import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
-import Icon from 'react-native-vector-icons/Feather';
-import {Fonts} from "../../components/common/Fonts";
-import { getBroadcastsRequest } from '../../actions/broadcasts';
+import ListController from '../../controllers/ListController';
+
 
 import themes from "../../styleTheme";
 
@@ -28,13 +27,16 @@ class BroadcastsScreen extends React.Component {
     super();
 
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
+    this.handleMapPress = this.handleMapPress.bind(this);
+  }
+  handleMapPress(data) {
+    this.props.navigation.navigate('BusinessMapInSpot', {...data});
 
   }
-
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams, navigate } = navigation;
+    const { state } = navigation;
     const params = state.params || {};
-    const { event } = params;
+    const { eventId } = params;
 
     return {
       title: "Locali vicini",
@@ -55,22 +57,10 @@ class BroadcastsScreen extends React.Component {
   }
 
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      const {event} = this.props.navigation.state.params;
-      const position = {
-        lat: this.props.latitude,
-        lng: this.props.longitude
-      };
-
-      if (!event.broadcasts) {
-        this.props.dispatch(getBroadcastsRequest(event._id, position));
-      }
-
-      this.state.scrollAnim.addListener(this._handleScroll);
-    });
-
-
+    this.state.scrollAnim.addListener(this._handleScroll);
   }
+  handleBusinessPress(id, broadcast, distance) {
+    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId: id, business: broadcast.business, distance});
 
   componentWillUnmount() {
     this.state.scrollAnim.removeListener(this._handleScroll);
@@ -108,9 +98,6 @@ class BroadcastsScreen extends React.Component {
   };
 
 
-  handleBusinessPress(broadcast) {
-    this.props.navigation.navigate('BusinessProfileScreen', {business: broadcast.business});
-
   }
 
   bottomView = (broadcasts) => {
@@ -143,6 +130,11 @@ class BroadcastsScreen extends React.Component {
   render() {
     const { scrollAnim, offsetAnim } = this.state;
 
+    const { event, eventId } = this.props.navigation.state.params;
+    const position = {
+      lat: this.props.latitude,
+      lng: this.props.longitude
+    };
     const translateY = Animated.add(scrollAnim, offsetAnim).interpolate({
       inputRange: [0, HEADER_HEIGHT],
       outputRange: [0, -HEADER_HEIGHT],
@@ -154,6 +146,16 @@ class BroadcastsScreen extends React.Component {
 
     let date = moment(event.start_at).locale('it').format('D MMM - hh:mm').toUpperCase();
 
+    //TODO: Fare qualcosa qui in caso di mancata posizione!
+    if (!position) return null;
+
+
+    const filter = {
+      latitude: position.lat,
+      longitude: position.lng,
+      radius: 50,
+      event: eventId
+    };
     if(currentlySending){
       return(
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
@@ -169,6 +171,19 @@ class BroadcastsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <View style={styles.subHeader}>
+          <Text style={styles.competitionName}>{event.competition.name}</Text>
+          <Text style={styles.eventName}>{event.name}</Text>
+          <Text style={styles.date}>{date}</Text>
+        </View>
+        <ListController
+            perPage="10"
+            resource="broadcasts"
+            filter={filter}>
+          { controllerProps => <BroadcastsList
+              onMapPress={this.handleMapPress}
+              { ...controllerProps } onItemPress={this.handleBusinessPress}/>}
+        </ListController>
 
 
         {this.bottomView(broadcasts)}
@@ -193,11 +208,10 @@ class BroadcastsScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { currentlySending, error} = state.entities;
   const { latitude, longitude } = state.location;
   const { loggedIn } = state.auth;
   return {
-    currentlySending, error, loggedIn, latitude, longitude,
+    loggedIn, latitude, longitude
   }
 
 }

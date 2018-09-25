@@ -5,13 +5,14 @@ import Modal from "react-native-modal";
 import { connect } from 'react-redux';
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
-import broadcasts from '../../api/broadcasts';
-import events from '../../api/events';
+
+import ShowController from '../../controllers/ShowController';
+
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
-import { reserveBroadcastRequest as reserveBroadcastAction} from '../../actions/reservation';
+
 const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
   "name": "Pizza Hot",
@@ -187,50 +188,37 @@ class BusinessProfileScreen extends React.Component {
 
   render(){
 
-    const {business} = this.props.navigation.state.params;
-    const { broadcasts, eventLoaded } = this.state;
-
-    let broadcastList;
-
-    if(!eventLoaded || !broadcasts || broadcasts.length == 0){
-      broadcastList = <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Non ci sono eventi in programma</Text>;
-    }
-    else{
-      broadcastList = <View>
-        <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
-        <BroadcastInProfileList broadcasts={broadcasts} onReservePress={this.handleReservePress.bind(this)}/>
-      </View>
-
-    }
-
-    if(this.state.currentlySending){
-      broadcastList = <View>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
-      </View>
-    }
-
+    const {business, distance} = this.props.navigation.state.params;
     return (
-
-      <ScrollView style={styles.scrollView} contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
-        <View style={styles.generalContainer}>
-          <ImagesScrollView business={businessImg}/>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            isVisible={this.state.modalVisible}
-            presentationStyle={'overFullScreen'}
-          >
-            <ReservationConfirmView
-              onConfirmPress={this.handleConfirm.bind(this)}
-              onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
-          </Modal>
-          <View style={styles.cardContainer}>
-            <BusinessInfoCard business={business}/>
-            {broadcastList}
-          </View>
-        </View>
-      </ScrollView>
-
+        <ShowController resource="businesses"
+                        id={business._id}
+                        basePath="/businesses">
+          { ({record, isLoading}) => {
+            if (isLoading || !record)  return null;
+            return (
+              <ScrollView style={styles.scrollView}
+                          contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
+                <View style={styles.generalContainer}>
+                  <ImagesScrollView business={businessImg}/>
+                  <Modal
+                      animationType="slide"
+                      transparent={true}
+                      visible={false}
+                      presentationStyle={'overFullScreen'}
+                  >
+                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                              onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
+                  </Modal>
+                  <View style={styles.cardContainer}>
+                    <BusinessInfoCard distance={distance} business={record}/>
+                    <Text style={{marginLeft: 8, fontSize: 18, fontFamily: Fonts.LatoBold}}>Eventi in programma</Text>
+                    <BroadcastInProfileList events={event}/>
+                  </View>
+                </View>
+              </ScrollView>
+            )}
+          }
+        </ShowController>
 
     );
   }
@@ -243,27 +231,18 @@ const styles = StyleSheet.create({
     flex: 1
   },
   generalContainer: {
-    width: '100%'
+    width: '100%',
+    backgroundColor: themes.base.colors.white.default
   },
   cardContainer: {
-    flex: 1,
     marginLeft: 8,
     marginRight: 8,
     marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
   },
 })
 
-BusinessProfileScreen.propTypes = {
-  reserveBroadcast: PropTypes.func,
-}
 
-const mapStateToProps = (state) => ({
-});
-const mapDispatchToProps = {
-  reserveBroadcast: reserveBroadcastAction
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BusinessProfileScreen);
+export default BusinessProfileScreen;
 
 
 
