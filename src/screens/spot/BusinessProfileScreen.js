@@ -165,70 +165,61 @@ class BusinessProfileScreen extends React.Component {
 
     const {businessId, distance} = this.props.navigation.state.params;
     return (
-        <ShowController resource="businesses"
-                        id={businessId}
-                        basePath="/businesses">
-          { ({record, isLoading}) => {
+      <ShowController resource="businesses"
+                      id={businessId}
+                      basePath="/businesses">
+        { ({record, isLoading}) => {
 
-            if (isLoading || !record) return null;
+          if (isLoading || !record) return null;
 
 
-            return (
-                <ScrollView style={styles.scrollView}
-                            contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
-                  <View style={styles.generalContainer}>
-                    <ImagesScrollView business={businessImg}/>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={this.state.modalVisible}
-                        presentationStyle={'overFullScreen'}
-                    >
-                      <View style={styles.modalContainer}>
-                        <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                                  onCancelPress={this.handleModalDismiss.bind(this)}
-                                                  data={this.state.modalData}/>
-                      </View>
-                    </Modal>
-                    <View style={styles.cardContainer}>
-                      { record && <BusinessInfoCard distance={distance} business={record}/>}
+          return (
+            <View style={styles.scrollView}
+                  contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
 
-                      <ReferenceManyFieldController
-                          resource="broadcasts"
-                          reference="broadcasts"
-                          target="business"
-                          source="id"
-                          record={record}
-                      >
-                        {controllerProps => <BroadcastInProfileList {...controllerProps}
-                                                                    onReservePress={this.handleReservePress.bind(this)}/>}
+            <ScrollView style={styles.generalContainer}>
+                <ImagesScrollView business={businessImg}/>
 
-                      </ReferenceManyFieldController>
+                <View style={styles.cardContainer}>
+                  { record && <BusinessInfoCard distance={distance} business={record}/>}
+                  <Modal
+                    animationIn={'slideInUp'}
+                    animationOut="slideOutDown"
+                    isVisible={this.state.modalVisible}
 
-                    </View>
-                  </View>
-                </ScrollView>
-            )}
-          }
-        </ShowController>
+                  >
+                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                              onCancelPress={this.handleModalDismiss.bind(this)}
+                                              data={this.state.modalData}/>
+                  </Modal>
+                  <ReferenceManyFieldController
+                    resource="broadcasts"
+                    reference="broadcasts"
+                    target="business"
+                    source="id"
+                    record={record}
+                  >
+                    {controllerProps => <BroadcastInProfileList {...controllerProps}
+                                                                onReservePress={this.handleReservePress.bind(this)}/>}
 
+                  </ReferenceManyFieldController>
+
+                </View>
+              </ScrollView>
+            </View>
+
+          )}
+        }
+      </ShowController>
     );
   }
 
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    width: '100%',
-    backgroundColor: 'rgba(0,0,0,.6)'
-  },
+
   scrollView: {
-    flexDirection: 'column',
+  //  flexDirection: 'column',
     flex: 1
   },
   generalContainer: {

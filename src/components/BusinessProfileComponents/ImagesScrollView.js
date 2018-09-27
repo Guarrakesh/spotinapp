@@ -63,11 +63,7 @@ const ImagesScrollView = (props) => {
 
 const styles = StyleSheet.create({
 
-  cardContainer: {
-    marginLeft: 8,
-    marginRight: 8,
-    marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
-  },
+
   buttonText: {
     fontSize: 50,
     color: 'rgba(255, 255, 255, 0.7)',

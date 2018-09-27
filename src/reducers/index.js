@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 
 
 
-import authReducer from './authReducer';
+import authReducer from './auth';
 import references from './references';
 import entities from './entities';
 import location from './location';

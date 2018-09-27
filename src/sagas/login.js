@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { take, put, call, fork, race } from 'redux-saga/effects';
 import NavigationService from '../navigators/NavigationService';
 import { delay } from 'redux-saga';
@@ -20,7 +21,7 @@ import {
     requestError
 } from '../actions';
 import auth from '../api/auth';
-
+import { PROFILE_GET_INFO_SUCCESS } from '../actions/profile';
 
 
 /**
@@ -48,8 +49,10 @@ export function* authorize({email, password, isRegistering, name}) {
         if (response && response.token && response.user) { //logged in {
             //Salvo la token e le info utente nello storage
             yield call(auth.setAuthToken, response.token);
+
             yield call(auth.setUserInfo, response.user);
             //Informo redux che ho finito la richiesta
+            yield put({type: PROFILE_GET_INFO_SUCCESS, payload: response.user});
             yield put(setAuthState(true, response.token));
 
             //Dico a redux di cambiare schermata

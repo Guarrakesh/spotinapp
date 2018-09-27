@@ -59,6 +59,7 @@ export default (apiUrl, httpClient = fetchJson) => {
             query = {...query, latitude, longitude, radius};
         }
         url = `${apiUrl}/${resource}?${stringify(query)}`;
+
         break;
       }
       case GET_ONE:
@@ -106,7 +107,7 @@ export default (apiUrl, httpClient = fetchJson) => {
         const query = {
           [`id_like`]: params.ids.join('|'),
         };
-        url = `${apiUrl}/${resource}?${stringify(query)}`;
+        url = `${apiUrl}/${resource}?id_like=${query.id_like}`;
         break;
       }
       default:

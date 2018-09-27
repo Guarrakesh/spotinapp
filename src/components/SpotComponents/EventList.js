@@ -2,7 +2,7 @@ import React from 'react';
 
 import EventCard from './EventCard';
 import PropTypes from 'prop-types';
-import { StyleSheet, SectionList, Text, View } from 'react-native';
+import {StyleSheet, SectionList, Text, View, ActivityIndicator} from 'react-native';
 import { groupBy } from 'lodash';
 import moment from 'moment';
 import 'moment/locale/it';
@@ -48,13 +48,23 @@ const EventList = ({
     return <Text style={styles.sectionHeader}>{date}</Text>
   };
 
+   if (isLoading && ids.length === 0) {
+     return (
+       <View style={styles.noContentView}>
+         <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+       </View>
+     )
+   }
 
 
+  if (!isRefreshing && !isLoading && ids.length === 0){
+    return (
+      <View style={styles.noContentView}>
+        <Text>Non ci sono eventi al momento</Text>
+      </View>
+    )
+  }
 
-  if (!isRefreshing && !isLoading && ids.length === 0)
-    return <View style={styles.noContentView}>
-      <Text>Non ci sono eventi al momento</Text>
-    </View>;
   return (
       <SectionList
           renderItem={({item}) => <EventCard

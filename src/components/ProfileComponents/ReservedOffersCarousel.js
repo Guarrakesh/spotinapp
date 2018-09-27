@@ -12,6 +12,7 @@ class ReservedOffersCarousel extends React.Component{
   render() {
 
     const {broadcasts} = this.props;
+    if (!broadcasts) return null;
 
     return(
       <View style={{

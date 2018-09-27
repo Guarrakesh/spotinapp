@@ -18,7 +18,8 @@ const EventCard = (props) => {
   let competitors = props.competitors;
   const competitorsComponent = (
       <ReferenceField  reference="competitions" source="competition" record={{...props}}>
-        {({record}) => (
+        {({record, isLoading}) =>
+          isLoading ? null : (
 
             record.competitorsHaveLogo
                 ?

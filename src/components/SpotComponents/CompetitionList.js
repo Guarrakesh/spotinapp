@@ -39,9 +39,10 @@ const CompetitionList = ({
   );
 
   if (isLoading) {
-    return (<View style={styles.noContentView}>
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
-        </View>
+    return (
+      <View style={styles.noContentView}>
+        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+      </View>
     )
   }
 
@@ -85,7 +86,11 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 8,
   },
-
+  noContentView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 
 });
 

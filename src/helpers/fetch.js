@@ -16,6 +16,7 @@ export const fetchJson = (url, options = {}) => {
         requestHeaders.set('Authorization', options.user.token);
     }
 
+
     return fetch(url, { ...options, headers: requestHeaders })
         .then(response =>
             response.text().then(text => ({

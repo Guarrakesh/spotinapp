@@ -1,6 +1,10 @@
 import React from 'react';
-import { userLogout } from '../../actions/login';
 import {View, Text, Button, StyleSheet} from 'react-native';
+import ProfileController from '../../controllers/ProfileController';
+
+
+
+import { userLogout } from '../../actions/login';
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservedOffersCarousel from '../../components/ProfileComponents/ReservedOffersCarousel';
 import { connect } from 'react-redux';
@@ -243,20 +247,25 @@ class ProfileScreen extends React.Component {
     const { loggedIn } = this.props.auth;
 
     return (
-      <View>
-        {loggedIn
-          ?
-          <View style={{padding: 8}}>
-            <UserInfoCard user={user} onLogoutPress={() => this.handleLogout()}/>
-            <Text style={styles.reservedOfferText}>Offerte prenotate</Text>
-            <ReservedOffersCarousel broadcasts={broadcasts}/>
+      <ProfileController>
+        {({profile, loggedIn, isLoading}) =>
+          isLoading || !profile ? null : (
+          <View>
+            {loggedIn
+              ?
+              <View style={{padding: 8}}>
+                <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
+                <Text style={styles.reservedOfferText}>Offerte prenotate</Text>
+                <ReservedOffersCarousel broadcasts={profile.reservations}/>
+              </View>
+              :  <Button title="Accedi" onPress={() => {this.props.navigation.navigate('SignIn')}}/>
+            }
+
+
           </View>
-          :  <Button title="Accedi" onPress={() => {this.props.navigation.navigate('SignIn')}}/>
-        }
+          )}
 
-
-      </View>
-
+      </ProfileController>
     )
   }
 }
