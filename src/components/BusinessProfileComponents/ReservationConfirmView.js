@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import View from '../common/View';
 import {Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import moment from "moment";
+import { connect } from 'react-redux';
+import get from 'lodash/get';
+
+import View from '../common/View';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from "../../helpers";
 import {Fonts} from "../common/Fonts";
-import moment from "moment";
 
 class ReservationConfirmView extends Component {
 
@@ -21,12 +24,10 @@ class ReservationConfirmView extends Component {
 
   render() {
 
-    const {onCancelPress, onConfirmPress} = this.props;
-    if (!this.props.data) return null;
+    const {onCancelPress, onConfirmPress, event} = this.props;
+    if (!this.props.data || !event) return null;
 
-    const {broadcast, event} = this.props.data;
-
-
+    const { broadcast } = this.props.data;
 
     const { offer } = broadcast;
 
@@ -143,8 +144,21 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8
   }
-})
+});
+
+const mapStateToProps = (state, props) => {
+  const { broadcast } = props.data;
+  const event = get(state, `entities.events.data[${broadcast.event}]`);
+  if (!event) return {};
+  return {
+    event: {
+        ...event,
+        competitors: event.competitors.map(record => ({ competitor: get(state, `entities.competitors.data[${record.competitor}]`)}) || null),
+        competition: get(state, `entities.competitions.data[${event.competition}]`) || null
+    }
+  }
+};
 
 
 
-export default ReservationConfirmView;
+export default connect(mapStateToProps)(ReservationConfirmView);

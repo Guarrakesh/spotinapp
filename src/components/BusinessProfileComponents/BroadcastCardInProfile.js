@@ -45,14 +45,14 @@ const BroadcastCardInProfile = (props) => {
               <View style={styles.broadcastInfoView} elevation={2}>
                 <View style={styles.eventInfoView}>
                   <ReferenceField reference="competitions" source="competition" record={event}>
-                    {({record: competition, isLoading}) =>
-                        isLoading ? null :
+                    {({record: competition, isLoading: competitionLoading}) =>
+                      competitionLoading || !competition ? null :
                             <View style={styles.competitorsLogoView}>
 
                               {competition.competitorsHaveLogo ?
                                   <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
-                                    {({record: competitor, isLoading}) =>
-                                        isLoading ? null :
+                                    {({record: competitor, isLoading: competitorLoading}) =>
+                                        competitorLoading ? null :
                                             <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
                                                                  imgSize={{width: 32, height: 32}}/>
                                     }
@@ -64,8 +64,8 @@ const BroadcastCardInProfile = (props) => {
 
                               {competition.competitorsHaveLogo ?
                                   <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
-                                    {({record: competitor, isLoading}) =>
-                                        isLoading ? null :
+                                    {({record: competitor, isLoading: competitorLoading}) =>
+                                        competitorLoading ? null :
                                             <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
                                                                  imgSize={{width: 32, height: 32}}/>
                                     }
@@ -91,7 +91,7 @@ const BroadcastCardInProfile = (props) => {
                   <View style={styles.offerContainer}>
                     <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
                   </View>
-                  <TouchableOpacity onPress={() => onReservePress(broadcast, event)}>
+                  <TouchableOpacity onPress={onReservePress}>
                     <View style={styles.reservationButton} elevation={2}>
                       <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
                     </View>

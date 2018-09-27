@@ -136,14 +136,12 @@ class BusinessProfileScreen extends React.Component {
     }
   }
 
-  handleReservePress(broadcast, event) {
-
+  handleReservePress(broadcast) {
     this.setState({
       modalVisible: true,
       currentBroadcast: broadcast,
       modalData: {
-        broadcast,
-        event
+        broadcast
       }
     });
   }
@@ -167,50 +165,52 @@ class BusinessProfileScreen extends React.Component {
 
     const {businessId, distance} = this.props.navigation.state.params;
     return (
-      <ShowController resource="businesses"
-                      id={businessId}
-                      basePath="/businesses">
-        { ({record, isLoading}) => {
+        <ShowController resource="businesses"
+                        id={businessId}
+                        basePath="/businesses">
+          { ({record, isLoading}) => {
 
-          if (isLoading || !record) return null;
+            if (isLoading || !record) return null;
 
 
-          return (
-            <ScrollView style={styles.scrollView}
-                        contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
-              <View style={styles.generalContainer}>
-                <ImagesScrollView business={businessImg}/>
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={this.state.modalVisible}
-                  presentationStyle={'overFullScreen'}
-                >
-                  <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                            onCancelPress={this.handleModalDismiss.bind(this)}
-                                            data={this.state.modalData}/>
-                </Modal>
-                <View style={styles.cardContainer}>
-                  { record && <BusinessInfoCard distance={distance} business={record}/>}
+            return (
+                <ScrollView style={styles.scrollView}
+                            contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start'}}>
+                  <View style={styles.generalContainer}>
+                    <ImagesScrollView business={businessImg}/>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={this.state.modalVisible}
+                        presentationStyle={'overFullScreen'}
+                    >
+                      <View style={styles.modalContainer}>
+                        <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                                  onCancelPress={this.handleModalDismiss.bind(this)}
+                                                  data={this.state.modalData}/>
+                      </View>
+                    </Modal>
+                    <View style={styles.cardContainer}>
+                      { record && <BusinessInfoCard distance={distance} business={record}/>}
 
-                    <ReferenceManyFieldController
-                        resource="broadcasts"
-                      reference="broadcasts"
-                      target="business"
-                      source="id"
-                      record={record}
+                      <ReferenceManyFieldController
+                          resource="broadcasts"
+                          reference="broadcasts"
+                          target="business"
+                          source="id"
+                          record={record}
                       >
-                      {controllerProps => <BroadcastInProfileList {...controllerProps}
-                                                                  onReservePress={this.handleReservePress.bind(this)}/>}
+                        {controllerProps => <BroadcastInProfileList {...controllerProps}
+                                                                    onReservePress={this.handleReservePress.bind(this)}/>}
 
-                    </ReferenceManyFieldController>
+                      </ReferenceManyFieldController>
 
-                </View>
-              </View>
-            </ScrollView>
-          )}
-        }
-      </ShowController>
+                    </View>
+                  </View>
+                </ScrollView>
+            )}
+          }
+        </ShowController>
 
     );
   }
@@ -218,12 +218,21 @@ class BusinessProfileScreen extends React.Component {
 };
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,.6)'
+  },
   scrollView: {
     flexDirection: 'column',
     flex: 1
   },
   generalContainer: {
-    width: '100%',
+    flex: 1,
     backgroundColor: themes.base.colors.white.default
   },
   cardContainer: {
