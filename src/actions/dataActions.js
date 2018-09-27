@@ -338,3 +338,28 @@ export const crudGetManyReference = (
     },
   },
 });
+
+export const CRUD_GET_NEAR_MANY = 'CRUD_GET_NEAR_MANY';
+export const CRUD_GET_NEAR_MANY_LOADING = 'CRUD_GET_NEAR_MANY_LOADING';
+export const CRUD_GET_NEAR_MANY_FAILURE = 'CRUD_GET_NEAR_MANY_FAILURE';
+export const CRUD_GET_NEAR_MANY_SUCCESS = 'CRUD_GET_NEAR_MANY_SUCCESS';
+
+// Get near (by location) entities
+export const crudGetNearMany = (
+    resource, position, pagination, sort, filter
+) => ({
+  resource,
+  type: CRUD_GET_NEAR_MANY,
+  payload: { position, pagination, sort, filter },
+  meta: {
+    resource,
+    fetch: GET_LIST,
+    /*onSuccess:
+    onFailure: {
+      notification: {
+        body: 'spotinapp.notification.http_error',
+        level: 'warning'
+      }
+    }*/
+  }
+})

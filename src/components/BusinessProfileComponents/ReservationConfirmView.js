@@ -24,10 +24,11 @@ class ReservationConfirmView extends Component {
     const {onCancelPress, onConfirmPress} = this.props;
     if (!this.props.data) return null;
 
-    const {broadcast} = this.props.data;
-    console.log(broadcast);
+    const {broadcast, event} = this.props.data;
 
-    const { event, offer } = broadcast;
+
+
+    const { offer } = broadcast;
 
     let date = moment(event.start_at).locale('it').format('dddd D MMMM');
     let time = moment(event.start_at).locale('it').format('HH:mm');
@@ -143,5 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   }
 })
+
+
 
 export default ReservationConfirmView;

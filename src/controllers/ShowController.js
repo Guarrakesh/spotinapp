@@ -51,7 +51,6 @@ export class ShowController extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (
-      !this.props.isLoading ||
       this.props.id !== nextProps.id ||
       nextProps.version !== this.props.version
     ) {
@@ -63,7 +62,6 @@ export class ShowController extends Component {
 
     this.props.crudGetOne(resource, id, this.props.basePath);
   }
-
   render() {
     const {
         //basePath,
@@ -78,7 +76,6 @@ export class ShowController extends Component {
     } = this.props;
 
     if (!children) return null;
-
     return children({
       isLoading,
       title,
@@ -89,6 +86,10 @@ export class ShowController extends Component {
     });
   }
 }
+ShowController.defaultProps = {
+  hasListControllers: false
+};
+
 
 ShowController.propTypes = {
    basePath: PropTypes.string.isRequired,
@@ -99,6 +100,7 @@ ShowController.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   resource: PropTypes.string.isRequired,
   title: PropTypes.any,
+  hasListControllers: PropTypes.bool.isRequired,
   // translate: PropTypes.func,
   version: PropTypes.number.isRequired,
 };
@@ -109,7 +111,6 @@ function mapStateToProps(state, props) {
     record: state.entities[props.resource]
         ? state.entities[props.resource].data[props.id]
         : null,
-    isLoading: state.loading > 0 ,
     version: state.ui.viewVersion,
   };
 }

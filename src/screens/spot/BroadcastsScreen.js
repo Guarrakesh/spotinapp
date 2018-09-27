@@ -61,10 +61,10 @@ class BroadcastsScreen extends React.Component {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
   handleBusinessPress(broadcastId, businessId, distance) {
+    console.log("°rrr");
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
   componentWillUnmount() {
-    console.log("AAAAAAA");
     this.state.scrollAnim.removeListener(this._handleScroll);
   }
   _handleScroll = ({ value }) => {
@@ -84,7 +84,6 @@ class BroadcastsScreen extends React.Component {
   _handleMomentumScrollEnd = () => {
     const previous = this._previousScrollValue;
     const current = this._currentScrollValue;
-    console.log("prev", previous, "cur",  current);
     if (previous > current || current < HEADER_HEIGHT) {
       Animated.spring(this.state.offsetAnim, {
         toValue: -current,
@@ -116,7 +115,6 @@ class BroadcastsScreen extends React.Component {
       extrapolate: 'clamp'
     });
 
-    let broadcasts = event.broadcasts;
     const {currentlySending} = this.props;
 
     let date = moment(event.start_at).locale('it').format('D MMM - hh:mm').toUpperCase();
@@ -125,11 +123,11 @@ class BroadcastsScreen extends React.Component {
     if (!position) return null;
 
 
-    const filter = {
+    const nearPosition = {
       latitude: position.lat,
       longitude: position.lng,
       radius: 50,
-      event: eventId
+
     };
     if(currentlySending){
       return(
@@ -148,9 +146,11 @@ class BroadcastsScreen extends React.Component {
       <View style={styles.container}>
 
         <ListController
-            perPage="10"
+            perPage="15"
             resource="broadcasts"
-            filter={filter}>
+            filter={{event: eventId}}
+            nearPosition={nearPosition}
+        >
           { controllerProps =>
             <BroadcastsList
               onScroll={Animated.event(
@@ -178,7 +178,7 @@ class BroadcastsScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { latitude, longitude } = state.location;
+  const { latitude, longitude } = state.location.coordinates;
   const { loggedIn } = state.auth;
   return {
     loggedIn, latitude, longitude

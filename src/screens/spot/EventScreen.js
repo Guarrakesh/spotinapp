@@ -38,7 +38,7 @@ class EventScreen extends React.Component {
     return (
       <ListController
         resource="events"
-        filter={{competition: competitionId, extend: 'competitors.competitor'}}>
+        filter={{competition: competitionId}}>
         { controllerProps => <EventList
             onItemPress={this.handleEventPress}
                                         onFavoritePress={this.handleEventFavoritePress}

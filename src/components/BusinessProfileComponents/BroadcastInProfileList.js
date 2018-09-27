@@ -28,9 +28,8 @@ const BroadcastInProfileList = (
       }
       data={ids}
       renderItem={({item}) =>  <BroadcastCardInProfile
-        isLoading={isLoading}
         broadcast={data[item]}
-        onReservePress={() => onReservePress(data[item])}
+        onReservePress={onReservePress}
       />}
     />
 

@@ -8,6 +8,7 @@ import ReferenceField from '../common/ReferenceField'
 import VersionedImageField from '../common/VersionedImageField';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
+import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 
 const colors = themes.base.colors
 
@@ -18,15 +19,22 @@ const EventCard = (props) => {
   const competitorsComponent = (
       <ReferenceField  reference="competitions" source="competition" record={{...props}}>
         {({record}) => (
-           record.competitorsHaveLogo
-              ?
-              competitors.map(comp => (<View style={styles.competitors}>
-                { <VersionedImageField source={comp.competitor.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />}
-              </View>))
-              :
-              <View style={{marginTop: 16}}>
-                { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-              </View>
+
+            record.competitorsHaveLogo
+                ?
+                <View style={styles.competitors}>
+                  {competitors.map(comp => (
+                    <ReferenceField reference="competitors" source="competitor" record={comp}>
+                      {({record: competitor}) =>
+                         <VersionedImageField source={competitor.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
+                      }
+                    </ReferenceField>
+                ))}
+                </View>
+                :
+                <View style={{marginTop: 16}}>
+                  { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                </View>
         )}
       </ReferenceField>
   );
@@ -100,9 +108,10 @@ const styles = {
   },
   competitors: {
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 8,
+    flex: 1,
 
   },
   detailContainer: {

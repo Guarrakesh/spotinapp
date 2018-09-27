@@ -13,6 +13,7 @@ import BroadcastInProfileList from '../../components/BusinessProfileComponents/B
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 import ListController from "../../controllers/ListController";
+import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 
 const businessImg = {
   "_id": "5b7f0c595066dea0081a1bc1",
@@ -135,12 +136,14 @@ class BusinessProfileScreen extends React.Component {
     }
   }
 
-  handleReservePress(broadcast) {
+  handleReservePress(broadcast, event) {
+
     this.setState({
       modalVisible: true,
       currentBroadcast: broadcast,
       modalData: {
-        broadcast
+        broadcast,
+        event
       }
     });
   }
@@ -169,8 +172,8 @@ class BusinessProfileScreen extends React.Component {
                       basePath="/businesses">
         { ({record, isLoading}) => {
 
+          if (isLoading || !record) return null;
 
-          if (isLoading) return null;
 
           return (
             <ScrollView style={styles.scrollView}
@@ -180,24 +183,27 @@ class BusinessProfileScreen extends React.Component {
                 <Modal
                   animationType="slide"
                   transparent={true}
-                  visible={false}
+                  visible={this.state.modalVisible}
                   presentationStyle={'overFullScreen'}
                 >
                   <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                            onCancelPress={this.handleModalDismiss.bind(this)} data={this.state.modalData}/>
+                                            onCancelPress={this.handleModalDismiss.bind(this)}
+                                            data={this.state.modalData}/>
                 </Modal>
                 <View style={styles.cardContainer}>
                   { record && <BusinessInfoCard distance={distance} business={record}/>}
 
-                    <ListController
-                      resource="broadcasts"
-                      filter={{business: businessId}}
-                      perPage={50}
-                    >
+                    <ReferenceManyFieldController
+                        resource="broadcasts"
+                      reference="broadcasts"
+                      target="business"
+                      source="id"
+                      record={record}
+                      >
                       {controllerProps => <BroadcastInProfileList {...controllerProps}
                                                                   onReservePress={this.handleReservePress.bind(this)}/>}
 
-                    </ListController>
+                    </ReferenceManyFieldController>
 
                 </View>
               </View>

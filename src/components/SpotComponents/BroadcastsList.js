@@ -1,5 +1,5 @@
 import React from "react";
-import BroadcastCard from "./BroadcastCard";
+import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
 import {StyleSheet, FlatList, Button, View, Text, Animated} from "react-native";
 import PropTypes from "prop-types";
 //import broadcasts from "../../api/broadcasts";
@@ -16,6 +16,7 @@ class BroadcastsList extends React.Component {
   _keyExtractor = (item) => item._id;
 
   _onItemPress = (id, businessId, distance) => {
+    console.log("provaprova");
     this.props.onItemPress(id, businessId, distance);
   };
 
@@ -33,6 +34,7 @@ class BroadcastsList extends React.Component {
       style,
       ...rest} = this.props;
 
+
     if (!isLoading && ids.length === 0) {
       return (<View style={themes.base.noContentView}>
         <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
@@ -40,16 +42,16 @@ class BroadcastsList extends React.Component {
       </View>)
     }
 
-
     return (
       <View style={{flex: 1}}>
         <AnimatedFlatList
           {...rest}
           scrollEventThrottle={15}
           data={ids}
-          renderItem={({item}) => <BroadcastCard
-            onItemPress={() =>  this._onItemPress(item, data[item].business._id, data[item].business.dist)}
-            {...data[item]}/>}
+          renderItem={({item}) => <BroadcastFloatingCard
+              elevation="2"
+              onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
+              broadcast={data[item]}/>}
 
           contentContainerStyle={[styles.container, style]}
         />

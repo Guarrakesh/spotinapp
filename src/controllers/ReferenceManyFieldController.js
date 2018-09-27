@@ -12,7 +12,7 @@ import {
     getIds,
     getReferences,
     nameRelatedTo,
-} from '../reducers/entities/oneToMany';
+} from '../reducers/references/oneToMany';
 
 /**
  * Render related records to the current one.
@@ -120,24 +120,24 @@ export class ReferenceManyFieldController extends Component {
             data,
             ids,
             children,
-            basePath,
+          //  basePath,
         } = this.props;
 
-        const referenceBasePath = basePath.replace(resource, reference);
+    //    const referenceBasePath = basePath.replace(resource, reference);
 
         return children({
             currentSort: this.state.sort,
             data,
             ids,
             isLoading: typeof ids === 'undefined',
-            referenceBasePath,
+          //  referenceBasePath,
             setSort: this.setSort,
         });
     }
 }
 
 ReferenceManyFieldController.propTypes = {
-    basePath: PropTypes.string.isRequired,
+   // basePath: PropTypes.string.isRequired,
     children: PropTypes.func.isRequired,
     crudGetManyReference: PropTypes.func.isRequired,
     filter: PropTypes.object,

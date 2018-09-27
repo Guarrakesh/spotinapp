@@ -17,7 +17,6 @@ const BroadcastCardInProfile = (props) => {
   const { offer } = broadcast;
 
 
-
   const discount = (type) => {
     switch (parseInt(type)) {
       case 0:
@@ -33,74 +32,74 @@ const BroadcastCardInProfile = (props) => {
 
 
   return (
-    <ReferenceField reference="events" record={broadcast} source="event">
-      {({record: event, isLoading}) => {
+      <ReferenceField reference="events" record={broadcast} source="event">
+        {({record: event, isLoading}) => {
 
-        if (isLoading) return null;
+          if (isLoading) return null;
 
-        let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-        let time = moment(event.start_at).locale('it').format('HH:mm');
+          let date = moment(event.start_at).locale('it').format('dddd D MMMM');
+          let time = moment(event.start_at).locale('it').format('HH:mm');
 
 
-        return (
-          <View style={styles.broadcastInfoView} elevation={2}>
-            <View style={styles.eventInfoView}>
-              <ReferenceField reference="competitions" source="competition" record={event}>
-                {({record: competition, isLoading}) =>
-                  isLoading ? null :
-                    <View style={styles.competitorsLogoView}>
+          return (
+              <View style={styles.broadcastInfoView} elevation={2}>
+                <View style={styles.eventInfoView}>
+                  <ReferenceField reference="competitions" source="competition" record={event}>
+                    {({record: competition, isLoading}) =>
+                        isLoading ? null :
+                            <View style={styles.competitorsLogoView}>
 
-                    {competition.competitorsHaveLogo ?
-                      <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
-                        {({record: competitor, isLoading}) =>
-                          isLoading ? null :
-                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
-                                                 imgSize={{width: 37, height: 37}}/>
-                        }
-                      </ReferenceField>
-                      :
-                      <VersionedImageField source={competition.image_versions} minSize={{width: 64, height: 64}}
-                                           imgSize={{width: 37, height: 37}}/>
+                              {competition.competitorsHaveLogo ?
+                                  <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
+                                    {({record: competitor, isLoading}) =>
+                                        isLoading ? null :
+                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                                 imgSize={{width: 32, height: 32}}/>
+                                    }
+                                  </ReferenceField>
+                                  :
+                                  <VersionedImageField source={competition.image_versions} minSize={{width: 64, height: 64}}
+                                                       imgSize={{width: 37, height: 37}}/>
+                              }
+
+                              {competition.competitorsHaveLogo ?
+                                  <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
+                                    {({record: competitor, isLoading}) =>
+                                        isLoading ? null :
+                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                                 imgSize={{width: 32, height: 32}}/>
+                                    }
+                                  </ReferenceField>
+
+                                  : null
+                              }
+                            </View>
                     }
 
-                    {competition.competitorsHaveLogo ?
-                      <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
-                        {({record: competitor, isLoading}) =>
-                          isLoading ? null :
-                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
-                                                 imgSize={{width: 37, height: 37}}/>
-                        }
-                      </ReferenceField>
+                  </ReferenceField>
 
-                      : null
-                    }
+                  <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+                    <Text style={styles.eventNameText}>{event.name}</Text>
+                    <Text style={styles.eventDateText}>{date}</Text>
+                    <Text style={styles.eventTimeText}>{time}</Text>
                   </View>
-                }
-
-              </ReferenceField>
-
-            <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
-              <Text style={styles.eventNameText}>{event.name}</Text>
-              <Text style={styles.eventDateText}>{date}</Text>
-              <Text style={styles.eventTimeText}>{time}</Text>
-            </View>
-            <View style={styles.sportIconView}>
-              <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-            </View>
-          </View>
-          <View style={styles.offerReservationView}>
-      <View style={styles.offerContainer}>
-      <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
-      </View>
-      <TouchableOpacity onPress={onReservePress}>
-          <View style={styles.reservationButton} elevation={2}>
-          <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
-      </View>
-      </TouchableOpacity>
-      </View>
-      </View>
-      )}}
-    </ReferenceField>
+                  <View style={styles.sportIconView}>
+                    <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+                  </View>
+                </View>
+                <View style={styles.offerReservationView}>
+                  <View style={styles.offerContainer}>
+                    <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => onReservePress(broadcast, event)}>
+                    <View style={styles.reservationButton} elevation={2}>
+                      <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+          )}}
+      </ReferenceField>
 
   );
 };
@@ -123,9 +122,15 @@ const styles = StyleSheet.create({
     marginTop: 16
   },
   competitorsLogoView: {
+
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 8,
     margin: 16,
     marginTop: 0,
-    marginRight: 0
+    marginRight: 0,
+
   },
   eventNameText: {
     fontSize: 18,

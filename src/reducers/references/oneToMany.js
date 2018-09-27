@@ -15,7 +15,7 @@ export default (previousState = initialState, { type, payload, meta }) => {
 };
 
 export const getIds = (state, relatedTo) =>
-    state.entities.oneToMany[relatedTo];
+    state.references.oneToMany[relatedTo];
 
 export const getReferences = (state, reference, relatedTo) => {
     const ids = getIds(state, relatedTo);

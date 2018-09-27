@@ -7,7 +7,7 @@ import Carousel from 'react-native-snap-carousel';
 
 import themes from '../../styleTheme';
 
-import BroadcastFloatingCard from '../../components/BusinessProfileComponents/BroadcastFloatingCard';
+import BroadcastFloatingCard from '../../components/BroadcastComponents/BroadcastFloatingCard';
 
 class BusinessMapScreen extends React.Component {
   state = {transitionFinished: false, region: null,
@@ -30,8 +30,8 @@ class BusinessMapScreen extends React.Component {
   }
 
   _centerMapOnMarker(index) {
-    const { broadcasts } = this.props.navigation.state.params;
-    const location = broadcasts[index].business.address.location;
+    const { data, ids } = this.props.navigation.state.params;
+    const location = data[ids[index]].dist.location;
     this.setState({
       region: {
         latitude: location.coordinates[1],
@@ -52,61 +52,65 @@ class BusinessMapScreen extends React.Component {
   }
   render() {
 
-
+    const { businesses } = this.props;
     const { ids, data } = this.props.navigation.state.params;
     if (!ids || !data || !this.state.transitionFinished) return null;
-
+    console.log("aaaaaaaa", businesses);
     const region = {
-      latitude: data[ids[0]].business.address.location.coordinates[1],
-      longitude: data[ids[0]].business.address.location.coordinates[0],
+      latitude: data[ids[0]].dist.location.coordinates[1],
+      longitude: data[ids[0]].dist.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
     }
     return (
-      <View style={{flex:1}}>
-        <MapView style={styles.map}
-                 region={this.state.region || region}
-                 onPress={this.slideCaoursel}
+        <View style={{flex:1}}>
+          <MapView style={styles.map}
+                   region={this.state.region || region}
+                   onPress={this.slideCaoursel}
 
-        >
+          >
 
-          {
-            ids.map(ids =>
-              <MapView.Marker
-                coordinate={{
-                  latitude: data[id].business.address.location.coordinates[1],
-                  longitude: data[id].business.address.location.coordinates[0]}}
-                title={data[id].business.name}
-                description={data[id].offer.title}
-              />
-            )
-          }
+            {
+              ids.map(id =>
 
-        </MapView>
-
-        <Animated.View style={{
-          transform: [{translateY: this.state.carouselY}],
-          position: 'absolute',
-          right: 0,
-          bottom: 0,
-          paddingBottom: 20
-        }}>
-          <Carousel
-            data={ids}
-            renderItem={({item}) =>
-              <BroadcastFloatingCard elevation={5} business={data[item].business} offer={item.offer} style={{flex: 1}}
-                                     onItemPress={() => this.handleBusPress(item, data[item].business._id, data[item].business.dist)}/>
+                  <MapView.Marker
+                      coordinate={{
+                        latitude: data[id].dist.location.coordinates[1],
+                        longitude: data[id].dist.location.coordinates[0]}}
+                      title={businesses[data[id].business].name}
+                      description={data[id].offer.title}
+                  />
+              )
             }
-            itemWidth={300}
-            sliderWidth={400}
-            activeAnimationType={'spring'}
-            // inactiveSlideOpacity={1}  //
-            // inactiveSlideScale={1}
-            onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
 
-          />
-        </Animated.View>
-      </View>
+          </MapView>
+
+          <Animated.View style={{
+            transform: [{translateY: this.state.carouselY}],
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            paddingBottom: 20
+          }}>
+            <Carousel
+                data={ids}
+                activeSlideAlignment={'center'}
+                renderItem={({item}) =>
+                    <BroadcastFloatingCard elevation={5}
+                                           broadcast={data[item]}
+                                           style={{flex: 1}}
+                                           onItemPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
+                }
+                itemWidth={300}
+                sliderWidth={400}
+                activeAnimationType={'spring'}
+                // inactiveSlideOpacity={1}  //
+                // inactiveSlideScale={1}
+                onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
+
+            />
+          </Animated.View>
+        </View>
     )
   }
 
@@ -121,9 +125,19 @@ class BusinessMapScreen extends React.Component {
 
 //equivale a function mapStateToProps(state) {}
 const mapStateToProps = (state) => {
+  //Mi prendo dallo state redux i business di questi broadcast
+  const resources = state.entities;
+  const businesses = state.entities.broadcasts.list.ids.reduce((acc, id) => ({
+    ...acc,
+    [resources.broadcasts.data[id].business]: state.entities.businesses.data[resources.broadcasts.data[id].business]
+  }),{});
+
+
+
   return {
     latitude: state.location.latitude,
     longitude: state.location.longitude,
+    businesses: businesses,
   };
 };
 
@@ -149,6 +163,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial'
   }
 });
+
 
 export default connect(mapStateToProps)(BusinessMapScreen);
 

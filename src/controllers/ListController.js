@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { parse, stringify } from 'query-string';
 import { isEqual, pickBy, debounce } from 'lodash';
 
-import { crudGetList as crudGetListAction } from '../actions/dataActions';
+import { crudGetList as crudGetListAction,
+  crudGetNearMany as crudGetNearManyAction } from '../actions/dataActions';
 import {
   changeListParams as changeListParamsAction,
   setListSelectedIds as setListSelectedIdsAction,
@@ -32,6 +33,7 @@ export class ListController extends Component {
   state = { isRefreshing: false }; //Per gestire il refresh della lista
 
   componentDidMount() {
+
     if (
         !this.props.query.page &&
         !(this.props.ids || []).length &&
@@ -56,7 +58,8 @@ export class ListController extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.resource !== this.props.resource ||
+    if (
+        nextProps.resource !== this.props.resource ||
         nextProps.query.sort !== this.props.query.sort ||
         nextProps.query.order !== this.props.query.order ||
         nextProps.query.perPage !== this.props.query.perPage ||
@@ -85,6 +88,7 @@ export class ListController extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
+
         nextProps.isLoading === this.props.isLoading &&
         nextProps.version === this.props.version &&
         nextState === this.state &&
@@ -127,14 +131,24 @@ export class ListController extends Component {
     };
 
     const permanentFilter = this.props.filter;
-
     // Chiamo l'API
-    this.props.crudGetList(
-        this.props.resource,
-        pagination,
-        { field: sort, order},
-        { ...filter, ...permanentFilter }
-    );
+    if (this.props.nearPosition && this.props.nearPosition.latitude
+    && this.props.nearPosition.longitude && this.props.nearPosition.radius) {
+      this.props.crudGetManyNear(
+          this.props.resource,
+          this.props.nearPosition,
+          pagination,
+          { field: sort, order},
+          { ...filter, ...permanentFilter}
+      )
+    } else {
+      this.props.crudGetList(
+          this.props.resource,
+          pagination,
+          {field: sort, order},
+          {...filter, ...permanentFilter}
+      );
+    }
   }
   refresh() {
     this.updateData();
@@ -231,11 +245,13 @@ ListController.propTypes = {
     order: PropTypes.string,
   }),
   resource: PropTypes.string.isRequired,
+  nearPosition: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   // the props managed by the system
   authProvider: PropTypes.func,
   basePath: PropTypes.string.isRequired,
   changeListParams: PropTypes.func.isRequired,
   crudGetList: PropTypes.func.isRequired,
+  crudGetManyNear: PropTypes.func.isRequired,
   data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   debounce: PropTypes.number,
   filterValues: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -263,7 +279,8 @@ ListController.defaultProps = {
   sort: {
     field: 'id',
     order: SORT_DESC
-  }
+  },
+  nearPosition: false,
 };
 
 const injectedProps = [
@@ -323,6 +340,18 @@ export const sanitizeListRestProps = props =>
  );*/
 function mapStateToProps(state, props) {
   const resourceState = state.entities[props.resource];
+  let data;
+  if (props.nearPosition && state.location.near[props.resource]) {
+    data = Object.keys(resourceState.data).reduce((acc, id) => ({
+        ...acc,
+        [id]: {
+          ...resourceState.data[id],
+          dist: state.location.near[props.resource][id]}
+
+    }), {});
+  } else {
+    data = resourceState.data;
+  }
 
   return {
     //query: selectQuery(props),
@@ -331,7 +360,7 @@ function mapStateToProps(state, props) {
     ids: resourceState.list.ids,
     selectedIds: resourceState.list.selectedIds,
     total: resourceState.list.total,
-    data: resourceState.data,
+    data,
     isLoading: state.loading > 0,
     filterValues: resourceState.list.params.filter,
     version: state.ui.viewVersion
@@ -343,6 +372,7 @@ connect(
     mapStateToProps,
     {
       crudGetList: crudGetListAction,
+      crudGetManyNear: crudGetNearManyAction,
       changeListParams: changeListParamsAction,
       setSelectedIds: setListSelectedIdsAction,
       toggleItem: toggleListItemAction,

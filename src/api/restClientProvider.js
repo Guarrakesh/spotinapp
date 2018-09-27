@@ -46,13 +46,18 @@ export default (apiUrl, httpClient = fetchJson) => {
       case GET_LIST: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
-        const query = {
+        let query = {
           ...flattenObject(params.filter),
           _sort: field,
           _order: convertOrder(order),
           _start: (page - 1) * perPage,
           _end: page * perPage,
         };
+        if (params.position) {
+          const {latitude, longitude, radius} = params.position;
+          if (latitude && longitude)
+            query = {...query, latitude, longitude, radius};
+        }
         url = `${apiUrl}/${resource}?${stringify(query)}`;
         break;
       }
@@ -123,7 +128,7 @@ export default (apiUrl, httpClient = fetchJson) => {
       case GET_LIST:
       case GET_MANY:
       case GET_MANY_REFERENCE: {
-        let data, total;
+        let data = [], total, near = {};
         if (!json.docs) {
           data = json.map(res => ({...res, id: res._id}));
           if (!headers.has('x-total-count')) {
@@ -139,24 +144,27 @@ export default (apiUrl, httpClient = fetchJson) => {
             10
           );
 
+
         } else {
-          data = json.docs.map(res => ({...res, id: res._id}));
+          if (params.position && params.position.latitude) {
+            //Gestisco il caso in cui la risposta contiene dati geolocalizzati
+            //I dati le inserisco in data (cosicché il data reducer li inserisca in entities)
+            //mentre le informazioni { id, distance } le inserisci il near (cosicché il near reducer li salvi)
+            data = json.docs.map(res => ({
+                ...res, id: res._id
+            }));
+            near = json.near;
+          } else {
+            data = json.docs.map(res => ({...res, id: res._id}));
+          }
           total = parseInt(json.total);
         }
 
-
-        return {
-          data,
-          total
-
-          /* total: parseInt(
-           headers
-           .get('x-total-count')
-           .split('/')
-           .pop(),
-           10
-           ),*/
+        const response = {
+          data, total
         };
+        if (near) response['near'] = near;
+        return response;
       }
       case UPDATE:
       case GET_ONE:
