@@ -33,7 +33,7 @@ export const MainNavigation = createTabNavigator(
     Spot: SpotStack,
     Business: BusinessStack,
     News: NewsStack,
-   Profile: ProfileStack,
+    Profile: ProfileStack,
   },
   {
     screenBackgroundColor: 'red',
@@ -98,12 +98,11 @@ const RootNavigator = createStackNavigator(
     },
 
     BusinessMapInSpot: BusinessMapNavigatorInSpot,
-    BusinessMapInBusiness: BusinessMapNavigatorInBusiness
+    BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
   }, {
     headerMode: 'none',
     mode: "modal",
     initialRouteName: 'Main',
-
   }
 );
 

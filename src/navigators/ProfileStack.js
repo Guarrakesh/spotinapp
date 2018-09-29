@@ -1,13 +1,13 @@
 import ProfileScreen from '../screens/profile/ProfileScreen'
 import { createStackNavigator } from 'react-navigation';
 import themes from "../styleTheme";
+import AuthNavigator from './AuthNavigator';
 
 export const ProfileStack = createStackNavigator({
     ProfileScreen: {
       screen: ProfileScreen,
       navigationOptions: { title: 'Profilo'}
     },
-
 
   },{
     navigationOptions: {

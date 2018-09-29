@@ -36,11 +36,11 @@ class LoginScreen extends React.Component {
     const {navigation} = this.props;
     const {loggedIn} = this.props.auth;
 
-    if (loggedIn) {
-      return () => this.props.navigation.navigate('ProfileScreen')
-
-    }
-    else {
+    // if (loggedIn) {
+    //   return () => this.props.navigation.navigate('ProfileScreen')
+    //
+    // }
+    //else {
 
       return (
 
@@ -145,7 +145,7 @@ class LoginScreen extends React.Component {
 
       )
     }
-  }
+  //}
 }
 
 
