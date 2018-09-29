@@ -1,12 +1,5 @@
 import {
-  GET_LIST,
-  GET_ONE,
-  CREATE,
-  UPDATE,
-  UPDATE_MANY,
-  DELETE,
-  GET_MANY,
-  GET_MANY_REFERENCE
+  GET_PROFILE
 } from './types';
 
 
@@ -15,14 +8,12 @@ export const PROFILE_GET_INFO_LOADING = 'PROFILE_GET_INFO_LOADING';
 export const PROFILE_GET_INFO_FAILURE = 'PRODILE_GET_INFO_FAILURE';
 export const PROFILE_GET_INFO_SUCCESS = 'PROFILE_GET_INFO_SUCCESS';
 
-export const profileGetInfo = (userId) => ({
+export const profileGetInfo = () => ({
   resource: "users",
   type: PROFILE_GET_INFO,
-  payload: { id: userId },
   meta: {
     resource: 'users',
-    basePath: "/users/profile",
-    fetch: GET_ONE
+    fetch: GET_PROFILE
   },
   onFailure: {
     notification: {

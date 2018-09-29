@@ -47,3 +47,8 @@ export const DELETE_MANY = 'DELETE_MANY';
 
 //Usato durante il pull to refresh
 export const REFRESH_VIEW = 'REFRESH_VIEW';
+
+
+/* Profile fetch actions */
+//Simile a GET_ONE, con l'eccezione che non viene  mandato l'ID nel payload perché già c'à la token per riconoscere il profilo utente
+export const GET_PROFILE = 'GET_PROFILE';

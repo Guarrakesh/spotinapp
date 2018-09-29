@@ -31,7 +31,7 @@ export default function authReducer(state = initialState, action) {
       return {...state, error: action.error};
 
     case PROFILE_GET_INFO_SUCCESS:
-       return { ...state, profile: action.payload };
+       return { ...state, profile: action.payload.data };
 
     default:
       return state;

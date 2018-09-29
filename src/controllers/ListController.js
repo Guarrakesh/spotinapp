@@ -80,7 +80,7 @@ export class ListController extends Component {
       this.setState({ isRefreshing: false });
     }
     //C'è un refresh
-    if (nextProps.version !== this.props.version) {
+    if (nextProps.version !== this.props.version ) {
       this.updateData();
     }
 
@@ -88,7 +88,6 @@ export class ListController extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
-
         nextProps.isLoading === this.props.isLoading &&
         nextProps.version === this.props.version &&
         nextState === this.state &&
@@ -98,9 +97,9 @@ export class ListController extends Component {
     ) {
       return false;
     }
+
     return true;
   }
-
   getQuery() {
     const query = Object.keys(this.props.query).length > 0
         ? this.props.queryData
@@ -281,6 +280,7 @@ ListController.defaultProps = {
     order: SORT_DESC
   },
   nearPosition: false,
+  parentLoading: false,
 };
 
 const injectedProps = [

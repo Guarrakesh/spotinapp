@@ -33,7 +33,7 @@ export const MainNavigation = createTabNavigator(
     Spot: SpotStack,
     Business: BusinessStack,
     News: NewsStack,
-    Profile: ProfileStack,
+   Profile: ProfileStack,
   },
   {
     screenBackgroundColor: 'red',

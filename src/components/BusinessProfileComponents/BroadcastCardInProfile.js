@@ -13,7 +13,7 @@ import ReferenceField from '../common/ReferenceField'
 
 const BroadcastCardInProfile = (props) => {
 
-  let { broadcast, onReservePress } = props;
+  let { broadcast, onReservePress, reserved } = props;
   const { offer } = broadcast;
 
 
@@ -46,7 +46,7 @@ const BroadcastCardInProfile = (props) => {
                 <View style={styles.eventInfoView}>
                   <ReferenceField reference="competitions" source="competition" record={event}>
                     {({record: competition, isLoading: competitionLoading}) =>
-                      competitionLoading || !competition ? null :
+                        competitionLoading || !competition ? null :
                             <View style={styles.competitorsLogoView}>
 
                               {competition.competitorsHaveLogo ?
@@ -91,11 +91,13 @@ const BroadcastCardInProfile = (props) => {
                   <View style={styles.offerContainer}>
                     <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
                   </View>
-                  <TouchableOpacity onPress={onReservePress}>
-                    <View style={styles.reservationButton} elevation={2}>
-                      <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
-                    </View>
-                  </TouchableOpacity>
+                  {!reserved ?
+                      <TouchableOpacity onPress={onReservePress}>
+                        <View style={styles.reservationButton} elevation={2}>
+                          <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+                        </View>
+                      </TouchableOpacity>
+                      : <Text>PRENOTATO</Text>}
                 </View>
               </View>
           )}}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
-import { crudGetManyAccumulate as crudGetManyAccumulateAction } from '../actions/dataActions';
+import { crudGetManyAccumulate as crudGetManyAccumulateAction } from '../actions/accumulateActions';
 import { getReferencesByIds } from '../reducers/references/oneToMany';
 
 /**

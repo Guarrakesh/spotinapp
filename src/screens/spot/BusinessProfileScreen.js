@@ -7,7 +7,7 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
 import ShowController from '../../controllers/ShowController';
-
+import { crudCreate } from '../../actions/dataActions';
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
@@ -164,6 +164,7 @@ class BusinessProfileScreen extends React.Component {
   render(){
 
     const {businessId, distance} = this.props.navigation.state.params;
+    const { userReservations } = this.props;
     return (
       <ShowController resource="businesses"
                       id={businessId}
@@ -199,8 +200,10 @@ class BusinessProfileScreen extends React.Component {
                     source="id"
                     record={record}
                   >
-                    {controllerProps => <BroadcastInProfileList {...controllerProps}
-                                                                onReservePress={this.handleReservePress.bind(this)}/>}
+                    {controllerProps => <BroadcastInProfileList
+                        userReservations={userReservations}
+                        {...controllerProps}
+                        onReservePress={this.handleReservePress.bind(this)}/>}
 
                   </ReferenceManyFieldController>
 
@@ -216,6 +219,9 @@ class BusinessProfileScreen extends React.Component {
 
 };
 
+BusinessProfileScreen.propTypes = {
+  reserveBroadcast: PropTypes.func,
+};
 const styles = StyleSheet.create({
 
   scrollView: {
@@ -231,10 +237,17 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
   },
-})
+});
 
 
-export default BusinessProfileScreen;
+
+export default connect((state) => ({
+  userReservations: state.auth.profile.reservations || []
+}), {
+  reserveBroadcast: broadcast => crudCreate('reservations', { broadcast }, '/reservations')
+
+})(BusinessProfileScreen)
+
 
 
 

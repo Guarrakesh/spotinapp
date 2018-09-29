@@ -14,6 +14,8 @@ import {
   UPDATE_MANY,
   DELETE,
   DELETE_MANY,
+
+  GET_PROFILE
 } from '../actions/types';
 import {fetchJson, flattenObject} from '../helpers/fetch';
 
@@ -110,6 +112,12 @@ export default (apiUrl, httpClient = fetchJson) => {
         url = `${apiUrl}/${resource}?id_like=${query.id_like}`;
         break;
       }
+
+      //  Profile fetch actions
+      case GET_PROFILE:
+        url = `${apiUrl}/users/profile`;
+        break;
+
       default:
         throw new Error(`Unsupported fetch action type ${type}`);
     }
@@ -164,7 +172,7 @@ export default (apiUrl, httpClient = fetchJson) => {
         const response = {
           data, total
         };
-        if (near) response['near'] = near;
+        if (params.position) response['near'] = near;
         return response;
       }
       case UPDATE:

@@ -8,18 +8,32 @@ import { profileGetInfo as profileGetInfoAction } from '../actions/profile';
 export class ProfileController extends Component {
 
   componentDidMount() {
-    this.fetchProfile();
+    const { token  } = this.props;
+    if (token)
+      this.fetchProfile(token);
   }
 
   fetchProfile() {
-    const { token, profile } = this.props;
-    if (profile && token)
-      this.props.profileGetInfo(profile._id);
+    this.props.getInfo();
+  }
+  shouldComponentUpdate(nextProps){
+    if (nextProps.token !== this.props.token ||
+      nextProps.profile !== this.props.profile ||
+      nextProps.loggedIn !== this.props.loggedIn ||
+      nextProps.isLoading !== this.props.isLoading) {
+      return true;
+    }
+    return false;
+  }
+  componentWillReceiveProps(newProps) {
+
+    if (newProps.token !== this.props.token) {
+      this.fetchProfile();
+    }
   }
 
   render() {
     const { loggedIn, token, profile, isLoading, children} = this.props;
-    console.log(profile);
     if (!children) return null;
 
     return children({
@@ -40,6 +54,8 @@ ProfileController.propTypes = {
   isLoading: PropTypes.bool,
   loggedIn: PropTypes.bool,
   children: PropTypes.func,
+
+
 };
 
 function mapStateToProps(state) {
@@ -53,5 +69,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  profileGetInfo: profileGetInfoAction
+  getInfo: profileGetInfoAction
 })(ProfileController);

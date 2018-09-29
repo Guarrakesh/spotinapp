@@ -117,12 +117,21 @@ const themes = {
 
     },
 
-
+    inlineListTitleStyle: {
+      fontWeight: '500',
+      textAlign: 'left',
+      fontSize: 21,
+      padding: 8,
+      paddingBottom: 0,
+      marginTop: 8,
+      color: '#555555'
+    },
     listTitleStyle: {
       fontWeight: '500',
       textAlign: 'center',
       fontSize: 21,
       padding: 8,
+
       marginTop: 8,
       color: '#555555'
     },

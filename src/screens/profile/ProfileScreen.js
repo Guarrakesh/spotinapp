@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import ProfileController from '../../controllers/ProfileController';
+import InlineListController from '../../controllers/InlineListController';
 
 
-
+import ListController from '../../controllers/ListController'
 import { userLogout } from '../../actions/login';
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
-import ReservedOffersCarousel from '../../components/ProfileComponents/ReservedOffersCarousel';
+import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
 import { connect } from 'react-redux';
 import {Fonts} from "../../components/common/Fonts";
 import themes from "../../styleTheme";
@@ -236,6 +237,7 @@ const broadcasts = [{
 class ProfileScreen extends React.Component {
 
   constructor() {
+
     super();
     this.handleLogout = this.handleLogout.bind(this);
   }
@@ -244,48 +246,37 @@ class ProfileScreen extends React.Component {
     this.props.dispatch(userLogout());
   }
   render() {
-    const { loggedIn } = this.props.auth;
+
 
     return (
-      <ProfileController>
-        {({profile, loggedIn, isLoading}) =>
-          isLoading || !profile ? null : (
-          <View>
-            {loggedIn
-              ?
-              <View style={{padding: 8}}>
-                <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
-                <Text style={styles.reservedOfferText}>Offerte prenotate</Text>
-                <ReservedOffersCarousel broadcasts={profile.reservations}/>
+        <ProfileController>
+          {({profile, loggedIn, isLoading}) =>
+              <View>
+                {loggedIn && profile._id
+                    ?
+                    <View style={{padding: 8}}>
+                      <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
+                      <InlineListController resource="reservations">
+                        {controllerProps =>
+                            controllerProps.isLoading ? null :
+                                <ReservationsCarousel {...controllerProps}/>
+                        }
+
+
+                      </InlineListController>
+                    </View>
+                    : <Button title="Accedi" onPress={() => {
+                  this.props.navigation.navigate('SignIn')
+                }}/>
+                }
               </View>
-              :  <Button title="Accedi" onPress={() => {this.props.navigation.navigate('SignIn')}}/>
-            }
+          }
 
-
-          </View>
-          )}
-
-      </ProfileController>
+        </ProfileController>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return ({
-    auth: state.auth
-  });
-}
 
-const styles = StyleSheet.create({
-  reservedOfferText: {
-    marginLeft: 8,
-    marginTop: 8,
-    fontSize: 18,
-    fontFamily: Fonts.LatoBold,
-    color: themes.base.colors.text.default
-  }
-
-});
-
-export default connect(mapStateToProps)(ProfileScreen);
+export default ProfileScreen;
 
