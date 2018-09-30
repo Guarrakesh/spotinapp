@@ -6,7 +6,7 @@ import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHe
 
 import AuthNavigator from './AuthNavigator';
 import FavoriteScreen from '../components/FavoriteScreen';
-import NewsScreen from '../components/NewsScreen';
+import HomeScreen from '../screens/home/HomeScreen';
 import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigatorInSpot} from './SpotStack';
@@ -16,13 +16,13 @@ import themes from '../styleTheme';
 
 const FavoriteStack = createStackNavigator({
   Favorite: FavoriteScreen,
-
 });
 
 
-const NewsStack = createStackNavigator({
-  News: NewsScreen,
-
+const HomeStack = createStackNavigator({
+  Home: HomeScreen,
+},{
+  cardStyle: { backgroundColor: themes.base.backgroundColor },
 });
 
 
@@ -30,9 +30,10 @@ const NewsStack = createStackNavigator({
 
 export const MainNavigation = createTabNavigator(
   {
+    News: HomeStack,
+
     Spot: SpotStack,
     Business: BusinessStack,
-    News: NewsStack,
    Profile: ProfileStack,
   },
   {
@@ -54,7 +55,7 @@ export const MainNavigation = createTabNavigator(
           case 'Spot':
             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
             break;
-          case 'News':
+          case 'Home':
             image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
             break;
           case 'Profile':
@@ -73,6 +74,7 @@ export const MainNavigation = createTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false,
+
 
   }
 );

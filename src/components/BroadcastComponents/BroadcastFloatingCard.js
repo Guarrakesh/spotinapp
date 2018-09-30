@@ -7,14 +7,19 @@ import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ReferenceField from '../common/ReferenceField'
+import Helpers from '../../helpers/index';
 
+
+const fonts = themes.base.fonts;
 const colors = themes.base.colors;
 
 const BroadcastFloatingCard = ({
     broadcast,
     onPress,
     dark,
-    elevation
+    elevation,
+    showEvent,
+    overlayOpacity = 1
 }) => {
 
   const { business, offer, dist } = broadcast;
@@ -42,19 +47,36 @@ const BroadcastFloatingCard = ({
             { ({record: business}) =>
                 <ImageBackground
                     imageStyle={{borderRadius: themes.base.borderRadius}}
-                    source={{uri: business.image_url ? business.image_url[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+                    source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
                     style={styles.imgBackground(6)}
                 >
                   <View
-                      style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground})]}>
+                      style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground(overlayOpacity)})]}>
                     <View style={styles.leftInfo}>
                       <Text
-                          style={[styles.name, dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
-                      <Text style={[styles.address, dark ? {color: colors.white.default} : {color: colors.text.default}]}>
+                        style={[styles.name(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
+                      {!showEvent &&
+
+                      <Text style={[styles.address(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>
                         {business.address.street}
                       </Text>
+                      }
+                      {showEvent &&
+                        <ReferenceField reference="events" record={broadcast} source="event">
+                          { ({record: event}) =>
+                              <View>
+                                <Text style={[styles.eventName(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>
+                                  {event.name}
+                                </Text>
+                                <View >
+                                  <Text style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}</Text>
+                                </View>
+                              </View>
+                          }
+                        </ReferenceField>
+                      }
 
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={{flexDirection: 'row', marginTop: 8}}>
                         <Icon name="map-marker-radius" color={dark ? colors.accent.light : colors.accent.default}
                               style={styles.geoFenceImg} size={14}/>
                         <Text
@@ -67,7 +89,8 @@ const BroadcastFloatingCard = ({
                       <Text style={{
                         fontSize: 24,
                         color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
+
+                          fontFamily: fonts.LatoMedium,
                         textAlign: 'center'
                       }}>
                         {discount(offer.type)}
@@ -75,7 +98,7 @@ const BroadcastFloatingCard = ({
                       <Text style={{
                         fontSize: 13,
                         color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
+                        fontFamily: fonts.LatoMedium,
                         textAlign: 'center'
                       }}>
                         alla cassa
@@ -114,7 +137,7 @@ const styles = StyleSheet.create({
   imgBackground: (elevation = 4) => ({
     position: 'relative',
     flex: 1,
-    paddingTop: 180,
+    paddingTop: 220,
     resizeMode: 'stretch',
     borderRadius: themes.base.borderRadius,
     elevation: elevation,
@@ -127,9 +150,9 @@ const styles = StyleSheet.create({
 
 
     bottom: 0,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    padding: 16,
+    borderBottomLeftRadius:  themes.base.borderRadius,
+    borderBottomRightRadius:  themes.base.borderRadius,
+    padding: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end'
@@ -138,33 +161,39 @@ const styles = StyleSheet.create({
   darkBackground: {
     backgroundColor: 'rgba(43,39,39,.8)',
   },
-  lightBackground: {
-    backgroundColor: 'rgba(255,255,255,.8)'
-  },
-  leftInfo: {
+  lightBackground: (opacity = 1) => ({
+    backgroundColor: `rgba(255,255,255,${opacity})`,
+  }),
 
-  },
   offerValue: {
-    alignSelf: 'center'
+    alignSelf: 'flex-end'
   },
-  name: {
-    fontSize: 17,
+  name: (opacity = 1) => ({
+    fontSize: 16,
+    fontFamily: fonts.LatoLight,
+    fontFamily: opacity !== 1 ? fonts.LatoBold : fonts.LatoMedium,
 
-    fontWeight: '700',
-  },
-  address: {
+  }),
+  address: (opacity = 1) => ({
     fontWeight: '300',
     fontSize: 12,
+    fontFamily: fonts.LatoLight,
 
-
-    marginBottom: 8
-  },
+    marginBottom: opacity === 1 ? 8 : 0,
+  }),
   distance: {
     fontSize: 12,
-    fontWeight: '700',
-
-
-
+    fontFamily: fonts.LatoBold,
+  },
+  eventName: (opacity = 1) => ({
+    fontFamily: opacity !== 1 ? fonts.LatoBold : fonts.LatoMedium,
+    fontSize: 16,
+    marginTop: 4,
+  }),
+  eventDate: {
+    fontFamily: fonts.LatoLight,
+    color: themes.base.colors.text.default,
+    fontSize: 12
   },
 
 

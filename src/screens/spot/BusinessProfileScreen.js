@@ -247,14 +247,3 @@ export default connect((state) => ({
   reserveBroadcast: broadcast => crudCreate('reservations', { broadcast }, '/reservations')
 
 })(BusinessProfileScreen)
-
-
-
-
-
-
-
-
-
-
-
