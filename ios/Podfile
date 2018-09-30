@@ -25,6 +25,8 @@ target 'spotinapp' do
     pod 'react-native-google-maps', path: '../node_modules/react-native-maps/'  # <~~ if you need GoogleMaps support on iOS
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|
