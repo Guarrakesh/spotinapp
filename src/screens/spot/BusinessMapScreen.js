@@ -55,7 +55,6 @@ class BusinessMapScreen extends React.Component {
     const { businesses } = this.props;
     const { ids, data } = this.props.navigation.state.params;
     if (!ids || !data || !this.state.transitionFinished) return null;
-    console.log("aaaaaaaa", businesses);
     const region = {
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],
@@ -166,6 +165,3 @@ const styles = StyleSheet.create({
 
 
 export default connect(mapStateToProps)(BusinessMapScreen);
-
-
-

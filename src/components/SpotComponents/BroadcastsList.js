@@ -49,6 +49,7 @@ class BroadcastsList extends React.Component {
           scrollEventThrottle={15}
           data={ids}
           renderItem={({item}) => <BroadcastFloatingCard
+              overlayOpacity={0.8}
               elevation={2}
               onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
               broadcast={data[item]}/>}

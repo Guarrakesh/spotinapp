@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
   sportIconView: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    position: 'absolute',
     right: 16
   },
   sportIcon: {

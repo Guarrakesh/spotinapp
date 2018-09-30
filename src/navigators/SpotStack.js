@@ -27,7 +27,6 @@ export const BusinessMapNavigatorInSpot = createStackNavigator({
     }
   }, {
     mode: 'modal',
-
   }
 );
 
@@ -63,6 +62,8 @@ export const SpotStack = createStackNavigator({
     },
 
   },{
+    cardStyle: { backgroundColor: themes.base.backgroundColor },
+
     navigationOptions: {
 
       headerStyle: {
@@ -73,5 +74,3 @@ export const SpotStack = createStackNavigator({
     }
   }
 );
-
-

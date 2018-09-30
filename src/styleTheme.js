@@ -32,7 +32,7 @@ const themes = {
     //Si dovrebbero calcolare diversamente su iOS ...
     elevations: {
       depth1: {
-        shadowOffset: {height: 1},
+        shadowOffset: {height: 1  },
         shadowRadius: 3,
         shadowOpacity: 0.12,
       },
@@ -116,7 +116,7 @@ const themes = {
       },
 
     },
-
+    backgroundColor: '#F6F6F6',
     inlineListTitleStyle: {
       fontWeight: '500',
       textAlign: 'left',
