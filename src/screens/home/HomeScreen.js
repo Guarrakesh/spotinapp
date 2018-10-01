@@ -45,7 +45,8 @@ export default class HomeScreen extends React.Component {
                   <Text style={styles.inlineListHeader}>
                     Prossimi eventi
                   </Text>
-                <EventCarousel style={...controllerProps} />
+
+                <EventCarousel {...controllerProps} />
                 </View>
               }
             </InlineListController>

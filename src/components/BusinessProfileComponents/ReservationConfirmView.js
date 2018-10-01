@@ -46,15 +46,14 @@ class ReservationConfirmView extends Component {
           return null;
       }
     };
-
     return (
 
         <View style={styles.container} elevation={3}>
           <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>Vuoi prenotare questa offerta?</Text>
           <View style={styles.eventInfoView}>
             <View style={styles.competitorsLogoView}>
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0].competitor.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[1].competitor.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null }
+              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
+              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[1]._links.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null }
             </View>
             <View style={{marginLeft: 16, justifyContent: 'space-between', flex: 1}}>
               <Text style={styles.eventNameText}>{event.name}</Text>
@@ -153,7 +152,6 @@ const mapStateToProps = (state, props) => {
   return {
     event: {
         ...event,
-        competitors: event.competitors.map(record => ({ competitor: get(state, `entities.competitors.data[${record.competitor}]`)}) || null),
         competition: get(state, `entities.competitions.data[${event.competition}]`) || null
     }
   }

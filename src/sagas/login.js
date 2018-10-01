@@ -52,7 +52,6 @@ export function* authorize({email, password, isRegistering, name}) {
 
             yield call(auth.setUserInfo, response.user);
             //Informo redux che ho finito la richiesta
-            yield put({type: PROFILE_GET_INFO_SUCCESS, payload: response.user});
             yield put(setAuthState(true, response.token));
 
             //Dico a redux di cambiare schermata

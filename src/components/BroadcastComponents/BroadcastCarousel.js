@@ -19,7 +19,6 @@ const BroadcastCarousel = ({
       };
       return false;
     });
-    console.log(ids);
     return (
     isLoading ?
       null

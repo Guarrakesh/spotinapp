@@ -20,7 +20,7 @@ class ReservationsCarousel extends React.Component{
       <View style={{
         right: 0,
         bottom: 0,
-        paddingBottom: 20, marginLeft: -16, marginRight: -15}}>
+        paddingBottom: 20, marginLeft: -8, marginRight: -8}}>
         <Text style={themes.base.inlineListTitleStyle}>Offerte prenotate</Text>
 
         <Carousel
