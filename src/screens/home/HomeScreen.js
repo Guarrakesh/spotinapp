@@ -22,46 +22,47 @@ export default class HomeScreen extends React.Component {
       <HomeController>
         {({isLoading, position,...rest}) =>
           !position.latitude || !position.longitude ? null :
-            <ScrollView style={styles.homeContainer}>
-              <Image source={logoImg} style={{width: 200, height: 150,marginTop: 32, alignSelf: 'center'}} resizeMode={'contain'}/>
-              <InlineListController
-                resource="broadcasts"
-                nearPosition={{...position, radius: 100}}>
-                {controllerProps =>
-                  <View>
-                    <Text style={styles.inlineListHeader}>
-                      Offerte intorno a te
-                    </Text>
-                    <BroadcastCarousel {...controllerProps} />
-                  </View>
-                }
-              </InlineListController>
-              <InlineListController
-                resource="events"
-                sort={{field: '_id', order: -1}}
-              >
-                {controllerProps => (
-                  <View>
-                    <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
-                    <EventCarousel {...controllerProps} />
-                  </View>
-                )
-                }
-              </InlineListController>
-              <InlineListController
-                resource="businesses"
-                nearPosition={{...position, radius: 100}}>
-                {controllerProps =>
-                  <View>
-                    <Text style={styles.inlineListHeader}>
-                      Locali intorno a te
-                    </Text>
-                    <BusinessCarousel {...controllerProps} />
-                  </View>
-                }
-              </InlineListController>
+          <ScrollView style={styles.homeContainer}>
+            <Image source={logoImg} style={{width: 200, height: 150,marginTop: 32, alignSelf: 'center'}} resizeMode={'contain'}/>
+            <InlineListController
+            resource="broadcasts"
+            nearPosition={{...position, radius: 100}}>
+              {controllerProps =>
+                <View>
+                  <Text style={styles.inlineListHeader}>
+                    Offerte intorno a te
+                  </Text>
+                <BroadcastCarousel {...controllerProps} />
+                </View>
+              }
+            </InlineListController>
+            <InlineListController
+            resource="events"
+            sort={{field: '_id', order: -1}}
+            >
+              {controllerProps =>
+                <View>
+                  <Text style={styles.inlineListHeader}>
+                    Prossimi eventi
+                  </Text>
+                <EventCarousel {...controllerProps} />
+                </View>
+              }
+            </InlineListController>
+            <InlineListController
+            resource="businesses"
+            nearPosition={{...position, radius: 100}}>
+              {controllerProps =>
+                <View>
+                  <Text style={styles.inlineListHeader}>
+                    Locali intorno a te
+                  </Text>
+                <BusinessCarousel {...controllerProps} />
+                </View>
+              }
+            </InlineListController>
 
-            </ScrollView>
+          </ScrollView>
 
         }
 

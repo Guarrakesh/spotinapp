@@ -15,6 +15,7 @@ const colors = themes.base.colors
 
 const EventCard = (props) => {
 
+  console.log(props);
   let competitors = props.competitors;
   const competitorsComponent = (
       <ReferenceField  reference="competitions" source="competition" record={{...props}}>
@@ -25,11 +26,7 @@ const EventCard = (props) => {
                 ?
                 <View style={styles.competitors}>
                   {competitors.map(comp => (
-                    <ReferenceField reference="competitors" source="competitor" record={comp}>
-                      {({record: competitor}) =>
-                         <VersionedImageField source={competitor.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                      }
-                    </ReferenceField>
+                     <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
                 ))}
                 </View>
                 :
