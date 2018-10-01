@@ -9,6 +9,7 @@ import BusinessMapScreen from "../screens/spot/BusinessMapScreen";
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 
 import DismissButton from '../components/common/DismissButton';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { View, Text, Button } from 'react-native';
 
@@ -34,16 +35,21 @@ export const BusinessMapNavigatorInSpot = createStackNavigator({
 export const SpotStack = createStackNavigator({
     SportList: {
       screen: SportScreen,
-      navigationOptions: {  title: 'Sport' }
+
 
     },
     Competitions: {
       screen: CompetitionsScreen,
-      navigationOptions: ({navigation}) => ({ title: navigation.state.params.title || "Spot In" })
+      navigationOptions: ({navigation}) => ({
+        ...navigation.navigationOptions,
+        headerBackTitle: null,
+
+        title: navigation.state.params.title || "Spot In" })
     },
     Events: {
       screen: EventScreen,
       navigationOptions: ({navigation}) => ({
+          ...navigation.navigationOptions,
         title: navigation.state.params.title || "Spot In",
         headerBackTitle: null,
       })
@@ -56,7 +62,6 @@ export const SpotStack = createStackNavigator({
     BusinessProfileScreen: {
       screen: BusinessProfileScreen,
       navigationOptions: ({navigation}) => ({
-        title: "Profilo locale",
         headerBackTitle: null,
       })
     },
@@ -65,6 +70,10 @@ export const SpotStack = createStackNavigator({
     cardStyle: { backgroundColor: themes.base.backgroundColor },
 
     navigationOptions: {
+      headerBackTitle: "",
+      headerBackImage: (<Icon
+        color={themes.base.colors.text.default}
+        name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>),
 
       headerStyle: {
         backgroundColor: themes.base.colors.primary.default

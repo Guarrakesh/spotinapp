@@ -47,6 +47,12 @@ import { crudGetOne as crudGetOneAction } from '../actions/dataActions';
  */
 export class ShowController extends Component {
   componentDidMount() {
+    const { navigation, navigationTitle, record } = this.props;
+
+    if (navigation && record) {
+      navigation.setParams({title: navigationTitle(record)})
+
+    }
     this.updateData();
   }
   componentWillReceiveProps(nextProps) {
@@ -55,6 +61,15 @@ export class ShowController extends Component {
       nextProps.version !== this.props.version
     ) {
       this.updateData(nextProps.resource, nextProps.id);
+    }
+  }
+  componentDidUpdate(prevProps) {
+
+    const { navigation, navigationTitle, record } = this.props;
+
+    if (navigation && navigationTitle(prevProps.record) !== navigation.getParam('title') ) {
+      navigation.setParams({title: navigationTitle(record)})
+
     }
   }
 
@@ -103,6 +118,9 @@ ShowController.propTypes = {
   hasListControllers: PropTypes.bool.isRequired,
   // translate: PropTypes.func,
   version: PropTypes.number.isRequired,
+
+  navigation: PropTypes.object,
+  navigationTitle: PropTypes.string
 };
 
 function mapStateToProps(state, props) {

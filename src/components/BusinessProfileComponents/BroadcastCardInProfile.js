@@ -40,7 +40,7 @@ const BroadcastCardInProfile = (props) => {
 
           let date = moment(event.start_at).locale('it').format('dddd D MMMM');
           let time = moment(event.start_at).locale('it').format('HH:mm');
-
+          const { competitors } = event; 
 
           return (
             <View style={styles.broadcastInfoView} elevation={2}>
@@ -51,7 +51,7 @@ const BroadcastCardInProfile = (props) => {
               }
                 <View style={styles.eventInfoView}>
                   <ReferenceField  reference="competitions" source="competition" record={event}>
-                    {({record}) => return (
+                    {({record}) => (
 
                       record.competitorsHaveLogo
                         ?

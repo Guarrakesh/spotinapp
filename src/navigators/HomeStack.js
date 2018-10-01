@@ -7,18 +7,26 @@ import HomeScreen from '../screens/home/HomeScreen';
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 
+import Icon from 'react-native-vector-icons/Ionicons';
 //import DismissButton from '../components/common/DismissButton';
 
 import { View, Text, Button } from 'react-native';
 
-const SpotStack = createStackNavigator({
+const HomeStack = createStackNavigator({
     Home: HomeScreen,
     BusinessProfile: BusinessProfileScreen,
     BroadcastsList: BroadcastsScreen,
   },{
-    //NavOptions
-  }
+    navigationOptions: {
+      headerBackTitle: false,
+      headerBackImage: (<Icon
+        color={themes.base.colors.text.default}
+        name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>)
+
+    }
+    }
+
 );
 
 
-export default SpotStack;
+export default HomeStack;

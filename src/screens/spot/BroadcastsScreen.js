@@ -40,6 +40,7 @@ class BroadcastsScreen extends React.Component {
     const { eventId } = params;
 
     return {
+      headerBackTitle: null,
       title: "Locali vicini",
       headerTitleStyle: {
         textAlign: 'center',
