@@ -15,11 +15,12 @@ export const CRUD_GET_LIST_LOADING = 'CRUD_GET_LIST_LOADING';
 export const CRUD_GET_LIST_FAILURE = 'CRUD_GET_LIST_FAILURE';
 export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 
-export const crudGetList = (resource, pagination, sort, filter) => ({
+export const crudGetList = (resource, listId, pagination, sort, filter) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
     resource,
+    listId,
     fetch: GET_LIST,
     onFailure: {
       notification: {
@@ -35,7 +36,7 @@ export const CRUD_GET_ALL_LOADING = 'CRUD_GET_ALL_LOADING';
 export const CRUD_GET_ALL_FAILURE = 'CRUD_GET_ALL_FAILURE';
 export const CRUD_GET_ALL_SUCCESS = 'CRUD_GET_ALL_SUCCESS';
 
-export const crudGetAll = (resource, sort, filter, maxResults, callback) => ({
+export const crudGetAll = (resource, sport, filter, maxResults, callback) => ({
   type: CRUD_GET_ALL,
   payload: { sort, filter, pagination: { page: 1, perPage: maxResults } },
   meta: {
@@ -58,11 +59,12 @@ export const CRUD_GET_ONE_LOADING = 'CRUD_GET_ONE_LOADING';
 export const CRUD_GET_ONE_FAILURE = 'CRUD_GET_ONE_FAILURE';
 export const CRUD_GET_ONE_SUCCESS = 'CRUD_GET_ONE_SUCCESS';
 
-export const crudGetOne = (resource, id, basePath, refresh = true) => ({
+export const crudGetOne = (resource, listId, id, basePath, refresh = true) => ({
   type: CRUD_GET_ONE,
   payload: { id },
   meta: {
     resource,
+    listId,
     fetch: GET_ONE,
     basePath,
     onFailure: {
@@ -81,12 +83,13 @@ export const CRUD_CREATE_LOADING = 'CRUD_CREATE_LOADING';
 export const CRUD_CREATE_FAILURE = 'CRUD_CREATE_FAILURE';
 export const CRUD_CREATE_SUCCESS = 'CRUD_CREATE_SUCCESS';
 
-export const crudCreate = (resource, data, basePath, redirectTo = 'edit') => ({
+export const crudCreate = (resource, listId, data, basePath, redirectTo = 'edit') => ({
   type: CRUD_CREATE,
   payload: { data },
   meta: {
     resource,
     fetch: CREATE,
+    listId,
     onSuccess: {
       notification: {
         body: 'spotinapp.notification.created',
@@ -115,6 +118,7 @@ export const CRUD_UPDATE_OPTIMISTIC = 'CRUD_UPDATE_OPTIMISTIC';
 
 export const crudUpdate = (
     resource,
+    listId,
     id,
     data,
     previousData,
@@ -125,6 +129,7 @@ export const crudUpdate = (
   payload: { id, data, previousData },
   meta: {
     resource,
+    listId,
     fetch: UPDATE,
     onSuccess: {
       notification: {
@@ -196,7 +201,7 @@ export const crudDelete = (
     id,
     previousData,
     basePath,
-    redirectTo = 'list'
+    redirectTo = 'list',
 ) => ({
   type: CRUD_DELETE,
   payload: { id, previousData },
@@ -264,11 +269,12 @@ export const CRUD_GET_MANY_SUCCESS = 'CRUD_GET_MANY_SUCCESS';
 
 // Reference related actions
 
-export const crudGetMany = (resource, ids) => ({
+export const crudGetMany = (resource, ids, listId ) => ({
   type: CRUD_GET_MANY,
   payload: { ids },
   meta: {
     resource,
+    listId,
     fetch: GET_MANY,
     onFailure: {
       notification: {
@@ -325,7 +331,7 @@ export const crudGetManyReference = (
     source
 ) => ({
   type: CRUD_GET_MANY_REFERENCE,
-  payload: { target, id, pagination, sort, filter, source },
+  payload: { target, id,  pagination, sort, filter, source },
   meta: {
     resource: reference,
     relatedTo,
@@ -346,13 +352,15 @@ export const CRUD_GET_NEAR_MANY_SUCCESS = 'CRUD_GET_NEAR_MANY_SUCCESS';
 
 // Get near (by location) entities
 export const crudGetNearMany = (
-    resource, position, pagination, sort, filter
+    resource, listId, position, pagination, sort, filter
 ) => ({
   resource,
+
   type: CRUD_GET_NEAR_MANY,
   payload: { position, pagination, sort, filter },
   meta: {
     resource,
+      listId,
     fetch: GET_LIST,
     /*onSuccess:
     onFailure: {

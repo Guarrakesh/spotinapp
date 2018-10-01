@@ -106,6 +106,7 @@ export default (apiUrl, httpClient = fetchJson) => {
         options.method = 'DELETE';
         break;
       case GET_MANY: {
+        console.log("aaaaa", params);
         const query = {
           [`id_like`]: params.ids.join('|'),
         };

@@ -97,9 +97,11 @@ function mapStateToProps(state, props) {
   } else {
     data = resourceState.data;
   }
+  const list = resourceState.list[props.id];
+
 
   return {
-    ids: resourceState.list.ids,
+    ids: list ? list.ids : [],
     data
   }
 }

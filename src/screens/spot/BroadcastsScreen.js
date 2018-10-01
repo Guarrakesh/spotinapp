@@ -139,6 +139,7 @@ class BroadcastsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ListController
+            id={`${eventId}_broadcasts_list`}
             perPage="15"
             resource="broadcasts"
             sort={{field: 'dist.calculated', order: 'asc'}} //non funziona

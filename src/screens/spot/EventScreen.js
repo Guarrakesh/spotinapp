@@ -37,6 +37,7 @@ class EventScreen extends React.Component {
 
     return (
       <ListController
+        id={`${competitionId}_event_list`}
         resource="events"
         filter={{competition: competitionId}}>
         { controllerProps => <EventList

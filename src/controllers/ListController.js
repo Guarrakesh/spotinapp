@@ -9,12 +9,14 @@ import { isEqual, pickBy, debounce } from 'lodash';
 import { crudGetList as crudGetListAction,
   crudGetNearMany as crudGetNearManyAction } from '../actions/dataActions';
 import {
+  initList as initListAction,
   changeListParams as changeListParamsAction,
   setListSelectedIds as setListSelectedIdsAction,
   toggleListItem as toggleListItemAction
 } from '../actions/listActions';
 import removeEmpty from '../helpers/removeEmpty';
 //import removeKey from '../helpers/removeKey';
+import { uniqueId } from 'lodash';
 
 import queryReducer, {
   SET_SORT,
@@ -29,25 +31,20 @@ import queryReducer, {
  * <ListController> renderizza la lista a cui è associato e fetcha la lista dei record dalle REST API
  **/
 
-export class ListController extends Component {
+class ListController extends Component {
   state = { isRefreshing: false }; //Per gestire il refresh della lista
 
   componentDidMount() {
-    if (
-        !this.props.query.page &&
-        !(this.props.ids || []).length &&
-        this.props.params.page > 1 &&
-        this.props.total > 0
-    ) {
-      this.setPage(this.props.params.page - 1);
-      return;
+    if (!this.props.initialised) {
+      this.props.initList(this.props.resource, this.props.id);
+    } else {
 
-    }
 
-    this.updateData();
-    if (Object.keys(this.props.query).length > 0) {
-      this.props.changeListParams(this.props.resource, this.props.query);
+      this.updateData();
+      if (Object.keys(this.props.query).length > 0) {
+        this.props.changeListParams(this.props.resource, this.props.query);
 
+      }
     }
   }
 
@@ -57,7 +54,10 @@ export class ListController extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
+    if (nextProps.initialised !== this.props.initialised) {
+      this.updateData()
+    }
+    if ((
         nextProps.resource !== this.props.resource ||
         nextProps.query.sort !== this.props.query.sort ||
         nextProps.query.order !== this.props.query.order ||
@@ -65,7 +65,7 @@ export class ListController extends Component {
         !isEqual(nextProps.query.filter, this.props.query.filter) ||
         !isEqual(nextProps.filter, this.props.filter) ||
         !isEqual(nextProps.sort, this.props.sort) ||
-        !isEqual(nextProps.perPage, this.props.perPage)
+        !isEqual(nextProps.perPage, this.props.perPage))
     ) {
 
       this.updateData(
@@ -73,11 +73,11 @@ export class ListController extends Component {
               ? nextProps.query
               : nextProps.params
       );
-
     }
     if (!this.props.isLoading) {
       this.setState({ isRefreshing: false });
     }
+
     //C'è un refresh
     if (nextProps.version !== this.props.version ) {
       this.updateData();
@@ -87,6 +87,7 @@ export class ListController extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
+        nextProps.initialised === this.props.initialised &&
         nextProps.isLoading === this.props.isLoading &&
         nextProps.version === this.props.version &&
         nextState === this.state &&
@@ -94,6 +95,7 @@ export class ListController extends Component {
         nextProps.selectedIds === this.props.selectedIds &&
         nextProps.total === this.props.total
     ) {
+
       return false;
     }
 
@@ -121,7 +123,10 @@ export class ListController extends Component {
   }
 
   updateData(query) {
+
+
     const params = query || this.getQuery();
+
     const { sort, order, page = 1, perPage, filter } = params;
     const pagination = {
       page: parseInt(page, 10),
@@ -134,6 +139,7 @@ export class ListController extends Component {
     && this.props.nearPosition.longitude && this.props.nearPosition.radius) {
       this.props.crudGetManyNear(
           this.props.resource,
+          this.props.id,
           this.props.nearPosition,
           pagination,
           { field: sort, order},
@@ -142,6 +148,7 @@ export class ListController extends Component {
     } else {
       this.props.crudGetList(
           this.props.resource,
+          this.props.id,
           pagination,
           {field: sort, order},
           {...filter, ...permanentFilter}
@@ -172,18 +179,18 @@ export class ListController extends Component {
   }, this.props.debounce);
 
   handleSelect = ids => {
-    this.props.setSelectedIds(this.props.resource, ids);
+    this.props.setSelectedIds(this.props.resource, this.props.id, ids);
   };
   handleUnselectItems = () => {
-    this.props.setSelectedIds(this.props.resource, []);
+    this.props.setSelectedIds(this.props.resource, this.props.id, []);
   };
   handleToggleItem = id => {
-    this.props.toggleItem(this.props.resource, id);
+    this.props.toggleItem(this.props.resource, this.props.id,  id);
   };
 
   changeParams(action) {
     const newParams = queryReducer(this.getQuery(), action);
-    this.props.changeListParams(this.props.resource, newParams);
+    this.props.changeListParams(this.props.resource, this.props.id, newParams);
 
   }
 
@@ -268,6 +275,8 @@ ListController.propTypes = {
   translate: PropTypes.func.isRequired,
   version: PropTypes.number,
 
+  id: PropTypes.string.isRequired,
+
 };
 
 ListController.defaultProps = {
@@ -282,7 +291,8 @@ ListController.defaultProps = {
     order: SORT_DESC
   },
   nearPosition: false,
-  parentLoading: false,
+  parentLoading: false
+
 };
 
 const injectedProps = [
@@ -354,18 +364,21 @@ function mapStateToProps(state, props) {
   } else {
     data = resourceState.data;
   }
+  const list = resourceState.list[props.id];
 
   return {
     //query: selectQuery(props),
     query: {},
-    params: resourceState.list.params,
-    ids: resourceState.list.ids,
-    selectedIds: resourceState.list.selectedIds,
-    total: resourceState.list.total,
+    initialised: !!list,
+    params: !!list ? list.params : {},
+    ids: !!list ? list.ids : [],
+    selectedIds: !!list ? list.ids : [],
+    total: !!list ? list.ids : [],
     data,
     isLoading: state.loading > 0,
-    filterValues: resourceState.list.params.filter,
-    version: state.ui.viewVersion
+    filterValues: !!list ? list.params.filter : {},
+    version: state.ui.viewVersion,
+
   };
 }
 
@@ -373,6 +386,7 @@ export default
 connect(
     mapStateToProps,
     {
+      initList: initListAction,
       crudGetList: crudGetListAction,
       crudGetManyNear: crudGetNearManyAction,
       changeListParams: changeListParamsAction,

@@ -31,6 +31,7 @@ class SportScreen extends React.Component {
   render() {
     return (
         <ListController
+            id="sport_screen_list"
             resource="sports"
             perPage={20}
             sort={{field: 'order', order: 'asc'}}
