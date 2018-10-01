@@ -61,7 +61,7 @@ class BroadcastsScreen extends React.Component {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
   handleBusinessPress(broadcastId, businessId, distance) {
-    console.log("°rrr");
+
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
   componentWillUnmount() {
@@ -99,8 +99,6 @@ class BroadcastsScreen extends React.Component {
   };
 
 
-
-
   render() {
     const { scrollAnim, offsetAnim } = this.state;
 
@@ -135,19 +133,14 @@ class BroadcastsScreen extends React.Component {
           <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
         </View>
       )
-    }<Animated.View style={[styles.subHeader, { transform: [{translateY}]}]}>
-      <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
-      <Text style={styles.eventName}>{event.name}</Text>
-      <Animated.Text style={[styles.date]}>{date}</Animated.Text>
-    </Animated.View>
-
+    }
 
     return (
       <View style={styles.container}>
-
         <ListController
             perPage="15"
             resource="broadcasts"
+            sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
             filter={{event: eventId}}
             nearPosition={nearPosition}
         >
@@ -166,8 +159,6 @@ class BroadcastsScreen extends React.Component {
               style={{paddingTop: HEADER_HEIGHT + 32}}
             />}
         </ListController>
-
-
         <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
           <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
           <Text style={styles.eventName}>{event.name}</Text>

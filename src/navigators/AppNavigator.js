@@ -30,10 +30,10 @@ const HomeStack = createStackNavigator({
 
 export const MainNavigation = createTabNavigator(
   {
-    News: HomeStack,
+    Home: HomeStack,
 
     Spot: SpotStack,
-    Business: BusinessStack,
+
    Profile: ProfileStack,
   },
   {
@@ -53,10 +53,10 @@ export const MainNavigation = createTabNavigator(
             image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
             break;
           case 'Spot':
-            image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
+            image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
             break;
           case 'Home':
-            image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
+            image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
             break;
           case 'Profile':
             image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;

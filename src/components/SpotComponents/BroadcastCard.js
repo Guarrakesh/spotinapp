@@ -44,7 +44,7 @@ const BroadcastCard = ({
               { ({ record: business }) =>
                   <ImageBackground
                       imageStyle={{ borderRadius: themes.base.borderRadius }}
-                      source={{uri: business.image_url ? business.image_url[0].url : "https://cdn0.matrimonio.com/emp/fotos/3/0/1/5/-dsf1954-ok_2_153015.jpg"}}
+                      source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://cdn0.matrimonio.com/emp/fotos/3/0/1/5/-dsf1954-ok_2_153015.jpg"}}
                       style={styles.imgBackground}
                   >
                     <View style={styles.overlayView}>

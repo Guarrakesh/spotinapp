@@ -30,49 +30,35 @@ class ProfileScreen extends React.Component {
     this.props.dispatch(userLogout());
   }
 
-  renderProfile(profile, loggedIn, isLoading){
-    if(isLoading){
-      return(
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-      )
-    }
-    if(loggedIn){
-      if(!profile._id){
-        return(
-          <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-            ⊗ Impossibile caricare il profilo ⊗
-          </Text>
-        )
-      }
-      return(
-        <View style={{padding: 8}}>
-          <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
-          <InlineListController resource="reservations">
-            {controllerProps =>
-              controllerProps.isLoading ? null :
-                <ReservationsCarousel {...controllerProps}/>
-            }
-          </InlineListController>
-        </View>
-      )
-    }
-    else {
-      <Button title="Accedi" onPress={() => {
-        this.props.navigation.navigate('SignIn')
-      }}/>
-    }
-  }
   render() {
-
 
     return (
       <ProfileController>
         {({profile, loggedIn, isLoading}) =>
+        1==0 ?
+          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
           <View>
-            {this.renderProfile(profile,loggedIn,isLoading)}
+            {loggedIn ?
+              (!profile._id ?
+                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                  ⊗ Impossibile caricare il profilo ⊗
+                </Text> :
+                <View style={{padding: 8}}>
+                  <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
+
+                  <InlineListController resource="reservations">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <ReservationsCarousel {...controllerProps}/>
+                    }
+                  </InlineListController>
+                </View> ):
+              <Button title="Accedi" onPress={() => {
+              this.props.navigation.navigate('SignIn')
+            }}/>
+            }
           </View>
         }
-
       </ProfileController>
     )
   }

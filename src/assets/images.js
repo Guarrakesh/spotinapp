@@ -23,8 +23,8 @@ const images = {
       volley: require('./img/volley/Volley.png'),
       football: require('./img/football/Football.png'),
       waterpolo: require('./img/waterpolo/Waterpolo.png'),
-      hockey: require('./img/waterpolo/Hockey.png'),
-      baseball: require('./img/waterpolo/Baseball.png'),
+      hockey: require('./img/hockey/Hockey.png'),
+      baseball: require('./img/baseball/Baseball.png'),
     }
   }
 };

@@ -47,7 +47,7 @@ const EventCard = ({
       </ReferenceField>
   );
 
-  let date = moment(event.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();
+  let date = moment(event.start_at).locale('it').format('D MMMM');
   const time = moment(event.start_at).locale('it').format('HH:mm').toUpperCase();
 
   return (
@@ -61,7 +61,7 @@ const EventCard = ({
           <View style={styles.detailContainer}>
             <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
             <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
-            <Text style={styles.dateText}>{time}</Text>
+            <Text style={styles.dateText}>{date} alle {time}</Text>
           </View>
 
             <View style={styles.sportIconView}>
@@ -122,7 +122,7 @@ const styles = {
     marginTop: 20,
     flexDirection: 'column',
     marginBottom: 20,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flex: 1,
     flexWrap: 'wrap'
   },
@@ -137,7 +137,7 @@ const styles = {
     fontFamily: Fonts.LatoBold,
   },
   dateText: {
-    fontSize: 20,
+    fontSize: 14,
     fontFamily: Fonts.LatoLight
   },
   arrowIconView: {

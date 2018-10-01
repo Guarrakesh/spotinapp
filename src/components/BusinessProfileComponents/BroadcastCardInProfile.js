@@ -8,6 +8,7 @@ import Helpers from '../../helpers';
 import moment from "moment";
 import 'moment/locale/it';
 import {Fonts} from "../common/Fonts";
+import Icon from 'react-native-vector-icons/Feather'
 import VersionedImageField from '../common/VersionedImageField';
 import ReferenceField from '../common/ReferenceField'
 
@@ -44,7 +45,7 @@ const BroadcastCardInProfile = (props) => {
         return (
           <View style={styles.broadcastInfoView} elevation={2}>
             {(newsfeed || newsfeed > 0) ?
-            <View style={styles.redHeader} elevation={2}>
+            <View style={styles.redHeader} elevation={3}>
               <Text style={styles.headerText}>Offerta consigliata</Text>
             </View> : null
             }
@@ -107,7 +108,12 @@ const BroadcastCardInProfile = (props) => {
                     <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
                   </View>
                 </TouchableOpacity>
-                : <Text>PRENOTATO</Text>}
+                :
+                <View style={styles.reservedView}>
+                  <Icon name={'check-circle'} size={20} color={themes.base.colors.accent.default} style={{marginRight: 3}}/>
+                  <Text style={styles.reservedText}>PRENOTATO</Text>
+                </View>
+              }
             </View>
           </View>
         )}}
@@ -198,6 +204,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     margin: 5
   },
+  reservedView: {
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    borderRadius: 100,
+    margin: 5
+  },
   reservationText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
@@ -206,6 +218,12 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginTop: 8,
     marginBottom: 8
+  },
+  reservedText: {
+    fontSize: 16,
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default,
+
   },
   offerInfoView: {
     marginLeft: 16,

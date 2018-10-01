@@ -21,18 +21,26 @@ class BusinessList extends React.Component {
   }
 
   render(){
+    const {
+      isLoading,
+      data,
+      ids,
+      refresh,
+      isRefreshing,
+      onMapPress,
+      onItemPress,
+      onFavoritePress,
+      style,
+      ...rest} = this.props;
 
-    const { businesses } = this.props;
-    if (!businesses || businesses.length <= 0) {
-      return null;
-    }
 
 
     return (
       <FlatList
-        data={businesses}
+        {...rest}
+        data={ids}
         renderItem={({item}) => <BusinessCard
-          business={item}
+          business={data[item]}
           onItemPress={() => this._onItemPress(item._id)}
         />}
 

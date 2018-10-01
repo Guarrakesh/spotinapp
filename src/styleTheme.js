@@ -1,6 +1,6 @@
 
 import { Platform } from 'react-native';
-
+import {Fonts} from "./components/common/Fonts";
 
 
 const themes = {
@@ -127,12 +127,10 @@ const themes = {
       color: '#555555'
     },
     listTitleStyle: {
-      fontWeight: '500',
+      fontFamily: Fonts.LatoBold,
       textAlign: 'center',
       fontSize: 21,
       padding: 8,
-
-      marginTop: 8,
       color: '#555555'
     },
 

@@ -33,7 +33,6 @@ export class ListController extends Component {
   state = { isRefreshing: false }; //Per gestire il refresh della lista
 
   componentDidMount() {
-
     if (
         !this.props.query.page &&
         !(this.props.ids || []).length &&
@@ -149,6 +148,8 @@ export class ListController extends Component {
       );
     }
   }
+
+
   refresh() {
     this.updateData();
     this.setState({ isRefreshing: true });
@@ -272,6 +273,7 @@ ListController.propTypes = {
 ListController.defaultProps = {
   debounce: 500,
   filter: {},
+  params:{},
   query: {},
   filterValues: {},
   perPage: 10,
