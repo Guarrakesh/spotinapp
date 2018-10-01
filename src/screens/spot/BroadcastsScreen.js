@@ -61,7 +61,6 @@ class BroadcastsScreen extends React.Component {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
   handleBusinessPress(broadcastId, businessId, distance) {
-    console.log("°rrr");
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
   componentWillUnmount() {

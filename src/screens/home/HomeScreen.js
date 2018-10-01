@@ -8,31 +8,56 @@ import BroadcastCarousel from '../../components/BroadcastComponents/BroadcastCar
 import EventCarousel from '../../components/EventComponents/EventCarousel';
 
 import themes from '../../styleTheme';
-const logoImg = require('../../assets/img/logo.png');
+const logoImg = require('../../assets/img/logo-text.png');
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
-      header: null
+      headerTitle: (<Image
+        source={logoImg}
+        style={{height: 25, alignSelf: 'center'}}
+        resizeMode={'contain'}/>),
+        headerStyle: {
+          backgroundColor: themes.base.colors.primary.default,
+        }
     }
   }
+
+  constructor(props) {
+    super(props);
+
+    this.handleEventPress = this.handleEventPress.bind(this);
+    this.handleBusinessPress = this.handleBusinessPress.bind(this);
+    this.handleBroadcastPress = this.handleBroadcastPress.bind(this);
+
+  }
+  handleBroadcastPress(broadcastId, businessId, distance) {
+    this.props.navigation.navigate('BusinessProfile', {broadcastId, businessId, distance});
+  }
+  handleBusinessPress(businessId, distance) {
+    this.props.navigation.navigate('BusinessProfile', {businessId, distance});
+
+  }
+  handleEventPress(event, eventId) {
+    this.props.navigation.navigate('BroadcastsList', {eventId, event});
+  }
+
   render() {
     return (
       <HomeController>
         {({isLoading, position,...rest}) =>
           !position.latitude || !position.longitude ? null :
           <ScrollView style={styles.homeContainer}>
-            <Image source={logoImg} style={{width: 200, height: 150,marginTop: 32, alignSelf: 'center'}} resizeMode={'contain'}/>
             <InlineListController
             resource="broadcasts"
             nearPosition={{...position, radius: 100}}>
-              {controllerProps =>
+              {controllerProps => !controllerProps.isLoading &&
                 <View>
                   <Text style={styles.inlineListHeader}>
                     Offerte intorno a te
                   </Text>
-                <BroadcastCarousel {...controllerProps} />
+                <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
                 </View>
               }
             </InlineListController>
@@ -40,25 +65,25 @@ export default class HomeScreen extends React.Component {
             resource="events"
             sort={{field: '_id', order: -1}}
             >
-              {controllerProps =>
+              {controllerProps => !controllerProps.isLoading &&
                 <View>
                   <Text style={styles.inlineListHeader}>
                     Prossimi eventi
                   </Text>
 
-                <EventCarousel {...controllerProps} />
+                <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
                 </View>
               }
             </InlineListController>
             <InlineListController
             resource="businesses"
             nearPosition={{...position, radius: 100}}>
-              {controllerProps =>
+              {controllerProps => !controllerProps.isLoading &&
                 <View>
                   <Text style={styles.inlineListHeader}>
                     Locali intorno a te
                   </Text>
-                <BusinessCarousel {...controllerProps} />
+                <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
                 </View>
               }
             </InlineListController>
@@ -75,8 +100,10 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   homeContainer: {
+
     flex: 1,
     padding: 0,
+    paddingTop: 16,
   },
   inlineListHeader: {
     fontFamily: themes.base.fonts.LatoLight,

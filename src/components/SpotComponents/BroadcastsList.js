@@ -16,7 +16,6 @@ class BroadcastsList extends React.Component {
   _keyExtractor = (item) => item._id;
 
   _onItemPress = (id, businessId, distance) => {
-    console.log("provaprova");
     this.props.onItemPress(id, businessId, distance);
   };
 

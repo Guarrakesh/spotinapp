@@ -9,6 +9,7 @@ const BroadcastCarousel = ({
   data,
   isLoading,
   style,
+  onItemPress
 }) => {
     const businessIds = [];
     ids = ids.filter(id => {
@@ -34,7 +35,7 @@ const BroadcastCarousel = ({
                                       showEvent
                                        broadcast={data[item]}
                                        style={{flex: 1}}
-                                       onItemPress={() => {}}/>
+                                       onPress={() => {onItemPress(item, data[item].business, data[item].dist)}}/>
             }
             itemWidth={300}
             layout={'default'}

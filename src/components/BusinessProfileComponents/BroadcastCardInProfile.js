@@ -39,26 +39,43 @@ const BroadcastCardInProfile = (props) => {
 
           let date = moment(event.start_at).locale('it').format('dddd D MMMM');
           let time = moment(event.start_at).locale('it').format('HH:mm');
-          const { competitors } = event;
+
 
           return (
               <View style={styles.broadcastInfoView} elevation={2}>
                 <View style={styles.eventInfoView}>
-                  <ReferenceField  reference="competitions" source="competition" record={event}>
-                    {({record}) => { console.log("eeee", record); return (
+                  <ReferenceField reference="competitions" source="competition" record={event}>
+                    {({record: competition, isLoading: competitionLoading}) =>
+                        competitionLoading || !competition ? null :
+                            <View style={styles.competitorsLogoView}>
 
-                      record.competitorsHaveLogo
-                                ?
-                                <View style={styles.competitors}>
-                                  {competitors.map(comp => { console.log("eeee", comp); return (
-                                      <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                                  )})}
-                                </View>
-                                :
-                                <View style={{marginTop: 8, marginLeft: 16}}>
-                                  { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                                </View>
-                      )}}
+                              {competition.competitorsHaveLogo ?
+                                  <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
+                                    {({record: competitor, isLoading: competitorLoading}) =>
+                                        competitorLoading ? null :
+                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                                 imgSize={{width: 32, height: 32}}/>
+                                    }
+                                  </ReferenceField>
+                                  :
+                                  <VersionedImageField source={competition.image_versions} minSize={{width: 64, height: 64}}
+                                                       imgSize={{width: 37, height: 37}}/>
+                              }
+
+                              {competition.competitorsHaveLogo ?
+                                  <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
+                                    {({record: competitor, isLoading: competitorLoading}) =>
+                                        competitorLoading ? null :
+                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
+                                                                 imgSize={{width: 32, height: 32}}/>
+                                    }
+                                  </ReferenceField>
+
+                                  : null
+                              }
+                            </View>
+                    }
+
                   </ReferenceField>
 
                   <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
@@ -106,12 +123,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16
   },
-  competitors: {
+  competitorsLogoView: {
+
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 8,
-    marginLeft: 16
+    margin: 16,
+    marginTop: 0,
+    marginRight: 0,
 
   },
   eventNameText: {
@@ -131,6 +151,7 @@ const styles = StyleSheet.create({
   sportIconView: {
     alignItems: 'flex-end',
     justifyContent: 'center',
+    position: 'absolute',
     right: 16
   },
   sportIcon: {

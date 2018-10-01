@@ -11,7 +11,8 @@ const EventCarousel = ({
   data,
   isLoading,
   sports,
-  style
+  style,
+  onItemPress
 }) => (
   isLoading || Object.keys(sports).length === 0 ?
       null
@@ -27,7 +28,7 @@ const EventCarousel = ({
                                        event={data[item]}
                                        sport={sports[data[item].sport]}
                                        style={{flex: 1}}
-                                       onItemPress={() => {}}/>
+                                       onPress={() => {onItemPress(data[item], item)}}/>
             }
             itemWidth={300}
             layout={'default'}

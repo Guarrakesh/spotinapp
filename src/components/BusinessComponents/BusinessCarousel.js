@@ -9,6 +9,7 @@ const BusinessCarousel = ({
   data,
   isLoading,
   style,
+  onItemPress
 }) => (
     isLoading ?
       null
@@ -24,7 +25,7 @@ const BusinessCarousel = ({
 
                                        business={data[item]}
                                        style={{flex: 1}}
-                                       onItemPress={() => {}}/>
+                                       onPress={() => onItemPress(item, data[item].dist)}/>
             }
             itemWidth={300}
             layout={'default'}

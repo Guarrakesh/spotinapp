@@ -6,11 +6,11 @@ import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHe
 
 import AuthNavigator from './AuthNavigator';
 import FavoriteScreen from '../components/FavoriteScreen';
-import HomeScreen from '../screens/home/HomeScreen';
 import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigatorInSpot} from './SpotStack';
 import ProfileStack from './ProfileStack';
+import HomeStack from './HomeStack';
 
 import themes from '../styleTheme';
 
@@ -19,25 +19,17 @@ const FavoriteStack = createStackNavigator({
 });
 
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-},{
-  cardStyle: { backgroundColor: themes.base.backgroundColor },
-});
-
-
 
 
 export const MainNavigation = createTabNavigator(
   {
-    News: HomeStack,
+    Home: HomeStack,
+    Esplora: SpotStack,
 
-    Spot: SpotStack,
-    Business: BusinessStack,
    Profile: ProfileStack,
   },
   {
-    screenBackgroundColor: 'red',
+    screenBackgroundColor: themes.base.colors.primary.default,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
 
@@ -46,16 +38,11 @@ export const MainNavigation = createTabNavigator(
         let image = '';
 
         switch (routeName){
-          case 'Business':
-            image = focused ? Images.icons.barIcons.businessSelected : Images.icons.barIcons.business;
-            break;
-          case 'Favorite':
-            image = focused ? Images.icons.barIcons.favoriteSelected : Images.icons.barIcons.favorite;
-            break;
-          case 'Spot':
+
+          case 'Home':
             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
             break;
-          case 'Home':
+          case 'Esplora':
             image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
             break;
           case 'Profile':
@@ -65,7 +52,7 @@ export const MainNavigation = createTabNavigator(
         return <Image source={image} style={{height: 24, width: 24}} />;
       },
     }),
-    initialRouteName: "Spot",
+    initialRouteName: "Home",
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {

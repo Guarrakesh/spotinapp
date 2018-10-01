@@ -15,7 +15,6 @@ const colors = themes.base.colors
 
 const EventCard = (props) => {
 
-  console.log(props);
   let competitors = props.competitors;
   const competitorsComponent = (
       <ReferenceField  reference="competitions" source="competition" record={{...props}}>
