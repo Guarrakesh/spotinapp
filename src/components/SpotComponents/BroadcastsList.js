@@ -1,6 +1,6 @@
 import React from "react";
 import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
-import {StyleSheet, FlatList, Button, View, Text, Animated} from "react-native";
+import {StyleSheet, FlatList, Button, View, Text, Animated, ActivityIndicator} from "react-native";
 import PropTypes from "prop-types";
 //import broadcasts from "../../api/broadcasts";
 
@@ -35,10 +35,12 @@ class BroadcastsList extends React.Component {
 
 
     if (!isLoading && ids.length === 0) {
-      return (<View style={themes.base.noContentView}>
-        <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
-        <Button title={"Contattaci"}/>
-      </View>)
+      return (
+        <View style={themes.base.noContentView}>
+          <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
+          <Button title={"Contattaci"}/>
+        </View>
+      )
     }
 
     return (
@@ -97,10 +99,9 @@ BroadcastsList.propTypes = {
 };
 const styles = StyleSheet.create({
   container: {
-
+    marginTop: -20,
     alignItems: 'stretch',
     flexWrap: 'wrap',
-    padding: 8,
   }
 });
 

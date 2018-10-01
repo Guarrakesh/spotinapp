@@ -21,7 +21,10 @@ const images = {
       golf: require('./img/golf/Golf.png'),
       motori: require('./img/motori/Motori.png'),
       volley: require('./img/volley/Volley.png'),
-      football: require('./img/football/Football.png')
+      football: require('./img/football/Football.png'),
+      waterpolo: require('./img/waterpolo/Waterpolo.png'),
+      hockey: require('./img/hockey/Hockey.png'),
+      baseball: require('./img/baseball/Baseball.png'),
     }
   }
 };

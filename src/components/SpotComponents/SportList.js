@@ -39,9 +39,11 @@ const SportList = ({
       <Row style={{height:150}} key={idx}>{
 
         row.map(id => <Col>
-          <SportCard key={id} onPress={() => onItemPress(id, data[id].name)}
+          {data[id].active ?
+            <SportCard key={id} onPress={() => onItemPress(id, data[id].name)}
                      icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
-                     {...data[id]}/></Col>)
+                     {...data[id]}/> : null
+          }</Col>)
       }</Row>
   ));
 

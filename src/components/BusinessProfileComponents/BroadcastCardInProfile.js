@@ -8,13 +8,14 @@ import Helpers from '../../helpers';
 import moment from "moment";
 import 'moment/locale/it';
 import {Fonts} from "../common/Fonts";
+import Icon from 'react-native-vector-icons/Feather'
 import VersionedImageField from '../common/VersionedImageField';
 import ReferenceField from '../common/ReferenceField'
 
 const BroadcastCardInProfile = (props) => {
 
   let { broadcast, onReservePress, reserved } = props;
-  const { offer } = broadcast;
+  const { offer, newsfeed } = broadcast;
 
 
   const discount = (type) => {
@@ -42,66 +43,65 @@ const BroadcastCardInProfile = (props) => {
 
 
           return (
-              <View style={styles.broadcastInfoView} elevation={2}>
+            <View style={styles.broadcastInfoView} elevation={2}>
+              {(newsfeed || newsfeed > 0) ?
+                <View style={styles.redHeader} elevation={3}>
+                  <Text style={styles.headerText}>Offerta consigliata</Text>
+                </View> : null
+              }
                 <View style={styles.eventInfoView}>
-                  <ReferenceField reference="competitions" source="competition" record={event}>
-                    {({record: competition, isLoading: competitionLoading}) =>
-                        competitionLoading || !competition ? null :
-                            <View style={styles.competitorsLogoView}>
+                  <ReferenceField  reference="competitions" source="competition" record={event}>
+                    {({record}) => return (
 
-                              {competition.competitorsHaveLogo ?
-                                  <ReferenceField reference="competitors" source="competitors[0].competitor" record={event}>
-                                    {({record: competitor, isLoading: competitorLoading}) =>
-                                        competitorLoading ? null :
-                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
-                                                                 imgSize={{width: 32, height: 32}}/>
-                                    }
-                                  </ReferenceField>
-                                  :
-                                  <VersionedImageField source={competition.image_versions} minSize={{width: 64, height: 64}}
-                                                       imgSize={{width: 37, height: 37}}/>
-                              }
-
-                              {competition.competitorsHaveLogo ?
-                                  <ReferenceField reference="competitors" source="competitors[1].competitor" record={event}>
-                                    {({record: competitor, isLoading: competitorLoading}) =>
-                                        competitorLoading ? null :
-                                            <VersionedImageField source={competitor.image_versions} minSize={{width: 64, height: 64}}
-                                                                 imgSize={{width: 32, height: 32}}/>
-                                    }
-                                  </ReferenceField>
-
-                                  : null
-                              }
-                            </View>
-                    }
-
+                      record.competitorsHaveLogo
+                        ?
+                        <View style={styles.competitors}>
+                          {competitors.map(comp => { console.log("eeee", comp); return (
+                            <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
+                          )})}
+                        </View>
+                        :
+                        <View style={{marginTop: 8, marginLeft: 16}}>
+                          { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                        </View>
+                    )}
                   </ReferenceField>
 
-                  <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
-                    <Text style={styles.eventNameText}>{event.name}</Text>
-                    <Text style={styles.eventDateText}>{date}</Text>
-                    <Text style={styles.eventTimeText}>{time}</Text>
-                  </View>
-                  <View style={styles.sportIconView}>
-                    <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-                  </View>
-                </View>
-                <View style={styles.offerReservationView}>
-                  <View style={styles.offerContainer}>
-                    <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
-                  </View>
-                  {!reserved ?
-                      <TouchableOpacity onPress={onReservePress}>
-                        <View style={styles.reservationButton} elevation={2}>
-                          <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
-                        </View>
-                      </TouchableOpacity>
-                      : <Text>PRENOTATO</Text>}
-                </View>
+              <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+                <Text style={styles.eventNameText}>{event.name}</Text>
+                <Text style={styles.eventDateText}>{date}</Text>
+                <Text style={styles.eventTimeText}>{time}</Text>
               </View>
-          )}}
-      </ReferenceField>
+              <View style={styles.sportIconView}>
+                <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+              </View>
+            </View>
+            {(newsfeed || newsfeed > 0) ?
+              <View style={styles.offerInfoView}>
+                <Text style={styles.offerTitleText}>{offer.title}</Text>
+                <Text style={styles.offerDescriptionText}>{offer.description}</Text>
+              </View> : null
+            }
+            <View style={styles.offerReservationView}>
+              <View style={styles.offerContainer}>
+                <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
+              </View>
+              {!reserved ?
+                <TouchableOpacity onPress={onReservePress}>
+                  <View style={styles.reservationButton} elevation={2}>
+                    <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+                  </View>
+                </TouchableOpacity>
+                :
+                <View style={styles.reservedView}>
+                  <Icon name={'check-circle'} size={20} color={themes.base.colors.accent.default} style={{marginRight: 3}}/>
+                  <Text style={styles.reservedText}>PRENOTATO</Text>
+                </View>
+              }
+            </View>
+          </View>
+        )}}
+    </ReferenceField>
 
   );
 };
@@ -116,6 +116,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'column',
     backgroundColor: themes.base.colors.white.light,
+  },
+  redHeader: {
+    backgroundColor: themes.base.colors.danger.default,
+    marginTop: 0,
+    borderRadius: 16,
+    padding: 5
+  },
+  headerText: {
+    fontFamily: Fonts.LatoBold,
+    fontSize: 14,
+    color: themes.base.colors.white.default,
+    marginLeft: 8
   },
   eventInfoView: {
     flexDirection: 'row',
@@ -179,6 +191,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     margin: 5
   },
+  reservedView: {
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    borderRadius: 100,
+    margin: 5
+  },
   reservationText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
@@ -187,6 +205,29 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginTop: 8,
     marginBottom: 8
+  },
+  reservedText: {
+    fontSize: 16,
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default,
+
+  },
+  offerInfoView: {
+    marginLeft: 16,
+    marginRight: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: themes.base.colors.white.divisor
+  },
+  offerTitleText: {
+    fontSize: 20,
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default
+  },
+  offerDescriptionText: {
+    fontSize: 16,
+    fontFamily: Fonts.Lato,
+    color: themes.base.colors.text.default
   }
 
 

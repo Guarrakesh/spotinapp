@@ -47,7 +47,7 @@ const ReservationFloatingCard = ({
               !business ? null :
                 <ImageBackground
                     imageStyle={{borderRadius: themes.base.borderRadius}}
-                    source={{uri: business.image_url ? business.image_url[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+                    source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
                     style={styles.imgBackground(6)}
                 >
                   <View elevation={3} style={styles.status}>

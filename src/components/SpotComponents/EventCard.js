@@ -69,9 +69,8 @@ const EventCard = (props) => {
 }
 const styles = {
   containerStyle: {
-    marginTop: 10,
     borderRadius: themes.base.borderRadius,
-    marginBottom: 8,
+    marginTop: 8,
     height: 130,
     flexDirection: 'row',
     justifyContent: 'center',

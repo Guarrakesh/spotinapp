@@ -51,7 +51,7 @@ const ImagesScrollView = (props) => {
       prevButton={<Text style={styles.buttonText}></Text>}
     >
       {
-        business.image_url.map(image =>
+        business.cover_versions.map(image =>
           <Image source={{uri: image.url}} style={{flex: 1}} resizeMode={'cover'}/>
         )
       }

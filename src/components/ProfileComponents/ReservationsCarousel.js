@@ -30,8 +30,10 @@ class ReservationsCarousel extends React.Component{
           sliderWidth={400}
           activeAnimationType={'spring'}
           activeSlideAlignment={'start'}
-          // inactiveSlideOpacity={1}
-          // inactiveSlideScale={1}
+          inactiveSlideOpacity={1}
+          inactiveSlideScale={1}
+          removeClippedSubviews={false}
+          containerCustomStyle={{marginTop: 8}}
           renderItem={({item}) =>
             <ReservationFloatingCard
               elevation={2}

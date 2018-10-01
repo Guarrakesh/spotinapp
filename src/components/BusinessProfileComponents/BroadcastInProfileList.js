@@ -1,10 +1,11 @@
 import React from 'react';
 import BroadcastCardInProfile from './BroadcastCardInProfile';
-import {View, StyleSheet, FlatList, Text} from 'react-native';
+import {View, StyleSheet, FlatList, Text, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import broadcasts from "../../api/broadcasts";
 import {Fonts} from "../common/Fonts";
 import themes from '../../styleTheme';
+
 const BroadcastInProfileList = (
     {
         isLoading,
@@ -17,7 +18,13 @@ const BroadcastInProfileList = (
     }
 ) => {
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return(
+      <View>
+        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+      </View>
+    )
+  };
 
 
   return (

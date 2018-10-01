@@ -35,7 +35,9 @@ const CompetitionCard = (props) => {
         <View style={styles.info}>
           <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
           <Text style={styles.country}>{country}</Text>
-          { week_events.length > 0 && <Text style={styles.extra}>{week_events.length} eventi questa settimana </Text> }
+          { week_events.length > 0 && <Text style={styles.extra}>{week_events.length}
+            {week_events.length === 1 ? " evento" : " eventi"} questa settimana
+          </Text> }
         </View>
         <View style={styles.arrowIconView}>
           <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>

@@ -28,7 +28,7 @@ export const finalizeFactory = (tasks, accumulations) =>
      */
     function* finalize(key, actionCreator) {
         // combined with cancel(), this debounces the calls
-        yield call(delay, 50);
+        yield call(delay, 150);
 
         // Get the latest accumulated value for the provided key
         const accumulatedValue = accumulations[key];

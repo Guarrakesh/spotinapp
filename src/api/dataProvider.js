@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 import auth from './auth';
 
 
-//const apiUrl = process.env.NODE_ENV === "production" ? "http://spotin.it/v1" : "http://localhost:3001/v1";
+//const apiUrl = process.env.NODE_ENV === "production" ? "http://spotin.it/v1" : "http://192.168.1.36:3001/v1";
 const apiUrl = "http://spotin.herokuapp.com/v1";
 
 const httpClient = async (url, options = {}) => {
@@ -15,7 +15,6 @@ const httpClient = async (url, options = {}) => {
   const token = await auth.getAuthToken();
   //if (!token) return Promise.reject("No Auth Token");
   if (token) options.headers.set('Authorization', `Bearer ${token.accessToken}`);
-
   return fetchJson(url, options);
 
 };

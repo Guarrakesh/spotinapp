@@ -87,12 +87,11 @@ const RootNavigator = createStackNavigator(
     },
 
     BusinessMapInSpot: BusinessMapNavigatorInSpot,
-    BusinessMapInBusiness: BusinessMapNavigatorInBusiness
+    BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
   }, {
     headerMode: 'none',
     mode: "modal",
     initialRouteName: 'Main',
-
   }
 );
 

@@ -20,6 +20,7 @@ class CompetitionsScreen extends React.Component {
     this.props.navigation.navigate('Events', {competitionId, title: name});
   }
 
+
   render() {
     const { sportId } = this.props.navigation.state.params;
 

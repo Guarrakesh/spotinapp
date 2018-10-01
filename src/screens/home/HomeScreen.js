@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   inlineListHeader: {
     fontFamily: themes.base.fonts.LatoLight,
     fontWeight: '500',
-    marginLeft: 8,
     textAlign: 'left',
     fontSize: 21,
     marginLeft: 8,

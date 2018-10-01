@@ -8,6 +8,7 @@ import moment from 'moment';
 import 'moment/locale/it';
 import {Fonts} from "../common/Fonts";
 import themes from "../../styleTheme";
+import Icon from 'react-native-vector-icons/Entypo'
 import LoadingView from '../common/LoadingView';
 
 const EventList = ({
@@ -60,7 +61,10 @@ const EventList = ({
   if (!isRefreshing && !isLoading && ids.length === 0){
     return (
       <View style={styles.noContentView}>
-        <Text>Non ci sono eventi al momento</Text>
+        <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>
+        <Text style={styles.noContentText}>
+          Non ci sono eventi al momento
+        </Text>
       </View>
     )
   }
@@ -108,6 +112,11 @@ const styles = StyleSheet.create({
     flex :1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  noContentText: {
+    fontFamily: Fonts.LatoMedium,
+    fontSize: 20,
+    color: themes.base.colors.text.default
   },
   sectionHeader:
       {

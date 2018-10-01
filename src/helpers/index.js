@@ -16,6 +16,8 @@ const helpers = {
       'martial-arts': 'martial',
       'golf': 'golf',
       'rugby': 'rugby',
+      'waterpolo': 'waterpolo',
+      'hockey': 'hockey',
     };
 
     return map[slug] || null;

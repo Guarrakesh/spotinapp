@@ -1,7 +1,6 @@
-
-
-
 import React from 'react';
+
+
 import { FluidNavigator } from 'react-navigation-fluid-transitions';
 
 import { Icon } from 'react-native-vector-icons/MaterialIcons'

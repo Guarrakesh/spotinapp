@@ -18,7 +18,7 @@ const styles = {
     borderRadius: 5,
     height: 189,
     width: screenwidth - 16,
-    justifycontent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
     marginRight: 8

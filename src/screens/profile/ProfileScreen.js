@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 
@@ -29,34 +29,37 @@ class ProfileScreen extends React.Component {
   handleLogout() {
     this.props.dispatch(userLogout());
   }
+
   render() {
 
-
     return (
-        <ProfileController>
-          {({profile, loggedIn, isLoading}) =>
-              <View>
-                {loggedIn && profile._id
-                    ?
-                    <View style={{padding: 8}}>
-                      <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
-                      <InlineListController resource="reservations">
-                        {controllerProps =>
-                            controllerProps.isLoading ? null :
-                                <ReservationsCarousel {...controllerProps}/>
-                        }
+      <ProfileController>
+        {({profile, loggedIn, isLoading}) =>
+        1==0 ?
+          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+          <View>
+            {loggedIn ?
+              (!profile._id ?
+                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                  ⊗ Impossibile caricare il profilo ⊗
+                </Text> :
+                <View style={{padding: 8}}>
+                  <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
 
-
-                      </InlineListController>
-                    </View>
-                    : <Button title="Accedi" onPress={() => {
-                  this.props.navigation.navigate('SignIn')
-                }}/>
-                }
-              </View>
-          }
-
-        </ProfileController>
+                  <InlineListController resource="reservations">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <ReservationsCarousel {...controllerProps}/>
+                    }
+                  </InlineListController>
+                </View> ):
+              <Button title="Accedi" onPress={() => {
+              this.props.navigation.navigate('SignIn')
+            }}/>
+            }
+          </View>
+        }
+      </ProfileController>
     )
   }
 }
