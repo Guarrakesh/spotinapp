@@ -19,7 +19,11 @@ export const BusinessMapNavigatorInSpot = createStackNavigator({
       screen: BusinessMapScreen,
       navigationOptions: ({navigation}) => {
         return {
-          title: "Mappa Locali",
+          headerTransparent: true,
+          headerStyle: {
+            shadowColor: 'transparent',
+            borderBottomWidth: 0,
+          },
           headerRight: (
             <DismissButton onPress={() => {navigation.navigate('BroadcastsList')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
           ),
@@ -35,6 +39,10 @@ export const BusinessMapNavigatorInSpot = createStackNavigator({
 export const SpotStack = createStackNavigator({
     SportList: {
       screen: SportScreen,
+      navigationOptions: () => ({
+        title: 'Esplora',
+        headerBackTitle: null
+      }),
 
 
     },
@@ -62,7 +70,11 @@ export const SpotStack = createStackNavigator({
     BusinessProfileScreen: {
       screen: BusinessProfileScreen,
       navigationOptions: ({navigation}) => ({
+
         headerBackTitle: null,
+        headerBackImage: (<Icon
+            color={themes.base.colors.text.default}
+            name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>),
       })
     },
 

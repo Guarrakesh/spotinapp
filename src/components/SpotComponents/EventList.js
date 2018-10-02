@@ -52,7 +52,7 @@ const EventList = ({
    if (isLoading && ids.length === 0) {
      return (
        <View style={styles.noContentView}>
-         <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+         <ActivityIndicator size="large" color={<themes className="base colors text"></themes>.default} />
        </View>
      )
    }

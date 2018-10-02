@@ -46,7 +46,7 @@ class ProfileScreen extends React.Component {
                 <View style={{padding: 8}}>
                   <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
 
-                  <InlineListController resource="reservations">
+                  <InlineListController id="profile_reservations_list" resource="reservations">
                     {controllerProps =>
                       controllerProps.isLoading ? null :
                         <ReservationsCarousel {...controllerProps}/>

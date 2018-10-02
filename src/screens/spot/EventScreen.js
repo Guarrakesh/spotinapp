@@ -9,7 +9,7 @@ import ListController from '../../controllers/ListController';
 
 class EventScreen extends React.Component {
 
- constructor() {
+  constructor() {
     super();
 
     this.handleEventPress = this.handleEventPress.bind(this);
@@ -18,9 +18,8 @@ class EventScreen extends React.Component {
   }
 
   handleEventPress(eventId, event) {
-    InteractionManager.runAfterInteractions(() => {
-      this.props.navigation.navigate('BroadcastsList', {eventId, event});
-    });
+
+    this.props.navigation.navigate('BroadcastsList', {eventId, event});
 
   }
   handleEventFavoritePress(eventId) {
@@ -36,17 +35,17 @@ class EventScreen extends React.Component {
 
 
     return (
-      <ListController
-        id={`${competitionId}_event_list`}
-        resource="events"
-        filter={{competition: competitionId}}>
-        { controllerProps => <EventList
-            onItemPress={this.handleEventPress}
-                                        onFavoritePress={this.handleEventFavoritePress}
-                                        { ...controllerProps }
-        />
-        }
-      </ListController>
+        <ListController
+            id={`${competitionId}_event_list`}
+            resource="events"
+            filter={{competition: competitionId}}>
+          { controllerProps => <EventList
+              onItemPress={this.handleEventPress}
+              onFavoritePress={this.handleEventFavoritePress}
+              { ...controllerProps }
+          />
+          }
+        </ListController>
 
     )
 

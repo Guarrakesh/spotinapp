@@ -43,7 +43,7 @@ const CompetitionList = ({
   if (isLoading) {
     return (
       <View style={styles.noContentView}>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+        <ActivityIndicator size="large" color={themes.base.colors.text.default} />
       </View>
     )
   }

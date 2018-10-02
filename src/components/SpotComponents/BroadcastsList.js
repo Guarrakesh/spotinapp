@@ -51,6 +51,7 @@ class BroadcastsList extends React.Component {
           data={ids}
           renderItem={({item}) => <BroadcastFloatingCard
               overlayOpacity={0.8}
+              titleStyle={{fontSize: 18}}
               elevation={2}
               onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
               broadcast={data[item]}/>}

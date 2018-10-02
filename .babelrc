@@ -1,4 +1,4 @@
 {
   "presets": ["react-native"],
-  "plugins": ["transform-export-extensions", "transform-remove-console"]
+  "plugins": ["transform-export-extensions"]
 }

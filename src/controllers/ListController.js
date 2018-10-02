@@ -16,7 +16,7 @@ import {
 } from '../actions/listActions';
 import removeEmpty from '../helpers/removeEmpty';
 //import removeKey from '../helpers/removeKey';
-import { uniqueId } from 'lodash';
+
 
 import queryReducer, {
   SET_SORT,
@@ -204,7 +204,8 @@ class ListController extends Component {
         total,
         isLoading,
         version,
-        selectedIds
+        selectedIds,
+        id
     } = this.props;
 
     const query = this.getQuery();
@@ -233,7 +234,9 @@ class ListController extends Component {
       setPage: this.setPage,
       setPerPage: this.setPerPage,
       total,
-      version
+      version,
+
+      listId: id,
     });
   }
 

@@ -23,6 +23,9 @@ class BroadcastsScreen extends React.Component {
     offsetAnim: new Animated.Value(0)
   };
 
+  listId = (eventId) => (
+      `${eventId}_broadcasts_list`
+  );
 
   constructor() {
     super();
@@ -30,10 +33,7 @@ class BroadcastsScreen extends React.Component {
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
     this.handleMapPress = this.handleMapPress.bind(this);
   }
-  handleMapPress(data) {
-    this.props.navigation.navigate('BusinessMapInSpot', {...data});
 
-  }
   static navigationOptions = ({ navigation }) => {
     const { state } = navigation;
     const params = state.params || {};
@@ -64,6 +64,11 @@ class BroadcastsScreen extends React.Component {
   handleBusinessPress(broadcastId, businessId, distance) {
 
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
+  }
+  handleMapPress(data) {
+    const { eventId } = this.props.navigation.state.params;
+    this.props.navigation.navigate('BusinessMapInSpot', {...data, listId: this.listId(eventId)});
+
   }
   componentWillUnmount() {
     this.state.scrollAnim.removeListener(this._handleScroll);
@@ -139,7 +144,7 @@ class BroadcastsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ListController
-            id={`${eventId}_broadcasts_list`}
+            id={this.listId(eventId)}
             perPage="15"
             resource="broadcasts"
             sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
@@ -158,7 +163,7 @@ class BroadcastsScreen extends React.Component {
               onMomentumScrollEnd={this._handleMomentumScrollEnd }
               onScrollEndDrag={this._handleScrollEndDrag}
               onItemPress={this.handleBusinessPress}
-              style={{paddingTop: HEADER_HEIGHT + 32}}
+              style={{paddingTop: HEADER_HEIGHT + 32, }}
             />}
         </ListController>
         <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
@@ -183,6 +188,7 @@ const mapStateToProps = (state) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
 
   },
   subHeader: {

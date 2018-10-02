@@ -17,6 +17,8 @@ class BusinessMapScreen extends React.Component {
   latitudeDelta = 0.1;
   longitudeDelta = 0.1;
 
+
+
   constructor() {
     super();
 
@@ -98,7 +100,7 @@ class BusinessMapScreen extends React.Component {
                     <BroadcastFloatingCard elevation={5}
                                            broadcast={data[item]}
                                            style={{flex: 1}}
-                                           onItemPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
+                                           onPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
                 }
                 itemWidth={300}
                 sliderWidth={400}
@@ -123,13 +125,19 @@ class BusinessMapScreen extends React.Component {
 
 
 //equivale a function mapStateToProps(state) {}
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+  const { listId } = props.navigation.state.params;
   //Mi prendo dallo state redux i business di questi broadcast
+  let businesses;
   const resources = state.entities;
-  const businesses = state.entities.broadcasts.list.ids.reduce((acc, id) => ({
-    ...acc,
-    [resources.broadcasts.data[id].business]: state.entities.businesses.data[resources.broadcasts.data[id].business]
-  }),{});
+  const list = state.entities.broadcasts.list[listId];
+  if (!listId || !list) businesses = {};
+  else {
+    businesses = list.ids.reduce((acc, id) => ({
+      ...acc,
+      [resources.broadcasts.data[id].business]: state.entities.businesses.data[resources.broadcasts.data[id].business]
+    }), {});
+  }
 
 
 

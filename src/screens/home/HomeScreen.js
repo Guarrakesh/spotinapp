@@ -15,12 +15,12 @@ export default class HomeScreen extends React.Component {
 
     return {
       headerTitle: (<Image
-        source={logoImg}
-        style={{height: 25, alignSelf: 'center'}}
-        resizeMode={'contain'}/>),
-        headerStyle: {
-          backgroundColor: themes.base.colors.primary.default,
-        }
+          source={logoImg}
+          style={{height: 25, alignSelf: 'center'}}
+          resizeMode={'contain'}/>),
+      headerStyle: {
+        backgroundColor: themes.base.colors.primary.default,
+      }
     }
   }
 
@@ -45,54 +45,57 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <HomeController>
-        {({isLoading, position,...rest}) =>
-          !position.latitude || !position.longitude ? null :
-          <ScrollView style={styles.homeContainer}>
-            <InlineListController
-            resource="broadcasts"
-            nearPosition={{...position, radius: 100}}>
-              {controllerProps => !controllerProps.isLoading &&
-                <View>
-                  <Text style={styles.inlineListHeader}>
-                    Offerte intorno a te
-                  </Text>
-                <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
-                </View>
-              }
-            </InlineListController>
-            <InlineListController
-            resource="events"
-            sort={{field: '_id', order: -1}}
-            >
-              {controllerProps => !controllerProps.isLoading &&
-                <View>
-                  <Text style={styles.inlineListHeader}>
-                    Prossimi eventi
-                  </Text>
+        <HomeController>
+          {({isLoading, position,...rest}) =>
+              !position.latitude || !position.longitude ? null :
+                  <ScrollView style={styles.homeContainer}>
+                    <InlineListController
+                        id="home_broadcasts_list"
+                        resource="broadcasts"
+                        nearPosition={{...position, radius: 100}}>
+                      {controllerProps => !controllerProps.isLoading &&
+                      <View>
+                        <Text style={styles.inlineListHeader}>
+                          Offerte intorno a te
+                        </Text>
+                        <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
+                      </View>
+                      }
+                    </InlineListController>
+                    <InlineListController
+                        id="home_events_list"
+                        resource="events"
+                        sort={{field: '_id', order: -1}}
+                    >
+                      {controllerProps => !controllerProps.isLoading &&
+                      <View>
+                        <Text style={styles.inlineListHeader}>
+                          Prossimi eventi
+                        </Text>
 
-                <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
-                </View>
-              }
-            </InlineListController>
-            <InlineListController
-            resource="businesses"
-            nearPosition={{...position, radius: 100}}>
-              {controllerProps => !controllerProps.isLoading &&
-                <View>
-                  <Text style={styles.inlineListHeader}>
-                    Locali intorno a te
-                  </Text>
-                <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
-                </View>
-              }
-            </InlineListController>
+                        <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
+                      </View>
+                      }
+                    </InlineListController>
+                    <InlineListController
+                        id="home_businesses_list"
+                        resource="businesses"
+                        nearPosition={{...position, radius: 100}}>
+                      {controllerProps => !controllerProps.isLoading &&
+                      <View>
+                        <Text style={styles.inlineListHeader}>
+                          Locali intorno a te
+                        </Text>
+                        <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
+                      </View>
+                      }
+                    </InlineListController>
 
-          </ScrollView>
+                  </ScrollView>
 
-        }
+          }
 
-      </HomeController>
+        </HomeController>
     );
   }
 
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
 
     flex: 1,
     padding: 0,
+
     paddingTop: 16,
   },
   inlineListHeader: {

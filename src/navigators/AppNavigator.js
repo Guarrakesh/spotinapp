@@ -29,7 +29,7 @@ export const MainNavigation = createTabNavigator(
    Profile: ProfileStack,
   },
   {
-    screenBackgroundColor: themes.base.colors.primary.default,
+
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
 

@@ -19,7 +19,9 @@ const BroadcastFloatingCard = ({
     dark,
     elevation,
     showEvent,
-    overlayOpacity = 1
+    overlayOpacity = 1,
+
+    titleStyle,
 }) => {
 
   const { business, offer, dist } = broadcast;
@@ -65,7 +67,7 @@ const BroadcastFloatingCard = ({
                         <ReferenceField reference="events" record={broadcast} source="event">
                           { ({record: event}) =>
                               <View>
-                                <Text style={[styles.eventName(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>
+                                <Text style={[styles.eventName(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}, titleStyle]}>
                                   {event.name}
                                 </Text>
                                 <View >
@@ -116,12 +118,17 @@ const BroadcastFloatingCard = ({
 
 BroadcastFloatingCard.defaultProps = {
   elevation: 1,
+  titleStyle: {}
 };
+
 BroadcastFloatingCard.propTyeps = {
   onPress: PropTypes.func,
   broadcast: PropTypes.object,
   dark: PropTypes.bool,
   elevation: PropTypes.number,
+
+  //styles
+  titleStile: PropTypes.object
 };
 
 const styles = StyleSheet.create({
