@@ -4,8 +4,8 @@ import { AsyncStorage } from 'react-native';
 import auth from './auth';
 
 
-const apiUrl = process.env.NODE_ENV === "production" ? "http://spotin.it/v1" : "http://localhost:3001/v1";
-//const apiUrl = "http://spotin.herokuapp.com/v1";
+//const apiUrl = process.env.NODE_ENV === "production" ? "http://spotin.it/v1" : "http://localhost:3001/v1";
+const apiUrl = "http://spotin.herokuapp.com/v1";
 
 const httpClient = async (url, options = {}) => {
   if (!options.headers) {

@@ -83,7 +83,7 @@ export const CRUD_CREATE_LOADING = 'CRUD_CREATE_LOADING';
 export const CRUD_CREATE_FAILURE = 'CRUD_CREATE_FAILURE';
 export const CRUD_CREATE_SUCCESS = 'CRUD_CREATE_SUCCESS';
 
-export const crudCreate = (resource, listId, data, basePath, redirectTo = 'edit') => ({
+export const crudCreate = (resource, data, basePath, redirectTo = 'edit', listId) => ({
   type: CRUD_CREATE,
   payload: { data },
   meta: {
