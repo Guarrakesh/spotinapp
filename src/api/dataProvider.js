@@ -11,6 +11,7 @@ const httpClient = async (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers({Accept: 'application/json'});
   }
+
   const token = await auth.getAuthToken();
   //if (!token) return Promise.reject("No Auth Token");
   if (token) options.headers.set('Authorization', `Bearer ${token.accessToken}`);
