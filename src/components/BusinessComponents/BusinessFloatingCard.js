@@ -13,12 +13,12 @@ const colors = themes.base.colors;
 
 const fonts = themes.base.fonts;
 const BroadcastFloatingCard = ({
-    business,
-    onPress,
-    dark,
-    elevation,
-    showEvent
-}) => {
+                                 business,
+                                 onPress,
+                                 dark,
+                                 elevation,
+                                 showEvent
+                               }) => {
 
   const { dist} = business;
 
@@ -28,37 +28,31 @@ const BroadcastFloatingCard = ({
 
 
   return (
-      <View style={styles.outerContainer} elevation={elevation}>
-        <TouchableOpacity onPress={onPress}>
-          <ImageBackground
-                  imageStyle={{borderRadius: themes.base.borderRadius}}
-                  source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
-                  style={styles.imgBackground(6)}
-                >
-                  <View style={styles.innerContainer}>
-                      <Text style={styles.name}>
-                        {business.name}
-                      </Text>
-                      <Text style={styles.address}>
-                        {business.address.street}
-                      </Text>
-
-
-                      <View style={styles.distanceContainer}>
-                        <Icon name="map-marker-radius" color={colors.white.default}
-                              style={styles.geoFenceImg} size={14}/>
-                        <Text style={styles.distance}>
-                          {roundedDistance} km
-                        </Text>
-                      </View>
-
-
-                  </View>
-              </ImageBackground>
-
-
-        </TouchableOpacity>
-      </View>
+    <View style={styles.outerContainer} elevation={elevation}>
+      <TouchableOpacity onPress={onPress}>
+        <ImageBackground
+          imageStyle={{borderRadius: themes.base.borderRadius}}
+          source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+          style={styles.imgBackground(6)}
+        >
+          <View style={styles.innerContainer}>
+            <Text style={styles.name}>
+              {business.name}
+            </Text>
+            <Text style={styles.type}>
+              {business.type.join(' • ')}
+            </Text>
+            <View style={styles.distanceContainer}>
+              <Icon name="map-marker-radius" color={colors.white.default}
+                    style={styles.geoFenceImg} size={20}/>
+              <Text style={styles.distance}>
+                {roundedDistance} km
+              </Text>
+            </View>
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
+    </View>
 
   );
 };
@@ -78,9 +72,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     //I padding servono per dare spazio all'ombra
-    padding: 8,
-    paddingTop: 0,
-    paddingBottom: 16
+    margin: 8,
+    backgroundColor: colors.white.light,
+    borderRadius: themes.base.borderRadius
 
   },
   imgBackground: (elevation = 4) => ({
@@ -103,36 +97,36 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
-    padding: 16,
+    padding: 8,
 
   },
   name: {
     fontSize: 21,
     color: colors.white.default,
     fontFamily: fonts.Lato,
-    fontWeight: '500',
   },
-  address: {
-      color: colors.white.default,
-      fontFamily: fonts.Lato,
-    fontWeight: '500',
+  type: {
+    color: colors.white.default,
+    fontFamily: fonts.Lato,
     fontSize: 14
   },
   distanceContainer: {
     color: colors.white.default,
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      alignSelf: 'flex-end',
-      marginTop: 8
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    alignSelf: 'flex-end',
+    borderRadius: themes.base.borderRadius
   },
   distance: {
-    fontSize: 12,
+    fontSize: 20,
+    fontFamily: fonts.LatoBlack,
     alignSelf: 'flex-end',
     color:  colors.white.default,
 
   },
   geoFenceImg: {
-    color: colors.white.default
+    color: colors.white.default,
+    marginRight: 5
   }
 
 

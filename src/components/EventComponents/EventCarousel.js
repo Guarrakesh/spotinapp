@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
-
+import themes from '../../styleTheme'
 //import BusinessFloatingCardLoader from './BusinessFloatingCardLoader';
 import EventFloatingCard from './EventFloatingCard';
 
+const sliderWidth = themes.base.deviceDimensions.width;
 
 const EventCarousel = ({
   ids,
@@ -19,9 +20,10 @@ const EventCarousel = ({
       :   <Carousel
 
             data={ids}
-            inactiveSlideScale={1}
-            inactiveSlideOpacity={1}
-            activeSlideAlignment={"start"}
+            // inactiveSlideScale={1}
+            // inactiveSlideOpacity={1}
+            firstItem={2}
+            activeSlideAlignment={"center"}
             removeClippedSubviews={false}
             renderItem={({item}) =>
                 <EventFloatingCard elevation={5}
@@ -30,13 +32,10 @@ const EventCarousel = ({
                                        style={{flex: 1}}
                                        onPress={() => {onItemPress(data[item], item)}}/>
             }
-            itemWidth={300}
+            itemWidth={sliderWidth - 80}
             layout={'default'}
-            slideStyle={{marginLeft: 8}}
-            sliderWidth={375}
+            sliderWidth={sliderWidth}
             activeAnimationType={'spring'}
-            // inactiveSlideOpacity={1}  //
-            // inactiveSlideScale={1}
 
         />
 

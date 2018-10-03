@@ -80,7 +80,7 @@ CompetitionList.propTypes = {
 
   //Controller props
   data: PropTypes.object,
-  ids: PropTypes.object,
+  ids: PropTypes.array,
   isLoading: PropTypes.bool,
   total: PropTypes.number,
   version: PropTypes.number,
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
     padding: 8,
+    backgroundColor: themes.base.colors.white.default
   },
   noContentView: {
     flex: 1,

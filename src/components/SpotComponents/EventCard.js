@@ -70,7 +70,7 @@ const EventCard = (props) => {
 const styles = {
   containerStyle: {
     borderRadius: themes.base.borderRadius,
-    marginTop: 8,
+    margin: 8,
     height: 130,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -99,7 +99,7 @@ const styles = {
     flexGrow: 0,
     flexBasis: 54,
     paddingTop: 22,
-    paddingBottom: 18
+    paddingBottom: 18,
 
   },
   competitors: {

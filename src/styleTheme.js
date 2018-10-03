@@ -1,5 +1,5 @@
 
-import { Platform } from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {Fonts} from "./components/common/Fonts";
 
 
@@ -159,6 +159,11 @@ const themes = {
       LatoSemiboldItalic: 'Lato-SemiboldItalic',
       LatoThin: 'Lato-Thin',
       LatoThinItalic: 'Lato-ThinItalic'
+    },
+
+    deviceDimensions: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
     }
 
   },

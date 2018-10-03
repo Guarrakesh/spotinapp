@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ListController from '../../controllers/ListController';
@@ -27,7 +28,7 @@ class CompetitionsScreen extends React.Component {
 
     return (
         <ListController
-              id={`${sportId}_competition_list`}
+            id={`${sportId}_competition_list`}
             resource="competitions"
             perPage={100}
             filter={{sport: sportId}}
@@ -42,7 +43,6 @@ class CompetitionsScreen extends React.Component {
 
 CompetitionsScreen.propTypes = {
   navigation: PropTypes.object,
-
 };
 
 

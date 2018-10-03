@@ -47,42 +47,40 @@ const EventCard = ({
       </ReferenceField>
   );
 
-  let date = moment(event.start_at).locale('it').format('D MMMM');
+  let date = moment(event.start_at).locale('it').format('D MMM').toUpperCase();
   const time = moment(event.start_at).locale('it').format('HH:mm').toUpperCase();
 
   return (
 
-      <View elevation={elevation} style={styles.containerStyle}>
-        <TouchableOpacity style={styles.eventInfo} onPress={onPress}>
-          <View style={styles.competitorsLogosContainer}>
-            {competitorsComponent}
-          </View>
+    <View elevation={elevation} style={styles.containerStyle}>
+      <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress}>
+        <View style={styles.competitorsLogosContainer}>
+          {competitorsComponent}
+        </View>
+        <View style={styles.detailContainer}>
+          <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+          <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
+          <Text style={styles.dateText}>{date} alle {time}</Text>
+        </View>
 
-          <View style={styles.detailContainer}>
-            <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-            <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
-            <Text style={styles.dateText}>{date} alle {time}</Text>
-          </View>
-
-            <View style={styles.sportIconView}>
-              <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
-            </View>
-
-
-        </TouchableOpacity>
-      </View>
+        <View style={styles.sportIconView}>
+          <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
+        </View>
+      </TouchableOpacity>
+    </View>
 
   );
 }
 const styles = {
   containerStyle: {
-    marginTop: 10,
     borderRadius: themes.base.borderRadius,
-    marginBottom: 8,
-    height: 130,
+    margin: 8,
+    marginRight: 5,
+    marginLeft: 5,
+    padding: 16,
     flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: colors.white.default,
+    alignItems: 'center',
+    backgroundColor: colors.white.light,
   },
   favorite: {
     borderRightColor: colors.white.divisor,
@@ -104,25 +102,17 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    flexGrow: 0,
-    flexBasis: 54,
-    paddingTop: 22,
-    paddingBottom: 18
-
+    marginRight: 16,
+    height: '100%'
   },
   competitors: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: 8,
-    flex: 1,
 
   },
   detailContainer: {
-    marginTop: 20,
     flexDirection: 'column',
-    marginBottom: 20,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     flex: 1,
     flexWrap: 'wrap'
   },
@@ -149,9 +139,7 @@ const styles = {
     marginRight: 8
   },
   sportIconView: {
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    right: 16
+    alignItems: 'center',
   },
   sportIcon: {
     width: 60,

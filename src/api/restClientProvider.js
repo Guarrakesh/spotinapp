@@ -42,10 +42,12 @@ export default (apiUrl, httpClient = fetchJson) => {
    * @returns {Object} { url, options } The HTTP request parameters
    */
   const convertDataRequestToHTTP = (type, resource, params) => {
+
     let url = '';
     const options = {};
     switch (type) {
       case GET_LIST: {
+
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         let query = {
@@ -61,7 +63,6 @@ export default (apiUrl, httpClient = fetchJson) => {
             query = {...query, latitude, longitude, radius};
         }
         url = `${apiUrl}/${resource}?${stringify(query)}`;
-
         break;
       }
       case GET_ONE:
@@ -78,6 +79,7 @@ export default (apiUrl, httpClient = fetchJson) => {
           _start: (page - 1) * perPage,
           _end: page * perPage,
         };
+
         url = `${apiUrl}/${resource}?${stringify(query)}`;
         break;
       }

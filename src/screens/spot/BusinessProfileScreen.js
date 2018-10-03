@@ -162,7 +162,7 @@ class BusinessProfileScreen extends React.Component {
     });
 
     this.props.reserveBroadcast(this.state.currentBroadcast._id);
-
+    this.forceUpdate();
   }
 
   handleScroll(e) {

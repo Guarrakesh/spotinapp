@@ -101,8 +101,6 @@ BroadcastsList.propTypes = {
 const styles = StyleSheet.create({
   container: {
     marginTop: -20,
-    alignItems: 'stretch',
-    flexWrap: 'wrap',
   }
 });
 

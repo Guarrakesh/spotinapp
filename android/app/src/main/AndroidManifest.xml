@@ -3,20 +3,20 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-      android:name=".MainApplication"
+      android:name="com.spotinapp.MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
-      android:allowBackup="false"
       android:largeHeap="true"
+      android:allowBackup="false"
       android:theme="@style/AppTheme">
-      <meta-data
-      android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI"/>
       <activity
-        android:name=".MainActivity"
+        android:name="com.spotinapp.MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize">

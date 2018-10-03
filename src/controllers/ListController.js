@@ -61,6 +61,7 @@ class ListController extends Component {
         nextProps.resource !== this.props.resource ||
         nextProps.query.sort !== this.props.query.sort ||
         nextProps.query.order !== this.props.query.order ||
+        nextProps.query.page !== this.props.query.page ||
         nextProps.query.perPage !== this.props.query.perPage ||
         !isEqual(nextProps.query.filter, this.props.query.filter) ||
         !isEqual(nextProps.filter, this.props.filter) ||
@@ -127,7 +128,8 @@ class ListController extends Component {
 
     const params = query || this.getQuery();
 
-    const { sort, order, page = 1, perPage, filter } = params;
+    const { sort, order, page = 1, perPage, filter = {} } = params;
+
     const pagination = {
       page: parseInt(page, 10),
       perPage: parseInt(perPage, 10)
@@ -143,7 +145,7 @@ class ListController extends Component {
           this.props.nearPosition,
           pagination,
           { field: sort, order},
-          { ...filter, ...permanentFilter}
+          { ...filter, ...permanentFilter }
       )
     } else {
       this.props.crudGetList(
@@ -371,12 +373,11 @@ function mapStateToProps(state, props) {
 
   return {
     //query: selectQuery(props),
-    query: {},
     initialised: !!list,
     params: !!list ? list.params : {},
     ids: !!list ? list.ids : [],
     selectedIds: !!list ? list.ids : [],
-    total: !!list ? list.ids : [],
+    total: !!list ? list.ids.length : 0,
     data,
     isLoading: state.loading > 0,
     filterValues: !!list ? list.params.filter : {},

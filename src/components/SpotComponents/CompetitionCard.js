@@ -25,12 +25,12 @@ const CompetitionCard = (props) => {
 
 
   return (
-    <TouchableOpacity onPress={props.onPress}>
-      <View elevation={1} style={styles.container}>
+    <View elevation={1} style={styles.container}>
+      <TouchableOpacity onPress={props.onPress} style={styles.container}>
         <View style={styles.image}>
           { image_versions
-              ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
-              : <Icon name="sports-club" size={42}/> }
+            ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
+            : <Icon name="sports-club" size={42}/> }
         </View>
         <View style={styles.info}>
           <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
@@ -42,9 +42,9 @@ const CompetitionCard = (props) => {
         <View style={styles.arrowIconView}>
           <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
         </View>
-      </View>
-    </TouchableOpacity>
 
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    backgroundColor: themes.base.colors.white.default,
+    backgroundColor: themes.base.colors.white.light,
     height: 100,
     flexDirection: 'row',
     justifyContent: 'center',

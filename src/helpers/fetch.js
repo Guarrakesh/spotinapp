@@ -1,5 +1,6 @@
 import HttpError from './HttpError';
 import { stringify } from 'query-string';
+import { Platform } from 'react-native';
 export const fetchJson = (url, options = {}) => {
     const requestHeaders =
         options.headers ||
@@ -64,12 +65,16 @@ const isValidObject = value => {
 
 export const flattenObject = (value, path = []) => {
     if (isValidObject(value)) {
-        return Object.assign(
-            {},
-            ...Object.keys(value).map(key =>
-                flattenObject(value[key], path.concat([key]))
-            )
-        );
+        if (Platform.OS === "android") {
+            return value;
+        }
+            const obj =  Object.assign(
+                {},
+                ...Object.keys(value).map(key =>
+                    flattenObject(value[key], path.concat([key]))
+                )
+            );
+            return obj;
     } else {
         return path.length ? { [path.join('.')]: value } : value;
     }

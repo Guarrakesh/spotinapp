@@ -163,7 +163,7 @@ class BroadcastsScreen extends React.Component {
               onMomentumScrollEnd={this._handleMomentumScrollEnd }
               onScrollEndDrag={this._handleScrollEndDrag}
               onItemPress={this.handleBusinessPress}
-              style={{paddingTop: HEADER_HEIGHT + 32, }}
+              style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
             />}
         </ListController>
         <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>

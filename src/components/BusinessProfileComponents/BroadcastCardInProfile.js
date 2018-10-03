@@ -33,39 +33,39 @@ const BroadcastCardInProfile = (props) => {
 
 
   return (
-      <ReferenceField reference="events" record={broadcast} source="event">
-        {({record: event, isLoading}) => {
+    <ReferenceField reference="events" record={broadcast} source="event">
+      {({record: event, isLoading}) => {
 
-          if (isLoading) return null;
+        if (isLoading) return null;
 
-          let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-          let time = moment(event.start_at).locale('it').format('HH:mm');
-          const { competitors } = event; 
+        let date = moment(event.start_at).locale('it').format('dddd D MMMM');
+        let time = moment(event.start_at).locale('it').format('HH:mm');
+        const { competitors } = event;
 
-          return (
-            <View style={styles.broadcastInfoView} elevation={2}>
-              {(newsfeed || newsfeed > 0) ?
-                <View style={styles.redHeader} elevation={3}>
-                  <Text style={styles.headerText}>Offerta consigliata</Text>
-                </View> : null
-              }
-                <View style={styles.eventInfoView}>
-                  <ReferenceField  reference="competitions" source="competition" record={event}>
-                    {({record}) => (
+        return (
+          <View style={styles.broadcastInfoView} elevation={2}>
+            {(newsfeed || newsfeed > 0) ?
+              <View style={styles.redHeader} elevation={3}>
+                <Text style={styles.headerText}>Offerta consigliata</Text>
+              </View> : null
+            }
+            <View style={styles.eventInfoView}>
+              <ReferenceField  reference="competitions" source="competition" record={event}>
+                {({record}) => (
 
-                      record.competitorsHaveLogo
-                        ?
-                        <View style={styles.competitors}>
-                          {competitors.map(comp => { console.log("eeee", comp); return (
-                            <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                          )})}
-                        </View>
-                        :
-                        <View style={{marginTop: 8, marginLeft: 16}}>
-                          { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                        </View>
-                    )}
-                  </ReferenceField>
+                  record.competitorsHaveLogo
+                    ?
+                    <View style={styles.competitorsLogoView}>
+                      {competitors.map(comp => { return (
+                        <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
+                      )})}
+                    </View>
+                    :
+                    <View style={{marginTop: 8, marginLeft: 16}}>
+                      { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                    </View>
+                )}
+              </ReferenceField>
 
               <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
                 <Text style={styles.eventNameText}>{event.name}</Text>
@@ -139,11 +139,7 @@ const styles = StyleSheet.create({
 
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: 8,
-    margin: 16,
-    marginTop: 0,
-    marginRight: 0,
+    marginLeft: 16,
 
   },
   eventNameText: {
