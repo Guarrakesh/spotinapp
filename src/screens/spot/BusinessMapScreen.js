@@ -63,6 +63,8 @@ class BusinessMapScreen extends React.Component {
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
     }
+    const sliderWidth = themes.base.deviceDimensions.width;
+
     return (
         <View style={{flex:1}}>
           <MapView style={styles.map}
@@ -95,18 +97,18 @@ class BusinessMapScreen extends React.Component {
           }}>
             <Carousel
                 data={ids}
-                activeSlideAlignment={'center'}
+                activeSlideAlignment={"center"}
                 renderItem={({item}) =>
                     <BroadcastFloatingCard elevation={5}
                                            broadcast={data[item]}
                                            style={{flex: 1}}
                                            onPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
                 }
-                itemWidth={300}
-                sliderWidth={400}
+                itemWidth={sliderWidth - 80}
+                sliderWidth={sliderWidth}
                 activeAnimationType={'spring'}
-                // inactiveSlideOpacity={1}  //
-                // inactiveSlideScale={1}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
                 onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
 
             />

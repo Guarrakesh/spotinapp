@@ -75,8 +75,6 @@ const styles = {
   containerStyle: {
     borderRadius: themes.base.borderRadius,
     margin: 8,
-    marginRight: 5,
-    marginLeft: 5,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',

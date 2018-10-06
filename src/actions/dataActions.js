@@ -36,7 +36,7 @@ export const CRUD_GET_ALL_LOADING = 'CRUD_GET_ALL_LOADING';
 export const CRUD_GET_ALL_FAILURE = 'CRUD_GET_ALL_FAILURE';
 export const CRUD_GET_ALL_SUCCESS = 'CRUD_GET_ALL_SUCCESS';
 
-export const crudGetAll = (resource, sport, filter, maxResults, callback) => ({
+export const crudGetAll = (resource, sort, filter, maxResults, callback) => ({
   type: CRUD_GET_ALL,
   payload: { sort, filter, pagination: { page: 1, perPage: maxResults } },
   meta: {

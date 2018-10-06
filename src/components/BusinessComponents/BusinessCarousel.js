@@ -15,22 +15,25 @@ const BusinessCarousel = ({
   onItemPress
 }) => (
     isLoading ?
-      null
+      <View style={{height: 166, justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+      </View>
       :   <Carousel
             data={ids}
-            // inactiveSlideScale={1}
-            // inactiveSlideOpacity={1}
-            firstItem={2}
-            activeSlideAlignment={"center"}
+            inactiveSlideScale={1}
+            inactiveSlideOpacity={1}
+            enableSnap={false}
+            loop={true}
+            activeSlideAlignment={"start"}
             removeClippedSubviews={false}
             renderItem={({item}) =>
-                <BusinessFloatingCard elevation={5}
+                <BusinessFloatingCard elevation={2}
 
                                        business={data[item]}
                                        style={{flex: 1}}
                                        onPress={() => onItemPress(item, data[item].dist)}/>
             }
-            itemWidth={sliderWidth - 80}
+            itemWidth={sliderWidth - 50}
             layout={'default'}
             sliderWidth={sliderWidth}
             activeAnimationType={'spring'}

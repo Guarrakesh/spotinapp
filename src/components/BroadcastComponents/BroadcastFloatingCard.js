@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ReferenceField from '../common/ReferenceField'
 import Helpers from '../../helpers/index';
+import {Fonts} from "../common/Fonts";
+import {VersionedImageField} from "../common";
 
 
 const fonts = themes.base.fonts;
@@ -20,7 +22,6 @@ const BroadcastFloatingCard = ({
                                  elevation,
                                  showEvent,
                                  overlayOpacity = 1,
-
                                  titleStyle,
                                }) => {
 
@@ -43,71 +44,60 @@ const BroadcastFloatingCard = ({
   };
 
   return (
-    <View style={styles.outerContainer} elevation={elevation}>
+    <View style={styles.outerContainer} elevation={2}>
       <TouchableOpacity onPress={onPress}>
         <ReferenceField reference="businesses" source="business" record={broadcast}>
           { ({record: business}) =>
-            <ImageBackground
-              imageStyle={{borderRadius: themes.base.borderRadius}}
-              source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
-              style={styles.imgBackground(6)}
-            >
-              <View
-                style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground(overlayOpacity)})]}>
-                <View style={styles.leftInfo}>
-                  <Text
-                    style={[styles.name(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
-                  {!showEvent &&
-
-                  <Text style={[styles.address(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}]}>
-                    {business.address.street}
-                  </Text>
-                  }
-                  {showEvent &&
-                  <ReferenceField reference="events" record={broadcast} source="event">
-                    { ({record: event}) =>
-                      <View>
-                        <Text style={[styles.eventName(overlayOpacity), dark ? {color: colors.white.default} : {color: colors.text.default}, titleStyle]}>
-                          {event.name}
-                        </Text>
-                        <View >
-                          <Text style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}</Text>
-                        </View>
-                      </View>
-                    }
-                  </ReferenceField>
-                  }
-
-                  <View style={{flexDirection: 'row', marginTop: 8}}>
-                    <Icon name="map-marker-radius" color={dark ? colors.accent.light : colors.accent.default}
-                          style={styles.geoFenceImg} size={14}/>
-                    <Text
-                      style={[styles.distance, dark ? {color: colors.accent.light} : {color: colors.accent.default}]}>
-                      {roundedDistance} km
-                    </Text>
+            <View style={{borderRadius: themes.base.borderRadius, overflow: 'hidden'}}>
+              <View>
+                <ImageBackground
+                  source={{uri: business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+                  style={styles.imgBackground}
+                >
+                  <View style={styles.businessContainer}>
+                    <View style={{flexDirection: 'column', flex: 1}}>
+                      <Text style={styles.businessName}>{business.name}</Text>
+                      <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
+                    </View>
+                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                      <Icon name="map-marker-radius" color={colors.white.light} size={20}/>
+                      <Text style={styles.businessDistance}>{roundedDistance} km</Text>
+                    </View>
                   </View>
-                </View>
-                <View style={styles.offerValue}>
-                  <Text style={{
-                    fontSize: 24,
-                    color: dark ? colors.danger.light : colors.danger.default,
-
-                    fontFamily: fonts.LatoMedium,
-                    textAlign: 'center'
-                  }}>
-                    {discount(offer.type)}
-                  </Text>
-                  <Text style={{
-                    fontSize: 13,
-                    color: dark ? colors.danger.light : colors.danger.default,
-                    fontFamily: fonts.LatoMedium,
-                    textAlign: 'center'
-                  }}>
-                    alla cassa
-                  </Text>
-                </View>
+                </ImageBackground>
               </View>
-            </ImageBackground>
+              <View>
+                {showEvent ?
+                  <ReferenceField reference="events" record={broadcast} source="event">
+                    {({record: event}) => (
+                      <View style={styles.eventInfoView}>
+                        <View style={{flex: 1}}>
+                          <Text style={styles.eventName}>{event.name}</Text>
+                          <Text
+                            style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMM • HH:mm")}</Text>
+                        </View>
+                        <ReferenceField reference="competitions" source="competition" record={event}>
+                          {({record, isLoading}) =>
+                            isLoading ? null : (
+                              <View>
+                                {<VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}}
+                                                      imgSize={{width: 48, height: 48}}/>}
+                              </View>
+                            )}
+                        </ReferenceField>
+
+                      </View>
+                    )
+                    }
+
+                  </ReferenceField> : null
+                }
+              </View>
+              <View style={styles.offerView}>
+                <Text style={styles.offerTitle}>{offer.title}</Text>
+                <Text style={styles.offerValue}>{discount(offer.type)}</Text>
+              </View>
+            </View>
           }
         </ReferenceField>
       </TouchableOpacity>
@@ -132,74 +122,85 @@ BroadcastFloatingCard.propTyeps = {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: themes.base.colors.white.default,
+    backgroundColor: themes.base.colors.white.light,
     flexDirection: 'column',
     justifyContent: 'center',
     //I padding servono per dare spazio all'ombra
     margin: 8,
-    marginRight: 5,
-    marginLeft: 5,
     borderRadius: 8
   },
-  imgBackground: (elevation = 4) => ({
-    position: 'relative',
+  businessContainer: {
     flex: 1,
-    paddingTop: 220,
-    resizeMode: 'stretch',
-    borderRadius: themes.base.borderRadius,
-
-  }),
-  bottomContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderBottomLeftRadius:  themes.base.borderRadius,
-    borderBottomRightRadius:  themes.base.borderRadius,
-    padding: 12,
+    alignItems: 'flex-end',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end'
-
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 8,
+    paddingLeft: 16,
+    paddingRight: 16
   },
-  darkBackground: {
-    backgroundColor: 'rgba(43,39,39,.8)',
+  businessName: {
+    fontFamily: Fonts.LatoBold,
+    fontSize: 20,
+    color: colors.white.light,
   },
-  lightBackground: (opacity = 0.5) => ({
-    backgroundColor: `rgba(255,255,255,${opacity})`,
-  }),
-
-  offerValue: {
-    alignSelf: 'flex-end'
-  },
-  name: (opacity = 1) => ({
+  businessType: {
+    fontFamily: Fonts.LatoLight,
     fontSize: 16,
-    fontFamily: opacity !== 1 ? fonts.LatoBold : fonts.LatoMedium,
-
-  }),
-  address: (opacity = 1) => ({
-    fontWeight: '300',
-    fontSize: 12,
-    fontFamily: fonts.LatoLight,
-
-    marginBottom: opacity === 1 ? 8 : 0,
-  }),
-  distance: {
-    fontSize: 12,
-    fontFamily: fonts.LatoBold,
+    color: themes.base.colors.white.light
   },
-  eventName: (opacity = 1) => ({
-    fontFamily: opacity !== 1 ? fonts.LatoBold : fonts.LatoMedium,
-    fontSize: 16,
-    marginTop: 4,
-  }),
+  businessDistance: {
+    fontSize: 18,
+    fontFamily: fonts.LatoMedium,
+    color: colors.white.light,
+  },
+  imgBackground: {
+    borderTopLeftRadius: themes.base.borderRadius,
+    borderTopRightRadius: themes.base.borderRadius,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    paddingTop: 100,
+  },
+  eventInfoView: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.white.divisor,
+    paddingTop: 8,
+    paddingBottom: 8,
+    marginLeft: 16,
+    marginRight: 16,
+    alignItems: 'center'
+  },
+  eventName: {
+    fontSize: 20,
+    fontFamily: Fonts.LatoBold,
+    color: colors.text.default
+  },
   eventDate: {
     fontFamily: fonts.LatoLight,
-    color: themes.base.colors.text.default,
-    fontSize: 12
+    color: colors.text.default,
+    fontSize: 18,
+    textTransform: 'capitalize'
   },
-
-
+  offerView: {
+    flexDirection: 'row',
+    padding: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    alignItems: 'center',
+    backgroundColor: colors.white.light
+  },
+  offerTitle: {
+    fontSize: 18,
+    fontFamily: Fonts.LatoMedium,
+    color: colors.text.default,
+    flex: 1
+  },
+  offerValue: {
+    fontSize: 24,
+    color: colors.danger.default,
+    fontFamily: fonts.LatoMedium,
+    textAlign: 'center'
+  }
 })
 
 export default BroadcastFloatingCard;

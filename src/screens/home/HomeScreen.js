@@ -57,12 +57,12 @@ export default class HomeScreen extends React.Component {
                 nearPosition={{...position, radius: 100}}>
                 {controllerProps =>
                   <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-                      <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginTop: 16, marginRight: 5}}/>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
+                      <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginTop: 12, marginRight: 5}}/>
                       <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
                     </View>
                     {controllerProps.isLoading ?
-                      <View style={{height: 236, justifyContent: 'center'}}>
+                      <View style={{height: 325, justifyContent: 'center'}}>
                         <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
                       </View> :
                       <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />}
@@ -76,8 +76,8 @@ export default class HomeScreen extends React.Component {
               >
                 {controllerProps =>
                   <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-                      <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginTop: 16, marginRight: 5}}/>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
+                      <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginTop: 8, marginRight: 5}}/>
                       <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
                     </View>
                     {controllerProps.isLoading ?
@@ -94,8 +94,8 @@ export default class HomeScreen extends React.Component {
                 nearPosition={{...position, radius: 100}}>
                 {controllerProps =>
                   <View style={{marginBottom: 16}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
-                      <Image source={localImg} style={{width: 21, height: 21, marginTop: 16, marginRight: 5}}/>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
+                      <Image source={localImg} style={{width: 21, height: 21, marginTop: 8, marginRight: 5}}/>
                       <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
                     </View>
                     {controllerProps.isLoading ?

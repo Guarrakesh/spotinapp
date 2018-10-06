@@ -25,14 +25,17 @@ const BroadcastCarousel = ({
   });
   return (
     isLoading ?
-      null
+      <View style={{height: 325, justifyContent: 'center'}}>
+        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+      </View>
       :   <Carousel
         swipeThreshold={0}
         data={ids}
-        // inactiveSlideScale={1}
-        // inactiveSlideOpacity={1}
-        firstItem={2}
-        activeSlideAlignment={"center"}
+        inactiveSlideScale={1}
+        inactiveSlideOpacity={1}
+        enableSnap={false}
+        loop={true}
+        activeSlideAlignment={"start"}
         removeClippedSubviews={false}
         renderItem={({item}) =>
           <BroadcastFloatingCard elevation={5}
@@ -41,7 +44,7 @@ const BroadcastCarousel = ({
                                  style={{flex: 1}}
                                  onPress={() => {onItemPress(item, data[item].business, data[item].dist)}}/>
         }
-        itemWidth={sliderWidth - 80}
+        itemWidth={sliderWidth - 50}
         layout={'default'}
         sliderWidth={sliderWidth}
         activeAnimationType={'spring'}

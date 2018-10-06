@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+import View from '../../components/common/View';
+import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 
@@ -8,6 +9,7 @@ import ListController from '../../controllers/ListController'
 import { userLogout } from '../../actions/login';
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
+import SavedEventsCard from '../../components/ProfileComponents/SavedEventsCard';
 import { connect } from 'react-redux';
 import {Fonts} from "../../components/common/Fonts";
 import themes from "../../styleTheme";
@@ -37,7 +39,7 @@ class ProfileScreen extends React.Component {
         {({profile, loggedIn, isLoading}) =>
         1==0 ?
           <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
-          <View>
+          <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
             {loggedIn ?
               (!profile._id ?
                 <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
@@ -45,11 +47,17 @@ class ProfileScreen extends React.Component {
                 </Text> :
                 <View style={{padding: 8}}>
                   <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
-
                   <InlineListController id="profile_reservations_list" resource="reservations">
                     {controllerProps =>
                       controllerProps.isLoading ? null :
                         <ReservationsCarousel {...controllerProps}/>
+                    }
+                  </InlineListController>
+                  <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
+                  <InlineListController id="profile_savedEvents_list" resource="events">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <SavedEventsCard {...controllerProps}/>
                     }
                   </InlineListController>
                 </View> ):
@@ -57,7 +65,7 @@ class ProfileScreen extends React.Component {
               this.props.navigation.navigate('SignIn')
             }}/>
             }
-          </View>
+          </ScrollView>
         }
       </ProfileController>
     )

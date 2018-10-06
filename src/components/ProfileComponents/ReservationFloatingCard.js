@@ -40,8 +40,8 @@ const ReservationFloatingCard = ({
   };
 
   return(
-      <View style={styles.outerContainer} elevation={elevation}>
-        <TouchableOpacity onPress={onPress} style={{flex: 1,    borderRadius: themes.base.borderRadius}}>
+    <View elevation={2}>
+        <TouchableOpacity onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
           <ReferenceField reference="businesses" source="business" record={broadcast}>
             { ({record: business}) =>
               !business ? null :
@@ -101,7 +101,6 @@ const ReservationFloatingCard = ({
 
         </TouchableOpacity>
       </View>
-
   )
 };
 
@@ -119,18 +118,15 @@ const styles = StyleSheet.create({
     //I padding servono per dare spazio all'ombra
     height: 250,
 
-
   },
-  imgBackground: (elevation = 4) => ({
+  imgBackground: (elevation = 1) => ({
     position: 'relative',
     flex: 1,
-    paddingTop: 180,
+    paddingTop: 200,
     resizeMode: 'stretch',
-    borderRadius: themes.base.borderRadius,
     elevation: elevation,
-    marginBottom: 16,
-    marginLeft: 8,
-    marginRight: 16,
+    borderRadius: themes.base.borderRadius,
+    marginBottom: 8,
   }),
   bottomContainer: {
     zIndex: 9,
@@ -166,22 +162,24 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   eventName: {
-    fontWeight: '700',
+    fontFamily: Fonts.LatoBold,
     fontSize: 16,
+    backgroundColor: 'transparent'
 
 
   },
   eventDate: {
     fontWeight: '500',
     color: themes.base.colors.text.default,
-    fontSize: 12
+    fontSize: 12,
   },
   status: {
     zIndex: 10,
     position: 'absolute',
     right: 16,
-    height: 55, width: 55,
-    bottom: '150%',
+    height: 55,
+    width: 55,
+    bottom: 80,
     padding: 12,
     backgroundColor: '#fff',
     borderRadius: 50,

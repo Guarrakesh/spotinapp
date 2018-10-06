@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Platform} from 'react-native'
 import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
 
@@ -21,7 +21,7 @@ const HomeStack = createStackNavigator({
       headerBackTitle: false,
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}
-        name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>)
+        name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>)
 
     }
     }

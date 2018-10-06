@@ -41,10 +41,11 @@ class BroadcastsScreen extends React.Component {
 
     return {
       headerBackTitle: null,
-      title: "Locali vicini",
+      title: "Offerte vicino a te",
       headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
+        color: themes.base.colors.text.default,
         flex: 1,
         marginRight: Platform.OS === 'android' ? 75 : null,
       },
@@ -121,7 +122,7 @@ class BroadcastsScreen extends React.Component {
 
     const {currentlySending} = this.props;
 
-    let date = moment(event.start_at).locale('it').format('D MMM - hh:mm').toUpperCase();
+    let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
 
     //TODO: Fare qualcosa qui in caso di mancata posizione!
     if (!position) return null;
@@ -169,7 +170,7 @@ class BroadcastsScreen extends React.Component {
         <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
           <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
           <Text style={styles.eventName}>{event.name}</Text>
-          <Animated.Text style={[styles.date]}>{date}</Animated.Text>
+          <Animated.Text style={styles.date}>{date}</Animated.Text>
         </Animated.View>
       </View>
     )
@@ -188,6 +189,7 @@ const mapStateToProps = (state) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: themes.base.colors.white.default
 
 
   },
@@ -202,11 +204,10 @@ const styles = StyleSheet.create({
     backgroundColor: themes.base.colors.primary.default
   },
   eventName: {
-    fontSize: 18,
+    fontSize: 24,
+    fontFamily: Fonts.LatoBold,
     color: themes.base.colors.text.default,
     marginBottom: 8,
-    fontWeight: '700',
-
   },
   competitionName: {
     fontSize: 18,
@@ -215,6 +216,8 @@ const styles = StyleSheet.create({
 
   },
   date: {
+    fontSize: 20,
+    fontFamily: Fonts.LatoLight,
     color: themes.base.colors.text.default,
 
   },

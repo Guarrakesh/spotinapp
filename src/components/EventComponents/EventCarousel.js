@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 import themes from '../../styleTheme'
 //import BusinessFloatingCardLoader from './BusinessFloatingCardLoader';
 import EventFloatingCard from './EventFloatingCard';
+import {ActivityIndicator, View} from "react-native";
 
 const sliderWidth = themes.base.deviceDimensions.width;
 
@@ -16,23 +17,26 @@ const EventCarousel = ({
   onItemPress
 }) => (
   isLoading || Object.keys(sports).length === 0 ?
-      null
+    <View style={{height: 138, justifyContent: 'center'}}>
+      <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+    </View>
       :   <Carousel
 
             data={ids}
-            // inactiveSlideScale={1}
-            // inactiveSlideOpacity={1}
-            firstItem={2}
-            activeSlideAlignment={"center"}
+            inactiveSlideScale={1}
+            inactiveSlideOpacity={1}
+            enableSnap={false}
+            loop={true}
+            activeSlideAlignment={"start"}
             removeClippedSubviews={false}
             renderItem={({item}) =>
-                <EventFloatingCard elevation={5}
+                <EventFloatingCard elevation={2}
                                        event={data[item]}
                                        sport={sports[data[item].sport]}
                                        style={{flex: 1}}
                                        onPress={() => {onItemPress(data[item], item)}}/>
             }
-            itemWidth={sliderWidth - 80}
+            itemWidth={sliderWidth - 50}
             layout={'default'}
             sliderWidth={sliderWidth}
             activeAnimationType={'spring'}

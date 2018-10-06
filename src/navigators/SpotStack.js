@@ -11,7 +11,7 @@ import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 import DismissButton from '../components/common/DismissButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { View, Text, Button } from 'react-native';
+import {View, Text, Button, Platform} from 'react-native';
 
 
 export const BusinessMapNavigatorInSpot = createStackNavigator({
@@ -74,7 +74,7 @@ export const SpotStack = createStackNavigator({
         headerBackTitle: null,
         headerBackImage: (<Icon
             color={themes.base.colors.text.default}
-            name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>),
+            name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
       })
     },
 
@@ -85,7 +85,7 @@ export const SpotStack = createStackNavigator({
       headerBackTitle: "",
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}
-        name="ios-arrow-round-back" style={{marginLeft: 16}} size={48}/>),
+        name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
 
       headerStyle: {
         backgroundColor: themes.base.colors.primary.default

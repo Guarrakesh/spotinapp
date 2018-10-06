@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     //I padding servono per dare spazio all'ombra
     margin: 8,
     backgroundColor: colors.white.light,
-    borderRadius: themes.base.borderRadius
+    borderRadius: themes.base.borderRadius,
+    overflow: 'hidden'
 
   },
   imgBackground: (elevation = 4) => ({
