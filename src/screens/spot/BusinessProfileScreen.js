@@ -160,8 +160,6 @@ const styles = StyleSheet.create({
     backgroundColor: themes.base.colors.white.default
   },
   cardContainer: {
-    marginLeft: 8,
-    marginRight: 8,
     marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
   },
 });

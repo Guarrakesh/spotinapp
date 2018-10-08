@@ -30,6 +30,7 @@
     "react-native-content-loader": "^0.1.6",
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^1.0.0-beta5",
+    "react-native-fbsdk": "^0.8.0",
     "react-native-maps": "^0.21.0",
     "react-native-modal": "^6.5.0",
     "react-native-phone-call": "^1.0.8",

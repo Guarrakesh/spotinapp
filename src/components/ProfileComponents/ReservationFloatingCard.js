@@ -40,7 +40,7 @@ const ReservationFloatingCard = ({
   };
 
   return(
-    <View elevation={2}>
+    <View style={styles.outerContainer} elevation={1}>
         <TouchableOpacity onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
           <ReferenceField reference="businesses" source="business" record={broadcast}>
             { ({record: business}) =>
@@ -48,9 +48,9 @@ const ReservationFloatingCard = ({
                 <ImageBackground
                     imageStyle={{borderRadius: themes.base.borderRadius}}
                     source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
-                    style={styles.imgBackground(6)}
+                    style={styles.imgBackground}
                 >
-                  <View elevation={3} style={styles.status}>
+                  <View style={styles.status} elevation={2}>
                   {reservation.used ? <Icon name="check" size={32} color={themes.base.colors.primary.default}/>
                       : <Icon name="clock" size={32} color={themes.base.colors.text.default}/>}
                 </View>
@@ -72,9 +72,6 @@ const ReservationFloatingCard = ({
                             </View>
                         }
                       </ReferenceField>
-
-
-
                     </View>
                     <View style={styles.offerValue}>
                       <Text style={{
@@ -113,21 +110,22 @@ ReservationFloatingCard.propTyeps = {
 
 const styles = StyleSheet.create({
   outerContainer: {
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
     flexDirection: 'column',
     justifyContent: 'center',
     //I padding servono per dare spazio all'ombra
     height: 250,
+    margin: 8
 
   },
-  imgBackground: (elevation = 1) => ({
+  imgBackground: {
     position: 'relative',
     flex: 1,
     paddingTop: 200,
     resizeMode: 'stretch',
-    elevation: elevation,
     borderRadius: themes.base.borderRadius,
-    marginBottom: 8,
-  }),
+  },
   bottomContainer: {
     zIndex: 9,
     position: 'absolute',
@@ -137,7 +135,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     padding: 16,
-    paddingTop: 24, paddingBottom: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
@@ -179,7 +176,7 @@ const styles = StyleSheet.create({
     right: 16,
     height: 55,
     width: 55,
-    bottom: 80,
+    bottom: 70,
     padding: 12,
     backgroundColor: '#fff',
     borderRadius: 50,

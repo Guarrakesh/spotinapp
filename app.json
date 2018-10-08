@@ -1,4 +1,5 @@
 {
-  "name": "spotinapp",
-  "displayName": "spotinapp"
+  "name": "Spot in",
+  "displayName": "Spot in",
+  "orientation": "portrait"
 }

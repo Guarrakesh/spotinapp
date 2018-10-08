@@ -43,7 +43,7 @@ const BroadcastCardInProfile = (props) => {
         const { competitors } = event;
 
         return (
-          <View style={styles.broadcastInfoView} elevation={2}>
+          <View style={(newsfeed || newsfeed > 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
             {(newsfeed || newsfeed > 0) ?
               <View style={styles.redHeader} elevation={3}>
                 <Text style={styles.headerText}>Offerta consigliata</Text>
@@ -111,9 +111,16 @@ BroadcastCardInProfile.propTypes ={
 };
 const styles = StyleSheet.create({
   broadcastInfoView: {
-    marginTop: 8,
-    marginBottom: 8,
+    margin: 8,
     borderRadius: 8,
+    flexDirection: 'column',
+    backgroundColor: themes.base.colors.white.light,
+  },
+  broadcastInfoViewWithHeader: {
+    margin: 8,
+    borderRadius: 8,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
     flexDirection: 'column',
     backgroundColor: themes.base.colors.white.light,
   },

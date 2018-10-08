@@ -59,7 +59,9 @@ const BusinessInfoCard = (props) => {
 
 const styles = StyleSheet.create({
   businessInfoView: {
-    marginBottom: 16,
+    marginBottom: 8,
+    marginRight: 8,
+    marginLeft: 8,
     borderRadius: 8,
     backgroundColor: themes.base.colors.white.light,
     ...themes.base.elevations.depth1

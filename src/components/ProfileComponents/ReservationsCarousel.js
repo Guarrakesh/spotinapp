@@ -28,15 +28,15 @@ class ReservationsCarousel extends React.Component{
           itemWidth={themes.base.deviceDimensions.width - 80}
           sliderWidth={themes.base.deviceDimensions.width}
           activeAnimationType={'spring'}
-          activeSlideAlignment={'center'}
-          // inactiveSlideOpacity={1}
-          // inactiveSlideScale={1}
+          activeSlideAlignment={'start'}
+          inactiveSlideOpacity={1}
+          inactiveSlideScale={1}
           loop={true}
+          enableSnap={false}
           removeClippedSubviews={false}
-          containerCustomStyle={{marginTop: 8}}
           renderItem={({item}) =>
             <ReservationFloatingCard
-              elevation={2}
+              elevation={0}
               reservation={data[item]}
 
               onPress={() => this.handleBusPress(item)}/>}

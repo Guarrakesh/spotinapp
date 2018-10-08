@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">spotinapp</string>
+    <string name="facebook_app_id">301945323939544</string>
+    <string name="fb_login_protocol_scheme">fb301945323939544</string>
 </resources>

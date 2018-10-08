@@ -27,6 +27,8 @@ target 'spotinapp' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|

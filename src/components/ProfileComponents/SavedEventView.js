@@ -1,6 +1,6 @@
 import React from 'react';
 import View from '../../components/common/View';
-import {  Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {  Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import themes from "../../styleTheme";
 import {Fonts} from "../common/Fonts";
 import ReferenceField from "../common/ReferenceField";
@@ -16,32 +16,32 @@ const SavedEventView = (props) => {
   const date = moment(event.start_at).locale('it').format('ddd D MMM').toString();
   const time = moment(event.start_at).locale('it').format('HH:mm').toUpperCase();
 
+  const onLongPress = (event) => {
+    Alert.alert(
+      `${event.name}`,
+      'Vuoi rimuoverlo dagli eventi preferiti?',
+      [
+        {text: 'Annulla', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Rimuovi', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: true }
+    )
+  };
 
   return(
-    <TouchableOpacity style={styles.eventContainer}>
-        <ReferenceField reference="competitions" source="competition" record={event}>
-          {({record, isLoading}) =>
-            isLoading ? null : (
-              !record.competitorsHaveLogo
-                ?
-                <View style={styles.competitors}>
-                  {competitors.map(comp => (
-                    <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}}
-                                         imgSize={{width: 32, height: 32}}/>
-                  ))}
-                </View>
-                :
-                <View style={{}}>
-                  {<VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}}
-                                        imgSize={{width: 48, height: 48}}/>}
-                </View>
-            )}
-        </ReferenceField>
-        <Text style={styles.eventName}>{event.name}</Text>
-        <View style={styles.dateContainer}>
-          <Text style={styles.eventTime}>{time}</Text>
-          <Text style={styles.eventDate}>{date}</Text>
-        </View>
+    <TouchableOpacity style={styles.eventContainer} onLongPress={() => onLongPress(event)}>
+      <ReferenceField reference="competitions" source="competition" record={event}>
+        {({record, isLoading}) =>
+          isLoading ? null : (
+            <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}}
+                                 imgSize={{width: 48, height: 48}}/>
+          )}
+      </ReferenceField>
+      <Text style={styles.eventName}>{event.name}</Text>
+      <View style={styles.dateContainer}>
+        <Text style={styles.eventTime}>{time}</Text>
+        <Text style={styles.eventDate}>{date}</Text>
+      </View>
     </TouchableOpacity>
 
   )

@@ -118,17 +118,17 @@ const themes = {
     },
     backgroundColor: '#F6F6F6',
     inlineListTitleStyle: {
-      fontWeight: '500',
+      fontFamily: Fonts.LatoBold,
       textAlign: 'left',
       fontSize: 21,
-      padding: 8,
+      paddingLeft: 8,
       paddingBottom: 0,
       marginTop: 8,
       color: '#555555'
     },
     listTitleStyle: {
       fontFamily: Fonts.LatoBold,
-      textAlign: 'center',
+      textAlign: 'left',
       fontSize: 21,
       padding: 8,
       color: '#555555'
