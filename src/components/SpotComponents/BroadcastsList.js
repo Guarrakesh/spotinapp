@@ -67,8 +67,7 @@ class BroadcastsList extends React.Component {
           size={52}
           offsetY={32}
           onPress={() => onMapPress({data, ids})}
-          icon={<Icon name="map" size={24}
-                      style={{color: themes.base.colors.white.default}}/>}
+          renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
         />
       </View>
 

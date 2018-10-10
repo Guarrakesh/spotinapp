@@ -85,5 +85,25 @@
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-ThinItalic.ttf</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb301945323939544</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>301945323939544</string>
+	<key>FacebookDisplayName</key>
+	<string>Spot IN</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 </dict>
 </plist>

@@ -106,8 +106,7 @@ class BusinessScreen extends React.Component {
               size={52}
               offsetY={32}
               onPress={() => {this.props.navigation.navigate('BusinessMapInBusiness', {businesses: businesses})}}
-              icon={<Icon name="map" size={24}
-                          style={{color: themes.base.colors.white.default}}/>}
+              renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
           />
         </View>}
       </ListController>

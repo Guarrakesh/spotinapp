@@ -46,7 +46,7 @@ class ProfileScreen extends React.Component {
                   ⊗ Impossibile caricare il profilo ⊗
                 </Text> :
                 <View style={{padding: 8}}>
-                  <UserInfoCard user={profile} onLogoutPress={() => this.handleLogout()}/>
+                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
                   <InlineListController id="profile_reservations_list" resource="reservations">
                     {controllerProps =>
                       controllerProps.isLoading ? null :
@@ -73,4 +73,9 @@ class ProfileScreen extends React.Component {
 }
 
 
-export default ProfileScreen;
+const mapStateToProps = (state) => {
+  return ({
+    auth: state.auth,
+  });
+};
+export default connect(mapStateToProps)(ProfileScreen);

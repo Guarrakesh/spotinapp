@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton } from 'react-native-fbsdk';
 
-export default class FBLoginButton extends Component {
+class FBLoginButton extends Component {
   render() {
     return (
       <View>
@@ -16,6 +16,7 @@ export default class FBLoginButton extends Component {
                 alert("Login was cancelled");
               } else {
                 alert("Login was successful with permissions: " + result.grantedPermissions)
+                console.log("RESULT:" + result);
               }
             }
           }
@@ -25,4 +26,4 @@ export default class FBLoginButton extends Component {
   }
 };
 
-module.exports = FBLoginButton;
+export default FBLoginButton;

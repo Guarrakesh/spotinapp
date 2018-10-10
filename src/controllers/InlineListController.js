@@ -45,10 +45,10 @@ class InlineListController extends Component {
   }
   updateData(props) {
 
-    const { sort, order, numElems = 10, filter } = this.props;
+    const { sort, order, numElems = 20, filter } = this.props;
     const pagination = {
       page: 1,
-      perPage: parseInt(numElems, 10)
+      perPage: parseInt(numElems, 20)
     };
     if (this.props.nearPosition && this.props.nearPosition.latitude
         && this.props.nearPosition.longitude && this.props.nearPosition.radius) {

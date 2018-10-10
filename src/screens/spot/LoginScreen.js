@@ -6,6 +6,7 @@ import View from "../../components/common/View";
 import {Input, Button} from "react-native-elements";
 import themes from "../../styleTheme";
 import {loginRequest} from "../../actions/login";
+import FBSDK, {LoginManager} from 'react-native-fbsdk';
 
 const colors = themes.base.colors;
 
@@ -31,6 +32,25 @@ class LoginScreen extends React.Component {
 
     this.props.dispatch(loginRequest(this.state.username,this.state.password));
   }
+
+  fbAuth(){
+
+    console.log('ACCESSO CON FB');
+
+    LoginManager.logInWithReadPermissions(['public_profile']).then(function (result) {
+      if(result.isCancelled){
+        console.log('Login cancelled');
+      }
+      else {
+        console.log('Login success: ' + result.grantedPermissions );
+      }
+
+    }, function (error) {
+      console.log('Errore di auth FB: ' + error);
+    });
+  }
+
+
   render() {
 
     const {navigation} = this.props;
@@ -97,7 +117,7 @@ class LoginScreen extends React.Component {
               />
 
               <Button
-                disabled={this.state.username == "" || this.state.password == ""}
+                disabled={this.state.username === "" || this.state.password === ""}
                 disabledStyle={{opacity: 0.8, borderRadius: 100}}
                 title='Sign In'
                 onPress={this.login}
@@ -111,6 +131,7 @@ class LoginScreen extends React.Component {
                 titleStyle={{color: colors.white.default, fontSize: 16}}
                 title='Sign in with Facebook'
                 buttonStyle={styles.fbSignInButton}
+                onPress={this.fbAuth}
                 icon={<Icon
                   name='facebook'
                   size={18}
@@ -119,7 +140,6 @@ class LoginScreen extends React.Component {
                 }
                 iconContainerStyle={{alignSelf: 'flex-start'}}
               />
-
 
               <Button
                 title='Forgot your password?'
@@ -153,14 +173,11 @@ class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-
     alignItems: 'center',
-
     flexDirection: 'column',
-
     width: '100%',
-
   },
+
   inputOuterContainer: {
     width:'100%',
     borderWidth: 0,
