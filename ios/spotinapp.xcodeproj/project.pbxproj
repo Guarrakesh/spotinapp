@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -71,10 +72,6 @@
 		B008E7D97DD2411CA3F7E4E0 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4971F59F611F43A5BCA2ADBC /* Lato-Thin.ttf */; };
 		B205B31C17574F1F8E346A5C /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EC9D668B34709AF81A225 /* Lato-ThinItalic.ttf */; };
 		BEF5C31FFB5340869598E8D5 /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC1DE8993C144FC088100073 /* Lato-HeavyItalic.ttf */; };
-		C4BB9929216E5D4C00BADD58 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BB9928216E5D4C00BADD58 /* Bolts.framework */; };
-		C4BB992B216E5D4C00BADD58 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BB992A216E5D4C00BADD58 /* FBSDKCoreKit.framework */; };
-		C4BB992D216E5D4C00BADD58 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BB992C216E5D4C00BADD58 /* FBSDKLoginKit.framework */; };
-		C4BB992F216E5D4C00BADD58 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BB992E216E5D4C00BADD58 /* FBSDKShareKit.framework */; };
 		C83FB50239664434AC1DBCD2 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 771B69A9E3CF4A3181612257 /* Lato-SemiboldItalic.ttf */; };
 		D0A612611A104119BA768A14 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F443DD82CFAD409690F6D556 /* MaterialCommunityIcons.ttf */; };
 		DC10BE83D1FA4CB8866A6559 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6352507C7212418A8343C6CA /* Lato-Medium.ttf */; };
@@ -429,10 +426,6 @@
 		A98AF76EA55C40B19183AFE7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B4501641154243228880F3A7 /* Lato-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Semibold.ttf"; path = "../src/assets/fonts/Lato-Semibold.ttf"; sourceTree = "<group>"; };
-		C4BB9928216E5D4C00BADD58 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = FacebookSDK.0/Bolts.framework; sourceTree = "<group>"; };
-		C4BB992A216E5D4C00BADD58 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = FacebookSDK.0/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		C4BB992C216E5D4C00BADD58 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = FacebookSDK.0/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		C4BB992E216E5D4C00BADD58 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = FacebookSDK.0/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		C5ADDBB079244BB3923C89F1 /* Lato-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
 		CC0EC9D668B34709AF81A225 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-ThinItalic.ttf"; path = "../src/assets/fonts/Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
 		CE23B027347A40C1A9621557 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../src/assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -459,10 +452,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4BB9929216E5D4C00BADD58 /* Bolts.framework in Frameworks */,
-				C4BB992B216E5D4C00BADD58 /* FBSDKCoreKit.framework in Frameworks */,
-				C4BB992D216E5D4C00BADD58 /* FBSDKLoginKit.framework in Frameworks */,
-				C4BB992F216E5D4C00BADD58 /* FBSDKShareKit.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -625,10 +614,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C4BB9928216E5D4C00BADD58 /* Bolts.framework */,
-				C4BB992A216E5D4C00BADD58 /* FBSDKCoreKit.framework */,
-				C4BB992C216E5D4C00BADD58 /* FBSDKLoginKit.framework */,
-				C4BB992E216E5D4C00BADD58 /* FBSDKShareKit.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				2D05356DD25B9D6E51123234 /* libPods-spotinapp.a */,
 			);
@@ -1361,6 +1346,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-spotinapp/Pods-spotinapp-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -1376,6 +1362,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",

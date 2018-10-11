@@ -6,7 +6,7 @@ import View from "../../components/common/View";
 import {Input, Button} from "react-native-elements";
 import themes from "../../styleTheme";
 import {loginRequest} from "../../actions/login";
-import FBSDK, {LoginManager} from 'react-native-fbsdk';
+import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 const colors = themes.base.colors;
 
@@ -43,13 +43,17 @@ class LoginScreen extends React.Component {
       }
       else {
         console.log('Login success: ' + result.grantedPermissions );
+
+        AccessToken.getCurrentAccessToken().then(data => {
+          console.log(data);
+        })
+        console.log(`Risultato: ${result.toString()}`)
       }
 
     }, function (error) {
       console.log('Errore di auth FB: ' + error);
     });
   }
-
 
   render() {
 
