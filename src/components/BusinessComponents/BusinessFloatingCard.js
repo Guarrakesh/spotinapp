@@ -29,10 +29,10 @@ const BroadcastFloatingCard = ({
 
   return (
     <View style={styles.outerContainer} elevation={elevation}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} delayPressIn={50}>
         <ImageBackground
           imageStyle={{borderRadius: themes.base.borderRadius}}
-          source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+          source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
           style={styles.imgBackground(6)}
         >
           <View style={styles.innerContainer}>
@@ -103,16 +103,16 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 21,
-    color: colors.white.default,
-    fontFamily: fonts.Lato,
+    color: colors.white.light,
+    fontFamily: fonts.LatoBold,
   },
   type: {
-    color: colors.white.default,
+    color: colors.white.light,
     fontFamily: fonts.Lato,
     fontSize: 14
   },
   distanceContainer: {
-    color: colors.white.default,
+    color: colors.white.light,
     flexDirection: 'row',
     alignItems: 'flex-end',
     alignSelf: 'flex-end',
@@ -122,11 +122,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: fonts.LatoBlack,
     alignSelf: 'flex-end',
-    color:  colors.white.default,
+    color:  colors.white.light,
 
   },
   geoFenceImg: {
-    color: colors.white.default,
+    color: colors.white.light,
     marginRight: 5
   }
 

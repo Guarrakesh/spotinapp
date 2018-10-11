@@ -44,7 +44,8 @@ class BusinessScreen extends React.Component {
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
         color: themes.base.colors.text.default
-      }
+      },
+      headerBackTitle: null
 
     }
   }
@@ -61,14 +62,13 @@ class BusinessScreen extends React.Component {
 
   }
 
-  handleBusinessPress(business) {
-    this.props.navigation.navigate('BusinessProfileScreen', {business: business});
+  handleBusinessPress(businessId, distance) {
+    this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
 
   }
 
 
   render() {
-    return null;
 
     const { latitude, longitude } = this.props;
 
@@ -84,19 +84,19 @@ class BusinessScreen extends React.Component {
 
     return (
       <ListController
+        id='business_list'
         perPage="20"
         resource="businesses"
         sort={{field: 'dist.calculated', order: 'asc'}}
-
         nearPosition={nearPosition}
       >
         {controllerProps =>
           <View style={styles.container}>
           <SearchBar
-              round={true}
-              placeholder='Cerca Locale'
-              lightTheme={true}
-              clearIcon={{ color: 'white' }}
+              // round={true}
+              // placeholder='Cerca Locale'
+               lightTheme={true}
+              // clearIcon={{ color: 'white' }}
           />
           <BusinessList onItemPress={this.handleBusinessPress} {...controllerProps}/>
           <ActionButton
@@ -105,7 +105,10 @@ class BusinessScreen extends React.Component {
               buttonColor={themes.base.colors.accent.default}
               size={52}
               offsetY={32}
-              onPress={() => {this.props.navigation.navigate('BusinessMapInBusiness', {businesses: businesses})}}
+              onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
+                data: controllerProps.data,
+                ids: controllerProps.ids
+              })}
               renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
           />
         </View>}
@@ -126,7 +129,8 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: themes.base.colors.white.default
     // top: 0,
     // bottom: 0,
     // right: 0,

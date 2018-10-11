@@ -25,8 +25,7 @@ export const MainNavigation = createTabNavigator(
   {
     Home: HomeStack,
     Esplora: SpotStack,
-
-   Profile: ProfileStack,
+    Profile: ProfileStack,
   },
   {
 

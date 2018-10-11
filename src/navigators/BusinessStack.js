@@ -52,7 +52,11 @@ export const BusinessMapNavigatorInBusiness = createStackNavigator({
     screen: BusinessMapInBusiness,
     navigationOptions: ({navigation}) => {
       return {
-        title: "Mappa Locali",
+        headerTransparent: true,
+        headerStyle: {
+          shadowColor: 'transparent',
+          borderBottomWidth: 0,
+        },
         headerRight: (
           <DismissButton onPress={() => {navigation.navigate('BusinessScreen')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
         ),

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Platform} from 'react-native';
+import { Button } from 'react-native-elements';
 import HomeController from '../../controllers/HomeController';
 import InlineListController from '../../controllers/InlineListController';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +10,7 @@ import BroadcastCarousel from '../../components/BroadcastComponents/BroadcastCar
 import EventCarousel from '../../components/EventComponents/EventCarousel';
 
 import themes from '../../styleTheme';
+import {Fonts} from "../../components/common/Fonts";
 const logoImg = require('../../assets/img/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
 
@@ -18,11 +20,18 @@ export default class HomeScreen extends React.Component {
     return {
       headerTitle: (<Image
         source={logoImg}
-        style={{height: 25, alignSelf: 'center'}}
+        style={{height: 25, alignSelf: 'center', width: '100%'}}
         resizeMode={'contain'}/>),
+      headerTitleStyle: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        flex: 1,
+        //marginLeft: Platform.OS === 'android' ? 75 : null,
+      },
       headerStyle: {
         backgroundColor: themes.base.colors.primary.default,
-      }
+      },
+      headerBackTitle: null
     }
   }
 
@@ -35,10 +44,10 @@ export default class HomeScreen extends React.Component {
 
   }
   handleBroadcastPress(broadcastId, businessId, distance) {
-    this.props.navigation.navigate('BusinessProfile', {broadcastId, businessId, distance});
+    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
   handleBusinessPress(businessId, distance) {
-    this.props.navigation.navigate('BusinessProfile', {businessId, distance});
+    this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
 
   }
   handleEventPress(event, eventId) {
@@ -58,8 +67,10 @@ export default class HomeScreen extends React.Component {
                 {controllerProps =>
                   <View>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginTop: 12, marginRight: 5}}/>
-                      <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
+                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                        <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
+                      </View>
                     </View>
                     {controllerProps.isLoading ?
                       <View style={{height: 325, justifyContent: 'center'}}>
@@ -77,8 +88,10 @@ export default class HomeScreen extends React.Component {
                 {controllerProps =>
                   <View>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginTop: 8, marginRight: 5}}/>
-                      <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
+                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                        <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
+                      </View>
                     </View>
                     {controllerProps.isLoading ?
                       <View style={{height: 138, justifyContent: 'center'}}>
@@ -94,9 +107,19 @@ export default class HomeScreen extends React.Component {
                 nearPosition={{...position, radius: 100}}>
                 {controllerProps =>
                   <View style={{marginBottom: 16}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <Image source={localImg} style={{width: 21, height: 21, marginTop: 8, marginRight: 5}}/>
-                      <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, justifyContent: 'space-between'}}>
+                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
+                        <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
+                      </View>
+                      <View>
+                        <Button
+                          title={'VEDI TUTTI ➔'}
+                          titleStyle={styles.seeAllTitle}
+                          buttonStyle={styles.seeAllButton}
+                          onPress={() => this.props.navigation.navigate('BusinessScreen')}
+                        />
+                      </View>
                     </View>
                     {controllerProps.isLoading ?
                       <View style={{height: 166, justifyContent: 'center'}}>
@@ -120,15 +143,24 @@ const styles = StyleSheet.create({
     backgroundColor: themes.base.colors.white.default,
     flex: 1,
     padding: 0,
-
     paddingTop: 16,
   },
   inlineListHeader: {
     fontFamily: themes.base.fonts.LatoBold,
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: 21,
-    marginTop: 8,
-    color: themes.base.colors.text.default
+    color: themes.base.colors.text.default,
   },
+  seeAllButton: {
+    backgroundColor: 'transparent',
+    elevation: 0
+  },
+  seeAllTitle: {
+    color: themes.base.colors.text.default,
+    fontFamily: Fonts.LatoMedium,
+    fontSize: 14,
+    paddingBottom: 0,
+    textDecorationLine: 'underline'
+  }
 
 });

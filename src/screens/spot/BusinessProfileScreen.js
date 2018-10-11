@@ -46,6 +46,7 @@ class BusinessProfileScreen extends React.Component {
         fontFamily: Fonts.LatoBold,
         color: themes.base.colors.text.default
       },
+      headerBackTitle: null
 
     }
   }

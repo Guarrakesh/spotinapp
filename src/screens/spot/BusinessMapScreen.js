@@ -10,6 +10,7 @@ import themes from '../../styleTheme';
 import BroadcastFloatingCard from '../../components/BroadcastComponents/BroadcastFloatingCard';
 
 class BusinessMapScreen extends React.Component {
+
   state = {transitionFinished: false, region: null,
     carouselVisible: true, carouselY: new Animated.Value(20)
   };
@@ -23,7 +24,7 @@ class BusinessMapScreen extends React.Component {
     super();
 
     this._centerMapOnMarker = this._centerMapOnMarker.bind(this);
-    this.slideCaoursel = this.slideCaoursel.bind(this);
+    this.slideCarousel = this.slideCarousel.bind(this);
   }
 
   componentDidMount() {
@@ -43,15 +44,16 @@ class BusinessMapScreen extends React.Component {
       }
     })
   }
-  slideCaoursel() {
+  slideCarousel() {
     Animated.timing(this.state.carouselY, {
-      toValue: (this.state.carouselVisible ? 220 : -10),
+      toValue: (this.state.carouselVisible ? 220 : 20),
       duration: 500,
     }).start();
     this.setState({
       carouselVisible: !this.state.carouselVisible
     });
   }
+
   render() {
 
     const { businesses } = this.props;
@@ -69,7 +71,7 @@ class BusinessMapScreen extends React.Component {
         <View style={{flex:1}}>
           <MapView style={styles.map}
                    region={this.state.region || region}
-                   onPress={this.slideCaoursel}
+                   onPress={this.slideCarousel}
 
           >
 
@@ -87,7 +89,6 @@ class BusinessMapScreen extends React.Component {
             }
 
           </MapView>
-
           <Animated.View style={{
             transform: [{translateY: this.state.carouselY}],
             position: 'absolute',

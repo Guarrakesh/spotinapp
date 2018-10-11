@@ -1,19 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import {StyleSheet, FlatList, InteractionManager} from 'react-native';
+import {StyleSheet, FlatList, InteractionManager, Animated} from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
 import themes from '../../styleTheme';
 
 import BusinessCard from '../../components/BusinessComponents/BusinessCard';
+import Carousel from "react-native-snap-carousel";
+import BroadcastFloatingCard from "../../components/BroadcastComponents/BroadcastFloatingCard";
 
 class BusinessMapInBusiness extends React.Component {
 
-  state = {transitionFinished: false}
+  state = {transitionFinished: false, region: null,
+    carouselVisible: true, carouselY: new Animated.Value(20)
+  };
+
+  latitudeDelta = 0.1;
+  longitudeDelta = 0.1;
 
   constructor() {
     super();
+
+    this._centerMapOnMarker = this._centerMapOnMarker.bind(this);
+    this.slideCarousel = this.slideCarousel.bind(this);
 
   }
 
@@ -22,56 +32,95 @@ class BusinessMapInBusiness extends React.Component {
     InteractionManager.runAfterInteractions(() => this.setState({transitionFinished: true}));
   }
 
+  _centerMapOnMarker(index) {
+    const { data, ids } = this.props.navigation.state.params;
+    const location = data[ids[index]].dist.location;
+    this.setState({
+      region: {
+        latitude: location.coordinates[1],
+        longitude: location.coordinates[0],
+        latitudeDelta: this.latitudeDelta,
+        longitudeDelta: this.longitudeDelta
+      }
+    })
+  }
+
+  slideCarousel() {
+    Animated.timing(this.state.carouselY, {
+      toValue: (this.state.carouselVisible ? 220 : 20),
+      duration: 500,
+    }).start();
+    this.setState({
+      carouselVisible: !this.state.carouselVisible
+    });
+  }
+
   render() {
 
-    const { businesses } = this.props.navigation.state.params;
-    if (!businesses || !this.state.transitionFinished) return null;
+    //const { businesses } = this.props;
+    const { ids, data } = this.props.navigation.state.params;
+
+    if (!ids || !data || !this.state.transitionFinished) return null;
+
+    const region = {
+      latitude: data[ids[0]].dist.location.coordinates[1],
+      longitude: data[ids[0]].dist.location.coordinates[0],
+      latitudeDelta: this.latitudeDelta,
+      longitudeDelta: this.longitudeDelta
+    }
+    const sliderWidth = themes.base.deviceDimensions.width;
 
     return (
       <View style={{flex:1}}>
         <MapView style={styles.map}
-                 initialRegion={{
-                   latitude: businesses[0].address.location.coordinates[1],
-                   longitude: businesses[0].address.location.coordinates[0],
-                   latitudeDelta: 0.5,
-                   longitudeDelta: 0.5
-                 }}
+                 region={this.state.region || region}
+                 onPress={this.slideCarousel}
         >
-
           {
-            businesses.map(bus =>
+            ids.map(id =>
               <MapView.Marker
                 coordinate={{
-                  latitude: bus.address.location.coordinates[1],
-                  longitude: bus.address.location.coordinates[0]}}
-                title={bus.name}
-                description={`${bus.address.street} ${bus.address.number}`}
+                  latitude: data[id].address.location.coordinates[1],
+                  longitude: data[id].address.location.coordinates[0]}}
+                title={data[id].name}
+                description={`${data[id].address.street} ${data[id].address.number}`}
               />
             )
           }
 
         </MapView>
-        <View style={{backgroundColor: themes.base.colors.white.default, position: 'absolute', bottom: 0, height: '40%', width: '100%'}}>
-          <FlatList
-            data={businesses}
+        <Animated.View style={{
+          transform: [{translateY: this.state.carouselY}],
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          paddingBottom: 20
+        }}>
+          <Carousel
+            data={ids}
+            activeSlideAlignment={"center"}
             renderItem={({item}) =>
-              <View style={{width: 280, marginTop: 16, marginBottom: 16, marginLeft: 8, marginRight: 8, borderRadius: 8, backgroundColor: themes.base.colors.white.light}} elevation={2}>
-                <BusinessCard business={item} style={{flex: 1}} onItemPress={() => this.handleBusPress(item)}/>
-              </View>
+              <BusinessCard business={data[item]}
+                            style={{flex: 1}}
+                            onPress={() => this.handleBusPress(item, data[item].dist)}/>
             }
-            horizontal={true}
-            pagingEnabled={true}
-          />
-        </View>
+            itemWidth={sliderWidth - 80}
+            sliderWidth={sliderWidth}
+            activeAnimationType={'spring'}
+            inactiveSlideOpacity={1}
+            inactiveSlideScale={1}
+            onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
 
+          />
+        </Animated.View>
       </View>
     )
   }
 
 
-  handleBusPress(business) {
+  handleBusPress(businessId, distance) {
 
-    this.props.navigation.navigate('BusinessProfileScreen', {business: business});
+    this.props.navigation.navigate('BusinessProfileScreen', {businessId: businessId, distance: distance});
 
   }
 }

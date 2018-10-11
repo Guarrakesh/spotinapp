@@ -28,7 +28,6 @@ const BusinessCarousel = ({
             removeClippedSubviews={false}
             renderItem={({item}) =>
                 <BusinessFloatingCard elevation={2}
-
                                        business={data[item]}
                                        style={{flex: 1}}
                                        onPress={() => onItemPress(item, data[item].dist)}/>
@@ -37,8 +36,6 @@ const BusinessCarousel = ({
             layout={'default'}
             sliderWidth={sliderWidth}
             activeAnimationType={'spring'}
-            // inactiveSlideOpacity={1}
-            // inactiveSlideScale={1}
 
         />
 

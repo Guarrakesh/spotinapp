@@ -26,7 +26,7 @@ class LoginScreen extends React.Component {
   }
 
   login() {
-    if (this.state.username == "" || this.state.password == "")
+    if (this.state.username === "" || this.state.password === "")
       return;
 
 

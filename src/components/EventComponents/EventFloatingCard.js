@@ -53,7 +53,7 @@ const EventCard = ({
   return (
 
     <View elevation={elevation} style={styles.containerStyle}>
-      <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress}>
+      <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress} delayPressIn={50}>
         <View style={styles.competitorsLogosContainer}>
           {competitorsComponent}
         </View>

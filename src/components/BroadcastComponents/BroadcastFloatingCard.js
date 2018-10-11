@@ -45,13 +45,13 @@ const BroadcastFloatingCard = ({
 
   return (
     <View style={styles.outerContainer} elevation={2}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} delayPressIn={50}>
         <ReferenceField reference="businesses" source="business" record={broadcast}>
           { ({record: business}) =>
             <View style={{borderRadius: themes.base.borderRadius, overflow: 'hidden'}}>
               <View>
                 <ImageBackground
-                  source={{uri: business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+                  source={{uri:  business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
                   style={styles.imgBackground}
                 >
                   <View style={styles.businessContainer}>
