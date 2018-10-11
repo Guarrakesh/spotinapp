@@ -5,8 +5,7 @@ import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground, Platform, A
 import View from "../../components/common/View";
 import {Input, Button} from "react-native-elements";
 import themes from "../../styleTheme";
-import {loginRequest} from "../../actions/login";
-import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
+import { userLogin, oAuthFacebookLogin } from "../../actions/authActions";
 
 const colors = themes.base.colors;
 
@@ -23,42 +22,23 @@ class LoginScreen extends React.Component {
     };
 
     this.login = this.login.bind(this);
+    this.facebookLogin = this.facebookLogin.bind(this);
   }
 
   login() {
     if (this.state.username == "" || this.state.password == "")
       return;
-
-
-    this.props.dispatch(loginRequest(this.state.username,this.state.password));
+    this.props.loginRequest(this.state.username,this.state.password);
   }
 
-  fbAuth(){
-
-    console.log('ACCESSO CON FB');
-
-    LoginManager.logInWithReadPermissions(['public_profile']).then(function (result) {
-      if(result.isCancelled){
-        console.log('Login cancelled');
-      }
-      else {
-        console.log('Login success: ' + result.grantedPermissions );
-
-        AccessToken.getCurrentAccessToken().then(data => {
-          console.log(data);
-        })
-        console.log(`Risultato: ${result.toString()}`)
-      }
-
-    }, function (error) {
-      console.log('Errore di auth FB: ' + error);
-    });
+  facebookLogin() {
+    this.props.facebookLogin();
   }
-
   render() {
 
-    const {navigation} = this.props;
+    const { navigation, isLoading } = this.props;
     const {loggedIn} = this.props.auth;
+
 
     // if (loggedIn) {
     //   return () => this.props.navigation.navigate('ProfileScreen')
@@ -112,7 +92,7 @@ class LoginScreen extends React.Component {
                 leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                 inputContainerStyle={{borderBottomWidth: 0}}
                 inputStyle={styles.textInputStyle}
-                errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
+                //errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
                 shake={true}
                 onChangeText={(text) => this.setState({password: text})}
                 secureTextEntry={true}
@@ -121,21 +101,23 @@ class LoginScreen extends React.Component {
               />
 
               <Button
-                disabled={this.state.username === "" || this.state.password === ""}
+                disabled={isLoading || this.state.username === "" || this.state.password === ""}
                 disabledStyle={{opacity: 0.8, borderRadius: 100}}
                 title='Sign In'
                 onPress={this.login}
                 buttonStyle={styles.signInButton}
                 titleStyle={{color: colors.text.light, fontSize: 16}}
-                loading={this.props.auth.currentlySending}
+                loading={isLoading}
 
 
               />
               <Button
                 titleStyle={{color: colors.white.default, fontSize: 16}}
                 title='Sign in with Facebook'
+                loading={isLoading}
+                disabled={isLoading}
                 buttonStyle={styles.fbSignInButton}
-                onPress={this.fbAuth}
+                onPress={this.facebookLogin}
                 icon={<Icon
                   name='facebook'
                   size={18}
@@ -146,6 +128,7 @@ class LoginScreen extends React.Component {
               />
 
               <Button
+                disabled={isLoading}
                 title='Forgot your password?'
                 titleStyle={{color: colors.text.light, fontSize: 16}}
                 buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
@@ -157,6 +140,7 @@ class LoginScreen extends React.Component {
 
             <Button
               clear={true}
+              disabled={isLoading}
               title={['Do not have an account? ', <Text style={{fontWeight: '700'}}>Create one</Text>]}
               titleStyle={{color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
               buttonStyle={styles.signUpButton}
@@ -245,6 +229,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return ({
     auth: state.auth,
+    isLoading: state.loading > 0
   });
 };
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps, {
+  userLogin,
+  facebookLogin: oAuthFacebookLogin
+})(LoginScreen);

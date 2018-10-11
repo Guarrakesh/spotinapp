@@ -1,39 +1,33 @@
 import {
-  LOGIN,
-  LOGOUT,
-  SET_AUTH,
-  SENDING_REQUEST,
-  REQUEST_ERROR
-} from '../actions/types';
+  USER_LOGIN_SUCCESS,
+  OAUTH_LOGIN_SUCCESS,
+  USER_LOGOUT,
+} from '../actions/authActions';
+
 import {PROFILE_GET_INFO_SUCCESS} from "../actions/profile";
 
 
 let initialState = {
 
-  loggedIn: false,
-  currentlySending: false,
-  error: '',
+  isLoggedIn: false,
   token: null,
   profile: {}
 
 }
 
-export default function authReducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_AUTH:
-      return {...state, loggedIn: action.newAuthState, token: action.token };
-    case LOGIN.REQUEST:
-    case SENDING_REQUEST:
-      return {...state, currentlySending: action.sending};
-
-    case LOGIN.FAILURE:
-    case REQUEST_ERROR:
-      return {...state, error: action.error};
+export default function authReducer(state = initialState, { payload, type }) {
+  switch (type) {
+    case USER_LOGIN_SUCCESS:
+    case OAUTH_LOGIN_SUCCESS:
+      return { ...state, loggedIn: true, token: payload.token, profile: payload.user}
 
     case PROFILE_GET_INFO_SUCCESS:
-       return { ...state, profile: action.payload.data };
-
+       return { ...state, profile: payload.data };
+    case USER_LOGOUT:
+        return { ...previousState, isLoggedIn: false, token: null, profile: {}};
     default:
       return state;
   }
 }
+//Selector
+export const isLoggedIn = state => state.isLoggedIn;
