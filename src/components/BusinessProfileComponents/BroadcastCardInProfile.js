@@ -72,9 +72,13 @@ const BroadcastCardInProfile = (props) => {
                 <Text style={styles.eventDateText}>{date}</Text>
                 <Text style={styles.eventTimeText}>{time}</Text>
               </View>
-              <View style={styles.sportIconView}>
-                <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-              </View>
+              <ReferenceField reference={"sports"} source={"sport"} record={event}>
+                {({record: sport}) =>
+                  <View style={styles.sportIconView}>
+                    <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
+                  </View>
+                }
+              </ReferenceField>
             </View>
             {(newsfeed || newsfeed > 0) ?
               <View style={styles.offerInfoView}>
@@ -138,13 +142,12 @@ const styles = StyleSheet.create({
   },
   eventInfoView: {
     flexDirection: 'row',
-    width: '100%',
     alignItems: 'center',
     marginTop: 16
   },
   competitorsLogoView: {
-
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginLeft: 16,
 

@@ -43,7 +43,7 @@ const BroadcastFloatingCard = ({
               {business.type.join(' • ')}
             </Text>
             <View style={styles.distanceContainer}>
-              <Icon name="map-marker-radius" color={colors.white.default}
+              <Icon name="map-marker-radius" color={colors.white.light}
                     style={styles.geoFenceImg} size={20}/>
               <Text style={styles.distance}>
                 {roundedDistance} km
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   distanceContainer: {
     color: colors.white.light,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     alignSelf: 'flex-end',
     borderRadius: themes.base.borderRadius
   },

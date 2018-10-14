@@ -6,6 +6,7 @@ import View from "../../components/common/View";
 import {Input, Button} from "react-native-elements";
 import themes from "../../styleTheme";
 import { userLogin, oAuthFacebookLogin } from "../../actions/authActions";
+import { loginRequest } from "../../actions/login";
 
 const colors = themes.base.colors;
 
@@ -28,7 +29,7 @@ class LoginScreen extends React.Component {
   login() {
     if (this.state.username === "" || this.state.password === "")
       return;
-    this.props.loginRequest(this.state.username,this.state.password);
+    loginRequest(this.state.username,this.state.password);
   }
 
   facebookLogin() {

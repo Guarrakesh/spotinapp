@@ -4,4 +4,5 @@ import App from './src';
 
 
 
+
 AppRegistry.registerComponent('spotinapp', () => App);

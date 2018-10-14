@@ -37,8 +37,6 @@ class ProfileScreen extends React.Component {
     return (
       <ProfileController>
         {({profile, loggedIn, isLoading}) =>
-        1==0 ?
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
           <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
             {loggedIn ?
               (!profile._id ?
@@ -62,8 +60,8 @@ class ProfileScreen extends React.Component {
                   </InlineListController>
                 </View> ):
               <Button title="Accedi" onPress={() => {
-              this.props.navigation.navigate('SignIn')
-            }}/>
+                this.props.navigation.navigate('SignIn')
+              }}/>
             }
           </ScrollView>
         }

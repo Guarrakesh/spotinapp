@@ -61,6 +61,7 @@ class BroadcastsList extends React.Component {
 
         <ActionButton
           active={ids.length !== 0}
+          fixNativeFeedbackRadius={true}
           title=''
           position={"right"}
           buttonColor={themes.base.colors.accent.default}

@@ -11,7 +11,6 @@ import BusinessScreen from '../screens/business/BusinessScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 //import DismissButton from '../components/common/DismissButton';
 
-import { View, Text, Button } from 'react-native';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,

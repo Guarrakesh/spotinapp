@@ -85,9 +85,9 @@ class BusinessScreen extends React.Component {
     return (
       <ListController
         id='business_list'
-        perPage="20"
+        perPage="100"
         resource="businesses"
-        sort={{field: 'dist.calculated', order: 'asc'}}
+        sort={{field: 'near', order: 'asc'}}
         nearPosition={nearPosition}
       >
         {controllerProps =>
@@ -101,6 +101,7 @@ class BusinessScreen extends React.Component {
           <BusinessList onItemPress={this.handleBusinessPress} {...controllerProps}/>
           <ActionButton
               title=''
+              fixNativeFeedbackRadius={true}
               position={"right"}
               buttonColor={themes.base.colors.accent.default}
               size={52}

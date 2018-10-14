@@ -55,13 +55,13 @@ const BroadcastFloatingCard = ({
                   style={styles.imgBackground}
                 >
                   <View style={styles.businessContainer}>
-                    <View style={{flexDirection: 'column', flex: 1}}>
-                      <Text style={styles.businessName}>{business.name}</Text>
+                    <Text style={styles.businessName}>{business.name}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
-                    </View>
-                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                      <Icon name="map-marker-radius" color={colors.white.light} size={20}/>
-                      <Text style={styles.businessDistance}>{roundedDistance} km</Text>
+                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
+                        <Text style={styles.businessDistance}>{roundedDistance} km</Text>
+                      </View>
                     </View>
                   </View>
                 </ImageBackground>
@@ -131,8 +131,7 @@ const styles = StyleSheet.create({
   },
   businessContainer: {
     flex: 1,
-    alignItems: 'flex-end',
-    flexDirection: 'row',
+    flexDirection: 'column',
     backgroundColor: 'rgba(0,0,0,0.5)',
     padding: 8,
     paddingLeft: 16,
@@ -144,6 +143,7 @@ const styles = StyleSheet.create({
     color: colors.white.light,
   },
   businessType: {
+    flex: 1,
     fontFamily: Fonts.LatoLight,
     fontSize: 16,
     color: themes.base.colors.white.light
