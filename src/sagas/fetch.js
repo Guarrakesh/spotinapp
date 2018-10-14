@@ -87,6 +87,10 @@ export function* handleFetch(dataProvider, action) {
     });
     yield put({ type: FETCH_END });
   } catch (error) {
+
+    yield put({type: AUTH_CHECKING, payload: { checking: false, type }});
+
+
     yield put({
       type: `${type}_FAILURE`,
       error: error.message ? error.message : error,

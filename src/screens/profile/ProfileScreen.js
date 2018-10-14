@@ -1,19 +1,17 @@
 import React from 'react';
 
-import { NavigationEvents } from 'react-navigation';
 
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 
 import View from '../../components/common/View';
 import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
-import ListController from '../../controllers/ListController'
+
 import { userLogout, userCheck } from '../../actions/authActions';
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
 import SavedEventsCard from '../../components/ProfileComponents/SavedEventsCard';
 import { connect } from 'react-redux';
-import {Fonts} from "../../components/common/Fonts";
 import themes from "../../styleTheme";
 
 const user = {

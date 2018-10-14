@@ -79,7 +79,7 @@ function* handleAuth(action) {
           type: USER_LOGIN_SUCCESS,
           payload: authResponse
         });
-        NavigationService.navigate(meta.pathName || 'Main');
+        NavigationService.navigate(meta.pathName || 'Main', {}, true );
       } catch (e) {
         yield call(handleErrorNotification,e);
 
@@ -89,7 +89,7 @@ function* handleAuth(action) {
           meta: { auth: true }
         });
 
-        //TODO: Handle Notification!!
+
       }
       break;
     }
@@ -106,7 +106,7 @@ function* handleAuth(action) {
           type: USER_REGISTER_SUCCESS,
           payload: authResponse
         });
-        NavigationService.navigate(meta.pathName || 'Main');
+        NavigationService.navigate(meta.pathName || 'Main' , {}, true);
       } catch (e) {
         yield call(handleErrorNotification,e);
 
@@ -127,16 +127,17 @@ function* handleAuth(action) {
           type: USER_LOGIN_SUCCESS,
           payload: authResponse
         });
-        NavigationService.navigate(meta.pathName || 'Main');
+        NavigationService.navigate(meta.pathName || 'Main', {}, true);
 
 
       } catch (e) {
+        yield call(handleErrorNotification, e);
+
         yield put({
           type: OAUTH_LOGIN_FAILURE,
           error: e,
           meta: { auth: true }
         });
-        yield call(handleErrorNotification, e);
       }
       break;
     }
@@ -161,6 +162,7 @@ function* handleAuth(action) {
 
       } catch (error) {
 
+        yield put({type: AUTH_CHECKING, payload: { checking: false }});
 
         //Check fallito, devo fare LOGOUT e reindirizzo al path specificato dal component (di default mando al login)
         yield call(auth.logout);
