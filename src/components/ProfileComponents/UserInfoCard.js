@@ -13,7 +13,7 @@ const UserInfoCard = (props) =>{
 
     <View style={styles.container} elevation={1}>
       <View style={styles.imageView}>
-        <Image source={{uri: user.image ? user.image : "https://media.licdn.com/dms/image/C4E03AQFX_8NZvj7RVw/profile-displayphoto-shrink_800_800/0?e=1544054400&v=beta&t=v9cAr2sCqtOCIMmBCR4UlMxxTqpz3c240x0GPHHCUK4"}} style={styles.userImage}/>
+        <Image source={{uri: user.picture ? user.picture : "https://media.licdn.com/dms/image/C4E03AQFX_8NZvj7RVw/profile-displayphoto-shrink_800_800/0?e=1544054400&v=beta&t=v9cAr2sCqtOCIMmBCR4UlMxxTqpz3c240x0GPHHCUK4"}} style={styles.userImage}/>
       </View>
       <View style={styles.infoView}>
         <Text style={styles.userName}>{user.name}</Text>

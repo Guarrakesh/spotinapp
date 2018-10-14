@@ -7,17 +7,19 @@ import eventsRoot from './events'
 import locationRoot from './location';
 import broadcastsRoot from "./broadcasts";
 import businessesRoot from './businesses'
+import notifications from './notifications';
 
 import fetch from './fetch';
 import dataProvider from '../api/dataProvider';
 
 export default function* root() {
   yield all([
-    fork(loginRoot),
+    // fork(loginRoot),
     fork(authRoot),
     fetch(dataProvider)(),
     fork(accumulate),
-      fork(locationRoot)
+    fork(locationRoot),
+    fork(notifications)
 
   ]);
 

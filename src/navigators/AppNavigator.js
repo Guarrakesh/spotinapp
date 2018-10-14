@@ -12,11 +12,16 @@ import {SpotStack, BusinessMapNavigatorInSpot} from './SpotStack';
 import ProfileStack from './ProfileStack';
 import HomeStack from './HomeStack';
 
+import Launcher from '../screens/Launcher';
+
+
+
 import themes from '../styleTheme';
 
 const FavoriteStack = createStackNavigator({
   Favorite: FavoriteScreen,
 });
+
 
 
 
@@ -67,6 +72,7 @@ export const MainNavigation = createTabNavigator(
 
 const RootNavigator = createStackNavigator(
   {
+    Launcher: Launcher,
     Main: {
       screen: MainNavigation,
       navigationOptions: {
@@ -90,7 +96,7 @@ const RootNavigator = createStackNavigator(
   }, {
     headerMode: 'none',
     mode: "modal",
-    initialRouteName: 'Main',
+    initialRouteName: 'Launcher',
   }
 );
 

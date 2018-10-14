@@ -17,10 +17,10 @@ const BusinessCard = (props) => {
 
 
   return (
-    <View style={styles.container} elevation={2}>
+    <View style={styles.container} elevation={4}>
       <TouchableOpacity onPress={onPress} delayPressIn={100}>
         <ImageBackground
-          imageStyle={{borderRadius: themes.base.borderRadius}}
+          //imageStyle={{borderRadius: themes.base.borderRadius}}
           source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
           style={styles.imgBackground}
         >
@@ -52,23 +52,26 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: themes.base.borderRadius,
     overflow: 'hidden',
+    backgroundColor: themes.base.colors.white.light,
     margin: 8,
-    backgroundColor: themes.base.colors.white.light
+    marginBottom: 4,
+
   },
   imgBackground: {
-    borderTopLeftRadius: themes.base.borderRadius,
+   borderTopLeftRadius: themes.base.borderRadius,
     borderTopRightRadius: themes.base.borderRadius,
-    justifyContent: 'flex-end',
+
     flexDirection: 'row',
-    paddingTop: 100,
+    height: 150,
     backgroundColor: themes.base.colors.white.light
   },
   businessContainer: {
     flex: 1,
-    alignItems: 'flex-end',
     flexDirection: 'row',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(62,62,62,.47)',
     padding: 8,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     paddingLeft: 16,
     paddingRight: 16,
   },

@@ -13,8 +13,9 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 const logoImg = require('../../assets/img/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
+import Authenticated  from '../../components/Auth/Authenticated';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
@@ -56,6 +57,7 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
+      <Authenticated location={{pathName: "Profile"}}>
       <HomeController>
         {({isLoading, position,...rest}) =>
           !position.latitude || !position.longitude ? null :
@@ -141,7 +143,8 @@ export default class HomeScreen extends React.Component {
             </ScrollView>
         }
 
-      </HomeController>
+          </HomeController>
+        </Authenticated>
     );
   }
 
@@ -173,3 +176,6 @@ const styles = StyleSheet.create({
   }
 
 });
+
+
+export default HomeScreen;

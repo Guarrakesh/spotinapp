@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Platform } from 'react-native';
 
 import { FluidNavigator } from 'react-navigation-fluid-transitions';
 
@@ -21,40 +21,46 @@ const BackButton = ({onPress}) => (
 
 const AuthNavigator = createStackNavigator(
     {
-        SignIn: {
-            screen: LoginScreen,
-            navigationOptions: ({navigation}) => {
-                return {
-                    headerLeft: ( <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.white.default}/>),
-                    headerTransparent: true,
-                    headerStyle: {
-                        shadowColor: 'transparent',
-                        borderBottomWidth: 0,
-                    }
-                }
+      SignIn: {
+        screen: LoginScreen,
+        navigationOptions: ({navigation}) => {
+          return {
+            headerTransparent: true,
+            headerStyle: {
+              shadowColor: 'transparent',
+              borderBottomWidth: 0,
             }
-
-        },
-        SignUp: {
-            screen: SignupScreen,
-
-            navigationOptions: ({navigation}) => ({
-                title: 'Sign Up',
-                headerMode: 'screen',
-                headerTransparent: true,
-                headerTintColor: '#fff',
-                headerStyle: {
-                    shadowColor: 'transparent',
-                    borderBottomWidth: 0,
-                }
-
-
-            })
+          }
         }
+
+      },
+      SignUp: {
+        screen: SignupScreen,
+
+        navigationOptions: ({navigation}) => ({
+          title: 'Registrazione'.toUpperCase(),
+          headerTitleStyle: {
+            fontFamily: themes.base.fonts.LatoMedium,
+            textAlign: 'center',
+            alignSelf: 'center',
+            flex: 1,
+            marginRight: Platform.OS === 'android' ? 75 : null,
+          },
+          headerMode: 'screen',
+          headerTransparent: true,
+          headerTintColor: themes.base.colors.text.default,
+          headerStyle: {
+            shadowColor: 'transparent',
+            borderBottomWidth: 0,
+          }
+
+
+        })
+      }
     },
     {
-        mode: 'modal',
-        headerMode: 'screen',
+      mode: 'modal',
+      headerMode: 'screen',
 
 
 
