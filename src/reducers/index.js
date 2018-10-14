@@ -9,7 +9,7 @@ import entities from './entities';
 import location from './location';
 import loading from './loading';
 import ui from './ui';
-
+import notifications from './notifications';
 
 const rootReducer = combineReducers({
     location,
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
     entities,
     loading,
     references,
+    notifications,
     ui
 });
 

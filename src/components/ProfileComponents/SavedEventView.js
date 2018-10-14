@@ -34,7 +34,7 @@ const SavedEventView = (props) => {
         {({record, isLoading}) =>
           isLoading ? null : (
             <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}}
-                                 imgSize={{width: 48, height: 48}}/>
+                                 imgSize={{width: 32, height: 32}}/>
           )}
       </ReferenceField>
       <Text style={styles.eventName}>{event.name}</Text>

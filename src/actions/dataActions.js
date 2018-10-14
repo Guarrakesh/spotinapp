@@ -59,7 +59,7 @@ export const CRUD_GET_ONE_LOADING = 'CRUD_GET_ONE_LOADING';
 export const CRUD_GET_ONE_FAILURE = 'CRUD_GET_ONE_FAILURE';
 export const CRUD_GET_ONE_SUCCESS = 'CRUD_GET_ONE_SUCCESS';
 
-export const crudGetOne = (resource, listId, id, basePath, refresh = true) => ({
+export const crudGetOne = (resource, id, basePath, refresh = true, listId) => ({
   type: CRUD_GET_ONE,
   payload: { id },
   meta: {

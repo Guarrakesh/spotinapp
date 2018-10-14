@@ -13,15 +13,16 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 const logoImg = require('../../assets/img/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
+import Authenticated  from '../../components/Auth/Authenticated';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
 
     return {
       headerTitle: (<Image
-        source={logoImg}
-        style={{height: 25, alignSelf: 'center', width: '100%'}}
-        resizeMode={'contain'}/>),
+          source={logoImg}
+          style={{height: 25, alignSelf: 'center', width: '100%'}}
+          resizeMode={'contain'}/>),
       headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
@@ -56,83 +57,85 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <HomeController>
-        {({isLoading, position,...rest}) =>
-          !position.latitude || !position.longitude ? null :
-            <ScrollView style={styles.homeContainer}>
-              <InlineListController
-                id="home_broadcasts_list"
-                resource="broadcasts"
-                nearPosition={{...position, radius: 100}}>
-                {controllerProps =>
-                  <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                        <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
-                      </View>
-                    </View>
-                    {controllerProps.isLoading ?
-                      <View style={{height: 325, justifyContent: 'center'}}>
-                        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-                      </View> :
-                      <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />}
-                  </View>
-                }
-              </InlineListController>
-              <InlineListController
-                id="home_events_list"
-                resource="events"
-                sort={{field: '_id', order: -1}}
-              >
-                {controllerProps =>
-                  <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                        <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
-                      </View>
-                    </View>
-                    {controllerProps.isLoading ?
-                      <View style={{height: 138, justifyContent: 'center'}}>
-                        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-                      </View>  :
-                      <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />}
-                  </View>
-                }
-              </InlineListController>
-              <InlineListController
-                id="home_businesses_list"
-                resource="businesses"
-                nearPosition={{...position, radius: 100}}>
-                {controllerProps =>
-                  <View style={{marginBottom: 16}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, justifyContent: 'space-between'}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
-                        <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
-                      </View>
-                      <View>
-                        <Button
-                          title={'VEDI TUTTI ➔'}
-                          titleStyle={styles.seeAllTitle}
-                          buttonStyle={styles.seeAllButton}
-                          onPress={() => this.props.navigation.navigate('BusinessScreen')}
-                        />
-                      </View>
-                    </View>
-                    {controllerProps.isLoading ?
-                      <View style={{height: 166, justifyContent: 'center'}}>
-                        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-                      </View>  :
-                      <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />}
-                  </View>
-                }
-              </InlineListController>
-            </ScrollView>
-        }
+        <Authenticated location={{pathName: "Profile"}}>
+          <HomeController>
+            {({isLoading, position,...rest}) =>
+                !position.latitude || !position.longitude ? null :
+                    <ScrollView style={styles.homeContainer}>
+                      <InlineListController
+                          id="home_broadcasts_list"
+                          resource="broadcasts"
+                          nearPosition={{...position, radius: 100}}>
+                        {controllerProps =>
+                            <View>
+                              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                  <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                                  <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
+                                </View>
+                              </View>
+                              {controllerProps.isLoading ?
+                                  <View style={{height: 325, justifyContent: 'center'}}>
+                                    <ActivityIndicator size="large" />
+                                  </View> :
+                                  <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />}
+                            </View>
+                        }
+                      </InlineListController>
+                      <InlineListController
+                          id="home_events_list"
+                          resource="events"
+                          sort={{field: '_id', order: -1}}
+                      >
+                        {controllerProps =>
+                            <View>
+                              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                  <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                                  <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
+                                </View>
+                              </View>
+                              {controllerProps.isLoading ?
+                                  <View style={{height: 138, justifyContent: 'center'}}>
+                                    <ActivityIndicator size="large"/>
+                                  </View>  :
+                                  <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />}
+                            </View>
+                        }
+                      </InlineListController>
+                      <InlineListController
+                          id="home_businesses_list"
+                          resource="businesses"
+                          nearPosition={{...position, radius: 100}}>
+                        {controllerProps =>
+                            <View style={{marginBottom: 16}}>
+                              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, justifyContent: 'space-between'}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                  <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
+                                  <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
+                                </View>
+                                <View>
+                                  <Button
+                                      title={'VEDI TUTTI ➔'}
+                                      titleStyle={styles.seeAllTitle}
+                                      buttonStyle={styles.seeAllButton}
+                                      onPress={() => this.props.navigation.navigate('BusinessScreen')}
+                                  />
+                                </View>
+                              </View>
+                              {controllerProps.isLoading ?
+                                  <View style={{height: 166, justifyContent: 'center'}}>
+                                    <ActivityIndicator size="large"/>
+                                  </View>  :
+                                  <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />}
+                            </View>
+                        }
+                      </InlineListController>
+                    </ScrollView>
+            }
 
-      </HomeController>
+          </HomeController>
+        </Authenticated>
     );
   }
 
@@ -164,3 +167,6 @@ const styles = StyleSheet.create({
   }
 
 });
+
+
+export default HomeScreen;

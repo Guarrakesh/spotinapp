@@ -8,9 +8,7 @@ import { profileGetInfo as profileGetInfoAction } from '../actions/profile';
 export class ProfileController extends Component {
 
   componentDidMount() {
-    const { token  } = this.props;
-    if (token)
-      this.fetchProfile(token);
+    this.fetchProfile();
   }
 
   fetchProfile() {
@@ -33,13 +31,12 @@ export class ProfileController extends Component {
   }
 
   render() {
-    const { loggedIn, token, profile, isLoading, children} = this.props;
+    const { profile, isLoading, children} = this.props;
     if (!children) return null;
-
     return children({
-      isLoading,
-      loggedIn,
-      token,
+      isLoading: Object.keys(profile).length > 0 && isLoading,
+      loggedIn: Object.keys(profile).length > 0,
+
       profile
 
     });
@@ -59,12 +56,10 @@ ProfileController.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { loggedIn, token, profile } = state.auth;
+  const { isLoading, profile } = state.auth;
   return {
-    loggedIn,
-    token,
+    isLoading,
     profile,
-    isLoading: state.loading > 0
   };
 }
 

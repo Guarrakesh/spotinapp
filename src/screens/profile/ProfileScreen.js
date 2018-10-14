@@ -1,12 +1,14 @@
 import React from 'react';
-import View from '../../components/common/View';
-import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+
+import { NavigationEvents } from 'react-navigation';
+
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 
-
+import View from '../../components/common/View';
+import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
 import ListController from '../../controllers/ListController'
-import { userLogout } from '../../actions/login';
+import { userLogout, userCheck } from '../../actions/authActions';
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
 import SavedEventsCard from '../../components/ProfileComponents/SavedEventsCard';
@@ -26,48 +28,55 @@ class ProfileScreen extends React.Component {
 
     super();
     this.handleLogout = this.handleLogout.bind(this);
+    this.checkAuthentication = this.checkAuthentication.bind(this);
   }
 
+
+  checkAuthentication() {
+
+    const { userCheck } = this.props;
+    userCheck({}, "Profile");
+  }
   handleLogout() {
-    this.props.dispatch(userLogout());
+    this.props.userLogout();
   }
 
   render() {
 
     return (
-      <ProfileController>
-        {({profile, loggedIn, isLoading}) =>
-        1==0 ?
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
-          <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
-            {loggedIn ?
-              (!profile._id ?
-                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-                  ⊗ Impossibile caricare il profilo ⊗
-                </Text> :
-                <View style={{padding: 8}}>
-                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
-                  <InlineListController id="profile_reservations_list" resource="reservations">
-                    {controllerProps =>
-                      controllerProps.isLoading ? null :
-                        <ReservationsCarousel {...controllerProps}/>
-                    }
-                  </InlineListController>
-                  <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
-                  <InlineListController id="profile_savedEvents_list" resource="events">
-                    {controllerProps =>
-                      controllerProps.isLoading ? null :
-                        <SavedEventsCard {...controllerProps}/>
-                    }
-                  </InlineListController>
-                </View> ):
-              <Button title="Accedi" onPress={() => {
-              this.props.navigation.navigate('SignIn')
-            }}/>
+
+
+          <ProfileController>
+            {({profile, loggedIn, isLoading}) =>
+                isLoading ?
+                    <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+                    <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
+                      {loggedIn && profile._id ?
+
+                              <View style={{padding: 8}}>
+                                <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
+                                <InlineListController id="profile_reservations_list" resource="reservations">
+                                  {controllerProps =>
+                                      controllerProps.isLoading ? null :
+                                          <ReservationsCarousel {...controllerProps}/>
+                                  }
+                                </InlineListController>
+                                <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
+                                <InlineListController id="profile_savedEvents_list" resource="events">
+                                  {controllerProps =>
+                                      controllerProps.isLoading ? null :
+                                          <SavedEventsCard {...controllerProps}/>
+                                  }
+                                </InlineListController>
+                              </View> :
+                          <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                            ⊗ Impossibile caricare il profilo ⊗
+                          </Text>
+                      }
+                    </ScrollView>
             }
-          </ScrollView>
-        }
-      </ProfileController>
+          </ProfileController>
+
     )
   }
 }
@@ -78,4 +87,4 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   });
 };
-export default connect(mapStateToProps)(ProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout })(ProfileScreen);

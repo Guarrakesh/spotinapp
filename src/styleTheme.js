@@ -116,6 +116,7 @@ const themes = {
       },
 
     },
+    inputPlaceholderColor: 'rgba(66,66,66,.26)',
     backgroundColor: '#F6F6F6',
     inlineListTitleStyle: {
       fontFamily: Fonts.LatoBold,
