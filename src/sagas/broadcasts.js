@@ -36,7 +36,7 @@ function* fetchBroadcasts(action){
     }
 }
 
-//TODO reserveBroadcast
+
 
 export default function* root() {
     yield all([

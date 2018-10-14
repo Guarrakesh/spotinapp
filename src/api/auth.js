@@ -170,7 +170,7 @@ const auth = {
 
                 })
             ).catch(e => reject(e));
-    });
+    });<x>  </x>
   },
   async refresh(username, token) {
 
