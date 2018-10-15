@@ -104,7 +104,7 @@ const auth = {
           LoginManager.logInWithReadPermissions(['public_profile','email'])
               .then(result => {
                 if (result.isCancelled) {
-                  return reject("Login annullato dall'utente");
+                  return reject({message: "Login annullato dall'utente", hidden: true});
                 }
                 AccessToken.getCurrentAccessToken().then(accessTokenResponse => {
                   const config = {

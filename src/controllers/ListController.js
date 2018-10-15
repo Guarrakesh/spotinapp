@@ -59,21 +59,14 @@ class ListController extends Component {
     }
     if ((
         nextProps.resource !== this.props.resource ||
-        nextProps.query.sort !== this.props.query.sort ||
-        nextProps.query.order !== this.props.query.order ||
-        nextProps.query.page !== this.props.query.page ||
-        nextProps.query.perPage !== this.props.query.perPage ||
-        !isEqual(nextProps.query.filter, this.props.query.filter) ||
+        !isEqual(nextProps.params, this.props.params) ||
         !isEqual(nextProps.filter, this.props.filter) ||
         !isEqual(nextProps.sort, this.props.sort) ||
         !isEqual(nextProps.perPage, this.props.perPage))
     ) {
 
-      this.updateData(
-          Object.keys(nextProps.query).length > 0
-              ? nextProps.query
-              : nextProps.params
-      );
+      this.updateData(nextProps.params);
+
     }
     if (!this.props.isLoading) {
       this.setState({ isRefreshing: false });
@@ -103,9 +96,9 @@ class ListController extends Component {
     return true;
   }
   getQuery() {
-    const query = Object.keys(this.props.query).length > 0
-        ? this.props.queryData
-        : { ...this.props.params };
+
+    const query = this.props.params;
+
 
     const filterDefaultValues = this.props.filterDefaultValues || {};
 
@@ -127,6 +120,7 @@ class ListController extends Component {
 
 
     const params = query || this.getQuery();
+
 
     const { sort, order, page = 1, perPage, filter = {} } = params;
 
@@ -173,6 +167,7 @@ class ListController extends Component {
       this.changeParams({ type: SET_PER_PAGE, payload: perPage });
 
   setFilters = debounce(filters => {
+
     if (isEqual(filters, this.props.filterValues)) {
       return;
     }

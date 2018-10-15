@@ -24,8 +24,7 @@ class EventScreen extends React.Component {
   }
   handleEventFavoritePress(eventId) {
     //Se l'utente non è loggato, rimanda alla schermata login
-    if (!this.props.loggedIn)
-      this.props.navigation.navigate('Auth');
+
   }
 
 
@@ -53,9 +52,7 @@ class EventScreen extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { loggedIn } = state.auth;
-  return { loggedIn }
 
-};
-export default connect(mapStateToProps)(EventScreen);
+export default connect(null, {
+
+})(EventScreen);

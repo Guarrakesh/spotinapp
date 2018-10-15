@@ -16,6 +16,7 @@ function navigate(routeName, params, setRoot = false) {
   if (setRoot) {
     const action = StackActions.reset({
       index: 0,
+      key: null, // @see https://github.com/react-navigation/react-navigation/issues/1127
       actions: [NavigationActions.navigate({routeName, params})]
     });
     _navigator.dispatch(action);

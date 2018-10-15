@@ -94,6 +94,7 @@ class LoginScreen extends React.Component {
               flexGrow: 1,
               justifyContent: 'space-between',
             }}
+            bounces={false}
         >
 
         <View style={styles.container}>
@@ -190,8 +191,7 @@ class LoginScreen extends React.Component {
                 />
 
                 <Button
-                    background={background}
-                    disabled={isLoading}
+                    fixNativeFeedbackRadius={true}
                     title='Password dimenticata?'
                     flat
                     titleStyle={{color: colors.text.default, fontSize: 16}}
@@ -199,8 +199,9 @@ class LoginScreen extends React.Component {
                     clear={true}
 
                 />
+                <View style={{overflow: "hidden"}}>
                 <Button
-                    background={background}
+                    fixNativeFeedbackRadius={true}
                     clear={true}
                     rounded={true}
                     disabled={isLoading}
@@ -209,6 +210,7 @@ class LoginScreen extends React.Component {
                     buttonStyle={styles.signUpButton}
                     onPress={() => this.props.navigation.navigate('SignUp')}
                 />
+              </View>
 
               </View>
             </KeyboardAvoidingView>
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24,
 
-    height: '100%',
+
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     paddingTop: 92,

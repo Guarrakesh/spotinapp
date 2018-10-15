@@ -131,8 +131,9 @@ function* handleAuth(action) {
 
 
       } catch (e) {
-        yield call(handleErrorNotification, e);
-
+        if (!e.hidden) {
+          yield call(handleErrorNotification, e);
+        }
         yield put({
           type: OAUTH_LOGIN_FAILURE,
           error: e,
