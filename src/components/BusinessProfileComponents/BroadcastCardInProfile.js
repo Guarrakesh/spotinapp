@@ -93,7 +93,7 @@ const BroadcastCardInProfile = (props) => {
               {!reserved ?
                 <TouchableOpacity onPress={onReservePress}>
                   <View style={styles.reservationButton} elevation={2}>
-                    <Text style={styles.reservationText}>PRENOTA OFFERTA</Text>
+                    <Text style={styles.reservationText}>OTTIENI OFFERTA</Text>
                   </View>
                 </TouchableOpacity>
                 :

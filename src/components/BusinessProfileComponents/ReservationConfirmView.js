@@ -49,7 +49,7 @@ class ReservationConfirmView extends Component {
     return (
 
         <View style={styles.container} elevation={3}>
-          <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>Vuoi prenotare questa offerta?</Text>
+          <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>Vuoi ottenere questa offerta?</Text>
           <View style={styles.eventInfoView}>
             <View style={styles.competitorsLogoView}>
               { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
@@ -65,9 +65,9 @@ class ReservationConfirmView extends Component {
             </View>
           </View>
           <View style={{width: '100%',borderColor: '#EEEEEE', borderBottomWidth: 1, borderTopWidth: 1, paddingTop: 16, paddingBottom: 16}}>
-            <Text style={{fontFamily: Fonts.LatoMedium, fontSize: 18}}>Prenotando questa offerta puoi usufruire del:</Text>
-            <Text style={{fontFamily: Fonts.LatoBold, fontSize: 18, color: themes.base.colors.accent.default, marginTop: 8, alignSelf: 'center'}}>{discount(offer.type)} alla cassa</Text>
-            <Text style={{fontFamily: Fonts.LatoLightItalic, fontSize: 12, color: themes.base.colors.danger.default, marginTop: 16}}>*lo sconto non include la prenotazione di un tavolo presso il locale</Text>
+            <Text style={{fontFamily: Fonts.LatoMedium, fontSize: 18}}>Partecipando all'evento puoi usufruire del:</Text>
+            <Text style={{fontFamily: Fonts.LatoBold, fontSize: 18, color: themes.base.colors.danger.default, marginTop: 8, alignSelf: 'center'}}>{discount(offer.type)} alla cassa*</Text>
+            <Text style={{fontFamily: Fonts.LatoLightItalic, fontSize: 16, color: themes.base.colors.danger.default, marginTop: 16}}>*l'offerta non include la prenotazione del tavolo presso il locale</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 16, alignItems: 'center'}}>
             <TouchableOpacity onPress={onCancelPress}>

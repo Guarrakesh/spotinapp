@@ -31,7 +31,7 @@ class ReservationScreen extends React.Component {
                   bounces={false}
       >
 
-            <ReservationView reservation={record}/>
+            <ReservationView reservation={reservation}/>
 
       </ScrollView>
     )
