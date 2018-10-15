@@ -14,37 +14,26 @@ import SavedEventsCard from '../../components/ProfileComponents/SavedEventsCard'
 import { connect } from 'react-redux';
 import {Fonts} from "../../components/common/Fonts";
 import themes from "../../styleTheme";
+import reservation from "../../api/reservation";
+import {ShowController} from "../../controllers/ShowController";
 
-const reservation = {
-  broadcast: {
-    "_id": "5bbb6df62c8b6a001ff20655",
-    "newsfeed": 1,
-    "event": "5b9958ca2663a4001f50c879",
-    "business": "5bb68212491957001f97fc94",
-    "offer": {
-      "_id": "5bbb6df62c8b6a001ff20656",
-      "title": "Derby con birra!",
-      "description": "Birra gratis per spesa minima di 15€  ",
-      "type": 0,
-      "value": 15
-    },
-    "image_url": [],
-    "reservations": [],
-    "__v": 0,
-    "dist": {
-      "calculated": 1.234
-    }
-  },
-  createdAt: null
-}
 
 class ReservationScreen extends React.Component {
 
+
   render() {
+
+    const {reservation} = this.props.navigation.state.params;
+
     return(
-      <View>
-        <ReservationView reservation={reservation}/>
-      </View>
+      <ScrollView style={{flexGrow: 1, backgroundColor: themes.base.colors.white.default}}
+                  contentContainerStyle={{justifyContent: 'space-between'}}
+                  bounces={false}
+      >
+
+            <ReservationView reservation={record}/>
+
+      </ScrollView>
     )
   }
 }

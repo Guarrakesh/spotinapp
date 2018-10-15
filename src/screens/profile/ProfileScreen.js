@@ -24,6 +24,7 @@ class ProfileScreen extends React.Component {
     super();
     this.handleLogout = this.handleLogout.bind(this);
     this.checkAuthentication = this.checkAuthentication.bind(this);
+    this.handleReservationPress = this.handleReservationPress.bind(this);
   }
 
 
@@ -32,45 +33,50 @@ class ProfileScreen extends React.Component {
     const { userCheck } = this.props;
     userCheck({}, "Profile");
   }
+
   handleLogout() {
     this.props.userLogout();
   }
+
+  handleReservationPress(reservation){
+    this.props.navigation.navigate('ReservationScreen', {reservation});
+  }
+
 
   render() {
 
     return (
 
+      <ProfileController>
+        {({profile, loggedIn, isLoading}) =>
+          isLoading ?
+            <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+            <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
+              {loggedIn && profile._id ?
 
-          <ProfileController>
-            {({profile, loggedIn, isLoading}) =>
-                isLoading ?
-                    <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
-                    <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
-                      {loggedIn && profile._id ?
-
-                              <View style={{padding: 8}}>
-                                <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
-                                <InlineListController id="profile_reservations_list" resource="reservations">
-                                  {controllerProps =>
-                                      controllerProps.isLoading ? null :
-                                          <ReservationsCarousel {...controllerProps}/>
-                                  }
-                                </InlineListController>
-                                <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
-                                <InlineListController id="profile_savedEvents_list" resource="events">
-                                  {controllerProps =>
-                                      controllerProps.isLoading ? null :
-                                          <SavedEventsCard {...controllerProps}/>
-                                  }
-                                </InlineListController>
-                              </View> :
-                          <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-                            ⊗ Impossibile caricare il profilo ⊗
-                          </Text>
-                      }
-                    </ScrollView>
-            }
-          </ProfileController>
+                <View style={{padding: 8}}>
+                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
+                  <InlineListController id="profile_reservations_list" resource="reservations">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <ReservationsCarousel {...controllerProps} onItemPress={this.handleReservationPress}/>
+                    }
+                  </InlineListController>
+                  <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
+                  <InlineListController id="profile_savedEvents_list" resource="events">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <SavedEventsCard {...controllerProps}/>
+                    }
+                  </InlineListController>
+                </View> :
+                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                  ⊗ Impossibile caricare il profilo ⊗
+                </Text>
+              }
+            </ScrollView>
+        }
+      </ProfileController>
 
     )
   }

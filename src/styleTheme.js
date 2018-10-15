@@ -85,7 +85,7 @@ const themes = {
       },
       danger: {
         default: '#B80638',
-        light: '#FF356E',
+        light: '#EA2026',
       }
     },
     elevations: {

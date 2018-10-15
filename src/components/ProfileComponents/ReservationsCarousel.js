@@ -11,6 +11,10 @@ import themes from "../../styleTheme";
 
 class ReservationsCarousel extends React.Component{
 
+  handleReservationPress(reservation){
+    this.props.onItemPress(reservation);
+  }
+
   render() {
 
     const { ids, data, isLoading } = this.props;
@@ -38,8 +42,7 @@ class ReservationsCarousel extends React.Component{
             <ReservationFloatingCard
               elevation={0}
               reservation={data[item]}
-
-              onPress={() => this.handleBusPress(item)}/>}
+              onPress={() => this.handleReservationPress(data[item])}/>}
         />
       </View>
     )

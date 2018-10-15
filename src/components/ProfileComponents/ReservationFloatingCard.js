@@ -16,11 +16,11 @@ import ReferenceFieldController from '../../controllers/ReferenceController';
 const colors = themes.base.colors;
 
 const ReservationFloatingCard = ({
-    reservation,
-    onPress,
-    elevation,
-    dark
-}) => {
+                                   reservation,
+                                   onPress,
+                                   elevation,
+                                   dark
+                                 }) => {
 
   const { broadcast, createdAt } = reservation;
   const { offer } = broadcast;
@@ -41,63 +41,63 @@ const ReservationFloatingCard = ({
 
   return(
     <View style={styles.outerContainer} elevation={1}>
-        <TouchableOpacity onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
-          <ReferenceField reference="businesses" source="business" record={broadcast}>
-            { ({record: business}) =>
-              !business ? null :
-                <ImageBackground
-                    imageStyle={{borderRadius: themes.base.borderRadius}}
-                    source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
-                    style={styles.imgBackground}
-                >
-                  <View style={styles.status} elevation={2}>
+      <TouchableOpacity onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
+        <ReferenceField reference="businesses" source="business" record={broadcast}>
+          { ({record: business}) =>
+            !business ? null :
+              <ImageBackground
+                imageStyle={{borderRadius: themes.base.borderRadius}}
+                source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
+                style={styles.imgBackground}
+              >
+                <View style={styles.status} elevation={2}>
                   {reservation.used ? <Icon name="check" size={32} color={themes.base.colors.primary.default}/>
-                      : <Icon name="clock" size={32} color={themes.base.colors.text.default}/>}
+                    : <Icon name="clock" size={32} color={themes.base.colors.text.default}/>}
                 </View>
-                  <View
-                      style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground})]}>
+                <View
+                  style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground})]}>
 
-                    <View style={styles.leftInfo}>
-                      <Text
-                          style={[styles.name, dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
-                      <ReferenceField reference="events" record={broadcast} source="event">
-                        { ({record: event}) =>
-                            <View>
-                              <Text style={[styles.eventName, dark ? {color: colors.white.default} : {color: colors.text.default}]}>
-                                {event.name}
-                              </Text>
-                              <View >
-                                <Text style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}</Text>
-                              </View>
-                            </View>
-                        }
-                      </ReferenceField>
-                    </View>
-                    <View style={styles.offerValue}>
-                      <Text style={{
-                        fontSize: 24,
-                        color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
-                        textAlign: 'center'
-                      }}>
-                        {discount(offer.type)}
-                      </Text>
-                      <Text style={{
-                        fontSize: 13,
-                        color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
-                        textAlign: 'center'
-                      }}>
-                        alla cassa
-                      </Text>
-                    </View>
+                  <View style={styles.leftInfo}>
+                    <Text
+                      style={[styles.name, dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
+                    <ReferenceField reference="events" record={broadcast} source="event">
+                      { ({record: event}) =>
+                        <View>
+                          <Text style={[styles.eventName, dark ? {color: colors.white.default} : {color: colors.text.default}]}>
+                            {event.name}
+                          </Text>
+                          <View >
+                            <Text style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}</Text>
+                          </View>
+                        </View>
+                      }
+                    </ReferenceField>
                   </View>
-                </ImageBackground>
-            }
-          </ReferenceField>
+                  <View style={styles.offerValue}>
+                    <Text style={{
+                      fontSize: 24,
+                      color: dark ? colors.danger.light : colors.danger.default,
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}>
+                      {discount(offer.type)}
+                    </Text>
+                    <Text style={{
+                      fontSize: 13,
+                      color: dark ? colors.danger.light : colors.danger.default,
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}>
+                      alla cassa
+                    </Text>
+                  </View>
+                </View>
+              </ImageBackground>
+          }
+        </ReferenceField>
 
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
+    </View>
   )
 };
 

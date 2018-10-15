@@ -1,9 +1,10 @@
 import { fetchJson } from '../helpers/fetch';
 import restClientProvider from './restClientProvider'
 import auth from './auth';
+import vars from '../vars';
 
 
-const apiUrl = process.env.NODE_ENV === "production" ? "http://spotin.it/v1" : "http://localhost:3001/v1";
+const apiUrl = vars.apiUrl;
 //const apiUrl = "http://spotin.herokuapp.com/v1";
 
 const httpClient = async (url, options = {}) => {
