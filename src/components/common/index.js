@@ -5,3 +5,4 @@ export {default as TextInput} from './TextInput';
 export {default as VersionedImageField} from './VersionedImageField';
 export {default as View} from './View';
 export {default as SearchBar} from './SearchBar';
+export {default as Touchable} from './Touchable';

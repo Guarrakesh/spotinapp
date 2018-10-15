@@ -16,11 +16,8 @@ const EventCarousel = ({
   style,
   onItemPress
 }) => (
-  isLoading || Object.keys(sports).length === 0 ?
-    <View style={{height: 138, justifyContent: 'center'}}>
-      <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-    </View>
-      :   <Carousel
+  isLoading ? null :
+   <Carousel
 
             data={ids}
             inactiveSlideScale={1}

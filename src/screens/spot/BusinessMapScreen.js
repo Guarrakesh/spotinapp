@@ -59,12 +59,20 @@ class BusinessMapScreen extends React.Component {
     const { businesses } = this.props;
     const { ids, data } = this.props.navigation.state.params;
     if (!ids || !data || !this.state.transitionFinished) return null;
+
+    if (ids.length === 0) {
+      return (
+          <View style={themes.base.noContentView}>
+            <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
+          </View>
+      )
+    };
     const region = {
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
-    }
+    };
     const sliderWidth = themes.base.deviceDimensions.width;
 
     return (

@@ -16,35 +16,28 @@ const colors = themes.base.colors
 
 
 const EventCard = ({
-  event,
-  onPress,
-  elevation,
-  sport
+    event,
+    onPress,
+    elevation,
+    sport
 }) => {
 
-  let competitors = event.competitors;
+  let {competitors, competition} = event;
   const competitorsComponent = (
-      <ReferenceField  reference="competitions" source="competition" record={event}>
-        {({record, isLoading}) =>
-          isLoading ? null : (
 
-            record.competitorsHaveLogo
-                ?
-                <View style={styles.competitors}>
-                  {competitors.map(comp => (
-                    <ReferenceField reference="competitors" source="competitor" record={comp}>
-                      {({record: competitor}) =>
-                         <VersionedImageField source={competitor.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                      }
-                    </ReferenceField>
-                ))}
-                </View>
-                :
-                <View style={{marginTop: 16}}>
-                  { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                </View>
-        )}
-      </ReferenceField>
+      competition.competitorsHaveLogo
+          ?
+          <View style={styles.competitors}>
+            {competitors.map(comp => (
+
+                <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
+
+            ))}
+          </View>
+          :
+          <View style={{marginTop: 16}}>
+            { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+          </View>
   );
 
   let date = moment(event.start_at).locale('it').format('D MMM').toUpperCase();
@@ -52,22 +45,22 @@ const EventCard = ({
 
   return (
 
-    <View elevation={elevation} style={styles.containerStyle}>
-      <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress} delayPressIn={50}>
-        <View style={styles.competitorsLogosContainer}>
-          {competitorsComponent}
-        </View>
-        <View style={styles.detailContainer}>
-          <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-          <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
-          <Text style={styles.dateText}>{date} alle {time}</Text>
-        </View>
+      <View elevation={elevation} style={styles.containerStyle}>
+        <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress} delayPressIn={50}>
+          <View style={styles.competitorsLogosContainer}>
+            {competitorsComponent}
+          </View>
+          <View style={styles.detailContainer}>
+            <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+            <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
+            <Text style={styles.dateText}>{date} alle {time}</Text>
+          </View>
 
-        <View style={styles.sportIconView}>
-          <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
-        </View>
-      </TouchableOpacity>
-    </View>
+          <View style={styles.sportIconView}>
+            <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
+          </View>
+        </TouchableOpacity>
+      </View>
 
   );
 }

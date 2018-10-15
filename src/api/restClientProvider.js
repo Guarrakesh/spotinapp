@@ -41,9 +41,14 @@ export default (apiUrl, httpClient = fetchJson) => {
    * @param {Object} params The data request params, depending on the type
    * @returns {Object} { url, options } The HTTP request parameters
    */
-  const convertDataRequestToHTTP = (type, resource, params) => {
+  const convertDataRequestToHTTP = (type, resource, params, basePath) => {
 
     let url = '';
+    let baseUrl = apiUrl;
+
+    if (basePath) {
+      baseUrl = `${baseUrl}${basePath}`;
+    }
     const options = {};
     switch (type) {
       case GET_LIST: {
@@ -62,11 +67,11 @@ export default (apiUrl, httpClient = fetchJson) => {
           if (latitude && longitude)
             query = {...query, latitude, longitude, radius};
         }
-        url = `${apiUrl}/${resource}?${stringify(query)}`;
+        url = `${baseUrl}/${resource}?${stringify(query)}`;
         break;
       }
       case GET_ONE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${baseUrl}/${resource}/${params.id}`;
         break;
       case GET_MANY_REFERENCE: {
         const { page, perPage } = params.pagination;
@@ -80,22 +85,22 @@ export default (apiUrl, httpClient = fetchJson) => {
           _end: page * perPage,
         };
 
-        url = `${apiUrl}/${resource}?${stringify(query)}`;
+        url = `${baseUrl}/${resource}?${stringify(query)}`;
         break;
       }
       case UPDATE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${baseUrl}/${resource}/${params.id}`;
         options.method = 'PATCH';
         if (params.data instanceof(FormData)) {
           options.body = params.data;
-        //  options.headers = new Headers({'Content-Type': false});
+          //  options.headers = new Headers({'Content-Type': false});
           break;
         }
 
         options.body = JSON.stringify(params.data);
         break;
       case CREATE:
-        url = `${apiUrl}/${resource}`;
+        url = `${baseUrl}/${resource}`;
         options.method = 'POST';
         if (params.data instanceof(FormData)) {
           options.body = params.data;
@@ -104,20 +109,20 @@ export default (apiUrl, httpClient = fetchJson) => {
         options.body = JSON.stringify(params.data);
         break;
       case DELETE:
-        url = `${apiUrl}/${resource}/${params.id}`;
+        url = `${baseUrl}/${resource}/${params.id}`;
         options.method = 'DELETE';
         break;
       case GET_MANY: {
         const query = {
           [`id_like`]: params.ids.join('|'),
         };
-        url = `${apiUrl}/${resource}?id_like=${query.id_like}`;
+        url = `${baseUrl}/${resource}?id_like=${query.id_like}`;
         break;
       }
 
-      //  Profile fetch actions
+        //  Profile fetch actions
       case GET_PROFILE:
-        url = `${apiUrl}/users/profile`;
+        url = `${baseUrl}/users/profile`;
         break;
 
       default:
@@ -144,15 +149,15 @@ export default (apiUrl, httpClient = fetchJson) => {
           data = json.map(res => ({...res, id: res._id}));
           if (!headers.has('x-total-count')) {
             throw new Error(
-              'The X-Total-Count headers is missing. '
+                'The X-Total-Count headers is missing. '
             );
           }
           total = parseInt(
-            headers
-              .get('x-total-count')
-              .split('/')
-              .pop(),
-            10
+              headers
+                  .get('x-total-count')
+                  .split('/')
+                  .pop(),
+              10
           );
 
 
@@ -162,7 +167,7 @@ export default (apiUrl, httpClient = fetchJson) => {
             //I dati le inserisco in data (cosicché il data reducer li inserisca in entities)
             //mentre le informazioni { id, distance } le inserisci il near (cosicché il near reducer li salvi)
             data = json.docs.map(res => ({
-                ...res, id: res._id
+              ...res, id: res._id
             }));
             near = json.near;
           } else {
@@ -181,7 +186,7 @@ export default (apiUrl, httpClient = fetchJson) => {
       case GET_ONE:
         return { data: {...json, id: json._id }  };
       case CREATE:
-        return { data: { ...params.data, id: json._id } };
+        return { data: { ...json, id: json._id } };
       case DELETE:
         return { data: { id : null}};
       default:
@@ -195,15 +200,16 @@ export default (apiUrl, httpClient = fetchJson) => {
    * @param {Object} payload Request parameters. Depends on the request type
    * @returns {Promise} the Promise for a data response
    */
-  return (type, resource, params) => {
+  return (type, resource, params, basePath) => {
 
     const { url, options } = convertDataRequestToHTTP(
-      type,
-      resource,
-      params
+        type,
+        resource,
+        params,
+        basePath
     );
     return httpClient(url, options).then(response =>
-      convertHTTPResponse(response, type, resource, params)
+        convertHTTPResponse(response, type, resource, params)
     );
   };
 };

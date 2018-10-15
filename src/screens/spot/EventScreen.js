@@ -5,16 +5,17 @@ import { Text, ScrollView, ActivityIndicator, View, InteractionManager} from 're
 
 import EventList from '../../components/SpotComponents/EventList';
 import ListController from '../../controllers/ListController';
+import { crudCreate } from '../../actions/dataActions';
 
 
 class EventScreen extends React.Component {
+
 
   constructor() {
     super();
 
     this.handleEventPress = this.handleEventPress.bind(this);
     this.handleEventFavoritePress = this.handleEventFavoritePress.bind(this);
-
   }
 
   handleEventPress(eventId, event) {
@@ -22,8 +23,10 @@ class EventScreen extends React.Component {
     this.props.navigation.navigate('BroadcastsList', {eventId, event});
 
   }
-  handleEventFavoritePress(eventId) {
+  handleEventFavoritePress(event) {
     //Se l'utente non è loggato, rimanda alla schermata login
+    this.props
+        .crudCreate('events', { event }, `/users/${this.props.userId}`, undefined, 'profile_savedEvents_list');
 
   }
 
@@ -53,6 +56,9 @@ class EventScreen extends React.Component {
 }
 
 
-export default connect(null, {
-
+export default connect(state => ({
+    userId: state.auth.profile ? state.auth.profile._id : undefined
+    })
+, {
+  crudCreate
 })(EventScreen);

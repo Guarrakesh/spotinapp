@@ -70,7 +70,8 @@ export function* handleFetch(dataProvider, action) {
         dataProvider,
         restType,
         meta.resource,
-        payload
+        payload,
+        meta.basePath,
     );
 
 

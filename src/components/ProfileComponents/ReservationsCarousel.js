@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import View from '../../components/common/View';
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import ReservationFloatingCard from "./ReservationFloatingCard";
 import themes from "../../styleTheme";
+import Button from '../common/Button';
 
 
 class ReservationsCarousel extends React.Component{
@@ -17,15 +18,26 @@ class ReservationsCarousel extends React.Component{
 
   render() {
 
-    const { ids, data, isLoading } = this.props;
+    const { ids, data, isLoading,  onBrowsePress} = this.props;
     if (isLoading) return null;
-
+    const emptyComponent = (
+        <View style={styles.emptyComponentView} elevation={2}>
+          <Text style={styles.emptyComponentText}>
+            {'Non hai ancora nessuna prenotazione'}
+          </Text>
+          <Button clear={true} onPress={onBrowsePress}> Esplora offerte </Button>
+        </View>
+    );
     return(
-      <View style={{
-        right: 0,
-        bottom: 0,
-        paddingBottom: 5, marginLeft: -8, marginRight: -8}}>
-        <Text style={themes.base.inlineListTitleStyle}>Offerte prenotate</Text>
+
+        <View>
+          <Text style={themes.base.inlineListTitleStyle}>Offerte prenotate</Text>
+
+          {ids.length === 0 ? emptyComponent :
+              <View style={{
+                right: 0,
+                bottom: 0,
+                paddingBottom: 5, marginLeft: -8, marginRight: -8}}>
 
         <Carousel
           data={ids}
@@ -51,8 +63,28 @@ class ReservationsCarousel extends React.Component{
 
 }
 
+const styles = StyleSheet.create({
+
+
+  emptyComponentView: {
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    marginTop: 8
+  },
+  emptyComponentText: {
+    fontSize: 14,
+    fontFamily: themes.base.fonts.LatoMedium,
+    padding: 8,
+  }
+});
+
+
 ReservationsCarousel.propTypes = {
   ids: PropTypes.array,
-  data: PropTypes.data
+  data: PropTypes.object,
+  onBrowsePress: PropTypes.func
 };
 export default ReservationsCarousel;

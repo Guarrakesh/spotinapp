@@ -19,6 +19,7 @@ export default (previousState = initialState, action) => {
   if (action.type === INIT_LIST) {
 
     const listState = {
+      isLoading: false,
       ids: ids(undefined, action),
       params: params(undefined, action),
       selectedIds: selectedIds(undefined, action),
@@ -28,17 +29,19 @@ export default (previousState = initialState, action) => {
     const newState = {
       ...previousState,
       [action.id]: listState
-    }
+    };
 
     return newState;
   }
   const listIds = Object.keys(previousState);
+
   const newState = listIds.reduce(
     (acc, id) => ({
       ...acc,
       [id]:
         action.meta.listId === id
           ? {
+            isLoading: action.type.includes('LOADING'),
             ids: ids(previousState[id].ids, action),
             params: params(previousState[id].params, action),
             selectedIds: selectedIds(previousState[id].selectedIds, action),

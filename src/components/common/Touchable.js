@@ -1,55 +1,86 @@
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
-  View,
-  Text,
   Platform,
+  TouchableNativeFeedback,
   TouchableOpacity,
-  TouchableNativeFeedback
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 
-export default class Touchable extends React.Component {
+let TouchableComponent;
 
-  render() {
-
-    const { onPress, style, children, rippleColor, borderlessRipple } = this.props;
-
-    if (Platform.OS === 'ios') {
-      return (
-        <TouchableOpacity onPress={onPress}>
-          <View style={style}>
-            {children}
-          </View>
-        </TouchableOpacity>
-      )
-    }
-
-    return (
-      <TouchableNativeFeedback
-        onPress={onPress}
-        background={
-          Platform.Version >= 21 ?
-            TouchableNativeFeedback.Ripple('rgba(0,0,0,.2)', true) :
-            TouchableNativeFeedback.SelectableBackground()
-        }>
-        <View>
-          {children}
-        </View>
-      </TouchableNativeFeedback>
-    )
-  }
-};
-
-Touchable.propTypes = {
-  onPress: PropTypes.func,
-  style: PropTypes.object,
-  rippleColor: PropTypes.string,
-  borderlessRipple: PropTypes.bool
+if (Platform.OS === 'android') {
+  TouchableComponent =
+      Platform.Version <= 20 ? TouchableOpacity : TouchableNativeFeedback;
+} else {
+  TouchableComponent = TouchableOpacity;
 }
 
-Touchable.defaultProps = {
-  onPress: () => {},
-  style: {},
-  rippleColor: '#fff',
-  borderlessRipple: false
+if (TouchableComponent !== TouchableNativeFeedback) {
+  TouchableComponent.SelectableBackground = () => ({});
+  TouchableComponent.SelectableBackgroundBorderless = () => ({});
+  TouchableComponent.Ripple = () => ({});
+  TouchableComponent.canUseNativeForeground = () => false;
+}
+
+export default class PlatformTouchable extends React.Component {
+  static SelectableBackground = TouchableComponent.SelectableBackground;
+  static SelectableBackgroundBorderless = TouchableComponent.SelectableBackgroundBorderless;
+  static Ripple = TouchableComponent.Ripple;
+  static canUseNativeForeground = TouchableComponent.canUseNativeForeground;
+
+  render() {
+    let {
+        children,
+        style,
+        foreground,
+        background,
+        useForeground,
+        ...props
+    } = this.props;
+
+    // Even though it works for TouchableWithoutFeedback and
+    // TouchableNativeFeedback with this component, we want
+    // the API to be the same for all components so we require
+    // exactly one direct child for every touchable type.
+    children = React.Children.only(children);
+
+    if (TouchableComponent === TouchableNativeFeedback) {
+      useForeground =
+          foreground && TouchableNativeFeedback.canUseNativeForeground();
+
+      if (foreground && background) {
+        console.warn(
+            'Specified foreground and background for Touchable, only one can be used at a time. Defaulted to foreground.'
+        );
+      }
+
+      return (
+          <TouchableComponent
+              {...props}
+              useForeground={useForeground}
+              background={(useForeground && foreground) || background}>
+            <View style={style}>
+              {children}
+            </View>
+          </TouchableComponent>
+      );
+    } else if (TouchableComponent === TouchableWithoutFeedback) {
+      return (
+          <TouchableWithoutFeedback {...props}>
+            <View style={style}>
+              {children}
+            </View>
+          </TouchableWithoutFeedback>
+      );
+    } else {
+      let TouchableFallback = this.props.fallback || TouchableComponent;
+      return (
+          <TouchableFallback {...props} style={style}>
+            {children}
+          </TouchableFallback>
+      );
+    }
+  }
 }

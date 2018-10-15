@@ -15,27 +15,20 @@ const colors = themes.base.colors
 
 const EventCard = (props) => {
 
-  let competitors = props.competitors;
+  const { competition, competitors } = props;
   const competitorsComponent = (
-      <ReferenceField  reference="competitions" source="competition" record={{...props}}>
-        {({record, isLoading}) =>
-          isLoading ? null : (
-
-            record.competitorsHaveLogo
+      competition.competitorsHaveLogo
                 ?
                 <View style={styles.competitors}>
                   {competitors.map(comp => (
                      <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                ))}
+                  ))}
                 </View>
                 :
                 <View style={{marginTop: 16}}>
-                  { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                  { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
                 </View>
-        )}
-      </ReferenceField>
   );
-
   let date = moment(props.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();
   const time = moment(props.start_at).locale('it').format('HH:mm').toUpperCase();
 
@@ -45,7 +38,7 @@ const EventCard = (props) => {
 
         <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
 
-          {props.isFavorite ?   <Icon name="favorite" size={30} color={colors.accent.default}/> :  <Icon name="favorite-border" size={30} color={colors.accent.default}/>}
+          {props.isUserFavorite ?   <Icon name="favorite" size={30} color={colors.accent.default}/> :  <Icon name="favorite-border" size={30} color={colors.accent.default}/>}
 
         </TouchableOpacity>
 

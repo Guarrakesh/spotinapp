@@ -2,12 +2,14 @@ import uniq from 'lodash/uniq';
 import {
   CRUD_GET_LIST_SUCCESS,
   CRUD_DELETE_OPTIMISTIC,
+  CRUD_DELETE_SUCCESS,
   CRUD_DELETE_MANY_OPTIMISTIC,
   CRUD_GET_MANY_SUCCESS,
   CRUD_GET_MANY_REFERENCE_SUCCESS,
   CRUD_GET_ONE_SUCCESS,
   CRUD_CREATE_SUCCESS,
   CRUD_UPDATE_SUCCESS,
+
   CRUD_GET_NEAR_MANY_SUCCESS,
 } from '../../../actions/dataActions';
 
@@ -30,7 +32,7 @@ export const addRecordIdsFactory = getFetchedAt => (
 
 const addRecordIds = addRecordIdsFactory(getFetchedAt);
 
-export default (previousState = [], { type, payload }) => {
+export default (previousState = [], { type, payload, requestPayload }) => {
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:
@@ -47,9 +49,10 @@ export default (previousState = [], { type, payload }) => {
     case CRUD_CREATE_SUCCESS:
     case CRUD_UPDATE_SUCCESS:
       return addRecordIds([payload.data.id], previousState);
-    case CRUD_DELETE_OPTIMISTIC: {
+    case CRUD_DELETE_OPTIMISTIC:
+      case CRUD_DELETE_SUCCESS:{
       const index = previousState
-          .map(el => el == payload.id) // eslint-disable-line eqeqeq
+          .map(el => el == requestPayload.id) // eslint-disable-line eqeqeq
           .indexOf(true);
       if (index === -1) {
         return previousState;
@@ -58,6 +61,7 @@ export default (previousState = [], { type, payload }) => {
         ...previousState.slice(0, index),
         ...previousState.slice(index + 1),
       ];
+
 
       Object.defineProperty(newState, 'fetchedAt', {
         value: previousState.fetchedAt,

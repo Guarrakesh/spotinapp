@@ -36,6 +36,7 @@ class InlineListController extends Component {
     if (changesPositionCond ||
         nextProps.initialised !== this.props.initialised ||
         nextProps.resource !== this.props.resource ||
+        nextProps.isLoading !== this.props.isLoading ||
         nextProps.ids !== this.props.ids ) {
       return true;
     }
@@ -43,7 +44,7 @@ class InlineListController extends Component {
     return false;
 
   }
-  updateData(props) {
+  updateData() {
 
     const { sort, order, numElems = 20, filter } = this.props;
     const pagination = {
@@ -58,7 +59,8 @@ class InlineListController extends Component {
           this.props.nearPosition,
           pagination,
           { field: sort, order},
-          { ...filter}
+          { ...filter},
+          this.props.basePath,
       )
     } else {
       this.props.crudGetList(
@@ -66,7 +68,8 @@ class InlineListController extends Component {
           this.props.id,
           pagination,
           {field: sort, order},
-          { ...filter }
+          { ...filter },
+          this.props.basePath,
       );
     }
 
@@ -78,11 +81,13 @@ class InlineListController extends Component {
         data,
         ids,
         id,
+        isLoading,
+        initialised
     } = this.props;
 
-    const isLoading = ids.length === 0;
     return children({
       data,
+      initialised,
       ids,
       isLoading,
       listId: id,
@@ -96,9 +101,13 @@ InlineListController.propTypes = {
   data: PropTypes.object,
   ids: PropTypes.array,
   nearPosition: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-
+  basePath: PropTypes.string,
+  resource: PropTypes.string,
   id: PropTypes.string.isRequired,
-}
+};
+InlineListController.defaultProps = {
+  initialised: false,
+};
 function mapStateToProps(state, props) {
   const resourceState = state.entities[props.resource];
   let data;
@@ -119,6 +128,7 @@ function mapStateToProps(state, props) {
 
 
   return {
+    isLoading: list && list.isLoading,
     initialised: !!list,
     ids: !!list ? list.ids : [],
     data
