@@ -81,8 +81,9 @@ class ProfileScreen extends React.Component {
                                       controllerProps.isLoading ? null :
                                           <ReservationsCarousel
                                               {...controllerProps}
+                                              onItemPress={this.handleReservationPress}
                                               onBrowsePress={this.handleBrowse}
-                                              ids={[]}/>
+                                              />
                                   }
                                 </InlineListController>
                                 <InlineListController

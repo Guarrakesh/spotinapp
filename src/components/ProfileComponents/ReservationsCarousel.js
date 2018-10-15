@@ -33,30 +33,33 @@ class ReservationsCarousel extends React.Component{
         <View>
           <Text style={themes.base.inlineListTitleStyle}>Offerte prenotate</Text>
 
-          {ids.length === 0 ? emptyComponent :
-              <View style={{
-                right: 0,
-                bottom: 0,
-                paddingBottom: 5, marginLeft: -8, marginRight: -8}}>
+          {
+            ids.length === 0 ? emptyComponent :
+                <View style={{
+                  right: 0,
+                  bottom: 0,
+                  paddingBottom: 5, marginLeft: -8, marginRight: -8}}>
 
-        <Carousel
-          data={ids}
-          itemWidth={themes.base.deviceDimensions.width - 80}
-          sliderWidth={themes.base.deviceDimensions.width}
-          activeAnimationType={'spring'}
-          activeSlideAlignment={'start'}
-          inactiveSlideOpacity={1}
-          inactiveSlideScale={1}
-          loop={true}
-          enableSnap={false}
-          removeClippedSubviews={false}
-          renderItem={({item}) =>
-            <ReservationFloatingCard
-              elevation={0}
-              reservation={data[item]}
-              onPress={() => this.handleReservationPress(data[item])}/>}
-        />
-      </View>
+                  <Carousel
+                      data={ids}
+                      itemWidth={themes.base.deviceDimensions.width - 80}
+                      sliderWidth={themes.base.deviceDimensions.width}
+                      activeAnimationType={'spring'}
+                      activeSlideAlignment={'start'}
+                      inactiveSlideOpacity={1}
+                      inactiveSlideScale={1}
+                      loop={true}
+                      enableSnap={false}
+                      removeClippedSubviews={false}
+                      renderItem={({item}) =>
+                          <ReservationFloatingCard
+                              elevation={0}
+                              reservation={data[item]}
+                              onPress={() => this.handleReservationPress(data[item])}/>}
+                  />
+                </View>
+          }
+        </View>
     )
 
   }
