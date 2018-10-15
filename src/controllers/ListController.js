@@ -139,7 +139,8 @@ class ListController extends Component {
           this.props.nearPosition,
           pagination,
           { field: sort, order},
-          { ...filter, ...permanentFilter }
+          { ...filter, ...permanentFilter },
+          this.props.basePath,
       )
     } else {
       this.props.crudGetList(
@@ -147,7 +148,8 @@ class ListController extends Component {
           this.props.id,
           pagination,
           {field: sort, order},
-          {...filter, ...permanentFilter}
+          {...filter, ...permanentFilter},
+          this.props.basePath,
       );
     }
   }
@@ -255,7 +257,7 @@ ListController.propTypes = {
   nearPosition: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   // the props managed by the system
   authProvider: PropTypes.func,
-  basePath: PropTypes.string.isRequired,
+  basePath: PropTypes.string,
   changeListParams: PropTypes.func.isRequired,
   crudGetList: PropTypes.func.isRequired,
   crudGetManyNear: PropTypes.func.isRequired,
@@ -374,7 +376,7 @@ function mapStateToProps(state, props) {
     selectedIds: !!list ? list.ids : [],
     total: !!list ? list.ids.length : 0,
     data,
-    isLoading: state.loading > 0,
+    isLoading: !!list ? list.isLoading : false,
     filterValues: !!list ? list.params.filter : {},
     version: state.ui.viewVersion,
 

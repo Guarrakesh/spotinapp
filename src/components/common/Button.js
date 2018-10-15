@@ -1,56 +1,54 @@
-//TODO:
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button as BaseButton, Platform } from 'react-native';
+import {  Platform } from 'react-native';
+import { Button as BaseButton } from 'react-native-elements'
 
-
+import themes from '../../styleTheme';
+const buttonStyle = themes.base.button;
 export default class Button extends React.Component {
-    static propTypes = {
-        elevation: PropTypes.number
-    };
+  static propTypes = {
+    elevation: PropTypes.number
+  };
 
-    static defaultProps = {
-        elevation: 0
-    }
+  static defaultProps = {
+    elevation: 0
+  }
 
-    render() {
+  render() {
 
-        const { style, elevation } = this.props;
-        if (Platform.OS === 'android') {
-            return (
-                <BaseButton elevation={this.props.elevation} style={[{elevation, backgroundColor: white}, style]} { ...this.props}>
-                    {this.props.children}
-                </BaseButton>
-            );
+    const { clear, variant, round } = this.props;
 
-        }
+    //TODO tutta la roba dell'ombra e dei ripple
 
-        if (elevation === 0) {
-            return (
-                <BaseButton style={style} { ...this.props}>
-                    {this.props.children}
-                </BaseButton>
-            );
-        }
+    const style = [
+      clear ? {} : buttonStyle[variant],
+      round ? buttonStyle.round : {}
+    ];
+    return (
+        <BaseButton
+            round
+            activeOpacity={0.2}
+            buttonStyle={style}
+            titleStyle={clear ? buttonStyle[`${variant}Simple`] : {}}
+            title={this.props.children}
+            {...this.props}
+        />
+    )
 
-        // iOS non supporta la prop 'elevation', per cui me la calcolo e applico i css
-        const iosShadowElevation = {
-            shadowOpacity: 0.0015 * elevation + 0.18,
-            shadowRadius: 0.54 * elevation,
-            shadowOffset: {
-                height: 0.6 * elevation,
-            },
-        };
-
-        return (
-            <BaseButton style={[iosShadowElevation, style]} {...this.props}>
-                {this.props.children}
-            </BaseButton>
-        )
-
-    }
-
-
+  }
 
 }
+
+Button.defaultProps = {
+  variant: 'primary'
+};
+Button.propTypes = {
+  variant: PropTypes.string,
+  clear: PropTypes.bool,
+};
+
+const styles = {
+
+
+};

@@ -90,6 +90,7 @@ class LoginScreen extends React.Component {
 
     return (
         <KeyboardAwareScrollView
+            keyboardShouldPersistTaps="always"
             contentContainerStyle={{
               flexGrow: 1,
               justifyContent: 'space-between',
@@ -112,7 +113,7 @@ class LoginScreen extends React.Component {
 
           }}>
 
-            <KeyboardAvoidingView>
+
               <View style={styles.middleContainerStyle}>
 
 
@@ -156,7 +157,6 @@ class LoginScreen extends React.Component {
                     onSubmitEditing={this.login}
                     blurOnSubmit={true}
                 />
-                <Text style={[styles.remoteErrorMessage]}>{errorMessage || null}</Text>
                 <Button
                     background={background}
                     disabled={isLoading || this.state.username === "" || this.state.password === ""}
@@ -213,7 +213,7 @@ class LoginScreen extends React.Component {
               </View>
 
               </View>
-            </KeyboardAvoidingView>
+
 
 
 

@@ -5,9 +5,11 @@ import View from '../../components/common/View';
 import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
 
 import { userLogout, userCheck } from '../../actions/authActions';
+import { crudDelete } from '../../actions/dataActions';
+
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
-import SavedEventsCard from '../../components/ProfileComponents/SavedEventsCard';
+import SavedEventsList from '../../components/ProfileComponents/SavedEventsList';
 import { connect } from 'react-redux';
 import themes from "../../styleTheme";
 
@@ -24,6 +26,9 @@ class ProfileScreen extends React.Component {
     super();
     this.handleLogout = this.handleLogout.bind(this);
     this.checkAuthentication = this.checkAuthentication.bind(this);
+    this.handleBrowse = this.handleBrowse.bind(this);
+    this.handleFavoriteEventRemove = this.handleFavoriteEventRemove.bind(this);
+    this.handleFavoriteEventPress = this.handleFavoriteEventPress.bind(this);
     this.handleReservationPress = this.handleReservationPress.bind(this);
   }
 
@@ -33,11 +38,24 @@ class ProfileScreen extends React.Component {
     const { userCheck } = this.props;
     userCheck({}, "Profile");
   }
-
   handleLogout() {
     this.props.userLogout();
   }
+  handleBrowse() {
+    this.props.navigation.navigate('Esplora');
+  }
 
+  handleFavoriteEventRemove(eventId) {
+    this.props.crudDelete('events', eventId, {},
+        `/users/${this.props.userId}`, 'profile_savedEvents_list');
+
+  }
+
+  handleFavoriteEventPress(eventId, event) {
+
+    this.props.navigation.navigate('BroadcastsList', {eventId, event});
+
+  }
   handleReservationPress(reservation){
     this.props.navigation.navigate('ReservationScreen', {reservation});
   }
@@ -47,36 +65,47 @@ class ProfileScreen extends React.Component {
 
     return (
 
-      <ProfileController>
-        {({profile, loggedIn, isLoading}) =>
-          isLoading ?
-            <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
-            <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
-              {loggedIn && profile._id ?
 
-                <View style={{padding: 8}}>
-                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
-                  <InlineListController id="profile_reservations_list" resource="reservations">
-                    {controllerProps =>
-                      controllerProps.isLoading ? null :
-                        <ReservationsCarousel {...controllerProps} onItemPress={this.handleReservationPress}/>
-                    }
-                  </InlineListController>
-                  <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
-                  <InlineListController id="profile_savedEvents_list" resource="events">
-                    {controllerProps =>
-                      controllerProps.isLoading ? null :
-                        <SavedEventsCard {...controllerProps}/>
-                    }
-                  </InlineListController>
-                </View> :
-                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-                  ⊗ Impossibile caricare il profilo ⊗
-                </Text>
-              }
-            </ScrollView>
-        }
-      </ProfileController>
+          <ProfileController>
+            {({profile, loggedIn, isLoading}) =>
+                isLoading ?
+                    <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+                    <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
+                      {loggedIn && profile._id ?
+
+                              <View style={{padding: 8}}>
+                                <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
+                                <InlineListController basePath={`/users/${profile._id}`}
+                                id="profile_reservations_list" resource="reservations">
+                                  {controllerProps =>
+                                      controllerProps.isLoading ? null :
+                                          <ReservationsCarousel
+                                              {...controllerProps}
+                                              onItemPress={this.handleReservationPress}
+                                              onBrowsePress={this.handleBrowse}
+                                              />
+                                  }
+                                </InlineListController>
+                                <InlineListController
+                                    basePath={`/users/${profile._id}`}
+                                    id="profile_savedEvents_list"
+                                    resource="events">
+                                  {controllerProps =>
+
+                                          <SavedEventsList
+                                              onItemPress={this.handleFavoriteEventPress}
+                                              onItemRemovePress={this.handleFavoriteEventRemove}
+                                              {...controllerProps}/>
+                                  }
+                                </InlineListController>
+                              </View> :
+                          <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                            ⊗ Impossibile caricare il profilo ⊗
+                          </Text>
+                      }
+                    </ScrollView>
+            }
+          </ProfileController>
 
     )
   }
@@ -85,7 +114,7 @@ class ProfileScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
-    auth: state.auth,
+    userId: state.auth.profile ? state.auth.profile._id : undefined
   });
 };
-export default connect(mapStateToProps, { userCheck, userLogout })(ProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout, crudDelete})(ProfileScreen);

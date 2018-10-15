@@ -14,11 +14,7 @@ const BusinessCarousel = ({
   style,
   onItemPress
 }) => (
-    isLoading ?
-      <View style={{height: 166, justifyContent: 'center'}}>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-      </View>
-      :   <Carousel
+    isLoading ? null :   <Carousel
             data={ids}
             inactiveSlideScale={1}
             inactiveSlideOpacity={1}

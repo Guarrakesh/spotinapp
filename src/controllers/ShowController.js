@@ -101,13 +101,10 @@ export class ShowController extends Component {
     });
   }
 }
-ShowController.defaultProps = {
-  hasListControllers: false
-};
 
 
 ShowController.propTypes = {
-   basePath: PropTypes.string.isRequired,
+   basePath: PropTypes.string,
   children: PropTypes.func.isRequired,
   crudGetOne: PropTypes.func.isRequired,
   record: PropTypes.object,
@@ -115,7 +112,6 @@ ShowController.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   resource: PropTypes.string.isRequired,
   title: PropTypes.any,
-  hasListControllers: PropTypes.bool.isRequired,
   // translate: PropTypes.func,
   version: PropTypes.number.isRequired,
 

@@ -15,19 +15,20 @@ export const CRUD_GET_LIST_LOADING = 'CRUD_GET_LIST_LOADING';
 export const CRUD_GET_LIST_FAILURE = 'CRUD_GET_LIST_FAILURE';
 export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 
-export const crudGetList = (resource, listId, pagination, sort, filter) => ({
+export const crudGetList = (resource, listId, pagination, sort, filter, basePath) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
     resource,
+    basePath,
     listId,
     fetch: GET_LIST,
-    onFailure: {
+    /*onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
         level: 'warning'
       }
-    }
+    }*/
   }
 });
 
@@ -36,11 +37,12 @@ export const CRUD_GET_ALL_LOADING = 'CRUD_GET_ALL_LOADING';
 export const CRUD_GET_ALL_FAILURE = 'CRUD_GET_ALL_FAILURE';
 export const CRUD_GET_ALL_SUCCESS = 'CRUD_GET_ALL_SUCCESS';
 
-export const crudGetAll = (resource, sort, filter, maxResults, callback) => ({
+export const crudGetAll = (resource, sort, filter, maxResults, callback, basePath) => ({
   type: CRUD_GET_ALL,
   payload: { sort, filter, pagination: { page: 1, perPage: maxResults } },
   meta: {
     resource,
+    basePath,
     fetch: GET_LIST,
     onSuccess: {
       callback,
@@ -67,14 +69,14 @@ export const crudGetOne = (resource, id, basePath, refresh = true, listId) => ({
     listId,
     fetch: GET_ONE,
     basePath,
-    onFailure: {
+    /*onFailure: {
       notification: {
         body: 'spotinapp.notification.item_doesnt_exist',
         level: 'warning',
       },
       redirectTo: 'list',
       refresh,
-    },
+    },*/
   },
 });
 
@@ -87,10 +89,11 @@ export const crudCreate = (resource, data, basePath, redirectTo = 'edit', listId
   type: CRUD_CREATE,
   payload: { data },
   meta: {
+    basePath,
     resource,
     fetch: CREATE,
     listId,
-    onSuccess: {
+   /* onSuccess: {
       notification: {
         body: 'spotinapp.notification.created',
         level: 'info',
@@ -106,7 +109,7 @@ export const crudCreate = (resource, data, basePath, redirectTo = 'edit', listId
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -131,7 +134,8 @@ export const crudUpdate = (
     resource,
     listId,
     fetch: UPDATE,
-    onSuccess: {
+    basePath,
+  /*  onSuccess: {
       notification: {
         body: 'spotinapp.notification.updated',
         level: 'info',
@@ -147,7 +151,7 @@ export const crudUpdate = (
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -170,7 +174,8 @@ export const crudUpdateMany = (
     resource,
     fetch: UPDATE_MANY,
     cancelPrevious: false,
-    onSuccess: {
+    basePath,
+   /* onSuccess: {
       notification: {
         body: 'ra.notification.updated',
         level: 'info',
@@ -187,7 +192,7 @@ export const crudUpdateMany = (
         body: 'ra.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 export const CRUD_DELETE = 'CRUD_DELETE';
@@ -201,14 +206,17 @@ export const crudDelete = (
     id,
     previousData,
     basePath,
-    redirectTo = 'list',
+
+    listId,
 ) => ({
   type: CRUD_DELETE,
   payload: { id, previousData },
   meta: {
+    basePath,
     resource,
+    listId,
     fetch: DELETE,
-    onSuccess: {
+    /*onSuccess: {
       notification: {
         body: 'spotinapp.notification.deleted',
         level: 'info',
@@ -224,7 +232,7 @@ export const crudDelete = (
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -241,7 +249,8 @@ export const crudDeleteMany = (resource, ids, basePath, refresh = true) => ({
   meta: {
     resource,
     fetch: DELETE_MANY,
-    onSuccess: {
+    basePath,
+   /* onSuccess: {
       notification: {
         body: 'spotinapp.notification.deleted',
         level: 'info',
@@ -258,7 +267,7 @@ export const crudDeleteMany = (resource, ids, basePath, refresh = true) => ({
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -269,19 +278,20 @@ export const CRUD_GET_MANY_SUCCESS = 'CRUD_GET_MANY_SUCCESS';
 
 // Reference related actions
 
-export const crudGetMany = (resource, ids, listId ) => ({
+export const crudGetMany = (resource, ids, listId, basePath ) => ({
   type: CRUD_GET_MANY,
   payload: { ids },
   meta: {
     resource,
     listId,
+    basePath,
     fetch: GET_MANY,
-    onFailure: {
+  /*  onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -303,12 +313,12 @@ export const crudGetMatching = (
     resource: reference,
     relatedTo,
     fetch: GET_LIST,
-    onFailure: {
+    /*onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -328,20 +338,22 @@ export const crudGetManyReference = (
     pagination,
     sort,
     filter,
-    source
+    source,
+    basePath,
 ) => ({
   type: CRUD_GET_MANY_REFERENCE,
   payload: { target, id,  pagination, sort, filter, source },
   meta: {
     resource: reference,
     relatedTo,
+    basePath,
     fetch: GET_MANY_REFERENCE,
-    onFailure: {
+   /* onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
         level: 'warning',
       },
-    },
+    },*/
   },
 });
 
@@ -352,22 +364,23 @@ export const CRUD_GET_NEAR_MANY_SUCCESS = 'CRUD_GET_NEAR_MANY_SUCCESS';
 
 // Get near (by location) entities
 export const crudGetNearMany = (
-    resource, listId, position, pagination, sort, filter
+    resource, listId, position, pagination, sort, filter, basePath,
 ) => ({
   resource,
 
   type: CRUD_GET_NEAR_MANY,
   payload: { position, pagination, sort, filter },
   meta: {
+    basePath,
     resource,
-      listId,
+    listId,
     fetch: GET_LIST,
     /*onSuccess:
-    onFailure: {
-      notification: {
-        body: 'spotinapp.notification.http_error',
-        level: 'warning'
-      }
-    }*/
+     onFailure: {
+     notification: {
+     body: 'spotinapp.notification.http_error',
+     level: 'warning'
+     }
+     }*/
   }
 })

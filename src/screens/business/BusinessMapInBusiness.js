@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import {StyleSheet, FlatList, InteractionManager, Animated} from 'react-native';
+import {StyleSheet, FlatList, InteractionManager, Animated, Text} from 'react-native';
 import MapView from 'react-native-maps';
 import Swiper from 'react-native-swiper';
 import themes from '../../styleTheme';
@@ -62,6 +62,13 @@ class BusinessMapInBusiness extends React.Component {
 
     if (!ids || !data || !this.state.transitionFinished) return null;
 
+    if (ids.length === 0) {
+      return (
+          <View style={themes.base.noContentView}>
+            <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
+          </View>
+      )
+    }
     const region = {
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],

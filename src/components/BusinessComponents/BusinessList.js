@@ -1,7 +1,7 @@
 import React from 'react';
 
 import BusinessCard from './BusinessCard';
-import {ActivityIndicator, FlatList, View} from 'react-native';
+import {ActivityIndicator, FlatList, View, Text} from 'react-native';
 
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';
@@ -22,36 +22,44 @@ class BusinessList extends React.Component {
 
   render(){
     const {
-      isLoading,
-      data,
-      ids,
-      refresh,
-      isRefreshing,
-      onMapPress,
-      onItemPress,
-      onFavoritePress,
-      style,
-      ...rest} = this.props;
+        isLoading,
+        data,
+        ids,
+      //  refresh,
+      //  isRefreshing,
+      //  onMapPress,
+      //  onItemPress,
+      //  onFavoritePress,
+        searchActive,
+        style,
+        ...rest} = this.props;
 
     if(isLoading){
       return(
-        <View style={[{flex: 1, justifyContent: 'center'}]}>
-          <ActivityIndicator size="large" color={themes.base.colors.text.default}/>
-        </View>
+          <View style={[{flex: 1, justifyContent: 'center'}]}>
+            <ActivityIndicator size="large" color={themes.base.colors.text.default}/>
+          </View>
+      )
+    }
+    if (searchActive && ids.length === 0) {
+      return (
+          <View style={themes.base.noContentView}>
+            <Text style={themes.base.noContentText}>{'Nessun locale trovato'}</Text>
+          </View>
       )
     }
 
     return (
 
-      <FlatList
-        {...rest}
-          style={[style]}
-        data={ids}
-        renderItem={({item}) => <BusinessCard
-          business={data[item]}
-          onPress={() => this._onItemPress(item, data[item].dist)}
-        />}
-      />
+        <FlatList
+            {...rest}
+            style={[style]}
+            data={ids}
+            renderItem={({item}) => <BusinessCard
+                business={data[item]}
+                onPress={() => this._onItemPress(item, data[item].dist)}
+            />}
+        />
 
     );
   }
@@ -59,6 +67,7 @@ class BusinessList extends React.Component {
 };
 
 BusinessList.propTypes = {
+  searchActive: PropTypes.bool,
   onItemPress: PropTypes.func.isRequired,
   broadcasts: PropTypes.array,
 };

@@ -2,6 +2,30 @@
 import {Dimensions, Platform} from 'react-native';
 import {Fonts} from "./components/common/Fonts";
 
+export const primaryColor = {
+  default: '#B2FF59',
+  light: '#E7FF8C',
+  dark: '#7ECB20'
+};
+export const accentColor = {
+  default: '#7C4DFF',
+  light: '#B47CFF',
+  dark: '#3F1DCB'
+};
+export const textColor = {
+  default: '#555555',
+  dark: '#424242',
+  light: '#FAFAFA'
+};
+export const whiteColor = {
+  default: '#FAFAFA',
+  light: '#FFFFFF',
+  divisor: '#EEEEEE' //colore per le linee divisorie
+};
+export const dangerColor = {
+  default: '#B80638',
+  light: '#FF356E',
+};
 
 const themes = {
   old: {
@@ -63,30 +87,11 @@ const themes = {
     borderRadius: 8,
     colors: {
 
-      primary: {
-        default: '#B2FF59',
-        light: '#E7FF8C',
-        dark: '#7ECB20'
-      },
-      accent: {
-        default: '#7C4DFF',
-        light: '#B47CFF',
-        dark: '#3F1DCB'
-      },
-      text: {
-        default: '#555555',
-        dark: '#424242',
-        light: '#FAFAFA'
-      },
-      white: {
-        default: '#FAFAFA',
-        light: '#FFFFFF',
-        divisor: '#EEEEEE' //colore per le linee divisorie
-      },
-      danger: {
-        default: '#B80638',
-        light: '#EA2026',
-      }
+      primary: primaryColor,
+      accent: accentColor,
+      text: textColor,
+      white: whiteColor,
+      danger: dangerColor,
     },
     elevations: {
       depth1: {
@@ -141,6 +146,10 @@ const themes = {
       alignItems: 'center'
     },
 
+    noContentText: {
+      fontFamily: 'Lato-Medium',
+      fontSize: 18
+    },
     fonts:  {
       Lato: 'Lato-Regular',
       LatoBold: 'Lato-Bold',
@@ -188,7 +197,22 @@ const themes = {
         fontFamily:'Lato-Medium',
 
       }
+    },
+    button: {
+      primary: {
+        backgroundColor: accentColor.default,
+        color: whiteColor.default,
+      },
+      primarySimple: {
+        backgroundColor: 'transparent',
+        color: accentColor.default,
+        fonts: 'Lato-Medium'
+      },
+      round: {
+        borderRadius: 50
+      }
     }
+
 
   },
 

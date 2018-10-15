@@ -134,6 +134,7 @@ class BusinessScreen extends React.Component {
     };
     //if (businesses.list.ids.length === 0) return null;
 
+
     return (
         <ListController
             id='business_list'
@@ -162,13 +163,14 @@ class BusinessScreen extends React.Component {
                 <AnimatedSearchBar
                     showLoading={controllerProps.isLoading}
                     onChangeText={(text) => controllerProps.setFilters({q: text})}
-                    onClear={() => controllerProps.setFilters({q: ""})}
+                    onClear={() => controllerProps.setFilters({q: undefined})}
                     value={controllerProps.filterValues.q}
 
                     placeholder="Cerca locale..."
                 />
                 </Animated.View>
                 <AnimatedBusinessList
+                    searchActive={controllerProps.filterValues.q !== undefined }
                     style={{
                       transform: [{
                         translateY: this.state._searchBarY.interpolate({

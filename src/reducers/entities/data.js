@@ -9,6 +9,7 @@ import {
 } from '../../actions/types';
 import {
     CRUD_DELETE_OPTIMISTIC,
+  CRUD_DELETE,
     CRUD_DELETE_MANY_OPTIMISTIC,
     CRUD_UPDATE_OPTIMISTIC,
     CRUD_UPDATE_MANY_OPTIMISTIC,
@@ -71,15 +72,7 @@ export default (previousState = initialState, { type, payload, meta }) => {
             .map(record => ({ ...record, ...payload.data }));
         return addRecords(updatedRecords, previousState);
     }
-    if (type === CRUD_DELETE_OPTIMISTIC) {
-        const { [payload.id]: removed, ...newState } = previousState;
 
-        Object.defineProperty(newState, 'fetchedAt', {
-            value: previousState.fetchedAt,
-        });
-
-        return newState;
-    }
     if (type === CRUD_DELETE_MANY_OPTIMISTIC) {
         const newState = Object.entries(previousState)
             .filter(([key]) => !payload.ids.includes(key))

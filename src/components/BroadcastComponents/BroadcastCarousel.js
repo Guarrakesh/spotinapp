@@ -24,11 +24,7 @@ const BroadcastCarousel = ({
     return false;
   });
   return (
-    isLoading ?
-      <View style={{height: 325, justifyContent: 'center'}}>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
-      </View>
-      :   <Carousel
+    <Carousel
         swipeThreshold={0}
         data={ids}
         inactiveSlideScale={1}
