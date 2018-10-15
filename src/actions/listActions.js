@@ -11,17 +11,17 @@ export const initList = (resource, id) => ({
 export const changeListParams = (resource, listId, params) => ({
   type: CRUD_CHANGE_LIST_PARAMS,
   payload: params,
-  meta: { resource, id: listId },
+  meta: { resource, listId },
 });
 
 export const setListSelectedIds = (resource, listId, ids) => ({
   type: SET_LIST_SELECTED_IDS,
   payload: ids,
-  meta: { resource, id: listId },
+  meta: { resource, listId },
 });
 
 export const toggleListItem = (resource, listId,  id) => ({
   type: TOGGLE_LIST_ITEM,
   payload: id,
-  meta: { resource, id: listId },
+  meta: { resource, listId },
 });

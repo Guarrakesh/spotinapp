@@ -165,6 +165,29 @@ const themes = {
     deviceDimensions: {
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
+    },
+
+
+    searchBar: {
+      container: {
+        backgroundColor: 'white',
+        borderBottomWidth: 0,
+        elevation: 3,
+
+        shadowOffset: {height: 10},
+        shadowRadius: 20,
+        shadowOpacity: 0.19,
+      },
+      inputContainer: {
+        backgroundColor: 'transparent',
+
+      },
+      inputStyle: {
+        fontSize: 17,
+        color: '#555555',
+        fontFamily:'Lato-Medium',
+
+      }
     }
 
   },

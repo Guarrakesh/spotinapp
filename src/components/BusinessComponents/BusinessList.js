@@ -35,8 +35,8 @@ class BusinessList extends React.Component {
 
     if(isLoading){
       return(
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+        <View style={[{flex: 1, justifyContent: 'center'}]}>
+          <ActivityIndicator size="large" color={themes.base.colors.text.default}/>
         </View>
       )
     }
@@ -45,6 +45,7 @@ class BusinessList extends React.Component {
 
       <FlatList
         {...rest}
+          style={[style]}
         data={ids}
         renderItem={({item}) => <BusinessCard
           business={data[item]}
