@@ -42,5 +42,5 @@ const EventCarousel = ({
 
     );
 export default connect(state => ({
-  sports: state.entities.sports.data
+  sports: state.entities.sports.data || {}
 }), {})(EventCarousel);

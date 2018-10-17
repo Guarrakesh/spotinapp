@@ -7,7 +7,7 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
 import ShowController from '../../controllers/ShowController';
-import { crudCreate } from '../../actions/dataActions';
+import { reserveBroadcast } from '../../actions/reservation';
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
@@ -28,20 +28,20 @@ class BusinessProfileScreen extends React.Component {
   };
 
   static navigationOptions = ({navigation}) => {
-  //  const headerVisible = navigation.state.params.headerVisible;
+    //  const headerVisible = navigation.state.params.headerVisible;
     return {
       title: navigation.getParam('title'),
 
-     /* headerTransparent: false
+      /* headerTransparent: false
 
+       headerStyle: {
+         shadowColor: 'transparent',
+         borderBottomWidth: 1,
+
+       },*/
       headerStyle: {
-        shadowColor: 'transparent',
-        borderBottomWidth: 1,
-
-      },*/
-     headerStyle: {
-       backgroundColor: themes.base.colors.primary.default
-     },
+        backgroundColor: themes.base.colors.primary.default
+      },
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
         color: themes.base.colors.text.default
@@ -71,7 +71,7 @@ class BusinessProfileScreen extends React.Component {
 
     });
 
-    this.props.reserveBroadcast(this.state.currentBroadcast._id);
+    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId);
     this.forceUpdate();
   }
 
@@ -89,59 +89,60 @@ class BusinessProfileScreen extends React.Component {
     const {businessId, distance} = this.props.navigation.state.params;
     const { userReservations } = this.props;
     return (
-        <ShowController resource="businesses"
-                        id={businessId}
-                        navigation={this.props.navigation}
-                        navigationTitle={(record) => record.name}
-                        basePath="/businesses">
-          { ({record, isLoading}) => {
+      <ShowController resource="businesses"
+                      id={businessId}
+                      navigation={this.props.navigation}
+                      navigationTitle={(record) => record.name}
+                      basePath="/businesses">
+        { ({record, isLoading}) => {
 
-            if (isLoading || !record) return null;
+          if (isLoading || !record) return null;
 
 
-            return (
-                <View style={styles.scrollView}
-                      contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
+          return (
+            <View style={styles.scrollView}
+                  contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
 
-                  <Animated.ScrollView
-                    //  onScroll={this.handleScroll.bind(this)}
-                      scrollEventThrottle={16}
-                      style={styles.generalContainer}>
-                    <ImagesScrollView business={record}/>
+              <Animated.ScrollView
+                //  onScroll={this.handleScroll.bind(this)}
+                scrollEventThrottle={16}
+                style={styles.generalContainer}>
+                <ImagesScrollView business={record}/>
 
-                    <View style={styles.cardContainer}>
-                      { record && <BusinessInfoCard distance={distance} business={record}/>}
-                      <Modal
-                          animationIn={'slideInUp'}
-                          animationOut="slideOutDown"
-                          isVisible={this.state.modalVisible}
+                <View style={styles.cardContainer}>
+                  { record && <BusinessInfoCard distance={distance} business={record}/>}
+                  <Modal
+                    animationIn={'slideInUp'}
+                    animationOut="slideOutDown"
+                    isVisible={this.state.modalVisible}
 
-                      >
-                        <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                                  onCancelPress={this.handleModalDismiss.bind(this)}
-                                                  data={this.state.modalData}/>
-                      </Modal>
-                      <ReferenceManyFieldController
-                          resource="broadcasts"
-                          reference="broadcasts"
-                          target="business"
-                          source="id"
-                          record={record}
-                      >
-                        {controllerProps => <BroadcastInProfileList
-                            userReservations={userReservations}
-                            {...controllerProps}
-                            onReservePress={this.handleReservePress.bind(this)}/>}
+                  >
+                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                              onCancelPress={this.handleModalDismiss.bind(this)}
 
-                      </ReferenceManyFieldController>
+                                              data={this.state.modalData}/>
+                  </Modal>
+                  <ReferenceManyFieldController
+                    resource="broadcasts"
+                    reference="broadcasts"
+                    target="business"
+                    source="id"
+                    record={record}
+                  >
+                    {controllerProps => <BroadcastInProfileList
+                      userReservations={userReservations}
+                      {...controllerProps}
+                      onReservePress={this.handleReservePress.bind(this)}/>}
 
-                    </View>
-                  </Animated.ScrollView>
+                  </ReferenceManyFieldController>
+
                 </View>
+              </Animated.ScrollView>
+            </View>
 
-            )}
-          }
-        </ShowController>
+          )}
+        }
+      </ShowController>
     );
   }
 
@@ -168,8 +169,9 @@ const styles = StyleSheet.create({
 
 
 export default connect((state) => ({
-  userReservations: state.auth.profile.reservations || []
+  userReservations: state.auth.profile.reservations || [],
+  userId: state.auth.profile._id
 }), {
-  reserveBroadcast: broadcast => crudCreate('reservations', { broadcast }, '/reservations')
+  reserveBroadcast
 
 })(BusinessProfileScreen)

@@ -76,15 +76,11 @@ const BroadcastFloatingCard = ({
                           <Text
                             style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMM • HH:mm")}</Text>
                         </View>
-                        <ReferenceField reference="competitions" source="competition" record={event}>
-                          {({record, isLoading}) =>
-                            isLoading ? null : (
-                              <View>
-                                {<VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}}
-                                                      imgSize={{width: 48, height: 48}}/>}
-                              </View>
-                            )}
-                        </ReferenceField>
+
+                        <View>
+                          {<VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
+                                                imgSize={{width: 48, height: 48}}/>}
+                        </View>
 
                       </View>
                     )

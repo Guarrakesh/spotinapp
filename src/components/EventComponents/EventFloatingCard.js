@@ -56,9 +56,9 @@ const EventCard = ({
             <Text style={styles.dateText}>{date} alle {time}</Text>
           </View>
 
-          <View style={styles.sportIconView}>
+          {sport && <View style={styles.sportIconView}>
             <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
-          </View>
+          </View>}
         </TouchableOpacity>
       </View>
 

@@ -35,7 +35,6 @@ const BroadcastCardInProfile = (props) => {
   return (
     <ReferenceField reference="events" record={broadcast} source="event">
       {({record: event, isLoading}) => {
-
         if (isLoading) return null;
 
         let date = moment(event.start_at).locale('it').format('dddd D MMMM');
@@ -50,23 +49,20 @@ const BroadcastCardInProfile = (props) => {
               </View> : null
             }
             <View style={styles.eventInfoView}>
-              <ReferenceField  reference="competitions" source="competition" record={event}>
-                {({record}) => (
 
-                  record.competitorsHaveLogo
-                    ?
-                    <View style={styles.competitorsLogoView}>
-                      {competitors.map(comp => { return (
-                        <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
-                      )})}
-                    </View>
-                    :
-                    <View style={{marginTop: 8, marginLeft: 16}}>
-                      { <VersionedImageField source={record.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                    </View>
-                )}
-              </ReferenceField>
+              {    event.competition.competitorsHaveLogo
+                ?
+                <View style={styles.competitorsLogoView}>
+                  {competitors.map(comp => { return (
+                    <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
+                  )})}
+                </View>
+                :
+                <View style={{marginTop: 8, marginLeft: 16}}>
+                  { <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                </View>
 
+              }
               <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
                 <Text style={styles.eventNameText}>{event.name}</Text>
                 <Text style={styles.eventDateText}>{date}</Text>

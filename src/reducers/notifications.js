@@ -7,6 +7,7 @@ import {
 const notifications = [
 
 
+
 ];
 export default (previousState = notifications, { type, payload }) => {
   switch (type) {

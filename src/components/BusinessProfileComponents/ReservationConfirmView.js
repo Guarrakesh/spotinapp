@@ -33,7 +33,6 @@ class ReservationConfirmView extends Component {
 
     let date = moment(event.start_at).locale('it').format('dddd D MMMM');
     let time = moment(event.start_at).locale('it').format('HH:mm');
-
     const discount = (type) => {
       switch (parseInt(type)) {
         case 0:
@@ -150,10 +149,7 @@ const mapStateToProps = (state, props) => {
   const event = get(state, `entities.events.data[${broadcast.event}]`);
   if (!event) return {};
   return {
-    event: {
-        ...event,
-        competition: get(state, `entities.competitions.data[${event.competition}]`) || null
-    }
+    event
   }
 };
 

@@ -37,7 +37,6 @@ const ReservationView = ({reservation, onPress}) => {
         moment(startAt).locale('it').format('HH:mm')
     )
   };
-  console.log("aaaaaaA", reservation);
 
   const discount = (type) => {
     switch (parseInt(type)) {
@@ -93,18 +92,24 @@ const ReservationView = ({reservation, onPress}) => {
         </ReferenceField>
 
         <View style={styles.eventInfoView}>
+        <ReferenceField resource="competitions" source="competition" record={event}>
+          { ({record: competition}) =>
+            competition.competitorsHaveLogo
+              ?
+              <View style={styles.competitorsLogoView}>
+                {event.competitors.map(comp => { return (
+                  <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
+                )})}
+              </View>
+              :
+              <View style={{marginTop: 8, marginLeft: 16}}>
+                { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+              </View>
 
-          event.competition.competitorsHaveLogo
-          ?
-          <View style={styles.competitorsLogoView}>
-            {event.competitors.map(comp => { return (
-                <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
-            )})}
-          </View>
-          :
-          <View style={{marginTop: 8, marginLeft: 16}}>
-            { <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-          </View>
+
+          }
+        </ReferenceField>
+
 
 
           <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
