@@ -7,6 +7,7 @@ import {createStackNavigator} from "react-navigation";
 import themes from "../styleTheme";
 import BusinessMapScreen from "../screens/spot/BusinessMapScreen";
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
+import ContactUsScreen from '../screens/spot/ContactUsScreen';
 
 import DismissButton from '../components/common/DismissButton';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,6 +36,26 @@ export const BusinessMapNavigatorInSpot = createStackNavigator({
   }
 );
 
+export const ContactUsNavigator = createStackNavigator({
+    ContactUsScreen: {
+      screen: ContactUsScreen,
+      navigationOptions: ({navigation}) => {
+        return {
+          headerTransparent: true,
+          headerStyle: {
+            shadowColor: 'transparent',
+            borderBottomWidth: 0,
+          },
+          headerRight: (
+            <DismissButton onPress={() => {navigation.navigate('BroadcastsList')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+          ),
+        }
+      },
+    }
+  }, {
+    mode: 'modal',
+  }
+);
 
 export const SpotStack = createStackNavigator({
     SportList: {
@@ -57,7 +78,7 @@ export const SpotStack = createStackNavigator({
     Events: {
       screen: EventScreen,
       navigationOptions: ({navigation}) => ({
-          ...navigation.navigationOptions,
+        ...navigation.navigationOptions,
         title: navigation.state.params.title || "Spot In",
         headerBackTitle: null,
       })
@@ -73,8 +94,8 @@ export const SpotStack = createStackNavigator({
 
         headerBackTitle: null,
         headerBackImage: (<Icon
-            color={themes.base.colors.text.default}
-            name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
+          color={themes.base.colors.text.default}
+          name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
       })
     },
 
@@ -95,3 +116,5 @@ export const SpotStack = createStackNavigator({
     }
   }
 );
+
+

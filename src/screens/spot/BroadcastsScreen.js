@@ -32,6 +32,7 @@ class BroadcastsScreen extends React.Component {
 
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
     this.handleMapPress = this.handleMapPress.bind(this);
+    this.handleContactUsPress = this.handleBusinessPress.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -62,18 +63,29 @@ class BroadcastsScreen extends React.Component {
   componentDidMount() {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
+
   handleBusinessPress(broadcastId, businessId, distance) {
 
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
+
+  //Navigazione alla mappa
   handleMapPress(data) {
     const { eventId } = this.props.navigation.state.params;
     this.props.navigation.navigate('BusinessMapInSpot', {...data, listId: this.listId(eventId)});
 
   }
+
+  //Navigazione al modulo di contatto
+  handleContactUsPress(){
+    //const { eventId } = this.props.navigation.state.params;
+    this.props.navigation.navigate('ContactUs');
+  }
+
   componentWillUnmount() {
     this.state.scrollAnim.removeListener(this._handleScroll);
   }
+
   _handleScroll = ({ value }) => {
 
     this._previousScrollValue = this._currentScrollValue;
@@ -88,6 +100,7 @@ class BroadcastsScreen extends React.Component {
   _handleMomentumScrollBegin = () => {
     clearTimeout(this._scrollEndTimer);
   };
+
   _handleMomentumScrollEnd = () => {
     const previous = this._previousScrollValue;
     const current = this._currentScrollValue;
@@ -160,6 +173,7 @@ class BroadcastsScreen extends React.Component {
               )}
               { ...controllerProps }
               onMapPress={this.handleMapPress}
+              onContactUsPress={this.handleContactUsPress}
               onMomentumScrollBegin={ this._handleMomentumScrollBegin }
               onMomentumScrollEnd={this._handleMomentumScrollEnd }
               onScrollEndDrag={this._handleScrollEndDrag}

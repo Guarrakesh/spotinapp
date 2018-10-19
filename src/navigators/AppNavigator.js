@@ -8,7 +8,7 @@ import AuthNavigator from './AuthNavigator';
 import FavoriteScreen from '../components/FavoriteScreen';
 import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
-import {SpotStack, BusinessMapNavigatorInSpot} from './SpotStack';
+import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotStack';
 import ProfileStack from './ProfileStack';
 import HomeStack from './HomeStack';
 
@@ -93,6 +93,7 @@ const RootNavigator = createStackNavigator(
 
     BusinessMapInSpot: BusinessMapNavigatorInSpot,
     BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
+    ContactUs: ContactUsNavigator
   }, {
     headerMode: 'none',
     mode: "modal",

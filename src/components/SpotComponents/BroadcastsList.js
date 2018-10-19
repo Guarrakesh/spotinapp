@@ -28,6 +28,7 @@ class BroadcastsList extends React.Component {
       refresh,
       isRefreshing,
       onMapPress,
+      onContactUsPress,
       onItemPress,
       onFavoritePress,
       style,
@@ -38,7 +39,10 @@ class BroadcastsList extends React.Component {
       return (
         <View style={themes.base.noContentView}>
           <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
-          <Button title={"Contattaci"}/>
+          <Button
+            title={"Contattaci"}
+            onPress={() => onContactUsPress()}
+          />
         </View>
       )
     }

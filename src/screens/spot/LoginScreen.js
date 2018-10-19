@@ -116,7 +116,6 @@ class LoginScreen extends React.Component {
 
               <View style={styles.middleContainerStyle}>
 
-
                 <Input
                     placeholder="email"
                     placeholderTextColor={themes.base.inputPlaceholderColor}
