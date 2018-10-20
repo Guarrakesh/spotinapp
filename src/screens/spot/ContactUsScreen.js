@@ -31,7 +31,7 @@ class ContactUsScreen extends React.Component{
       },
       location: "",
       maxDistance: 0,
-      people: 1,
+      numOfPeople: 1,
       notes: "",
     }
   }
@@ -51,14 +51,14 @@ class ContactUsScreen extends React.Component{
   }
 
   _sendRequest(){
-    const {userId, event, userPosition, location, maxDistance, people, notes } = this.state;
-    createRequest(userId, event, location, maxDistance, people, userPosition, notes);
+    const {userId, event, userPosition, location, maxDistance, numOfPeople, notes } = this.state;
+    createRequest(userId, event, location, maxDistance, numOfPeople, userPosition, notes);
   }
 
   showAlert() {
     Alert.alert(
       "Inviare la richiesta?",
-      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.lat}\nlng: ${this.state.userPosition.lng}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.people}\nnotes: ${this.state.notes}`,
+      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.lat}\nlng: ${this.state.userPosition.lng}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.numOfPeople}\nnotes: ${this.state.notes}`,
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => this._sendRequest()},
@@ -137,11 +137,11 @@ class ContactUsScreen extends React.Component{
             <Text style={[styles.header, {marginTop: 8}]}>Quante persone sarete?</Text>
             <View style={styles.peopleCard} elevation={2}>
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.peopleText}>{this.state.people}</Text>
+                <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
                 <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
               </View>
               <Slider
-                value={this.state.people}
+                value={this.state.numOfPeople}
                 minimumValue={1}
                 maximumValue={20}
                 step={1}
@@ -149,7 +149,7 @@ class ContactUsScreen extends React.Component{
                 //trackStyle={{height: 1}}
                 thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
                 thumbTintColor={colors.white.light}
-                onValueChange={(people) => this.setState({people})} />
+                onValueChange={(numOfPeople) => this.setState({numOfPeople})} />
             </View>
           </View>
           <View style={styles.noteCard} elevation={2}>
