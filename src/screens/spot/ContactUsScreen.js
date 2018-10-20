@@ -2,27 +2,33 @@ import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground,
-  Platform, Alert, ScrollView, KeyboardAvoidingView, TextInput } from "react-native";
+import {Text, StyleSheet, ActivityIndicator, ImageBackground,
+  Platform, Alert, ScrollView, TextInput } from "react-native";
+import {createRequest} from "../../actions/requests";
 
 import {Input, Button, Slider} from "react-native-elements";
 import View from "../../components/common/View";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import {VersionedImageField} from "../../components/common";
+import moment from "moment";
 
 const colors = themes.base.colors
 
 const BackgroundPattern = require('../../assets/img/wave_pattern.png');
-const emailError = false
 
 class ContactUsScreen extends React.Component{
 
   constructor() {
-    console.log('CONTACTUS MONTATO!!!!!!!!!!!!!!!!!!!')
     super();
 
     this.state = {
+      userId: "",
+      event: "",
+      userPosition: {
+        lat: this.latitude,
+        lng: this.longitude
+      },
       location: "",
       maxDistance: 0,
       people: 1,
@@ -30,14 +36,32 @@ class ContactUsScreen extends React.Component{
     }
   }
 
+  componentDidMount(){
+
+    const {event} = this.props.navigation.state.params;
+
+    this.setState({
+      event: event._id,
+      userId: this.props.userId,
+      userPosition: {
+        lat: this.props.latitude,
+        lng: this.props.longitude
+      }
+    });
+  }
+
+  _sendRequest(){
+    const {userId, event, userPosition, location, maxDistance, people, notes } = this.state;
+    createRequest(userId, event, location, maxDistance, people, userPosition, notes);
+  }
+
   showAlert() {
     Alert.alert(
-      'Alert Title',
-      `location: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.people}\nnotes: ${this.state.notes}`,
+      "Inviare la richiesta?",
+      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.lat}\nlng: ${this.state.userPosition.lng}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.people}\nnotes: ${this.state.notes}`,
       [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        {text: 'OK', onPress: () => this._sendRequest()},
       ],
       { cancelable: false }
     )
@@ -45,28 +69,37 @@ class ContactUsScreen extends React.Component{
 
   render() {
 
+    const {event} = this.props.navigation.state.params;
     const distances = [5, 10, 20, 50, 100];
 
-    const position = {
-      lat: this.props.latitude,
-      lng: this.props.longitude
-    };
+    let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
 
     return(
-      <ScrollView contentContainerStyle={styles.container} >
+      <ScrollView
+        contentContainerStyle={styles.container}
+        bounces={false}
+      >
         <Text style={styles.header}>Organizziamo l'evento per te!</Text>
         <View style={styles.eventContainer}>
-          <Text style={styles.competitionName}>Serie A</Text>
+          <Text style={styles.competitionName}>{event.competition.name}</Text>
           <View style={styles.eventRow}>
-            <Image source={{uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/S.S.C._Napoli_logo.svg/200px-S.S.C._Napoli_logo.svg.png"}}
-                   style={{width: 48, height: 48}}
-                   resizeMode={'contain'}/>
-            <Text style={styles.eventName}>Napoli - Juventus</Text>
-            <Image source={{uri: "https://upload.wikimedia.org/wikipedia/commons/5/51/Juventus_FC_2017_logo.png"}}
-                   style={{width: 48, height: 48}}
-                   resizeMode={'contain'}/>
+            <VersionedImageField
+              source={event.competition.competitorsHaveLogo ? event.competitors[0]._links.image_versions : event.competition.image_versions}
+              minSize={{width: 62, height: 62}}
+              imgSize={{width: 42, height: 42}}
+            />
+            <Text style={styles.eventName}>{event.name}</Text>
+            {event.competition.competitorsHaveLogo ?
+              <VersionedImageField
+                source={event.competitors[1]._links.image_versions}
+                minSize={{width: 62, height: 62}}
+                imgSize={{width: 42, height: 42}}
+              /> :
+              <View style={{width: 42, height: 42}}/>
+            }
+
           </View>
-          <Text style={styles.eventDate}>23 agosto alle 21:30</Text>
+          <Text style={styles.eventDate}>{date}</Text>
         </View>
         <ImageBackground source={BackgroundPattern} style={{
           height: '100%',
@@ -84,7 +117,6 @@ class ContactUsScreen extends React.Component{
               inputContainerStyle={{borderBottomWidth: 0}}
               inputStyle={styles.textInputStyle}
               autoCapitalize="none"
-              errorMessage={emailError}
               displayError={true}
               errorStyle={styles.errorMessage}
               shake={true}
@@ -129,24 +161,26 @@ class ContactUsScreen extends React.Component{
               onChangeText={(text) => this.setState({notes: text})}
             />
           </View>
-            <Button
-              title={"Invia"}
-              titleStyle={styles.sendButtonText}
-              buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
-              disabled={this.state.location === "" || this.state.maxDistance === 0}
-              onPress={() => this.showAlert()}
-            />
+          <Button
+            title={"Invia"}
+            titleStyle={styles.sendButtonText}
+            buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
+            disabled={this.state.location === "" || this.state.maxDistance === 0}
+            onPress={() => this.showAlert()}
+          />
         </ImageBackground>
       </ScrollView>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state, props) => {
-  const {eventId} = props.navigation.state.params;
-  const { latitude, logitude } = state.location.coordinates;
+const mapStateToProps = (state) => {
+
+  const { latitude, longitude } = state.location.coordinates;
+  const userId = state.auth.profile._id;
+
   return {
-    eventId, latitude, logitude
+    latitude, longitude, userId
   }
 }
 
@@ -154,6 +188,7 @@ const styles = StyleSheet.create({
 
   container: {
     alignItems: 'center',
+    backgroundColor: colors.white.light
   },
   header: {
     fontFamily: Fonts.LatoBold,

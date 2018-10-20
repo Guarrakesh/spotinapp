@@ -32,7 +32,7 @@ class BroadcastsScreen extends React.Component {
 
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
     this.handleMapPress = this.handleMapPress.bind(this);
-    this.handleContactUsPress = this.handleBusinessPress.bind(this);
+    this.handleContactUsPress = this.handleContactUsPress.bind(this);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -78,8 +78,8 @@ class BroadcastsScreen extends React.Component {
 
   //Navigazione al modulo di contatto
   handleContactUsPress(){
-    //const { eventId } = this.props.navigation.state.params;
-    this.props.navigation.navigate('ContactUs');
+    const { eventId, event } = this.props.navigation.state.params;
+    this.props.navigation.navigate('ContactUs', {eventId, event});
   }
 
   componentWillUnmount() {
@@ -204,8 +204,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: themes.base.colors.white.default
-
-
   },
   subHeader: {
     height: HEADER_HEIGHT,

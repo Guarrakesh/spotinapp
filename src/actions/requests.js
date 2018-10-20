@@ -1,11 +1,13 @@
 import {CREATE} from "./types";
 import {CRUD_CREATE} from "./dataActions";
 
-export const createRequest = (userId, event, maxDistance, numOfPeople, userPosition, note) => ({
+export const createRequest = (userId, event, location, maxDistance, numOfPeople, userPosition, note) => ({
 
   type: CRUD_CREATE,
   payload: {
+    userId,
     event,
+    location,
     maxDistance,
     numOfPeople,
     userPosition,
