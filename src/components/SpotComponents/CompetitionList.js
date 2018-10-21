@@ -14,7 +14,8 @@ const CompetitionList = ({
     ids,
     refresh,
     isRefreshing,
-    onItemPress
+    onItemPress,
+    noContent,
 }) => {
 
 
@@ -48,7 +49,7 @@ const CompetitionList = ({
     )
   }
 
-  if (!isRefreshing && !isLoading && ids.length === 0 ) {
+  if (noContent) {
     return (
       <View style={styles.noContentView}>
         <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>

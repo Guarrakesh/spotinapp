@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
   cardFooter: {
 
-    backgroundColor: themes.base.colors.white.light,
+    alignSelf: 'center',
     borderTopWidth: 1,
     borderColor: '#EEEEEE',
     alignItems: 'center',

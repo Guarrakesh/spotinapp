@@ -32,11 +32,12 @@ export const addRecordIdsFactory = getFetchedAt => (
 
 const addRecordIds = addRecordIdsFactory(getFetchedAt);
 
-export default (previousState = [], { type, payload, requestPayload }) => {
+export default (previousState = [], { type, payload, requestPayload, meta }) => {
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:
-      return addRecordIds(payload.data.map(({ id }) => id), previousState);
+      console.log("eeeeeeeee", meta.accumulateResults);
+      return addRecordIds(payload.data.map(({ id }) => id), meta.accumulateResults ? previousState : []);
 
 
     case CRUD_GET_MANY_SUCCESS:

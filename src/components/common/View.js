@@ -17,7 +17,7 @@ export default class View extends React.Component {
         const { style, elevation } = this.props;
         if (Platform.OS === 'android') {
             return (
-                <BaseView elevation={this.props.elevation} style={[{elevation, backgroundColor: 'white'}, style]} { ...this.props}>
+                <BaseView elevation={this.props.elevation} style={[{elevation, backgroundColor: 'transparent'}, style]} { ...this.props}>
                     {this.props.children}
                 </BaseView>
             );

@@ -88,7 +88,7 @@ class BusinessScreen extends React.Component {
       headerRight: <AnimatedIcon
                         name={params.searchBar && params.searchBar.open ? "x" : "search"}
                          onPress={params.onSearchPress}
-                         style={{marginRight: 16}}
+                         style={{marginRight: 21}}
                          color={themes.base.colors.text.default}
                          size={21}/>,
 
@@ -125,7 +125,7 @@ class BusinessScreen extends React.Component {
     const nearPosition = {
       latitude,
       longitude,
-      radius: 50,
+      radius: 99999,
 
     };
     //if (businesses.list.ids.length === 0) return null;
@@ -136,6 +136,7 @@ class BusinessScreen extends React.Component {
             id='business_list'
             perPage="20"
             resource="businesses"
+
             sort={{field: 'dist.calculated', order: 'asc'}}
             nearPosition={nearPosition}
         >
@@ -158,9 +159,9 @@ class BusinessScreen extends React.Component {
                     }}>
                 <AnimatedSearchBar
                     showLoading={controllerProps.isLoading}
-                    onChangeText={(text) => controllerProps.setFilters({q: text})}
+                    onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
                     onClear={() => controllerProps.setFilters({q: undefined})}
-                    value={controllerProps.filterValues.q}
+                    value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
 
                     placeholder="Cerca locale..."
                 />

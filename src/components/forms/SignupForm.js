@@ -3,7 +3,9 @@
 import React from 'react';
 import  View   from '../common/View';
 import { Text, Platform, TouchableNativeFeedback } from 'react-native';
-import {Input, Button } from 'react-native-elements';
+import {Input } from 'react-native-elements';
+import { Button } from '../common';
+
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -101,12 +103,13 @@ const SignupForm = props => {
         />
 
         <Button
-
+            clear
             rounded={true}
+            variant={"primary"}
             loading={props.isLoading}
             title={'Registrati'.toUpperCase()}
-            titleStyle={{ color: colors.white.default, fontSize: 14}}
-            buttonStyle={styles.signUpButton}
+
+          //  buttonStyle={styles.signUpButton}
             onPress={props.onSubmit}
         />
 
@@ -170,7 +173,7 @@ const styles = {
     fontWeight: '500'
   },
   signUpButton: {
-
+      zIndex: 999,
     //marginTop: 20,
     backgroundColor: colors.accent.default,
     height: 40,

@@ -34,7 +34,7 @@ import queryReducer, {
  **/
 
 class ListController extends Component {
-  state = { isRefreshing: false }; //Per gestire il refresh della lista
+  state = { isRefreshing: false, noContent: false }; //Per gestire il refresh della lista
 
   componentDidMount() {
     if (!this.props.initialised) {
@@ -141,6 +141,7 @@ class ListController extends Component {
           { field: sort, order},
           { ...filter, ...permanentFilter },
           this.props.basePath,
+          this.props.infiniteScroll, //accumulateResults: infiniteScroll
       )
     } else {
       this.props.crudGetList(
@@ -150,8 +151,16 @@ class ListController extends Component {
           {field: sort, order},
           {...filter, ...permanentFilter},
           this.props.basePath,
+          this.props.infiniteScroll ////accumulateResults: infiniteScroll
       );
     }
+
+    //Hack per non far visualizzare in un breve istante il "no content" prima del fetch
+    setTimeout(() => {
+      if (this.props.ids.length === 0 && !this.props.isLoading) {
+        this.setState({noContent: true})
+      } else { this.setState({noContent: false})}
+    }, 1000)
   }
 
 
@@ -210,10 +219,10 @@ class ListController extends Component {
 
     const query = this.getQuery();
     const queryFilterValues = query.filter || {};
-    if (!initialised && isLoading) {
+    if (isLoading) {
 
       return (
-          <View >
+          <View style={{flex: 1, justifyContent: 'center'}}>
             <ActivityIndicator size="large" />
           </View>
       )
@@ -243,6 +252,7 @@ class ListController extends Component {
       total,
       version,
       initialised,
+      noContent: this.state.noContent,
 
       listId: id,
     });
@@ -287,6 +297,8 @@ ListController.propTypes = {
   version: PropTypes.number,
 
   id: PropTypes.string.isRequired,
+
+  infiniteScroll: PropTypes.bool
 
 };
 

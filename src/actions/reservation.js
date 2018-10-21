@@ -23,12 +23,13 @@ export const reserveBroadcast = (broadcast, userId, callback) => ({
       },
 
     },
-    /*onFailure: {
-     notification: {
-     body: 'spotinapp.notification.http_error',
-     level: 'warning',
-     },
-     },*/
+    onFailure: {
+      notification: {
+        title: "Qualcosa è andato storto...",
+        body: "Non è stato possibile ottenere questa offerta, riprova più tardi.",
+        level: 'warning',
+      },
+    },
   },
 });
 

@@ -40,6 +40,7 @@ class EventScreen extends React.Component {
         <ListController
             id={`${competitionId}_event_list`}
             resource="events"
+            infiniteScroll
             filter={{competition: competitionId}}>
           { controllerProps => <EventList
               onItemPress={this.handleEventPress}

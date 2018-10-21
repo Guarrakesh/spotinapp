@@ -108,10 +108,11 @@ class LoginScreen extends React.Component {
             <Text style={styles.title}>{"Entra nel tuo account".toUpperCase()}</Text>
 
             <ImageBackground source={BackgroundPattern} style={{
-              flex: 1,
+              height: '100%',
               width: '100%',
+              marginTop: -50
 
-            }}>
+            }} resizeMode="cover" resizeMethod="scale">
 
 
                 <View style={styles.middleContainerStyle}>
@@ -230,7 +231,7 @@ class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+
     alignItems: 'center',
     flexDirection: 'column',
     width: '100%',

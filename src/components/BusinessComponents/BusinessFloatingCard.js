@@ -1,7 +1,7 @@
 import React from 'react';
 
-import View from '../common/View';
-import {Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import {View, Touchable} from '../common';
+import {Text, StyleSheet, ImageBackground} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -28,8 +28,10 @@ const BroadcastFloatingCard = ({
 
 
   return (
-    <View style={styles.outerContainer} elevation={elevation}>
-      <TouchableOpacity onPress={onPress} delayPressIn={50}>
+
+      <Touchable activeOpacity={0.5}
+                 style={[styles.outerContainer, {elevation, ...themes.base.elevations[`depth${elevation}`]}]}
+                 onPress={onPress} delayPressIn={50}>
         <ImageBackground
           imageStyle={{borderRadius: themes.base.borderRadius}}
           source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
@@ -51,8 +53,8 @@ const BroadcastFloatingCard = ({
             </View>
           </View>
         </ImageBackground>
-      </TouchableOpacity>
-    </View>
+      </Touchable>
+
 
   );
 };
@@ -85,6 +87,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     borderRadius: themes.base.borderRadius,
     elevation: elevation,
+      ...themes.base.elevations[`depth${elevation}`]
 
   }),
   innerContainer: {

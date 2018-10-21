@@ -25,63 +25,64 @@ class BroadcastsList extends React.Component {
   render(){
 
     const {
-      isLoading,
-      data,
-      ids,
-      refresh,
-      isRefreshing,
-      onMapPress,
-      onContactUsPress,
-      onItemPress,
-      onFavoritePress,
-      style,
-      ...rest} = this.props;
+        isLoading,
+        data,
+        ids,
+        refresh,
+        isRefreshing,
+        onMapPress,
+        onContactUsPress,
+        onItemPress,
+        onFavoritePress,
+        style,
+        noContent,
+        ...rest} = this.props;
 
 
-    if (!isLoading && ids.length === 0) {
+    if (noContent) {
       return (
-        <View style={themes.base.noContentView}>
-          <Text style={styles.noBroadcastText}>Non ci sono locali che trasmettono questo evento...</Text>
-          <Button
-            title={"Contattaci"}
-            titleStyle={styles.contactUsButtonText}
-            buttonStyle={[styles.contactUsButton, {borderColor: colors.accent.default}]}
-            onPress={() => onContactUsPress()}
-          />
-          <Text style={styles.noBroadcastText}>...e organizzeremo l'evento per te!</Text>
-        </View>
+          <View style={themes.base.noContentView}>
+            <Text style={styles.noBroadcastText}>Non ci sono locali che trasmettono questo evento...</Text>
+            <Button
+                title={"Contattaci"}
+                titleStyle={styles.contactUsButtonText}
+                buttonStyle={[styles.contactUsButton, {borderColor: colors.accent.default}]}
+                onPress={() => onContactUsPress()}
+            />
+            <Text style={styles.noBroadcastText}>...e organizzeremo l'evento per te!</Text>
+          </View>
       )
     }
 
     return (
-      <View style={{flex: 1}}>
-        <AnimatedFlatList
-          {...rest}
-          scrollEventThrottle={15}
-          data={ids}
-          renderItem={({item}) => <BroadcastFloatingCard
-              overlayOpacity={0.8}
-              titleStyle={{fontSize: 18}}
-              elevation={2}
-              onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
-              broadcast={data[item]}/>}
+        <View style={{flex: 1}}>
+          <AnimatedFlatList
+              {...rest}
+              scrollEventThrottle={15}
+              data={ids}
+              renderItem={({item}) => <BroadcastFloatingCard
+                  overlayOpacity={0.8}
+                  titleStyle={{fontSize: 18}}
+                  elevation={2}
+                  onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
+                  broadcast={data[item]}/>}
 
-          contentContainerStyle={[styles.container, style]}
-        />
+              contentContainerStyle={[styles.container, style]}
+          />
 
-        <ActionButton
-          active={ids.length !== 0}
-          fixNativeFeedbackRadius={true}
-          title=''
-          position={"right"}
-          buttonColor={themes.base.colors.accent.default}
-          size={52}
-          offsetY={32}
-          degrees={0}
-          onPress={() => onMapPress({data, ids})}
-          renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
-        />
-      </View>
+          <ActionButton
+              active={ids.length !== 0}
+              fixNativeFeedbackRadius={true}
+              title=''
+              position={"right"}
+              buttonColor={themes.base.colors.accent.default}
+              size={52}
+              offsetY={32}
+              degrees={0}
+              onPress={() => onMapPress({data, ids})}
+              renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
+          />
+        </View>
 
     );
   }

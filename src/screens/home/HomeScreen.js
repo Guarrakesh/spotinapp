@@ -65,7 +65,7 @@ class HomeScreen extends React.Component {
                 <InlineListController
                   id="home_broadcasts_list"
                   resource="broadcasts"
-                  nearPosition={{...position, radius: 100}}>
+                  nearPosition={{...position, radius: 99999}}>
                   {controllerProps => controllerProps.isLoading ?
                     <View style={{height: 325, justifyContent: 'center'}}>
                       <ActivityIndicator size="large" />
@@ -112,7 +112,7 @@ class HomeScreen extends React.Component {
                 <InlineListController
                   id="home_businesses_list"
                   resource="businesses"
-                  nearPosition={{...position, radius: 100}}>
+                  nearPosition={{...position, radius: 99999}}>
                   {controllerProps => controllerProps.isLoading ?
                     null :
                     <View style={{marginBottom: 16}}>

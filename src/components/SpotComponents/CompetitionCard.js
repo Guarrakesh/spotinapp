@@ -1,8 +1,8 @@
 
 
 import React from 'react';
-import {View, VersionedImageField} from '../common';
-import { Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, VersionedImageField, Touchable} from '../common';
+import { Text, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -25,8 +25,9 @@ const CompetitionCard = (props) => {
 
 
   return (
-    <View elevation={1} style={styles.container}>
-      <TouchableOpacity onPress={props.onPress} style={styles.container}>
+      <Touchable onPress={props.onPress} style={[styles.container, {elevation: 1, ...themes.base.elevations.depth1}]}>
+        <View style={{flexDirection: 'row'}}>
+
         <View style={styles.image}>
           { image_versions
             ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
@@ -42,9 +43,9 @@ const CompetitionCard = (props) => {
         <View style={styles.arrowIconView}>
           <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
         </View>
+      </View>
+      </Touchable>
 
-      </TouchableOpacity>
-    </View>
   );
 };
 
@@ -89,8 +90,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: themes.base.colors.white.light,
     height: 100,
-    flexDirection: 'row',
-    justifyContent: 'center',
+
     marginBottom: 8,
     borderRadius: themes.base.borderRadius,
 

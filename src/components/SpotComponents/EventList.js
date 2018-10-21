@@ -42,6 +42,8 @@ class EventList extends React.Component {
         setPage,
         page,
         total,
+        noContent,
+
         ...props
     } = this.props;
 
@@ -75,7 +77,7 @@ class EventList extends React.Component {
       return <Text style={styles.sectionHeader}>{date}</Text>
     };
 
-    if (!isLoading && ids.length === 0){
+    if (noContent){
       return (  <View style={styles.noContentView}>
               <Text style={styles.noContentText}>
               Non ci sono eventi al momento

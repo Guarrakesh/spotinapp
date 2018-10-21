@@ -26,7 +26,7 @@ const EventCarousel = ({
             activeSlideAlignment={"start"}
             removeClippedSubviews={false}
             renderItem={({item}) =>
-                <EventFloatingCard elevation={2}
+                <EventFloatingCard elevation={1}
                                        event={data[item]}
 
                                        style={{flex: 1}}

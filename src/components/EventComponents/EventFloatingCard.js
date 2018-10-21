@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text, Dimensions, StyleSheet} from 'react-native';
-import View from '../common/View';
+import { Image, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Touchable} from '../common';
 import moment from 'moment';
 import 'moment/locale/it';
 import themes from '../../styleTheme';
@@ -44,9 +44,12 @@ const EventCard = ({
   const time = moment(event.start_at).locale('it').format('HH:mm').toUpperCase();
 
   return (
+      <Touchable
+          activeOpacity={0.5}
+          style={[styles.containerStyle, {elevation: 1, ...themes.base.elevations[`depth${elevation}`]}]}
+          onPress={onPress} delayPressIn={50}>
 
-      <View elevation={elevation} style={styles.containerStyle}>
-        <TouchableOpacity style={{flexDirection: 'row'}} onPress={onPress} delayPressIn={50}>
+          <View style={{flexDirection: 'row'}}>
           <View style={styles.competitorsLogosContainer}>
             {competitorsComponent}
           </View>
@@ -59,8 +62,9 @@ const EventCard = ({
           {event.sport && <View style={styles.sportIconView}>
             <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
           </View>}
-        </TouchableOpacity>
-      </View>
+          </View>
+
+      </Touchable>
 
   );
 }

@@ -15,7 +15,7 @@ export const CRUD_GET_LIST_LOADING = 'CRUD_GET_LIST_LOADING';
 export const CRUD_GET_LIST_FAILURE = 'CRUD_GET_LIST_FAILURE';
 export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 
-export const crudGetList = (resource, listId, pagination, sort, filter, basePath) => ({
+export const crudGetList = (resource, listId, pagination, sort, filter, basePath, accumulateResults = false) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
@@ -23,6 +23,7 @@ export const crudGetList = (resource, listId, pagination, sort, filter, basePath
     basePath,
     listId,
     fetch: GET_LIST,
+    accumulateResults,
     /*onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
@@ -278,7 +279,7 @@ export const CRUD_GET_MANY_SUCCESS = 'CRUD_GET_MANY_SUCCESS';
 
 // Reference related actions
 
-export const crudGetMany = (resource, ids, listId, basePath ) => ({
+export const crudGetMany = (resource, ids, listId, basePath,  accumulateResults = false) => ({
   type: CRUD_GET_MANY,
   payload: { ids },
   meta: {
@@ -286,6 +287,7 @@ export const crudGetMany = (resource, ids, listId, basePath ) => ({
     listId,
     basePath,
     fetch: GET_MANY,
+    accumulateResults
   /*  onFailure: {
       notification: {
         body: 'spotinapp.notification.http_error',
@@ -364,7 +366,7 @@ export const CRUD_GET_NEAR_MANY_SUCCESS = 'CRUD_GET_NEAR_MANY_SUCCESS';
 
 // Get near (by location) entities
 export const crudGetNearMany = (
-    resource, listId, position, pagination, sort, filter, basePath,
+    resource, listId, position, pagination, sort, filter, basePath,  accumulateResults = false
 ) => ({
   resource,
 
@@ -375,6 +377,7 @@ export const crudGetNearMany = (
     resource,
     listId,
     fetch: GET_LIST,
+    accumulateResults
     /*onSuccess:
      onFailure: {
      notification: {

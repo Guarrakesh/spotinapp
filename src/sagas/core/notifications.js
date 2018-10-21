@@ -13,6 +13,7 @@ function* handleNotification({ error, meta: { notification, optimistic } }) {
             level || 'warning',
             {
               messageArgs,
+              title,
               undoable: false,
             }
         )

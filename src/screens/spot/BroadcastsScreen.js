@@ -144,7 +144,7 @@ class BroadcastsScreen extends React.Component {
     const nearPosition = {
       latitude: position.lat,
       longitude: position.lng,
-      radius: 50,
+      radius: 99999,
 
     };
     if(currentlySending){

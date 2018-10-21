@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text, Dimensions, StyleSheet} from 'react-native';
-import View from '../common/View';
+import { Image, Text, Dimensions, StyleSheet} from 'react-native';
+import { Touchable, View } from '../common';
 import moment from 'moment';
 import 'moment/locale/it';
 import themes from '../../styleTheme';
@@ -18,16 +18,16 @@ const EventCard = (props) => {
   const { competition, competitors } = props;
   const competitorsComponent = (
       competition.competitorsHaveLogo
-                ?
-                <View style={styles.competitors}>
-                  {competitors.map(comp => (
-                     <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
-                  ))}
-                </View>
-                :
-                <View style={{marginTop: 16}}>
-                  { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                </View>
+          ?
+          <View style={styles.competitors}>
+            {competitors.map(comp => (
+                <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} />
+            ))}
+          </View>
+          :
+          <View style={{marginTop: 16}}>
+            { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+          </View>
   );
   let date = moment(props.start_at).locale('it').format('D MMM - HH:mm').toUpperCase();
   const time = moment(props.start_at).locale('it').format('HH:mm').toUpperCase();
@@ -36,26 +36,28 @@ const EventCard = (props) => {
 
       <View elevation={1} style={styles.containerStyle}>
 
-        <TouchableOpacity style={styles.favorite} onPress={props.onFavoritePress}>
+        <Touchable style={styles.favorite} onPress={props.onFavoritePress}>
 
           {props.isUserFavorite ?   <Icon name="favorite" size={30} color={colors.accent.default}/> :  <Icon name="favorite-border" size={30} color={colors.accent.default}/>}
 
-        </TouchableOpacity>
+        </Touchable>
 
-        <TouchableOpacity style={styles.eventInfo} onPress={props.onPress}>
-          <View style={styles.competitorsLogosContainer}>
-            {competitorsComponent}
-          </View>
+        <Touchable style={styles.eventInfo} onPress={props.onPress}>
+          <View style={{flexDirection: 'row', flex: 1}}>
+            <View style={styles.competitorsLogosContainer}>
+              {competitorsComponent}
+            </View>
 
-          <View style={styles.detailContainer}>
-            <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{props.name}</Text>
-            <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>
-            <Text style={styles.dateText}>{time}</Text>
+            <View style={styles.detailContainer}>
+              <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{props.name}</Text>
+              {/*  <Text style={styles.businessesInfoText}>3 locali vicino a te</Text>*/}
+              <Text style={styles.dateText}>{time}</Text>
+            </View>
+            <View style={styles.arrowIconView}>
+              <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
+            </View>
           </View>
-          <View style={styles.arrowIconView}>
-            <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
-          </View>
-        </TouchableOpacity>
+        </Touchable>
       </View>
 
   );
@@ -76,15 +78,14 @@ const styles = {
     borderRightWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16,
-    marginRight: 8,
+    paddingTop: 16,
+    paddingRight: 8,
     flexGrow: 0,
     flexBasis: 63,
-    marginBottom: 16
+    paddingBottom: 16
   },
   eventInfo: {
     flexGrow: 3,
-    flexDirection: 'row',
 
   },
   competitorsLogosContainer: {
@@ -109,7 +110,7 @@ const styles = {
     marginTop: 20,
     flexDirection: 'column',
     marginBottom: 20,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     flex: 1,
     flexWrap: 'wrap'
   },
