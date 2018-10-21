@@ -88,11 +88,7 @@ class BusinessScreen extends React.Component {
       headerRight: <AnimatedIcon
                         name={params.searchBar && params.searchBar.open ? "x" : "search"}
                          onPress={params.onSearchPress}
-                         style={{
-                           position: 'absolute',
-                           right: 16,
-
-                         }}
+                         style={{marginRight: 16}}
                          color={themes.base.colors.text.default}
                          size={21}/>,
 
@@ -184,6 +180,7 @@ class BusinessScreen extends React.Component {
                 <ActionButton
                     title=''
                     position={"right"}
+                    fixNativeFeedbackRadius={true}
                     buttonColor={themes.base.colors.accent.default}
                     size={52}
                     offsetY={32}

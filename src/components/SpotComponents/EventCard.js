@@ -64,10 +64,12 @@ const styles = {
   containerStyle: {
     borderRadius: themes.base.borderRadius,
     margin: 8,
+    marginTop: 4,
+    marginBottom: 4,
     height: 130,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: colors.white.default,
+    backgroundColor: colors.white.light,
   },
   favorite: {
     borderRightColor: colors.white.divisor,

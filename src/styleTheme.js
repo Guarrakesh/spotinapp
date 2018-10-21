@@ -142,6 +142,7 @@ const themes = {
 
     noContentView: {
       flex :1,
+      padding: 16,
       justifyContent: 'center',
       alignItems: 'center'
     },
