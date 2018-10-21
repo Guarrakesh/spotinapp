@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import {Text, StyleSheet, ImageBackground, Image, Alert} from 'react-native';
-import { Button } from 'react-native-elements';
-
-import View from '../common/View';
-import {Fonts} from "../../components/common/Fonts";
-import themes from "../../styleTheme";
-import Helpers from '../../helpers';
-
+import {get} from "lodash";
+import {Text, StyleSheet, ImageBackground, Image, Alert} from "react-native";
+import {Button} from "../common";
+import moment from "moment";
+import "moment/locale/it";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import ReferenceField from '../common/ReferenceField';
+import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
 import Images from "../../assets/images";
-import moment from "moment";
-import 'moment/locale/it';
+import View from "../common/View";
+import themes from "../../styleTheme";
+import Helpers from "../../helpers";
+
 
 const colors = themes.base.colors;
+const Fonts = themes.base.fonts;
 
-const ReservationView = ({reservation, onPress}) => {
+const ReservationView = ({reservation, onCancel}) => {
 
   const { broadcast, createdAt } = reservation;
-  const { offer, newsfeed, event } = broadcast;
+  const { offer, newsfeed } = broadcast;
 
 
   // let roundedDistance = Math.round(dist.calculated*10)/10;
@@ -57,20 +57,19 @@ const ReservationView = ({reservation, onPress}) => {
         'Eliminando la prenotazione non avrai più diritto allo sconto',
         [
           {text: 'Annulla', style: 'cancel'},
-          {text: 'Elimina', onPress: () => console.log('OK Pressed')},
+          {text: 'Elimina', onPress: () => onCancel()},
         ],
         { cancelable: true }
     )
-  }
-
+  };
 
   return(
       <View style={styles.container} elevation={2}>
-        <ReferenceField reference={"businesses"} source={"business"} record={broadcast}>
-          { ({record: business}) =>
-              <View style={styles.imgContainer}>
+        <View style={styles.imgContainer}>
+          <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
+            { ({record: business}) =>
                 <ImageBackground
-                    source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+                    source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
                     style={styles.imgBackground}
                 >
                   <View style={styles.businessContainer}>
@@ -79,53 +78,61 @@ const ReservationView = ({reservation, onPress}) => {
                       <View style={{flexDirection: 'column', flex: 1}}>
                         <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
                         <Text style={styles.businessAddress}>{business.address.street} {business.address.number}</Text>
-                        <Text style={styles.businessAddress}>{business.address.city} ({business.address.province})</Text>
+                        <Text style={styles.businessAddress}>{business.address.city}
+                          ({business.address.province})</Text>
                       </View>
-                      <View style={{flexDirection: 'row', alignItems: 'center', position: 'absolute', right: 8, bottom: 8}}>
+                      <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        right: 8,
+                        bottom: 8
+                      }}>
                         <Icon name="map-marker-radius" color={colors.white.light} size={20}/>
                         <Text style={styles.businessDistance}>1,2 km</Text>
                       </View>
                     </View>
                   </View>
                 </ImageBackground>
-              </View>}
-        </ReferenceField>
+            }
+          </ReferenceField>
+        </View>
+        <ReferenceField source="event" record={broadcast} resource="events" reference="events">
+          {({record: event}) =>
+              <View style={styles.eventInfoView}>
 
-        <View style={styles.eventInfoView}>
-        <ReferenceField resource="competitions" source="competition" record={event}>
-          { ({record: competition}) =>
-            competition.competitorsHaveLogo
-              ?
-              <View style={styles.competitorsLogoView}>
-                {event.competitors.map(comp => { return (
-                  <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
-                )})}
+                {event.competition.competitorsHaveLogo
+                    ? <View style={styles.competitorsLogoView}>
+                  {event.competitors.map(comp => {
+                    return comp._links &&
+                        <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}}
+                                             imgSize={{width: 32, height: 32}}/>
+
+                  })}
+                </View>
+                    :
+                    <View style={{marginTop: 8, marginLeft: 16}}>
+                      { <VersionedImageField source={event.competition.image_versions}
+                                             minSize={{width: 128, height: 128}}
+                                             imgSize={{width: 48, height: 48}}/>}
+                    </View>
+
+                }
+
+                <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+                  <Text style={styles.eventNameText}>{event.name}</Text>
+                  <Text style={styles.eventDateText}>{date(event.start_at)}</Text>
+                  <Text style={styles.eventTimeText}>{time(event.start_at)}</Text>
+                </View>
+                <View style={styles.sportIconView}>
+                  <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+                </View>
+
+
               </View>
-              :
-              <View style={{marginTop: 8, marginLeft: 16}}>
-                { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-              </View>
-
-
           }
         </ReferenceField>
 
-
-
-          <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
-            <Text style={styles.eventNameText}>{event.name}</Text>
-            <Text style={styles.eventDateText}>{date(event.start_at)}</Text>
-            <Text style={styles.eventTimeText}>{time(event.start_at)}</Text>
-          </View>
-
-
-          <View style={styles.sportIconView}>
-            <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
-          </View>
-
-
-        </View>
-        )}
 
         {(newsfeed || newsfeed > 0) ?
             <View style={styles.offerInfoView}>
@@ -142,8 +149,9 @@ const ReservationView = ({reservation, onPress}) => {
 
             <Button
                 title={"Elimina".toUpperCase()}
-                titleStyle={styles.deleteText}
-                buttonStyle={styles.deleteButton}
+                clear
+                variant="danger"
+
                 containerStyle={{borderRadius: 50}}
                 onPress={() => deletePress()}
             />
@@ -157,9 +165,9 @@ const ReservationView = ({reservation, onPress}) => {
 };
 
 ReservationView.propTypes = {
-  reservation: PropTypes.object,
-  onPress: PropTypes.func
-}
+  reservation: PropTypes.object.isRequired,
+  onCancel: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -285,11 +293,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: 'hidden'
   },
-  deleteButton: {
+  /*deleteButton: {
     backgroundColor: themes.base.colors.danger.light,
     alignItems: 'center',
     borderColor: "transparent",
-  },
+  },*/
   deleteText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
@@ -298,6 +306,10 @@ const styles = StyleSheet.create({
     marginRight: 16
 
   },
-})
+});
 
-export default ReservationView;
+
+
+
+
+export default (ReservationView);

@@ -98,23 +98,23 @@ class LoginScreen extends React.Component {
             bounces={false}
         >
 
-        <View style={styles.container}>
+          <View style={styles.container}>
 
-          <StatusBar
-              backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
-              barStyle="dark-content"
-          />
-          <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
-          <Text style={styles.title}>{"Entra nel tuo account".toUpperCase()}</Text>
+            <StatusBar
+                backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
+                barStyle="dark-content"
+            />
+            <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
+            <Text style={styles.title}>{"Entra nel tuo account".toUpperCase()}</Text>
 
-          <ImageBackground source={BackgroundPattern} style={{
-            height: '100%',
-            width: '100%',
+            <ImageBackground source={BackgroundPattern} style={{
+              flex: 1,
+              width: '100%',
 
-          }}>
+            }}>
 
 
-              <View style={styles.middleContainerStyle}>
+                <View style={styles.middleContainerStyle}>
 
                 <Input
                     placeholder="email"
@@ -199,27 +199,27 @@ class LoginScreen extends React.Component {
 
                 />
                 <View style={{overflow: "hidden"}}>
-                <Button
-                    fixNativeFeedbackRadius={true}
-                    clear={true}
-                    rounded={true}
-                    disabled={isLoading}
-                    title={['Non hai un account?', <Text style={{fontWeight: '700'}}> Registrati</Text>]}
-                    titleStyle={{color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
-                    buttonStyle={styles.signUpButton}
-                    onPress={() => this.props.navigation.navigate('SignUp')}
-                />
-              </View>
+                  <Button
+                      fixNativeFeedbackRadius={true}
+                      clear={true}
+                      rounded={true}
+                      disabled={isLoading}
+                      title={['Non hai un account?', <Text style={{fontWeight: '700'}}> Registrati</Text>]}
+                      titleStyle={{color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
+                      buttonStyle={styles.signUpButton}
+                      onPress={() => this.props.navigation.navigate('SignUp')}
+                  />
+                </View>
 
               </View>
 
 
 
 
-          </ImageBackground>
+            </ImageBackground>
 
 
-        </View>
+          </View>
         </KeyboardAwareScrollView>
     )
   }
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white.default
   },
   logo: {
-    marginTop: 42,
+    marginTop: 55,
     height: 128,
 
   },
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingTop: 8,
     marginBottom: 8,
-      ...themes.base.elevations.depth1,
+    ...themes.base.elevations.depth1,
     position: 'relative',
   },
 
@@ -284,9 +284,9 @@ const styles = StyleSheet.create({
 
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    paddingTop: 92,
 
-    justifyContent: 'flex-start',
+    flex:1,
+    justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
     ...themes.base.elevations.depth2

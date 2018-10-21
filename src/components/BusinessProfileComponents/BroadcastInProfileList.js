@@ -14,7 +14,7 @@ const BroadcastInProfileList = (
         refresh,
         isRefreshing,
         onReservePress,
-        userReservations
+        reservedBroadcasts,
     }
 ) => {
 
@@ -36,8 +36,8 @@ const BroadcastInProfileList = (
           }
           data={ids}
           renderItem={({item}) =>  <BroadcastCardInProfile
+              reserved={reservedBroadcasts.includes(item)}
               broadcast={data[item]}
-                reserved={userReservations.includes(item)}
                 onReservePress={() => onReservePress(data[item])}
                 />}
           />
@@ -56,10 +56,12 @@ const BroadcastInProfileList = (
     version: PropTypes.number,
     refresh: PropTypes.func,
     isRefreshing: PropTypes.bool,
-  }
-  BroadcastCardInProfile.propTypes = {
+
     broadcasts: PropTypes.array.isRequired,
-    onReservePress: PropTypes.func.isRequired
+    onReservePress: PropTypes.func.isRequired,
+
+    reservedBroadcasts: PropTypes.array,
   };
+
 
   export default BroadcastInProfileList;

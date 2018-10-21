@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { get } from 'lodash';
+
 import oneToMany from './oneToMany';
 import possibleValues, {
     getPossibleReferences as pvGetPossibleReferences,

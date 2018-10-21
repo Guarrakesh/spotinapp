@@ -199,6 +199,15 @@ const themes = {
       }
     },
     button: {
+      base: {
+        fontFamily: 'Lato-Medium',
+        color: '#555'
+      },
+      titleBase: {
+        fontSize: 16,
+        fontFamily: 'Lato-Medium',
+        color: '#555'
+      },
       primary: {
         backgroundColor: accentColor.default,
         color: whiteColor.default,
@@ -206,7 +215,15 @@ const themes = {
       primarySimple: {
         backgroundColor: 'transparent',
         color: accentColor.default,
-        fonts: 'Lato-Medium'
+
+      },
+      danger: {
+        backgroundColor: dangerColor.light
+      },
+      dangerSimple: {
+        backgroundColor: 'transparent',
+        color: dangerColor.light,
+
       },
       round: {
         borderRadius: 50

@@ -52,7 +52,7 @@ class ContactUsScreen extends React.Component{
 
   _sendRequest(){
     const {userId, event, userPosition, location, maxDistance, numOfPeople, notes } = this.state;
-    createRequest(userId, event, location, maxDistance, numOfPeople, userPosition, notes);
+    this.props.dispatch(createRequest(userId, event, location, maxDistance, numOfPeople, userPosition, notes));
   }
 
   showAlert() {

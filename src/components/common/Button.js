@@ -5,7 +5,7 @@ import {  Platform } from 'react-native';
 import { Button as BaseButton } from 'react-native-elements'
 
 import themes from '../../styleTheme';
-const buttonStyle = themes.base.button;
+const buttonBaseStyle = themes.base.button;
 export default class Button extends React.Component {
   static propTypes = {
     elevation: PropTypes.number
@@ -17,20 +17,27 @@ export default class Button extends React.Component {
 
   render() {
 
-    const { clear, variant, round } = this.props;
+    const { clear, variant, round, buttonStyle, titleStyle} = this.props;
 
     //TODO tutta la roba dell'ombra e dei ripple
 
     const style = [
-      clear ? {} : buttonStyle[variant],
-      round ? buttonStyle.round : {}
+      clear ? {} : buttonBaseStyle[variant],
+      round ? buttonBaseStyle.round : {},
+      buttonBaseStyle.base,
+      buttonStyle,
+    ];
+    const titleBaseStyle = [
+        buttonBaseStyle.titleBase,
+      clear ? buttonBaseStyle[`${variant}Simple`] : {},
+      titleStyle
     ];
     return (
         <BaseButton
-            round
+            rounded
             activeOpacity={0.2}
             buttonStyle={style}
-            titleStyle={clear ? buttonStyle[`${variant}Simple`] : {}}
+            titleStyle={titleBaseStyle}
             title={this.props.children}
             {...this.props}
         />

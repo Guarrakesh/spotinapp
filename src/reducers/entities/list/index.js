@@ -17,7 +17,6 @@ const initialState = {};
 export default (previousState = initialState, action) => {
 
   if (action.type === INIT_LIST) {
-
     const listState = {
       isLoading: false,
       ids: ids(undefined, action),
@@ -28,7 +27,7 @@ export default (previousState = initialState, action) => {
 
     const newState = {
       ...previousState,
-      [action.id]: listState
+      [action.payload.id]: listState
     };
 
     return newState;
@@ -39,7 +38,7 @@ export default (previousState = initialState, action) => {
     (acc, id) => ({
       ...acc,
       [id]:
-        action.meta.listId === id
+        action.meta.listId == id
           ? {
             isLoading: action.type.includes('LOADING'),
             ids: ids(previousState[id].ids, action),

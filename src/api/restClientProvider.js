@@ -20,7 +20,7 @@ import {
 import {fetchJson, flattenObject} from '../helpers/fetch';
 
 const convertOrder = order => {
-  return order === "ASC" ? 1 : -1;
+  return typeof order === "string" ? order === "ASC" ? 1 : -1 : order;
 }
 /**
  * Maps react-admin queries to a json-server powered REST API

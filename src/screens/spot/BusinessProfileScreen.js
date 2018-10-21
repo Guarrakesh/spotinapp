@@ -24,7 +24,10 @@ class BusinessProfileScreen extends React.Component {
     broadcasts: [],
     eventLoaded: false,
     currentlySending: true,
-    scrollY: new Animated.Value(0)
+    scrollY: new Animated.Value(0),
+
+    //Broadcast prenotati durante questa sessione
+    reservedBroadcasts: [],
   };
 
   static navigationOptions = ({navigation}) => {
@@ -71,7 +74,11 @@ class BusinessProfileScreen extends React.Component {
 
     });
 
-    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId);
+    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId, ({payload, requestPayload}) => {
+      //A prenotazione effettuata, aggiungo questo broadcast a quelli prenotati nello state, così che possa cambiare comparire
+      //il flag PRENOTATO
+      this.setState({ reservedBroadcasts: [...this.state.reservedBroadcasts, requestPayload.data.broadcast]})
+    });
     this.forceUpdate();
   }
 
@@ -87,7 +94,7 @@ class BusinessProfileScreen extends React.Component {
   render(){
 
     const {businessId, distance} = this.props.navigation.state.params;
-    const { userReservations } = this.props;
+
     return (
       <ShowController resource="businesses"
                       id={businessId}
@@ -130,8 +137,9 @@ class BusinessProfileScreen extends React.Component {
                     record={record}
                   >
                     {controllerProps => <BroadcastInProfileList
-                      userReservations={userReservations}
                       {...controllerProps}
+
+                        reservedBroadcasts={this.state.reservedBroadcasts}
                       onReservePress={this.handleReservePress.bind(this)}/>}
 
                   </ReferenceManyFieldController>
@@ -169,7 +177,6 @@ const styles = StyleSheet.create({
 
 
 export default connect((state) => ({
-  userReservations: state.auth.profile.reservations || [],
   userId: state.auth.profile._id
 }), {
   reserveBroadcast

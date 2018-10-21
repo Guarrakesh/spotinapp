@@ -14,8 +14,8 @@ import ReferenceField from '../common/ReferenceField'
 
 const BroadcastCardInProfile = (props) => {
 
-  let { broadcast, onReservePress, reserved } = props;
-  const { offer, newsfeed } = broadcast;
+  let { broadcast, onReservePress } = props;
+  const { offer, newsfeed, reserved } = broadcast;
 
 
   const discount = (type) => {
@@ -86,7 +86,7 @@ const BroadcastCardInProfile = (props) => {
               <View style={styles.offerContainer}>
                 <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
               </View>
-              {!reserved ?
+              {!reserved && !props.reserved ?
                 <TouchableOpacity onPress={onReservePress}>
                   <View style={styles.reservationButton} elevation={2}>
                     <Text style={styles.reservationText}>OTTIENI OFFERTA</Text>
@@ -107,7 +107,8 @@ const BroadcastCardInProfile = (props) => {
 };
 BroadcastCardInProfile.propTypes ={
   broadcast: PropTypes.object,
-  onReservePress: PropTypes.func
+  onReservePress: PropTypes.func,
+  reserved: PropTypes.bool,
 };
 const styles = StyleSheet.create({
   broadcastInfoView: {

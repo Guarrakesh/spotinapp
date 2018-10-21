@@ -34,7 +34,7 @@ class SportScreen extends React.Component {
             id="sport_screen_list"
             resource="sports"
             perPage={20}
-            sort={{field: 'order', order: 'asc'}}
+            sort={{field: '_id', order: 'asc'}}
         >
           { controllerProps =>  <SportList onItemPress={this.handleItemPress} {...controllerProps} />}
 

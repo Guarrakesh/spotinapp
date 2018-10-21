@@ -72,7 +72,6 @@ export default (previousState = initialState, { type, payload, meta }) => {
             .map(record => ({ ...record, ...payload.data }));
         return addRecords(updatedRecords, previousState);
     }
-
     if (type === CRUD_DELETE_MANY_OPTIMISTIC) {
         const newState = Object.entries(previousState)
             .filter(([key]) => !payload.ids.includes(key))

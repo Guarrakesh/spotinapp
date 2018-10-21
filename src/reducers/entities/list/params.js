@@ -1,14 +1,16 @@
 import { CRUD_CHANGE_LIST_PARAMS } from '../../../actions/listActions';
 
 const defaultState = {
-    sort: null,
-    order: null,
+    sort: "_id",
+    order: 1,
     page: 1,
-    perPage: null,
+    perPage: 10,
     filter: {},
 };
 
-export default (previousState = defaultState, { type, payload }) => {
+
+export default   (previousState = defaultState, { type, payload }) => {
+
     switch (type) {
         case CRUD_CHANGE_LIST_PARAMS:
             return payload;

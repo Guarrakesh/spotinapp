@@ -14,7 +14,7 @@ export const createRequest = (userId, event, location, maxDistance, numOfPeople,
     note,
   },
   meta: {
-    basePath: "/users/:"+userId,
+    basePath: "/users/"+userId,
     resource: "requests",
     fetch: CREATE,
     onSuccess: {

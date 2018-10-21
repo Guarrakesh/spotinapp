@@ -1,6 +1,8 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { View, ActivityIndicator } from 'react-native';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { parse, stringify } from 'query-string';
@@ -42,7 +44,8 @@ class ListController extends Component {
 
       this.updateData();
       if (Object.keys(this.props.query).length > 0) {
-        this.props.changeListParams(this.props.resource, this.props.query);
+
+        this.props.changeListParams(this.props.resource, this.props.id, this.props.query);
 
       }
     }
@@ -54,17 +57,15 @@ class ListController extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.initialised !== this.props.initialised) {
-      this.updateData()
-    }
+
     if ((
+        nextProps.initialised !== this.props.initialised ||
         nextProps.resource !== this.props.resource ||
         !isEqual(nextProps.params, this.props.params) ||
         !isEqual(nextProps.filter, this.props.filter) ||
         !isEqual(nextProps.sort, this.props.sort) ||
         !isEqual(nextProps.perPage, this.props.perPage))
     ) {
-
       this.updateData(nextProps.params);
 
     }
@@ -97,7 +98,7 @@ class ListController extends Component {
   }
   getQuery() {
 
-    const query = this.props.params;
+    const query = {...this.props.params};
 
 
     const filterDefaultValues = this.props.filterDefaultValues || {};
@@ -120,7 +121,6 @@ class ListController extends Component {
 
 
     const params = query || this.getQuery();
-
 
     const { sort, order, page = 1, perPage, filter = {} } = params;
 
@@ -204,12 +204,20 @@ class ListController extends Component {
         isLoading,
         version,
         selectedIds,
-        id
+        id,
+        initialised,
     } = this.props;
 
     const query = this.getQuery();
     const queryFilterValues = query.filter || {};
+    if (!initialised && isLoading) {
 
+      return (
+          <View >
+            <ActivityIndicator size="large" />
+          </View>
+      )
+    }
     return children({
       basePath,
       currentSort: {
@@ -234,6 +242,7 @@ class ListController extends Component {
       setPerPage: this.setPerPage,
       total,
       version,
+      initialised,
 
       listId: id,
     });
@@ -284,7 +293,7 @@ ListController.propTypes = {
 ListController.defaultProps = {
   debounce: 500,
   filter: {},
-  params:{},
+
   query: {},
   filterValues: {},
   perPage: 10,
@@ -367,16 +376,15 @@ function mapStateToProps(state, props) {
     data = resourceState.data;
   }
   const list = resourceState.list[props.id];
-
   return {
     //query: selectQuery(props),
     initialised: !!list,
     params: !!list ? list.params : {},
     ids: !!list ? list.ids : [],
     selectedIds: !!list ? list.ids : [],
-    total: !!list ? list.ids.length : 0,
+    total: !!list ? list.total : 0,
     data,
-    isLoading: !!list ? list.isLoading : false,
+    isLoading: !!list ? list.isLoading && state.loading > 0: false,
     filterValues: !!list ? list.params.filter : {},
     version: state.ui.viewVersion,
 

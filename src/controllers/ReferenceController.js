@@ -12,11 +12,13 @@ import { crudGetManyAccumulate as crudGetManyAccumulateAction } from '../actions
 
 export class ReferenceController extends Component {
   componentDidMount() {
+
     this.fetchReference(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.record.id !== nextProps.record.id) {
+    if (this.props.record.id !== nextProps.record.id || ( !this.props.referenceRecord &&
+    this.props.referenceRecord !== nextProps.referenceRecord) ) {
       this.fetchReference(nextProps);
     }
   }
@@ -64,12 +66,13 @@ ReferenceController.defaultProps = {
   record: {}
 };
 
-const mapStateToProps = (state, props) => ({
-  referenceRecord:
-      state.entities[props.reference].data[
-          get(props.record, props.source)
-          ]
-});
+const mapStateToProps = (state, props) => {
+  return {
+    referenceRecord: state.entities[props.reference].data[
+        get(props.record, props.source)
+        ]
+  }
+}
 
 export default connect(
     mapStateToProps,

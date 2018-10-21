@@ -4,6 +4,7 @@ import data from './data';
 import list from './list';
 
 const initialState = {};
+import { INIT_LIST } from '../../actions/listActions';
 
 export default (previousState = initialState, action) => {
     if (action.type === REGISTER_RESOURCE) {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { takeEvery, all, call, put } from 'redux-saga/effects';
-import {fork} from "../../node_modules/redux-saga/effects";
+import {fork} from "../../../node_modules/redux-saga/effects";
 
-import { getLocationSuccess } from "../actions/location";
-import { requestError, sendingRequest } from "../actions";
+import { getLocationSuccess } from "../../actions/location";
+import { requestError, sendingRequest } from "../../actions";
 import {
   GET_CURRENT_LOCATION
 
-} from '../actions/types';
+} from '../../actions/types';
 
 
 function getPosition() {

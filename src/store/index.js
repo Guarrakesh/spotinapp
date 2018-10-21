@@ -5,7 +5,7 @@ import logger from 'redux-logger'; //eslint-disable-line
 import {offline} from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import rootReducer from '../reducers';
-import rootSaga from '../sagas';
+import rootSaga from '../sagas/core';
 
 
 
@@ -22,6 +22,7 @@ else
 
 
 
+
 export default function configureStore(initialState) {
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -30,7 +31,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     composeEnhancers(
-      applyMiddleware(sagaMiddleware),
+      applyMiddleware(sagaMiddleware, logger),
       //offline(offlineConfig)
     )
   );

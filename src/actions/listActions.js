@@ -6,7 +6,7 @@ export const INIT_LIST = 'INIT_LIST';
 export const initList = (resource, id) => ({
   type: INIT_LIST,
   meta: { resource }, 
-  id
+  payload: {id}
 });
 export const changeListParams = (resource, listId, params) => ({
   type: CRUD_CHANGE_LIST_PARAMS,

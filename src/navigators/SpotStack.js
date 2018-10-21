@@ -99,7 +99,10 @@ export const SpotStack = createStackNavigator({
       })
     },
 
-  },{
+      ContactUs: ContactUsNavigator
+
+
+    },{
     cardStyle: { backgroundColor: themes.base.backgroundColor },
 
     navigationOptions: {

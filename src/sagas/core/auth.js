@@ -1,8 +1,8 @@
 import { all, put, call, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import NavigationService from '../navigators/NavigationService';
-import { showNotification, hideNotification } from'../actions/notificationActions';
-import convertErrorMessage, { ERROR_TYPE_UNKNOWN } from '../helpers/convertErrorMessage';
+import NavigationService from '../../navigators/NavigationService';
+import { showNotification, hideNotification } from'../../actions/notificationActions';
+import convertErrorMessage, { ERROR_TYPE_UNKNOWN } from '../../helpers/convertErrorMessage';
 
 import {
   USER_LOGIN,
@@ -22,14 +22,14 @@ import {
   OAUTH_LOGIN_SUCCESS,
 
   AUTH_CHECKING
-} from '../actions/authActions';
-import { FETCH_ERROR } from '../actions/fetchActions';
+} from '../../actions/authActions';
+import { FETCH_ERROR } from '../../actions/fetchActions';
 
 
 
-import { isChecking } from '../reducers/auth';
+import { isChecking } from '../../reducers/auth';
 
-import auth from '../api/auth';
+import auth from '../../api/auth';
 /*
  function* initAuth() {
  let token = yield call(auth.getAuthToken);
@@ -124,7 +124,7 @@ function* handleAuth(action) {
         const { service } = payload;
         const authResponse = yield call(auth.oAuthLogin, service);
         yield put({
-          type: USER_LOGIN_SUCCESS,
+          type: OAUTH_LOGIN_SUCCESS,
           payload: authResponse
         });
         NavigationService.navigate(meta.pathName || 'Main', {}, true);

@@ -4,7 +4,7 @@ import { take, put, call, fork, race } from 'redux-saga/effects';
 import NavigationService from '../navigators/NavigationService';
 import { delay } from 'redux-saga';
 
-import { wait } from './helpers';
+import { wait } from './core/helpers';
 import {
     LOGIN,
     LOGOUT,

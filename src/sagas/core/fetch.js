@@ -15,13 +15,13 @@ import {
   FETCH_END,
   FETCH_ERROR,
   FETCH_START
-} from '../actions/fetchActions'
+} from '../../actions/fetchActions'
 
-import { AUTH_CHECKING } from '../actions/authActions';
-import { isChecking } from '../reducers/auth';
-import { hideNotification } from '../actions/notificationActions';
+import { AUTH_CHECKING } from '../../actions/authActions';
+import { isChecking } from '../../reducers/auth';
+import { hideNotification } from '../../actions/notificationActions';
 
-import auth from '../api/auth'
+import auth from '../../api/auth'
 
 
 export function* handleFetch(dataProvider, action) {

@@ -12,7 +12,6 @@ const EventCarousel = ({
   ids,
   data,
   isLoading,
-  sports,
   style,
   onItemPress
 }) => (
@@ -29,7 +28,7 @@ const EventCarousel = ({
             renderItem={({item}) =>
                 <EventFloatingCard elevation={2}
                                        event={data[item]}
-                                       sport={sports[data[item].sport]}
+
                                        style={{flex: 1}}
                                        onPress={() => {onItemPress(data[item], item)}}/>
             }
@@ -41,6 +40,4 @@ const EventCarousel = ({
         />
 
     );
-export default connect(state => ({
-  sports: state.entities.sports.data || {}
-}), {})(EventCarousel);
+export default EventCarousel;

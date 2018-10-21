@@ -41,7 +41,7 @@ class BroadcastsList extends React.Component {
           <Text style={{marginBottom: 16, fontFamily: Fonts.LatoMedium, fontSize: 16}}>Non ci sono locali che trasmettono questo evento</Text>
           <Button
             title={"Contattaci"}
-            onPress={() => onContactUsPress()}
+            onPress={onContactUsPress}
           />
         </View>
       )

@@ -21,7 +21,7 @@ export const addRecordIdsFactory = getFetchedAt => (
 ) => {
   const newFetchedAt = getFetchedAt(newRecordIds, oldRecordIds.fetchedAt);
   const recordIds = uniq(
-      oldRecordIds.filter(id => !!newFetchedAt[id]).concat(newRecordIds)
+      oldRecordIds.concat(newRecordIds)
   );
 
   Object.defineProperty(recordIds, 'fetchedAt', {
@@ -36,7 +36,9 @@ export default (previousState = [], { type, payload, requestPayload }) => {
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:
-      return addRecordIds(payload.data.map(({ id }) => id), []);
+      return addRecordIds(payload.data.map(({ id }) => id), previousState);
+
+
     case CRUD_GET_MANY_SUCCESS:
     case CRUD_GET_MANY_REFERENCE_SUCCESS:
       return addRecordIds(
@@ -50,9 +52,10 @@ export default (previousState = [], { type, payload, requestPayload }) => {
     case CRUD_UPDATE_SUCCESS:
       return addRecordIds([payload.data.id], previousState);
     case CRUD_DELETE_OPTIMISTIC:
-      case CRUD_DELETE_SUCCESS:{
+
+    case CRUD_DELETE_SUCCESS:{
       const index = previousState
-          .map(el => el == requestPayload.id) // eslint-disable-line eqeqeq
+          .map(el => el == (requestPayload ? requestPayload.id : payload.id)) // eslint-disable-line eqeqeq
           .indexOf(true);
       if (index === -1) {
         return previousState;

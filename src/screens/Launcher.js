@@ -3,7 +3,7 @@ import { userCheck } from '../actions/authActions';
 
 import { connect } from 'react-redux';
 
-import { View, Image } from 'react-native';
+import { View, Image, ActivityIndicator} from 'react-native';
 
 const Logo = require('../assets/img/logo.png');
 
@@ -14,9 +14,11 @@ class Launcher extends React.Component {
 
 
   render() {
+    const { isLoading } = this.props;
     return (
         <View style={styles.container}>
           <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Logo}/>
+          {isLoading && <ActivityIndicator size="large"/>}
         </View>
     );
   }
@@ -36,4 +38,7 @@ const styles = {
 };
 
 
-export default connect(null, { userCheck })(Launcher);
+export default connect(state => ({
+  isLoading: state.loading > 0
+    })
+, { userCheck })(Launcher);

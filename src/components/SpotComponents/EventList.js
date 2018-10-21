@@ -1,93 +1,116 @@
-import React from 'react';
-
-import EventCard from './EventCard';
-import PropTypes from 'prop-types';
-import {StyleSheet, SectionList, Text, View, ActivityIndicator} from 'react-native';
-import { groupBy } from 'lodash';
-import moment from 'moment';
-import 'moment/locale/it';
+import React from "react";
+import EventCard from "./EventCard";
+import PropTypes from "prop-types";
+import {StyleSheet, SectionList, Text, View, ActivityIndicator} from "react-native";
+import {groupBy, debounce} from "lodash";
+import moment from "moment";
+import "moment/locale/it";
 import {Fonts} from "../common/Fonts";
 import themes from "../../styleTheme";
-import Icon from 'react-native-vector-icons/Entypo'
-import LoadingView from '../common/LoadingView';
-
-const EventList = ({
-    isLoading,
-    data,
-    ids,
-    refresh,
-    isRefreshing,
-    onItemPress,
-    onFavoritePress
-}) => {
+import Icon from "react-native-vector-icons/Entypo";
 
 
-  const sectionKeys = ids.reduce((sections, id) => {
-    const date = new Date(data[id].start_at);
-    const sectionKey = `${date.getDate().toString()}.${date.getMonth().toString()}`;
-    if (!sections.includes(sectionKey))
-      sections.push(sectionKey);
+class EventList extends React.Component {
 
-    return sections;
-  }, new Array());
+  state = {isLoadingMore: false};
 
-  const sections = sectionKeys.map(key => {
-    const section = {key};
-    section.data = ids.filter(id => {
+
+  loadMore = debounce(() => {
+    const { isLoading, isRefreshing, setPage, page, total, perPage} = this.props;
+
+    const nextPage = page + 1;
+    //Mi assicuro che non sto sforando le pagine
+    if ((Math.ceil(nextPage) < (total / perPage )) && !isLoading && !isRefreshing) {
+      setPage(page + 1)
+    }
+
+
+  }, 1000, { leading: true, trailing: false});
+
+
+
+  render() {
+
+    const {
+        isLoading = true,
+        data,
+        ids,
+        refresh,
+        isRefreshing,
+        onItemPress,
+        onFavoritePress,
+        setPage,
+        page,
+        total,
+        ...props
+    } = this.props;
+
+
+    let sectionKeys = groupBy(ids, id => moment(data[id].start_at).startOf('isoWeek'));
+
+    sectionKeys = ids.reduce((sections, id) => {
       const date = new Date(data[id].start_at);
       const sectionKey = `${date.getDate().toString()}.${date.getMonth().toString()}`;
-      return sectionKey === key;
+      if (!sections.includes(sectionKey))
+        sections.push(sectionKey);
+
+      return sections;
+    }, new Array());
+
+    const sections = sectionKeys.map(key => {
+      const section = {key};
+      section.data = ids.filter(id => {
+        const date = new Date(data[id].start_at);
+        const sectionKey = `${date.getDate().toString()}.${date.getMonth().toString()}`;
+        return sectionKey === key;
+      });
+      return section;
     });
-    return section;
-  });
 
 
-  const headerSection = ({section}) => {
+    const headerSection = ({section}) => {
 
-    const date = moment(data[section.data[0]].start_at).locale('it').format('dddd D MMMM').toString();
+      const date = moment(data[section.data[0]].start_at).locale('it').format('dddd D MMMM').toString();
 
-    return <Text style={styles.sectionHeader}>{date}</Text>
-  };
+      return <Text style={styles.sectionHeader}>{date}</Text>
+    };
 
-   if (isLoading && ids.length === 0) {
-     return (
-       <View style={styles.noContentView}>
-         <ActivityIndicator size="large" color={<themes className="base colors text"></themes>.default} />
-       </View>
-     )
-   }
+    if (!isLoading && ids.length === 0){
+      return (  <View style={styles.noContentView}>
+              <Text style={styles.noContentText}>
+              Non ci sono eventi al momento
+            </Text>
+          </View>
+      )
+    }
 
-
-  if (!isRefreshing && !isLoading && ids.length === 0){
     return (
-      <View style={styles.noContentView}>
-        <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>
-        <Text style={styles.noContentText}>
-          Non ci sono eventi al momento
-        </Text>
-      </View>
-    )
+        <SectionList
+            renderItem={({item}) => <EventCard
+                key={data[item]._id}
+                onPress={ ()=> onItemPress(item, data[item])}
+                onFavoritePress={ () => onFavoritePress(item)}
+                {...data[item]}/>}
+            contentContainerStyle={styles.container}
+            onEndReached={this.loadMore.bind(this)}
+            onEndReachedThreshold={0.5}
+            renderSectionHeader={headerSection}
+            sections={sections}
+            stickySectionHeadersEnabled={false}
+            onRefresh={refresh}
+            refreshing={isRefreshing}
+            ListFooterComponent={isLoading && <ActivityIndicator/>}
+            ListHeaderComponent={<Text style={themes.base.listTitleStyle}>Seleziona l'evento</Text> }
+        />
+    );
   }
-
-  return (
-      <SectionList
-          renderItem={({item}) => <EventCard
-              key={data[item]._id}
-              onPress={ ()=> onItemPress(item, data[item])}
-              onFavoritePress={ () => onFavoritePress(item)}
-              {...data[item]}/>}
-          contentContainerStyle={styles.container}
-         // onEndReached={loadMore}
-          renderSectionHeader={headerSection}
-          sections={sections}
-          stickySectionHeadersEnabled={false}
-          onRefresh={refresh}
-          refreshing={isRefreshing}
-          ListHeaderComponent={<Text style={themes.base.listTitleStyle}>Seleziona l'evento</Text> }
-      />
-  );
 }
 
+
+EventList.defaultProps = {
+  isLoading: true,
+
+};
 EventList.propTypes = {
   onItemPress: PropTypes.func.isRequired,
   onFavoritePress: PropTypes.func.isRequired,

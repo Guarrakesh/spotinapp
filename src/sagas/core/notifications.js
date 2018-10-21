@@ -1,11 +1,11 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { showNotification } from '../actions/notificationActions';
+import { showNotification } from '../../actions/notificationActions';
 
 /**
  * Notification Side Effects
  */
 function* handleNotification({ error, meta: { notification, optimistic } }) {
-  const { body, level, messageArgs = {} } = notification;
+  const { body, level, title, messageArgs = {} } = notification;
   if (error) {
     return yield put(
         showNotification(
@@ -20,6 +20,7 @@ function* handleNotification({ error, meta: { notification, optimistic } }) {
   }
   yield put(
       showNotification(body, level || 'info', {
+        title,
         messageArgs,
         undoable: optimistic,
       })

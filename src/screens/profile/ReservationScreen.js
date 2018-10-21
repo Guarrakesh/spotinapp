@@ -1,15 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+
+import { cancelReservation } from '../../actions/reservation';
 
 import ReservationView from '../../components/ProfileComponents/ReservationView';
 
 import themes from "../../styleTheme";
 
 
-
 class ReservationScreen extends React.Component {
 
 
+  onCancel() {
+    const { reservation } = this.props.navigation.state.params;
+    this.props.cancelReservation(reservation.user, reservation._id);
+    this.props.navigation.goBack();
+  }
   render() {
 
     const {reservation} = this.props.navigation.state.params;
@@ -20,11 +28,12 @@ class ReservationScreen extends React.Component {
                   bounces={false}
       >
 
-            <ReservationView reservation={reservation}/>
+
+            <ReservationView reservation={reservation} onCancel={this.onCancel.bind(this)}/>
 
       </ScrollView>
     )
   }
 }
 
-export default ReservationScreen;
+export default connect(null, {cancelReservation})(ReservationScreen);

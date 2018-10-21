@@ -72,11 +72,13 @@ const auth = {
         Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
           const token = values[0];
           const user = values[1];
-
           if (!token) return reject({status: 401, message: "No auth token"});
+
           const dateNow = Date.now();
           const tokenExpire = Date.parse(token.expiresIn);
+
           if (tokenExpire < dateNow) {
+
             //La token e' scaduta, effetuo il refresh
             const {email} = user;
             const refreshToken = token.refreshToken;
@@ -88,6 +90,7 @@ const auth = {
             }).catch(e => reject(e));
 
           } else {
+
             return resolve();
           }
         })
