@@ -129,7 +129,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
     flexDirection: 'column',
-    padding: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    backgroundColor: themes.base.colors.white.default
   },
   noContentView: {
     flex :1,

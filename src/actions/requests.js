@@ -5,13 +5,15 @@ export const createRequest = (userId, event, location, maxDistance, numOfPeople,
 
   type: CRUD_CREATE,
   payload: {
-    userId,
-    event,
-    location,
-    maxDistance,
-    numOfPeople,
-    userPosition,
-    note,
+    data: {
+      userId,
+      event,
+      location,
+      maxDistance,
+      numOfPeople,
+      userPosition,
+      note,
+    }
   },
   meta: {
     basePath: "/users/"+userId,

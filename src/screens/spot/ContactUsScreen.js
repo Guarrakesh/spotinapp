@@ -26,8 +26,8 @@ class ContactUsScreen extends React.Component{
       userId: "",
       event: "",
       userPosition: {
-        lat: this.latitude,
-        lng: this.longitude
+        latitude: this.latitude,
+        longitude: this.longitude
       },
       location: "",
       maxDistance: 0,
@@ -44,8 +44,8 @@ class ContactUsScreen extends React.Component{
       event: event._id,
       userId: this.props.userId,
       userPosition: {
-        lat: this.props.latitude,
-        lng: this.props.longitude
+        latitude: this.props.latitude,
+        longitude: this.props.longitude
       }
     });
   }
@@ -58,7 +58,7 @@ class ContactUsScreen extends React.Component{
   showAlert() {
     Alert.alert(
       "Inviare la richiesta?",
-      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.lat}\nlng: ${this.state.userPosition.lng}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.numOfPeople}\nnotes: ${this.state.notes}`,
+      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.latitude}\nlng: ${this.state.userPosition.longitude}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.numOfPeople}\nnotes: ${this.state.notes}`,
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => this._sendRequest()},
@@ -188,7 +188,8 @@ const styles = StyleSheet.create({
 
   container: {
     alignItems: 'center',
-    backgroundColor: colors.white.light
+    backgroundColor: colors.white.light,
+    paddingTop: 16,
   },
   header: {
     fontFamily: Fonts.LatoBold,
