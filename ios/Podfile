@@ -30,6 +30,8 @@ target 'spotinapp' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|

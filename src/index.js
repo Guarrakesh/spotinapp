@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import { Provider, connect } from 'react-redux';
 import { View } from 'react-native';
+import   from 'react-native-code-push';
+
 import configureStore from './store';
 
 import NavigationService from './navigators/NavigationService';
@@ -51,8 +53,7 @@ const ConnectedResourceInit = connect(null, {
 })(ResourceInitializer);
 
 
-
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
 
     return (
@@ -62,3 +63,7 @@ export default class App extends React.Component {
     );
   }
 }
+
+//Controllo aggiornamenti ad ogni resume dell'app
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+export default codePush(App);
