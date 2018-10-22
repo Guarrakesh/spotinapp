@@ -79,7 +79,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 16,
-    paddingRight: 8,
     flexGrow: 0,
     flexBasis: 63,
     paddingBottom: 16

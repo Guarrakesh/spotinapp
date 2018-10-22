@@ -46,6 +46,10 @@ export const ProfileStack = createStackNavigator({
 
     },{
       navigationOptions: {
+        headerBackTitle: null,
+        headerBackImage: (<Icon
+          color={themes.base.colors.text.default}
+          name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
 
         headerStyle: {
           backgroundColor: themes.base.colors.primary.default

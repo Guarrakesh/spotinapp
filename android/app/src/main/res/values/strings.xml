@@ -1,5 +1,5 @@
 <resources>
-    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ</string>
     <string name="app_name">spotinapp</string>
     <string name="facebook_app_id">301945323939544</string>
     <string name="fb_login_protocol_scheme">fb301945323939544</string>

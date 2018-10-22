@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import { Provider, connect } from 'react-redux';
 import { View } from 'react-native';
-import   from 'react-native-code-push';
+import codePush from 'react-native-code-push';
 
 import configureStore from './store';
 

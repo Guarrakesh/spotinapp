@@ -73,7 +73,7 @@ class ProfileScreen extends React.Component {
             <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
               {loggedIn && profile._id ?
 
-                <View style={{padding: 8}}>
+                <View>
                   <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
                   <InlineListController basePath={`/users/${profile._id}`}
                                         id="profile_reservations_list" resource="reservations">

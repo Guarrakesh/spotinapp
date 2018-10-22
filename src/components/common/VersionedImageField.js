@@ -2,47 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Image } from 'react-native';
+import { Image, ImageBackground } from 'react-native';
 
 
 /* eslint-disable */
 const sanitizeRestProps = (rest) => ({
-  addLabel,
-  allowEmpty,
-  basePath,
-  cellClassName,
-  className,
-  formClassName,
-  headerClassName,
-  label,
-  linkType,
-  locale,
-  record,
-  resource,
-  sortable,
-  sortBy,
-  source,
-  textAlign,
-  translateChoice,
-  ...rest
-}) => rest;
+                                       addLabel,
+                                       allowEmpty,
+                                       basePath,
+                                       cellClassName,
+                                       className,
+                                       formClassName,
+                                       headerClassName,
+                                       label,
+                                       linkType,
+                                       locale,
+                                       record,
+                                       resource,
+                                       sortable,
+                                       sortBy,
+                                       source,
+                                       textAlign,
+                                       translateChoice,
+                                       ...rest
+                                     }) => rest;
 /* eslint-enable */
 
 
 export const VersionedImageField = ({
-  style,
-  source,
-  minSize,
-  imgSize,
-  ...rest
-}) => {
+                                      style,
+                                      source,
+                                      minSize,
+                                      imgSize,
+                                      isBackground,
+                                      children,
+                                      ...rest
+                                    }) => {
   //Posto che il source dato in ingresso sia un'array, trovo la versione dell'immagine con la dimensione più prossima a quella data (minSize)
 
   const sourceValue = source;
 
   if (!sourceValue)
     return  null;
-    let version; //oggetto con { url, width, height }
+  let version; //oggetto con { url, width, height }
   if (sourceValue.length == 1) {
     version = sourceValue[0];
   } else {
@@ -58,9 +60,19 @@ export const VersionedImageField = ({
   }
 
   return (
-  <Image source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
-         style={{width: imgSize.width, height: imgSize.height, ...style}}
-         resizeMode={"contain"} />
+    isBackground
+      ?
+      <ImageBackground source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
+                       style={{...style}}
+                       resizeMode={"cover"}
+                       {...rest}
+
+      >{children}</ImageBackground>
+      :
+      <Image source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
+             style={{width: imgSize.width, height: imgSize.height, ...style}}
+             resizeMode={"contain"}
+             {...rest}/>
 
   );
 
@@ -76,6 +88,8 @@ VersionedImageField.propTypes = {
   style: PropTypes.object,
   minSize: PropTypes.object,
   source: PropTypes.string.isRequired,
+  children: PropTypes.element,
+  isBackground: PropTypes.bool
 };
 
 export default (VersionedImageField);

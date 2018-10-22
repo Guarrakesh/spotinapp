@@ -31,10 +31,10 @@ const UserInfoCard = (props) =>{
 const styles = StyleSheet.create({
   container: {
     height: 100,
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
+    margin: 8,
     borderRadius: 8,
     backgroundColor: themes.base.colors.white.light,
   },

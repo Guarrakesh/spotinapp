@@ -38,7 +38,7 @@ class ReservationsCarousel extends React.Component{
                 <View style={{
                   right: 0,
                   bottom: 0,
-                  paddingBottom: 5, marginLeft: -8, marginRight: -8}}>
+                  paddingBottom: 5}}>
 
                   <Carousel
                       data={ids}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    marginTop: 8
+    margin: 8
   },
   emptyComponentText: {
     fontSize: 14,

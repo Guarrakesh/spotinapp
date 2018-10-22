@@ -113,6 +113,7 @@ class BusinessProfileScreen extends React.Component {
               <Animated.ScrollView
                 //  onScroll={this.handleScroll.bind(this)}
                 scrollEventThrottle={16}
+                bounces={false}
                 style={styles.generalContainer}>
                 <ImagesScrollView business={record}/>
 

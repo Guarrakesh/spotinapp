@@ -25,7 +25,7 @@ const BroadcastFloatingCard = ({
                                  titleStyle,
                                }) => {
 
-  const { business, offer, dist } = broadcast;
+  const { business, offer, dist, newsfeed } = broadcast;
 
   let roundedDistance = Math.round(dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
@@ -43,6 +43,18 @@ const BroadcastFloatingCard = ({
     }
   };
 
+  const businessInfoComponent = (business) => (
+    <View style={styles.businessContainer}>
+      <Text style={styles.businessName}>{business.name}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
+          <Text style={styles.businessDistance}>{roundedDistance} km</Text>
+        </View>
+      </View>
+    </View>);
+
   return (
     <View style={styles.outerContainer} elevation={2}>
       <TouchableOpacity onPress={onPress} delayPressIn={50}>
@@ -50,21 +62,19 @@ const BroadcastFloatingCard = ({
           { ({record: business}) =>
             <View style={{borderRadius: themes.base.borderRadius, overflow: 'hidden'}}>
               <View>
-                <ImageBackground
-                  source={{uri:  business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
-                  style={styles.imgBackground}
-                >
-                  <View style={styles.businessContainer}>
-                    <Text style={styles.businessName}>{business.name}</Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
-                        <Text style={styles.businessDistance}>{roundedDistance} km</Text>
-                      </View>
-                    </View>
-                  </View>
-                </ImageBackground>
+                { business.cover_versions && business.cover_versions.length > 0 ?
+                  <VersionedImageField
+                    isBackground
+                    minSize={{width: 350, height: 150}}
+                    imgSize={{width: 350, height: 150}}
+                    style={styles.imgBackground}
+                    source={business.cover_versions}>
+                    {businessInfoComponent(business)}
+                  </VersionedImageField>
+                  :<ImageBackground style={{width: 350, height: 150}} source={{uri:  "https://via.placeholder.com/350x150"}}>
+                    {businessInfoComponent(business)}
+                  </ImageBackground>}
+
               </View>
               <View>
                 {showEvent ?
@@ -90,7 +100,7 @@ const BroadcastFloatingCard = ({
                 }
               </View>
               <View style={styles.offerView}>
-                <Text style={styles.offerTitle}>{offer.title}</Text>
+                <Text style={styles.offerTitle}>{newsfeed === 0 ? "Sconto alla cassa" : offer.title}</Text>
                 <Text style={styles.offerValue}>{discount(offer.type)}</Text>
               </View>
             </View>
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   businessContainer: {
-    flex: 1,
+    width: '100%',
     flexDirection: 'column',
     backgroundColor: 'rgba(0,0,0,0.5)',
     padding: 8,

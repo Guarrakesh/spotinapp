@@ -6,7 +6,7 @@ import { View, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { parse, stringify } from 'query-string';
-import { isEqual, pickBy, debounce } from 'lodash';
+import { isEqual, pickBy, debounce, omitBy } from 'lodash';
 
 import { crudGetList as crudGetListAction,
   crudGetNearMany as crudGetNearManyAction } from '../actions/dataActions';
@@ -61,12 +61,17 @@ class ListController extends Component {
     if ((
         nextProps.initialised !== this.props.initialised ||
         nextProps.resource !== this.props.resource ||
+
         !isEqual(nextProps.params, this.props.params) ||
         !isEqual(nextProps.filter, this.props.filter) ||
         !isEqual(nextProps.sort, this.props.sort) ||
         !isEqual(nextProps.perPage, this.props.perPage))
     ) {
-      this.updateData(nextProps.params);
+      this.updateData(
+        Object.keys(nextProps.query).length > 0
+          ? nextProps.query
+          : nextProps.params
+      );
 
     }
     if (!this.props.isLoading) {
@@ -98,18 +103,17 @@ class ListController extends Component {
   }
   getQuery() {
 
-    const query = {...this.props.params};
-
+    const query = {...this.props.params };
 
     const filterDefaultValues = this.props.filterDefaultValues || {};
 
     query.filter = { ...filterDefaultValues, ...query.filter };
     if (!query.sort) {
-      query.sort = this.props.sort.field;
-      query.order = this.props.sort.order;
+      query.sort = this.props.sort.field || "_id";
+      query.order = this.props.sort.order || 1;
     }
     if (!query.perPage) {
-      query.perPage = this.props.perPage;
+      query.perPage = this.props.perPage || 20;
     }
     if (!query.page) {
       query.page = 1;
@@ -122,12 +126,13 @@ class ListController extends Component {
 
     const params = query || this.getQuery();
 
-    const { sort, order, page = 1, perPage, filter = {} } = params;
+    const { sort, order, page = 1, perPage = 20, filter = {} } = omitBy(params, null);
 
     const pagination = {
       page: parseInt(page, 10),
-      perPage: parseInt(perPage, 10)
+      perPage: parseInt(perPage || 20, 10)
     };
+
 
     const permanentFilter = this.props.filter;
     // Chiamo l'API
@@ -138,7 +143,7 @@ class ListController extends Component {
           this.props.id,
           this.props.nearPosition,
           pagination,
-          { field: sort, order},
+          { field: sort || order},
           { ...filter, ...permanentFilter },
           this.props.basePath,
           this.props.infiniteScroll, //accumulateResults: infiniteScroll
@@ -219,7 +224,7 @@ class ListController extends Component {
 
     const query = this.getQuery();
     const queryFilterValues = query.filter || {};
-    if (isLoading) {
+    if (isLoading && !initialised) {
 
       return (
           <View style={{flex: 1, justifyContent: 'center'}}>
@@ -389,7 +394,7 @@ function mapStateToProps(state, props) {
   }
   const list = resourceState.list[props.id];
   return {
-    //query: selectQuery(props),
+    query: pickBy(props, ['page', 'perPage', 'sort', 'order', 'filter']),
     initialised: !!list,
     params: !!list ? list.params : {},
     ids: !!list ? list.ids : [],

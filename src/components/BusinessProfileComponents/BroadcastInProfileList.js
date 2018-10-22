@@ -30,7 +30,7 @@ const BroadcastInProfileList = (
   return (
       <FlatList
           ListHeaderComponent={
-            <Text style={themes.base.listTitleStyle}>
+            <Text style={themes.base.inlineListTitleStyle}>
               {ids.length === 0 ? "Nessuna offerta al momento" : "Eventi in programma"}
             </Text>
           }

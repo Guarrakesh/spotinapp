@@ -8,33 +8,33 @@ import Button from '../common/Button';
 
 
 const SavedEventsList = ({
-    ids,
-    data,
-    isLoading,
-    onItemPress,
-    onItemRemovePress,
-    ...rest,
-}) => {
+                           ids,
+                           data,
+                           isLoading,
+                           onItemPress,
+                           onItemRemovePress,
+                           ...rest,
+                         }) => {
 
   const emptyComponent = null;
 
   return (
-      ids.length === 0 ? emptyComponent :
-      <View style={styles.container} elevation={2}>
-        <FlatList
+    ids.length === 0 ? emptyComponent :
+      <View>
+        <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
+        <View style={styles.container} elevation={2}>
+          <FlatList
             data={ids}
-            ListHeaderComponent={
-              <Text style={styles.listHeader}>Eventi preferiti</Text>
-              }
             renderItem={({item}) =>
-                <SavedEventListItem
-                    onPress={() => onItemPress(item, data[item])}
-                    onRemovePress={() => onItemRemovePress(item)}
-                    event={data[item]}/>
+              <SavedEventListItem
+                onPress={() => onItemPress(item, data[item])}
+                onRemovePress={() => onItemRemovePress(item)}
+                event={data[item]}/>
             }
             {...rest}
-        />
+          />
 
+        </View>
       </View>
   )
 }
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 16,
     paddingRight: 16,
-    marginTop: 8
+    margin: 8
   },
   emptyComponentView: {
     flex: 1,

@@ -154,7 +154,9 @@ class ContactUsScreen extends React.Component{
               minSize={{width: 62, height: 62}}
               imgSize={{width: 42, height: 42}}
             />
-            <Text style={styles.eventName}>{event.name}</Text>
+            <View style={{flex:1, flexWrap: 'wrap'}}>
+              <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+            </View>
             {event.competition.competitorsHaveLogo ?
               <VersionedImageField
                 source={event.competitors[1]._links.image_versions}
@@ -292,7 +294,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: themes.base.colors.text.default,
     marginTop: 8,
-    marginBottom: 8
+    marginBottom: 8,
+    textAlign: 'center'
   },
   eventDate: {
     fontFamily: Fonts.LatoBold,
@@ -303,8 +306,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 16,
     paddingRight: 16,
-
-
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     paddingTop: 100,
