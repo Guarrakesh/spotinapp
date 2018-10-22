@@ -138,7 +138,7 @@ const styles = {
   },
   sportIcon: {
     width: 60,
-    height: 60
+    height: 60,
   },
 
 };

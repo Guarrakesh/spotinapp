@@ -63,14 +63,14 @@ class ReservationConfirmView extends Component {
               <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
             </View>
           </View>
-          <View style={{width: '100%',borderColor: '#EEEEEE', borderBottomWidth: 1, borderTopWidth: 1, paddingTop: 16, paddingBottom: 16}}>
-            <Text style={{fontFamily: Fonts.LatoMedium, fontSize: 18}}>Partecipando all'evento puoi usufruire del:</Text>
-            <Text style={{fontFamily: Fonts.LatoBold, fontSize: 18, color: themes.base.colors.danger.default, marginTop: 8, alignSelf: 'center'}}>{discount(offer.type)} alla cassa*</Text>
-            <Text style={{fontFamily: Fonts.LatoLightItalic, fontSize: 16, color: themes.base.colors.danger.default, marginTop: 16}}>*l'offerta non include la prenotazione del tavolo presso il locale</Text>
+          <View style={styles.offerView}>
+            <Text style={styles.headerOfferText}>Partecipando all'evento puoi usufruire del:</Text>
+            <Text style={styles.offerText}>{discount(offer.type)} alla cassa*</Text>
+            <Text style={styles.noteText}>*l'offerta non include la prenotazione del tavolo presso il locale</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 16, alignItems: 'center'}}>
             <TouchableOpacity onPress={onCancelPress}>
-              <Text style={{fontFamily: Fonts.LatoBold, fontSize: 14, color: themes.base.colors.text.default, marginLeft: 16, textDecorationLine: 'underline'}}>ANNULLA</Text>
+              <Text style={styles.cancelButtonText}>ANNULLA</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onConfirmPress}>
               <View style={styles.confirmButton} elevation={2}>
@@ -108,17 +108,20 @@ const styles = StyleSheet.create({
   },
   eventNameText: {
     fontSize: 18,
-    fontFamily: Fonts.LatoBold
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default
   },
   eventDateText: {
     fontSize: 16,
     fontFamily: Fonts.LatoMedium,
     marginTop: 5,
     marginBottom: 5,
+    color: themes.base.colors.text.default
   },
   eventTimeText: {
     fontSize: 20,
-    fontFamily: Fonts.LatoLight
+    fontFamily: Fonts.LatoLight,
+    color: themes.base.colors.text.default
   },
   sportIconView: {
     alignItems: 'flex-end',
@@ -127,6 +130,38 @@ const styles = StyleSheet.create({
   sportIcon: {
     width: 60,
     height: 60
+  },
+  offerView: {
+    width: '100%',
+    borderColor: '#EEEEEE',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    paddingTop: 16,
+    paddingBottom: 16
+  },
+  headerOfferText: {
+    fontFamily: Fonts.LatoMedium,
+    fontSize: 18
+  },
+  offerText: {
+    fontFamily: Fonts.LatoBold,
+    fontSize: 18,
+    color: themes.base.colors.danger.default,
+    marginTop: 8,
+    alignSelf: 'center'
+  },
+  noteText: {
+    fontFamily: Fonts.LatoLightItalic,
+    fontSize: 16,
+    color: themes.base.colors.danger.default,
+    marginTop: 16
+  },
+  cancelButtonText: {
+    fontFamily: Fonts.LatoBold,
+    fontSize: 14,
+    color: themes.base.colors.text.default,
+    marginLeft: 16,
+    textDecorationLine: 'underline'
   },
   confirmButton: {
     backgroundColor: themes.base.colors.accent.default,

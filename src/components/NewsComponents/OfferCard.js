@@ -3,7 +3,7 @@ import { Dimensions, TouchableOpacity, Image, Text, ImageBackground} from 'react
 import View from '../common/View';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Entypo';
-import Themes from '../../styleTheme';
+import themes from '../../styleTheme';
 import Images from '../../assets/images';
 import Helpers from '../../helpers';
 import { Fonts } from "../common/Fonts";
@@ -132,7 +132,7 @@ const styles = {
     borderRadius: 8,
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: Themes.base.colors.white.light,
+    backgroundColor: themes.base.colors.white.light,
   },
   offerImgBackground: {
     width: '100%',
@@ -144,7 +144,7 @@ const styles = {
     paddingTop: 8
   },
   bookOfferButton: {
-    backgroundColor: Themes.base.colors.accent.default,
+    backgroundColor: themes.base.colors.accent.default,
     width: 180,
     height: 38,
     borderColor: "transparent",
@@ -152,7 +152,7 @@ const styles = {
     borderRadius: 50,
     marginTop: 20,
     marginBottom: 15,
-    ...Themes.base.elevations.depth2
+    ...themes.base.elevations.depth2
   },
 
   imageStyle: {
@@ -175,42 +175,45 @@ const styles = {
     alignItems: 'space-between',
   },
   offerName: {
-    color: Themes.base.colors.text.default,
+    color: themes.base.colors.text.default,
     fontSize: 24,
     fontFamily: Fonts.LatoBold
 
   },
   offerValue: {
-    color: Themes.base.colors.danger.default,
+    color: themes.base.colors.danger.default,
     fontSize: 36,
     fontFamily: Fonts.LatoBlack
   },
   offerDescription: {
-    color: Themes.base.colors.text.default
+    color: themes.base.colors.text.default
   },
   eventNameText: {
     fontSize: 18,
-    fontFamily: Fonts.LatoBold
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default
   },
   eventDateText: {
     fontSize: 16,
     fontFamily: Fonts.LatoMedium,
     marginTop: 5,
     marginBottom: 5,
+    color: themes.base.colors.text.default
   },
   eventTimeText: {
     fontSize: 20,
-    fontFamily: Fonts.LatoLight
+    fontFamily: Fonts.LatoLight,
+    color: themes.base.colors.text.default
   },
   reservationButton: {
-    backgroundColor: Themes.base.colors.accent.default,
+    backgroundColor: themes.base.colors.accent.default,
     borderRadius: 100,
     margin: 5
   },
   reservationText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
-    color: Themes.base.colors.white.light,
+    color: themes.base.colors.white.light,
     marginRight: 16,
     marginLeft: 16,
     marginTop: 8,

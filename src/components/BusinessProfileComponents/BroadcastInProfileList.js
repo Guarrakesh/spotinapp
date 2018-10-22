@@ -58,7 +58,6 @@ const BroadcastInProfileList = (
     isRefreshing: PropTypes.bool,
 
     broadcasts: PropTypes.array.isRequired,
-    onReservePress: PropTypes.func.isRequired,
 
     reservedBroadcasts: PropTypes.array,
   };

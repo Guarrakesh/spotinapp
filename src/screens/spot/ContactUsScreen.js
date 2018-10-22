@@ -5,13 +5,17 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {Text, StyleSheet, ActivityIndicator, ImageBackground,
   Platform, Alert, ScrollView, TextInput } from "react-native";
 import {createRequest} from "../../actions/requests";
-
 import {Input, Button, Slider} from "react-native-elements";
 import View from "../../components/common/View";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import {VersionedImageField} from "../../components/common";
 import moment from "moment";
+import auth from '../../api/auth';
+import vars from '../../vars';
+import {fetchStart, fetchEnd} from "../../actions/fetchActions";
+import {showNotification} from "../../actions/notificationActions";
+import NavigationService from '../../navigators/NavigationService';
 
 const colors = themes.base.colors
 
@@ -21,6 +25,8 @@ class ContactUsScreen extends React.Component{
 
   constructor() {
     super();
+
+    this._sendRequest = this._sendRequest.bind(this);
 
     this.state = {
       userId: "",
@@ -52,19 +58,79 @@ class ContactUsScreen extends React.Component{
 
   _sendRequest(){
     const {userId, event, userPosition, location, maxDistance, numOfPeople, notes } = this.state;
-    this.props.dispatch(createRequest(userId, event, location, maxDistance, numOfPeople, userPosition, notes));
-  }
+    //this.props.dispatch(createRequest(userId, event, location, maxDistance, numOfPeople, userPosition, notes));
+    const self = this;
 
-  showAlert() {
-    Alert.alert(
-      "Inviare la richiesta?",
-      `user: ${this.state.userId}\nevent: ${this.state.event}\nlat: ${this.state.userPosition.latitude}\nlng: ${this.state.userPosition.longitude}\nlocation: ${this.state.location}\nmaxDistance: ${this.state.maxDistance}\npeople: ${this.state.numOfPeople}\nnotes: ${this.state.notes}`,
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => this._sendRequest()},
-      ],
-      { cancelable: false }
-    )
+    auth.check().then(() => {
+      auth.getAuthToken().then(token => {
+
+        self.props.dispatch(fetchStart());
+
+        fetch(`${vars.apiUrl}/users/${userId}/requests`,
+          {
+            headers: {
+              'Authorization':`Bearer ${token.accessToken}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+              event,
+              location,
+              maxDistance,
+              numOfPeople,
+              userPosition,
+              note: notes
+            })
+          })
+          .then(function(res){
+            if(res.status === 204){
+              console.log(res);
+              console.log("Richiesta inviata con successo");
+              self.props.dispatch(fetchEnd());
+              //mostra notifica
+              self.props.dispatch(showNotification(
+                "Lavoreremo per soddisfare la tua richiesta.\nVerrai ricontattato al tuo indirizzo email.",
+                "success",
+                {
+                  title: "Richiesta inviata"
+                }
+              ));
+              self.props.navigation.navigate('BroadcastsList');
+            }
+            else{
+              //mostra notifica
+              self.props.dispatch(showNotification(
+                "Ricontrolla i tuoi dati.",
+                "warning",
+                {
+                  title: "Qualcosa è andato storto..."
+                }
+              ));
+              console.log(res);
+              console.log("Errore nell'invio")
+              self.props.dispatch(fetchEnd());
+            }
+          })
+          .catch(function(res){
+            console.log(res);
+            self.props.dispatch(showNotification(
+              "Controlla la tua connessione ad internet.",
+              "error",
+              {
+                title: "Qualcosa è andato storto..."
+              }
+            ));
+            self.props.dispatch(fetchEnd());
+          })
+      })
+    }).catch(function(e){
+      console.log(e);
+      NavigationService.navigate("Auth", {}, true);
+      self.props.dispatch(fetchEnd());
+    })
+
+
   }
 
   render() {
@@ -117,6 +183,7 @@ class ContactUsScreen extends React.Component{
               inputContainerStyle={{borderBottomWidth: 0}}
               inputStyle={styles.textInputStyle}
               autoCapitalize="none"
+              numberOfLines = {1}
               displayError={true}
               errorStyle={styles.errorMessage}
               shake={true}
@@ -166,7 +233,10 @@ class ContactUsScreen extends React.Component{
             titleStyle={styles.sendButtonText}
             buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
             disabled={this.state.location === "" || this.state.maxDistance === 0}
-            onPress={() => this.showAlert()}
+            loading={this.props.isLoading}
+            loadingProps={{color: colors.accent.default}}
+            loadingStyle={{padding: 16, paddingTop: 8, paddingBottom: 8}}
+            onPress={() => this._sendRequest()}
           />
         </ImageBackground>
       </ScrollView>
@@ -177,10 +247,11 @@ class ContactUsScreen extends React.Component{
 const mapStateToProps = (state) => {
 
   const { latitude, longitude } = state.location.coordinates;
+  const isLoading = state.loading > 0;
   const userId = state.auth.profile._id;
 
   return {
-    latitude, longitude, userId
+    latitude, longitude, userId, isLoading
   }
 }
 

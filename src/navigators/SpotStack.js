@@ -97,12 +97,8 @@ export const SpotStack = createStackNavigator({
           color={themes.base.colors.text.default}
           name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
       })
-    },
-
-      ContactUs: ContactUsNavigator
-
-
-    },{
+    }
+  },{
     cardStyle: { backgroundColor: themes.base.backgroundColor },
 
     navigationOptions: {

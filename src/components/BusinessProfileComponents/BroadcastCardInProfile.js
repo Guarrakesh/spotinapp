@@ -53,9 +53,8 @@ const BroadcastCardInProfile = (props) => {
               {    event.competition.competitorsHaveLogo
                 ?
                 <View style={styles.competitorsLogoView}>
-                  {competitors.map(comp => { return (
-                    <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
-                  )})}
+                  <VersionedImageField source={competitors[0]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
+                  <VersionedImageField source={competitors[1]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} style={{marginTop: 8}}/>
                 </View>
                 :
                 <View style={{marginTop: 8, marginLeft: 16}}>
@@ -63,18 +62,14 @@ const BroadcastCardInProfile = (props) => {
                 </View>
 
               }
-              <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+              <View style={{flex: 1, marginLeft: 16, justifyContent: 'space-between'}}>
                 <Text style={styles.eventNameText}>{event.name}</Text>
                 <Text style={styles.eventDateText}>{date}</Text>
                 <Text style={styles.eventTimeText}>{time}</Text>
               </View>
-              <ReferenceField reference={"sports"} source={"sport"} record={event}>
-                {({record: sport}) =>
-                  <View style={styles.sportIconView}>
-                    <Image source={Images.icons.sports[Helpers.sportSlugIconMap(sport.slug)]} style={styles.sportIcon}/>
-                  </View>
-                }
-              </ReferenceField>
+              <View style={styles.sportIconView}>
+                <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+              </View>
             </View>
             {(newsfeed || newsfeed > 0) ?
               <View style={styles.offerInfoView}>
@@ -151,27 +146,28 @@ const styles = StyleSheet.create({
   },
   eventNameText: {
     fontSize: 18,
-    fontFamily: Fonts.LatoBold
+    fontFamily: Fonts.LatoBold,
+    color: themes.base.colors.text.default
   },
   eventDateText: {
     fontSize: 16,
     fontFamily: Fonts.LatoMedium,
     marginTop: 5,
     marginBottom: 5,
+    color: themes.base.colors.text.default
   },
   eventTimeText: {
     fontSize: 20,
-    fontFamily: Fonts.LatoLight
+    fontFamily: Fonts.LatoLight,
+    color: themes.base.colors.text.default
   },
   sportIconView: {
-    alignItems: 'flex-end',
     justifyContent: 'center',
-    position: 'absolute',
-    right: 16
+    marginRight: 16
   },
   sportIcon: {
     width: 60,
-    height: 60
+    height: 60,
   },
   offerReservationView: {
     flexDirection: 'row',
@@ -218,6 +214,7 @@ const styles = StyleSheet.create({
   offerInfoView: {
     marginLeft: 16,
     marginRight: 16,
+    marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
     borderTopColor: themes.base.colors.white.divisor

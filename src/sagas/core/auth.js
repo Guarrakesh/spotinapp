@@ -181,7 +181,7 @@ function* handleAuth(action) {
     case USER_LOGOUT: {
       yield call(auth.logout);
 
-      NavigationService.navigate('SignIn', {}, true);
+      NavigationService.navigate('Auth', {}, true);
       break;
     }
     case FETCH_ERROR: {

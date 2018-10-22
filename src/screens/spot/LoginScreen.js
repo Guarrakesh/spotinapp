@@ -131,6 +131,7 @@ class LoginScreen extends React.Component {
                     displayError={true}
                     errorStyle={styles.errorMessage}
                     shake={true}
+                    numberOfLines = {1}
                     onChangeText={(text) => this.setState({email: text})}
                     onSubmitEditing={() => {
                       this.refs.password.focus()
@@ -156,6 +157,7 @@ class LoginScreen extends React.Component {
                     errorStyle={styles.errorMessage}
                     onSubmitEditing={this.login}
                     blurOnSubmit={true}
+                    numberOfLines = {1}
                 />
                 <Button
                     background={background}

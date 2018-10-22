@@ -31,7 +31,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     composeEnhancers(
-      applyMiddleware(sagaMiddleware, logger),
+      applyMiddleware(sagaMiddleware),
       //offline(offlineConfig)
     )
   );
