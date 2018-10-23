@@ -141,107 +141,111 @@ class ContactUsScreen extends React.Component{
     let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
 
     return(
-      <ScrollView
-        contentContainerStyle={styles.container}
-        bounces={false}
-      >
-        <Text style={styles.header}>Organizziamo l'evento per te!</Text>
-        <View style={styles.eventContainer}>
-          <Text style={styles.competitionName}>{event.competition.name}</Text>
-          <View style={styles.eventRow}>
-            <VersionedImageField
-              source={event.competition.competitorsHaveLogo ? event.competitors[0]._links.image_versions : event.competition.image_versions}
-              minSize={{width: 62, height: 62}}
-              imgSize={{width: 42, height: 42}}
-            />
-            <View style={{flex:1, flexWrap: 'wrap'}}>
-              <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-            </View>
-            {event.competition.competitorsHaveLogo ?
+      <View>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          bounces={false}
+        >
+          <Text style={styles.header}>Organizziamo l'evento per te!</Text>
+          <View style={styles.eventContainer}>
+            <Text style={styles.competitionName}>{event.competition.name}</Text>
+            <View style={styles.eventRow}>
               <VersionedImageField
-                source={event.competitors[1]._links.image_versions}
+                source={event.competition.competitorsHaveLogo ? event.competitors[0]._links.image_versions : event.competition.image_versions}
                 minSize={{width: 62, height: 62}}
                 imgSize={{width: 42, height: 42}}
-              /> :
-              <View style={{width: 42, height: 42}}/>
-            }
-
-          </View>
-          <Text style={styles.eventDate}>{date}</Text>
-        </View>
-        <ImageBackground source={BackgroundPattern} style={{
-          height: '100%',
-          width: '100%',
-          marginTop: -50
-        }}>
-          <View style={styles.middleContainerStyle}>
-            <Input
-              placeholder="Dove vuoi guardare l’evento ?"
-              placeholderTextColor={themes.base.inputPlaceholderColor}
-              leftIcon={<Icon name={"map-marker-radius"}
-                              color={colors.text.default} size={25}/>}
-              leftIconContainerStyle={{width: 25, height: 25, marginLeft: 0}}
-              containerStyle={styles.inputOuterContainer}
-              inputContainerStyle={{borderBottomWidth: 0}}
-              inputStyle={styles.textInputStyle}
-              autoCapitalize="none"
-              numberOfLines = {1}
-              displayError={true}
-              errorStyle={styles.errorMessage}
-              shake={true}
-              onChangeText={(text) => this.setState({location: text})}
-
-            />
-            <Text style={[styles.header, {marginTop: 0}]}>Quanto sei disposto a spostarti?</Text>
-            <View style={styles.distancesContainer}>
-              {distances.map(dist => (
-                <Button
-                  title={dist + ' km'}
-                  titleStyle={this.state.maxDistance === dist ? [styles.distanceTextButton, {fontFamily: Fonts.LatoBold}] : [styles.distanceTextButton, {fontFamily: Fonts.LatoLight}]}
-                  buttonStyle={this.state.maxDistance === dist ? [styles.distanceButton, {borderColor: colors.accent.default}] : [styles.distanceButton, {borderColor: colors.white.light}]}
-                  onPress={() => { this.setState({maxDistance: dist}) }}
-                />
-              ))}
-            </View>
-            <Text style={[styles.header, {marginTop: 8}]}>Quante persone sarete?</Text>
-            <View style={styles.peopleCard} elevation={2}>
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
-                <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
+              />
+              <View style={{flex:1, flexWrap: 'wrap'}}>
+                <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
               </View>
-              <Slider
-                value={this.state.numOfPeople}
-                minimumValue={1}
-                maximumValue={20}
-                step={1}
-                style={{justifyContent: 'center'}}
-                //trackStyle={{height: 1}}
-                thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
-                thumbTintColor={colors.white.light}
-                onValueChange={(numOfPeople) => this.setState({numOfPeople})} />
+              {event.competition.competitorsHaveLogo ?
+                <VersionedImageField
+                  source={event.competitors[1]._links.image_versions}
+                  minSize={{width: 62, height: 62}}
+                  imgSize={{width: 42, height: 42}}
+                /> :
+                <View style={{width: 42, height: 42}}/>
+              }
+
             </View>
+            <Text style={styles.eventDate}>{date}</Text>
           </View>
-          <View style={styles.noteCard} elevation={2}>
-            <TextInput
-              multiline = {true}
-              numberOfLines = {4}
-              placeholder={"Aggiungi eventuali note"}
-              style={{textAlignVertical: "top"}}
-              onChangeText={(text) => this.setState({notes: text})}
+          <ImageBackground source={BackgroundPattern} style={{
+            height: '100%',
+            width: '100%',
+            marginTop: -20
+          }}
+                           resizeMode={'cover'}>
+            <View style={styles.middleContainerStyle}>
+              <Input
+                placeholder="Dove vuoi guardare l’evento ?"
+                placeholderTextColor={themes.base.inputPlaceholderColor}
+                leftIcon={<Icon name={"map-marker-radius"}
+                                color={colors.text.default} size={25}/>}
+                leftIconContainerStyle={{width: 25, height: 25, marginLeft: 0}}
+                containerStyle={styles.inputOuterContainer}
+                inputContainerStyle={{borderBottomWidth: 0}}
+                inputStyle={styles.textInputStyle}
+                autoCapitalize="none"
+                numberOfLines = {1}
+                displayError={true}
+                errorStyle={styles.errorMessage}
+                shake={true}
+                onChangeText={(text) => this.setState({location: text})}
+
+              />
+              <Text style={[styles.header, {marginTop: 0}]}>Quanto sei disposto a spostarti?</Text>
+              <View style={styles.distancesContainer}>
+                {distances.map(dist => (
+                  <Button
+                    title={dist + ' km'}
+                    titleStyle={this.state.maxDistance === dist ? [styles.distanceTextButton, {fontFamily: Fonts.LatoBold}] : [styles.distanceTextButton, {fontFamily: Fonts.LatoLight}]}
+                    buttonStyle={this.state.maxDistance === dist ? [styles.distanceButton, {borderColor: colors.accent.default}] : [styles.distanceButton, {borderColor: colors.white.light}]}
+                    onPress={() => { this.setState({maxDistance: dist}) }}
+                  />
+                ))}
+              </View>
+              <Text style={[styles.header, {marginTop: 8}]}>Quante persone sarete?</Text>
+              <View style={styles.peopleCard} elevation={2}>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                  <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
+                  <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
+                </View>
+                <Slider
+                  value={this.state.numOfPeople}
+                  minimumValue={1}
+                  maximumValue={20}
+                  step={1}
+                  style={{justifyContent: 'center'}}
+                  //trackStyle={{height: 1}}
+                  thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
+                  thumbTintColor={colors.white.light}
+                  onValueChange={(numOfPeople) => this.setState({numOfPeople})} />
+              </View>
+            </View>
+            <View style={styles.noteCard} elevation={2}>
+              <TextInput
+                multiline = {true}
+                numberOfLines = {4}
+                placeholder={"Aggiungi eventuali note"}
+                style={{textAlignVertical: "top"}}
+                onChangeText={(text) => this.setState({notes: text})}
+              />
+            </View>
+            <Button
+              title={"Invia"}
+              titleStyle={styles.sendButtonText}
+              buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
+              disabled={this.state.location === "" || this.state.maxDistance === 0}
+              loading={this.props.isLoading}
+              loadingProps={{color: colors.accent.default}}
+              loadingStyle={{padding: 16, paddingTop: 8, paddingBottom: 8}}
+              onPress={() => this._sendRequest()}
             />
-          </View>
-          <Button
-            title={"Invia"}
-            titleStyle={styles.sendButtonText}
-            buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
-            disabled={this.state.location === "" || this.state.maxDistance === 0}
-            loading={this.props.isLoading}
-            loadingProps={{color: colors.accent.default}}
-            loadingStyle={{padding: 16, paddingTop: 8, paddingBottom: 8}}
-            onPress={() => this._sendRequest()}
-          />
-        </ImageBackground>
-      </ScrollView>
+          </ImageBackground>
+        </ScrollView>
+        <View style={styles.bottomView}/>
+      </View>
     );
   }
 }
@@ -272,11 +276,10 @@ const styles = StyleSheet.create({
   },
   eventContainer: {
     alignItems: 'center',
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: 32,
+    marginBottom: -40,
     width: '100%',
     padding: 16,
-    paddingBottom: 0
   },
   competitionName: {
     fontFamily: Fonts.LatoLight,
@@ -395,6 +398,11 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.LatoBold,
     fontSize: 18,
     color: colors.accent.default
+  },
+  bottomView: {
+    width: '100%',
+    height: 200,
+    backgroundColor: colors.primary.default
   }
 })
 

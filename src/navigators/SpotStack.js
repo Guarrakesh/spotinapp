@@ -62,9 +62,15 @@ export const SpotStack = createStackNavigator({
       screen: SportScreen,
       navigationOptions: () => ({
         title: 'Esplora',
-        headerBackTitle: null
+        headerBackTitle: null,
+        headerTitleStyle: {
+          flex: 1,
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          //marginRight: Platform.OS === 'android' ? 75 : null,
+        },
       }),
-
 
     },
     Competitions: {
