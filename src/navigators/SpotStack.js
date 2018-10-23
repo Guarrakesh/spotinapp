@@ -78,6 +78,13 @@ export const SpotStack = createStackNavigator({
       navigationOptions: ({navigation}) => ({
         ...navigation.navigationOptions,
         headerBackTitle: null,
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -30 : null,
+        },
 
         title: navigation.state.params.title || "Spot In" })
     },
@@ -87,6 +94,13 @@ export const SpotStack = createStackNavigator({
         ...navigation.navigationOptions,
         title: navigation.state.params.title || "Spot In",
         headerBackTitle: null,
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -30 : null,
+        },
       })
     },
     BroadcastsList: {
@@ -99,6 +113,13 @@ export const SpotStack = createStackNavigator({
       navigationOptions: ({navigation}) => ({
 
         headerBackTitle: null,
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -30 : null,
+        },
         headerBackImage: (<Icon
           color={themes.base.colors.text.default}
           name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),

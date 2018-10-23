@@ -20,12 +20,29 @@ import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 export const ProfileStack = createStackNavigator({
       ProfileScreen: {
         screen: ProfileScreen,
-        navigationOptions: { title: 'Profilo'}
+        navigationOptions: {
+          title: 'Profilo',
+          headerBackTitle: null,
+          headerTitleStyle: {
+            flex: 1,
+            textAlign: 'center',
+            alignSelf: 'center',
+            color: themes.base.colors.text.default,
+            //marginRight: Platform.OS === 'android' ? 75 : null,
+          },
+        }
       },
       ReservationScreen: {
         screen: ReservationScreen,
         navigationOptions: {
-          title: 'Offerta prenotata'
+          title: 'Offerta prenotata',
+          headerTitleStyle: {
+            width: '100%',
+            textAlign: 'center',
+            alignSelf: 'center',
+            color: themes.base.colors.text.default,
+            marginLeft: Platform.OS === 'android' ? -30 : null,
+          },
         }
       },
       BroadcastsList: {
@@ -38,6 +55,13 @@ export const ProfileStack = createStackNavigator({
         navigationOptions: ({navigation}) => ({
 
           headerBackTitle: null,
+          headerTitleStyle: {
+            width: '100%',
+            textAlign: 'center',
+            alignSelf: 'center',
+            color: themes.base.colors.text.default,
+            marginLeft: Platform.OS === 'android' ? -30 : null,
+          },
           headerBackImage: (<Icon
               color={themes.base.colors.text.default}
               name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),

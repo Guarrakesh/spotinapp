@@ -14,9 +14,31 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
-    BusinessProfileScreen: BusinessProfileScreen,
+    BusinessProfileScreen: {
+      screen: BusinessProfileScreen,
+      navigationOptions: {
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -30 : null,
+        },
+      }
+    },
     BroadcastsList: BroadcastsScreen,
-    BusinessScreen: BusinessScreen,
+    BusinessScreen: {
+      screen: BusinessScreen,
+      navigationOptions: {
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -10 : null,
+        },
+      }
+    },
   },{
     navigationOptions: {
       headerBackTitle: null,
