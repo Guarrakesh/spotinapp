@@ -49,7 +49,9 @@ class BroadcastsList extends React.Component {
                 buttonStyle={[styles.contactUsButton, {borderColor: colors.accent.default}]}
                 onPress={() => onContactUsPress()}
             />
-            <Text style={styles.noBroadcastText}>...e organizzeremo l'evento per te!</Text>
+            <Text style={styles.noBroadcastText}>
+              ...e organizzeremo l'evento per te!
+            </Text>
           </View>
       )
     }

@@ -36,7 +36,7 @@ export default (previousState = [], { type, payload, requestPayload, meta }) => 
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:
-      console.log("eeeeeeeee", meta.accumulateResults);
+
       return addRecordIds(payload.data.map(({ id }) => id), meta.accumulateResults ? previousState : []);
 
 

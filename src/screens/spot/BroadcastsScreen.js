@@ -133,7 +133,7 @@ class BroadcastsScreen extends React.Component {
       extrapolate: 'clamp'
     });
 
-    const {currentlySending} = this.props;
+
 
     let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
 
@@ -147,46 +147,47 @@ class BroadcastsScreen extends React.Component {
       radius: 99999,
 
     };
-    if(currentlySending){
-      return(
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
-        </View>
-      )
-    }
 
     return (
-      <View style={styles.container}>
-        <ListController
-            id={this.listId(eventId)}
-            perPage="15"
-            resource="broadcasts"
-            sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
-            filter={{event: eventId}}
-            nearPosition={nearPosition}
-        >
-          { controllerProps =>
-            <BroadcastsList
-              onScroll={Animated.event(
-                [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
+        <View style={styles.container}>
+          <ListController
+              id={this.listId(eventId)}
+              perPage="15"
+              resource="broadcasts"
+              sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
+              filter={{event: eventId}}
+              nearPosition={nearPosition}
+          >
+            { controllerProps =>
+                controllerProps.isLoading
+                    ? (
+                    <View style={themes.base.noContentView}>
+                      <ActivityIndicator />
 
-              )}
-              { ...controllerProps }
-              onMapPress={this.handleMapPress}
-              onContactUsPress={this.handleContactUsPress}
-              onMomentumScrollBegin={ this._handleMomentumScrollBegin }
-              onMomentumScrollEnd={this._handleMomentumScrollEnd }
-              onScrollEndDrag={this._handleScrollEndDrag}
-              onItemPress={this.handleBusinessPress}
-              style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
-            />}
-        </ListController>
-        <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
-          <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
-          <Text style={styles.eventName}>{event.name}</Text>
-          <Animated.Text style={styles.date}>{date}</Animated.Text>
-        </Animated.View>
-      </View>
+                    </View>
+                )
+                    :
+                    <BroadcastsList
+                        onScroll={Animated.event(
+                        [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
+
+                    )}
+                        { ...controllerProps }
+                        onMapPress={this.handleMapPress}
+                        onContactUsPress={this.handleContactUsPress}
+                        onMomentumScrollBegin={ this._handleMomentumScrollBegin }
+                        onMomentumScrollEnd={this._handleMomentumScrollEnd }
+                        onScrollEndDrag={this._handleScrollEndDrag}
+                        onItemPress={this.handleBusinessPress}
+                        style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
+                    />}
+          </ListController>
+          <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
+            <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+            <Text style={styles.eventName}>{event.name}</Text>
+            <Animated.Text style={styles.date}>{date}</Animated.Text>
+          </Animated.View>
+        </View>
     )
   }
 }

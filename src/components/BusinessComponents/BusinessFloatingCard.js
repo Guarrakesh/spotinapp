@@ -1,6 +1,8 @@
 import React from 'react';
 
 import {View, Touchable} from '../common';
+import VersionedImage from '../common/VersionedImageField';
+
 import {Text, StyleSheet, ImageBackground} from 'react-native';
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
@@ -13,12 +15,12 @@ const colors = themes.base.colors;
 
 const fonts = themes.base.fonts;
 const BroadcastFloatingCard = ({
-                                 business,
-                                 onPress,
-                                 dark,
-                                 elevation,
-                                 showEvent
-                               }) => {
+    business,
+    onPress,
+    dark,
+    elevation,
+    showEvent
+}) => {
 
   const { dist} = business;
 
@@ -26,33 +28,47 @@ const BroadcastFloatingCard = ({
   roundedDistance = roundedDistance.toString().replace(".",",");
 
 
-
+  const component = (
+      <View style={styles.innerContainer}>
+        <Text style={styles.name}>
+          {business.name}
+        </Text>
+        <Text style={styles.type}>
+          {business.type.join(' • ')}
+        </Text>
+        <View style={styles.distanceContainer}>
+          <Icon name="map-marker-radius" color={colors.white.light}
+                style={styles.geoFenceImg} size={20}/>
+          <Text style={styles.distance}>
+            {roundedDistance} km
+          </Text>
+        </View>
+      </View>
+  );
   return (
 
       <Touchable activeOpacity={0.5}
                  style={[styles.outerContainer, {elevation, ...themes.base.elevations[`depth${elevation}`]}]}
                  onPress={onPress} delayPressIn={50}>
-        <ImageBackground
-          imageStyle={{borderRadius: themes.base.borderRadius}}
-          source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
-          style={styles.imgBackground(6)}
-        >
-          <View style={styles.innerContainer}>
-            <Text style={styles.name}>
-              {business.name}
-            </Text>
-            <Text style={styles.type}>
-              {business.type.join(' • ')}
-            </Text>
-            <View style={styles.distanceContainer}>
-              <Icon name="map-marker-radius" color={colors.white.light}
-                    style={styles.geoFenceImg} size={20}/>
-              <Text style={styles.distance}>
-                {roundedDistance} km
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
+
+        { business.cover_versions && business.cover_versions.length > 0 ?
+            <VersionedImage
+                isBackground
+                minSize={{width: 550, height: 250}}
+                imgSize={{width: 350, height: 150}}
+                style={styles.imgBackground(6)}
+
+                imageStyle={{borderRadius: themes.base.borderRadius}}
+                source={business.cover_versions}>
+              {component}
+            </VersionedImage>
+            :<ImageBackground
+            imageStyle={{borderRadius: themes.base.borderRadius}}
+            style={[style.imgBackground(6),{width: 350, height: 150}]} source={{uri:  "https://via.placeholder.com/350x150"}}>
+          {component}
+        </ImageBackground>}
+
+
       </Touchable>
 
 
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     borderRadius: themes.base.borderRadius,
     elevation: elevation,
-      ...themes.base.elevations[`depth${elevation}`]
+    ...themes.base.elevations[`depth${elevation}`]
 
   }),
   innerContainer: {

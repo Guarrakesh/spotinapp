@@ -63,7 +63,8 @@ export const VersionedImageField = ({
     isBackground
       ?
       <ImageBackground source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
-                       style={{...style}}
+                       style={style}
+
                        resizeMode={"cover"}
                        {...rest}
 
@@ -77,7 +78,7 @@ export const VersionedImageField = ({
   );
 
 
-}
+};
 
 VersionedImageField.defaultProps = {
   minSize: {width: 32, height: 32 }

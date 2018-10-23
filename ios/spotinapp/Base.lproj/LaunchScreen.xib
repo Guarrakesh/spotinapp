@@ -15,14 +15,14 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="EJk-op-RVW">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="EJk-op-RVW">
                     <rect key="frame" x="120" y="100" width="240" height="148"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="148" id="4z7-Id-lGS"/>
                         <constraint firstAttribute="width" constant="240" id="RsM-FU-kuk"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ww9-1X-XwN">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Together" translatesAutoresizingMaskIntoConstraints="NO" id="ww9-1X-XwN">
                     <rect key="frame" x="120" y="260" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="240" id="Ezc-es-p1F"/>
@@ -44,7 +44,7 @@
         </view>
     </objects>
     <resources>
-        <image name="AppIcon" width="902" height="902"/>
-        <image name="AppLogo" width="528" height="261"/>
+        <image name="AppLogo" width="245.75999450683594" height="271.44000244140625"/>
+        <image name="Together" width="770" height="330"/>
     </resources>
 </document>

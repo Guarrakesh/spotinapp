@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import { View, Image, ActivityIndicator} from 'react-native';
 
-const Logo = require('../assets/img/logo.png');
+const Logo = require('../assets/img/logo/logo.png');
+const Together = require('../assets/img/together/together.png');
 
 class Launcher extends React.Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class Launcher extends React.Component {
     return (
         <View style={styles.container}>
           <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Logo}/>
+          <Image source={Together} resizeMethod={"scale"} resizeMode="contain" style={{marginTop: 12, width: 240, height: 128}}/>
           {isLoading && <ActivityIndicator size="large"/>}
         </View>
     );
@@ -28,11 +30,13 @@ const styles = {
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    paddingTop: 100,
+    backgroundColor: 'white'
   },
   logo: {
-    width: 256,
-    height: 256,
+    width: 240,
+    height: 148
   }
 
 };

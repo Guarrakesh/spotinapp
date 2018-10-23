@@ -57,20 +57,24 @@ class ListController extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.initialised !== this.props.initialised) {
+      this.props.changeListParams(this.props.resource, this.props.id, pickBy(this.props, ['page', 'perPage', 'sort', 'order', 'filter']));
 
+    } else
     if ((
-        nextProps.initialised !== this.props.initialised ||
+
         nextProps.resource !== this.props.resource ||
 
         !isEqual(nextProps.params, this.props.params) ||
+        !isEqual(nextProps.query.filter, this.props.query.filter) ||
         !isEqual(nextProps.filter, this.props.filter) ||
         !isEqual(nextProps.sort, this.props.sort) ||
         !isEqual(nextProps.perPage, this.props.perPage))
     ) {
       this.updateData(
-        Object.keys(nextProps.query).length > 0
-          ? nextProps.query
-          : nextProps.params
+          Object.keys(nextProps.query).length > 0
+              ? nextProps.query
+              : nextProps.params
       );
 
     }
@@ -113,7 +117,7 @@ class ListController extends Component {
       query.order = this.props.sort.order || 1;
     }
     if (!query.perPage) {
-      query.perPage = this.props.perPage || 20;
+      query.perPage = this.props.perPage;
     }
     if (!query.page) {
       query.page = 1;
@@ -126,18 +130,18 @@ class ListController extends Component {
 
     const params = query || this.getQuery();
 
-    const { sort, order, page = 1, perPage = 20, filter = {} } = omitBy(params, null);
+    const { sort, order, page = 1, perPage = 20, filter = {} } = params;
 
     const pagination = {
       page: parseInt(page, 10),
-      perPage: parseInt(perPage || 20, 10)
+      perPage: parseInt(perPage, 10)
     };
 
 
     const permanentFilter = this.props.filter;
     // Chiamo l'API
     if (this.props.nearPosition && this.props.nearPosition.latitude
-    && this.props.nearPosition.longitude && this.props.nearPosition.radius) {
+        && this.props.nearPosition.longitude && this.props.nearPosition.radius) {
       this.props.crudGetManyNear(
           this.props.resource,
           this.props.id,
@@ -161,11 +165,11 @@ class ListController extends Component {
     }
 
     //Hack per non far visualizzare in un breve istante il "no content" prima del fetch
-    setTimeout(() => {
+    /*setTimeout(() => {
       if (this.props.ids.length === 0 && !this.props.isLoading) {
         this.setState({noContent: true})
       } else { this.setState({noContent: false})}
-    }, 1000)
+    }, 5000)*/
   }
 
 
@@ -215,16 +219,18 @@ class ListController extends Component {
         data,
         ids,
         total,
+        isListLoading,
         isLoading,
         version,
         selectedIds,
         id,
+        noContent,
         initialised,
     } = this.props;
 
     const query = this.getQuery();
     const queryFilterValues = query.filter || {};
-    if (isLoading && !initialised) {
+    if ((isLoading && !initialised)) {
 
       return (
           <View style={{flex: 1, justifyContent: 'center'}}>
@@ -241,7 +247,7 @@ class ListController extends Component {
       data,
       filterValues: queryFilterValues,
       ids,
-      isLoading,
+      isLoading: isListLoading,
       onSelect: this.handleSelect,
       onToggleItem: this.handleToggleItem,
       onUnselectItems: this.handleUnselectItems,
@@ -255,9 +261,10 @@ class ListController extends Component {
       setPage: this.setPage,
       setPerPage: this.setPerPage,
       total,
+      noContent,
       version,
       initialised,
-      noContent: this.state.noContent,
+     // noContent: this.state.noContent,
 
       listId: id,
     });
@@ -378,15 +385,19 @@ export const sanitizeListRestProps = props =>
  return query;
  }
  );*/
+
+const selectQuery =(props) => {
+  return props.navigation ? pickBy(props.navigation.state.params, ['page', 'perPage', 'sort', 'order', 'filter']) : {};
+};
 function mapStateToProps(state, props) {
   const resourceState = state.entities[props.resource];
   let data;
   if (props.nearPosition && state.location.near[props.resource]) {
     data = Object.keys(resourceState.data).reduce((acc, id) => ({
-        ...acc,
-        [id]: {
-          ...resourceState.data[id],
-          dist: state.location.near[props.resource][id]}
+      ...acc,
+      [id]: {
+        ...resourceState.data[id],
+        dist: state.location.near[props.resource][id]}
 
     }), {});
   } else {
@@ -394,16 +405,18 @@ function mapStateToProps(state, props) {
   }
   const list = resourceState.list[props.id];
   return {
-    query: pickBy(props, ['page', 'perPage', 'sort', 'order', 'filter']),
+    query: selectQuery(props),
     initialised: !!list,
     params: !!list ? list.params : {},
     ids: !!list ? list.ids : [],
     selectedIds: !!list ? list.ids : [],
     total: !!list ? list.total : 0,
     data,
-    isLoading: !!list ? list.isLoading && state.loading > 0: false,
+    isListLoading: !!list ? list.isLoading && state.loading > 0: false,
+    isLoading: state.loading > 0,
     filterValues: !!list ? list.params.filter : {},
     version: state.ui.viewVersion,
+    noContent: !!list ? list.noContent : false,
 
   };
 }

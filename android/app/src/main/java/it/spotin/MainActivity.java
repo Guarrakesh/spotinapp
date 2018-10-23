@@ -1,4 +1,6 @@
-package com.spotinapp;
+package it.spotin;
+
+
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;

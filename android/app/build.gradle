@@ -99,7 +99,7 @@ android {
     buildToolsVersion '28.0.2'
 
     defaultConfig {
-        applicationId "com.spotinapp"
+        applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

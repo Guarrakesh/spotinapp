@@ -7,7 +7,7 @@ import validate from 'validate.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SignupBackground = require('../../assets/img/signup_background.png');
-const Logo = require('../../assets/img/logo-text.png');
+const Logo = require('../../assets/img/logo-text/logo-text.png');
 import {
   View,
   Text,

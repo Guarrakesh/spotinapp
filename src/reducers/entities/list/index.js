@@ -34,6 +34,10 @@ export default (previousState = initialState, action) => {
   }
   const listIds = Object.keys(previousState);
 
+  let noContent = false;
+  if (action.type.includes("SUCCESS") && action.payload && action.payload.data && Object.keys(action.payload.data).length === 0) {
+    noContent = true;
+  }
   const newState = listIds.reduce(
     (acc, id) => ({
       ...acc,
@@ -44,7 +48,8 @@ export default (previousState = initialState, action) => {
             ids: ids(previousState[id].ids, action),
             params: params(previousState[id].params, action),
             selectedIds: selectedIds(previousState[id].selectedIds, action),
-            total: total(previousState[id].total, action)
+            total: total(previousState[id].total, action),
+            noContent,
           }
           : previousState[id]
     }), {});

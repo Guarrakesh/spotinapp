@@ -1,4 +1,4 @@
-package com.spotinapp;
+package it.spotin;
 
 import android.app.Application;
 
@@ -20,6 +20,10 @@ import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
 import java.util.List;
+
+
+import it.spotin.spotinapp.BuildConfig;
+import it.spotin.spotinapp.R;
 
 public class MainApplication extends Application implements ReactApplication {
 
