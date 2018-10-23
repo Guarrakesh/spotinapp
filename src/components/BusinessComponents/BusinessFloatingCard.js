@@ -64,7 +64,7 @@ const BroadcastFloatingCard = ({
             </VersionedImage>
             :<ImageBackground
             imageStyle={{borderRadius: themes.base.borderRadius}}
-            style={[style.imgBackground(6),{width: 350, height: 150}]} source={{uri:  "https://via.placeholder.com/350x150"}}>
+            style={[styles.imgBackground(6),{width: 350, height: 150}]} source={{uri:  "https://via.placeholder.com/350x150"}}>
           {component}
         </ImageBackground>}
 

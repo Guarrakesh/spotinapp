@@ -66,11 +66,9 @@ const auth = {
 
   check(payload) {
 
-    performance.now();
       return new Promise((resolve, reject) => {
 
         Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
-          console.log(performance.now());
           const token = values[0];
           const user = values[1];
           if (!token) return reject({status: 401, message: "No auth token"});
@@ -90,7 +88,6 @@ const auth = {
             }).catch(e => reject(e));
 
           } else {
-            console.log(performance.now());
             return resolve();
           }
         })

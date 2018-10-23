@@ -16,7 +16,7 @@ class FBLoginButton extends Component {
                 alert("Login was cancelled");
               } else {
                 alert("Login was successful with permissions: " + result.grantedPermissions)
-                console.log("RESULT:" + result);
+
               }
             }
           }
