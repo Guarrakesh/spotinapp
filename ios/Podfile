@@ -36,6 +36,9 @@ target 'spotinapp' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|

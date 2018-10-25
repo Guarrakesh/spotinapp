@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Platform} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import { Button } from 'react-native-elements';
+import Permissions from 'react-native-permissions';
 import HomeController from '../../controllers/HomeController';
 import InlineListController from '../../controllers/InlineListController';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -42,20 +43,53 @@ class HomeScreen extends React.Component {
     this.handleEventPress = this.handleEventPress.bind(this);
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
     this.handleBroadcastPress = this.handleBroadcastPress.bind(this);
-
   }
+
+
+  checkPermission() {
+    Permissions.check('location').then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      if(response !== 'authorized'){
+        this.props.navigation.navigate('NoLocationScreen');
+      }
+    })
+  }
+
+  componentDidUpdate(){
+    Permissions.check('location').then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      if(response !== 'authorized'){
+        this.props.navigation.navigate('NoLocationScreen');
+      }
+
+    })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.navigation.state.params.refresh){
+      console.log('componentWillReceiveProps ESEGUITA!');
+      this.forceUpdate();
+    }
+  }
+
+
   handleBroadcastPress(broadcastId, businessId, distance) {
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
+
+
   handleBusinessPress(businessId, distance) {
     this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
 
   }
+
+
   handleEventPress(event, eventId) {
     this.props.navigation.navigate('BroadcastsList', {eventId, event});
   }
 
   render() {
+    {this.checkPermission()}
     return (
       <Authenticated location={{pathName: "Profile"}}>
         <HomeController>

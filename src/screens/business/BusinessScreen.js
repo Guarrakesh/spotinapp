@@ -135,7 +135,7 @@ class BusinessScreen extends React.Component {
         <ListController
             id='business_list'
             resource="businesses"
-            perPage="100"
+            //perPage="100"
             sort={{field: 'dist.calculated', order: 'asc'}}
             nearPosition={nearPosition}
         >

@@ -100,7 +100,7 @@ const BroadcastFloatingCard = ({
                 }
               </View>
               <View style={styles.offerView}>
-                <Text style={styles.offerTitle}>{newsfeed === 0 ? "Sconto alla cassa" : offer.title}</Text>
+                <Text style={styles.offerTitle}>{(newsfeed === 0 || !offer.title || offer.title === "") ? "Sconto alla cassa" : offer.title}</Text>
                 <Text style={styles.offerValue}>{discount(offer.type)}</Text>
               </View>
             </View>

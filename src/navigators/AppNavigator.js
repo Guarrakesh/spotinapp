@@ -13,6 +13,7 @@ import ProfileStack from './ProfileStack';
 import HomeStack from './HomeStack';
 
 import Launcher from '../screens/Launcher';
+import NoLocationScreen from '../screens/NoLocationScreen';
 
 
 
@@ -73,6 +74,9 @@ export const MainNavigation = createTabNavigator(
 const RootNavigator = createStackNavigator(
   {
     Launcher: Launcher,
+
+    NoLocationScreen: NoLocationScreen,
+
     Main: {
       screen: MainNavigation,
       navigationOptions: {

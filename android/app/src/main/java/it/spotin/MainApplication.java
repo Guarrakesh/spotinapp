@@ -17,6 +17,7 @@ import com.facebook.soloader.SoLoader;
 import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
+import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +54,8 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new SvgPackage(),
             new MapsPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new AndroidOpenSettingsPackage()
       );
     }
 

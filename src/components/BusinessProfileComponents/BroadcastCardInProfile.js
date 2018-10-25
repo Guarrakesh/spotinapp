@@ -71,9 +71,9 @@ const BroadcastCardInProfile = (props) => {
                 <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
               </View>
             </View>
-            {(newsfeed || newsfeed > 0) ?
+            {(newsfeed || newsfeed > 0 ) ?
               <View style={styles.offerInfoView}>
-                <Text style={styles.offerTitleText}>{offer.title}</Text>
+                <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? "Sconto alla cassa" : offer.title}</Text>
                 <Text style={styles.offerDescriptionText}>{offer.description}</Text>
               </View> : null
             }
