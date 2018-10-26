@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
+
 import InlineListController from './InlineListController';
-import { getLocationRequest } from "../actions/location";
+
 
 
 /**
@@ -13,9 +14,7 @@ import { getLocationRequest } from "../actions/location";
 
 */
 export class HomeController extends Component {
-  componentDidMount() {
-    this.props.getLocation();
-  }
+
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.isLoggedIn !== this.props.isLoggedIn ||
@@ -25,6 +24,8 @@ export class HomeController extends Component {
     return false;
   }
   render() {
+
+
     const {
       children,
       isLoading,
@@ -39,10 +40,11 @@ export class HomeController extends Component {
 }
 
 const mapStateToProps = (state) => {
+
   return {
     isLoggedIn: state.auth.isLoggedIn,
     isLoading: state.loading > 0,
-    position: state.location.coordinates,
+    position: state.location.device.position ? state.location.device.position.coords : null
   };
 };
 
@@ -53,7 +55,6 @@ HomeController.propTypes = {
 export default connect(
   mapStateToProps,
   {
-    getLocation: getLocationRequest,
     getNearBroadcasts: (position) => crudGetNearMany()
 
   })(HomeController);

@@ -4,6 +4,10 @@ import { Provider, connect } from 'react-redux';
 import { View } from 'react-native';
 import codePush from 'react-native-code-push';
 
+
+import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
+
+
 import configureStore from './store';
 
 import NavigationService from './navigators/NavigationService';
@@ -15,8 +19,12 @@ import Notification from './components/Notification/Notification';
 
 import RootNavigator from './navigators/AppNavigator';
 
-console.disableYellowBox = true;
+
 const store = configureStore();
+const ReduxifiedNavigator = connect(state => ({state: state.navigation}))(reduxifyNavigator(RootNavigator, "root"));
+
+console.disableYellowBox = true;
+
 
 class ResourceInitializer extends Component {
 
@@ -38,7 +46,7 @@ class ResourceInitializer extends Component {
         <View  style={{flex: 1}}>
           <Notification/>
 
-          <RootNavigator
+          <ReduxifiedNavigator
               ref={navigatorRef => {
                 NavigationService.setTopLevelNavigator(navigatorRef)
               }} />
@@ -46,6 +54,7 @@ class ResourceInitializer extends Component {
     )
   }
 };
+
 
 const ConnectedResourceInit = connect(null, {
   register: registerResource,

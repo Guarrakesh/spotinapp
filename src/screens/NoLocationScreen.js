@@ -7,32 +7,6 @@ import {Button} from "react-native-elements";
 
 class NoLocationScreen extends React.Component{
 
-  state = {
-    appState: AppState.currentState
-  }
-
-  componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-  }
-
-  _handleAppStateChange = (nextAppState) => {
-
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!');
-      Permissions.check('location').then(response => {
-        // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-        if(response === 'authorized'){
-          this.props.navigation.navigate('Home', {refresh: true});
-        }
-      })
-
-    }
-    this.setState({appState: nextAppState});
-  }
 
   render(){
     return(

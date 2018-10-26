@@ -1,38 +1,60 @@
 import { combineReducers } from 'redux';
 
-import {
-    GET_CURRENT_LOCATION, REQUEST_ERROR, SENDING_REQUEST
-} from "../../actions/types";
-
 import near from './near';
+import {
+    LOCATION_SET_POSITION
+  , LOCATION_REQUEST
+  , LOCATION_SET_ERROR
+} from '../../actions/location';
 
+function locationReducer(state = {
+  position: null,
+  error: null,
+  fetching: false
+}, action) {
+  switch(action.type) {
 
-let initialState = {
-    latitude: null,
-    longitude: null
-};
-
-
-
-//Action e' l'oggetto (plain) di risposta dispatchata dal saga
-//I campi di action li posso vedere nel file actions/location.js
-function coordReducer(state = initialState, action) {
-    switch (action.type) {
-
-        case GET_CURRENT_LOCATION.SUCCESS:
-            const { latitude, longitude } = action;
-            return {...state,
-
-                latitude: latitude, longitude: longitude };
-
-
-        default:
-
-            return state;
+    case LOCATION_REQUEST: {
+      return {
+        ...state,
+        fetching: true
+      }
     }
+
+    case LOCATION_SET_POSITION: {
+      const {position} = action;
+
+      return {
+        ...state,
+        position,
+        error: null,
+        fetching: false
+      }
+    }
+
+    case LOCATION_SET_ERROR : {
+      const {error} = action;
+
+      return {
+        ...state,
+        error: error,
+        fetching: false
+      }
+    }
+
+    default: {
+      return state;
+    }
+  }
 }
 
+
+
+export const locationSelector = (state) => state.location.device;
+
+
 export default combineReducers({
-    coordinates: coordReducer,
+    device: locationReducer,
     near,
 })
+

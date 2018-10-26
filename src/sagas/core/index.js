@@ -8,7 +8,6 @@ import locationRoot from './location';
 import notifications from './notifications';
 import callback from './callback';
 
-
 import fetch from './fetch';
 import dataProvider from '../../api/dataProvider';
 
@@ -19,8 +18,7 @@ export default function* root() {
     fork(accumulate),
     fork(locationRoot),
     fork(notifications),
-    fork(callback)
-
+    fork(callback),
   ]);
 
 }

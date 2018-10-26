@@ -55,7 +55,7 @@ export function* authorize({email, password, isRegistering, name}) {
             yield put(setAuthState(true, response.token));
 
             //Dico a redux di cambiare schermata
-            yield call(NavigationService.navigate, 'SignedIn');
+            yield put(NavigationService.navigate('Auth'));
             return response.token;
         } else {
             //Informo redux dell'errore

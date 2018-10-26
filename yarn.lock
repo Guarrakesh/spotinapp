@@ -5042,6 +5042,10 @@ react-native-action-button@^2.8.5:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-android-location-enabler@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-android-location-enabler/-/react-native-android-location-enabler-1.0.8.tgz#faa42f8b14adc0099bdec5fb3ac1d92c9804e953"
+
 react-native-android-open-settings@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-android-open-settings/-/react-native-android-open-settings-1.2.0.tgz#95d045df5da51f52a9ade939ae3c4f28d7d9dec0"
@@ -5281,7 +5285,7 @@ react-navigation-fluid-transitions@^0.2.2:
     lodash.sortby "*"
     prop-types "*"
 
-react-navigation-redux-helpers@^2.0.2:
+react-navigation-redux-helpers@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/react-navigation-redux-helpers/-/react-navigation-redux-helpers-2.0.6.tgz#592c51b2c97d08b301b6ca88f9c2e52285829a32"
   dependencies:

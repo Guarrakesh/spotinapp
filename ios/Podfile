@@ -34,10 +34,11 @@ target 'spotinapp' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
 end
 post_install do |installer|
@@ -49,6 +50,11 @@ post_install do |installer|
         end
         if target.name == "React"
           target.remove_from_project
+        end
+        targets_to_ignore = %w(React yoga)
+        
+        if targets_to_ignore.include? target.name
+            target.remove_from_project
         end
     end
 end

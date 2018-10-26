@@ -4,12 +4,12 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import com.microsoft.codepush.react.CodePush;
-import com.microsoft.codepush.react.CodePush;
+
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import it.spotin.spotinapp.BuildConfig;
-import it.spotin.spotinapp.R;
+import it.spotin.BuildConfig;
+import it.spotin.R;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -50,6 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+
+            new RNAndroidLocationEnablerPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new VectorIconsPackage(),
             new SvgPackage(),

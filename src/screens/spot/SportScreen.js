@@ -7,7 +7,6 @@ import SportList from '../../components/SpotComponents/SportList';
 import PropTypes from 'prop-types';
 
 import { View, Text, ActivityIndicator , InteractionManager } from 'react-native';
-import { getLocationRequest } from "../../actions/location";
 
 
 import themes from '../../styleTheme';
@@ -20,9 +19,6 @@ class SportScreen extends React.Component {
     this.handleItemPress = this.handleItemPress.bind(this);
   }
 
-  componentDidMount() {
-    this.props.dispatch(getLocationRequest());
-  }
 
   handleItemPress(sportId, sportName) {
     this.props.navigation.navigate('Competitions', {sportId, title: sportName});

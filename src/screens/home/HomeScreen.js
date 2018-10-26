@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import { Button } from 'react-native-elements';
-import Permissions from 'react-native-permissions';
 import HomeController from '../../controllers/HomeController';
 import InlineListController from '../../controllers/InlineListController';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -46,33 +45,6 @@ class HomeScreen extends React.Component {
   }
 
 
-  checkPermission() {
-    Permissions.check('location').then(response => {
-      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-      if(response !== 'authorized'){
-        this.props.navigation.navigate('NoLocationScreen');
-      }
-    })
-  }
-
-  componentDidUpdate(){
-    Permissions.check('location').then(response => {
-      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-      if(response !== 'authorized'){
-        this.props.navigation.navigate('NoLocationScreen');
-      }
-
-    })
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps.navigation.state.params.refresh){
-      console.log('componentWillReceiveProps ESEGUITA!');
-      this.forceUpdate();
-    }
-  }
-
-
   handleBroadcastPress(broadcastId, businessId, distance) {
     this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
   }
@@ -89,12 +61,12 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    {this.checkPermission()}
+
     return (
       <Authenticated location={{pathName: "Profile"}}>
         <HomeController>
           {({isLoading, position,...rest}) =>
-            !position.latitude || !position.longitude ? null :
+              !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
               <ScrollView style={styles.homeContainer}>
                 <InlineListController
                   id="home_broadcasts_list"

@@ -29,7 +29,8 @@ const AuthNavigator = createStackNavigator(
             headerStyle: {
               shadowColor: 'transparent',
               borderBottomWidth: 0,
-            }
+            },
+
           }
         }
 
@@ -61,7 +62,9 @@ const AuthNavigator = createStackNavigator(
     {
       mode: 'modal',
       headerMode: 'screen',
-
+      cardStyle: {
+        backgroundColor: themes.base.colors.primary.default
+      }
 
 
     }

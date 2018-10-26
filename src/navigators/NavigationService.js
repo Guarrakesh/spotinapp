@@ -13,22 +13,23 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function navigate(routeName, params, setRoot = false) {
+
+
   if (setRoot) {
-    const action = StackActions.reset({
+    return action = StackActions.reset({
       index: 0,
       key: null, // @see https://github.com/react-navigation/react-navigation/issues/1127
       actions: [NavigationActions.navigate({routeName, params})]
     });
-    _navigator.dispatch(action);
+
   } else {
 
 
-    _navigator.dispatch(
-        NavigationActions.navigate({
+      return NavigationActions.navigate({
             routeName,
             params
         })
-    );
+
   }
 }
 

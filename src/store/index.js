@@ -4,8 +4,17 @@ import logger from 'redux-logger'; //eslint-disable-line
 
 import {offline} from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
+
+
+import {
+
+  createReactNavigationReduxMiddleware,
+
+} from 'react-navigation-redux-helpers';
+
 import rootReducer from '../reducers';
 import rootSaga from '../sagas/core';
+import appstateMiddleware from '../middlewares/appstate';
 
 
 
@@ -15,10 +24,10 @@ const sagaMiddleware = createSagaMiddleware();
 
 
 /*
-if (__DEV__)
-  middleware = [...middleware, logger];
-else
-  middleware = [...middleware];*/
+ if (__DEV__)
+ middleware = [...middleware, logger];
+ else
+ middleware = [...middleware];*/
 
 
 
@@ -26,14 +35,15 @@ else
 export default function configureStore(initialState) {
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
+  const navMiddleware = createReactNavigationReduxMiddleware("root", state => state.navigation);
   const store = createStore(
-    rootReducer,
-    initialState,
-    composeEnhancers(
-      applyMiddleware(sagaMiddleware, logger),
-      //offline(offlineConfig)
-    )
+      rootReducer,
+      initialState,
+      composeEnhancers(
+          appstateMiddleware(),
+          applyMiddleware(sagaMiddleware, navMiddleware, logger)
+          //offline(offlineConfig)
+      )
   );
   sagaMiddleware.run(rootSaga);
 

@@ -66,6 +66,16 @@
                ReferencedContainer = "container:spotinapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "81759F9021807804002650B7"
+               BuildableName = "spotinappUITests.xctest"
+               BlueprintName = "spotinappUITests"
+               ReferencedContainer = "container:spotinapp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

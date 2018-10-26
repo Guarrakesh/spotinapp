@@ -45,6 +45,8 @@
 		6AC9D5102A0F46AE94351753 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5ADDBB079244BB3923C89F1 /* Lato-Light.ttf */; };
 		6D86022AF1F94C3BA27F7BD4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41A062B539054070857540F3 /* Ionicons.ttf */; };
 		7DF496E1D5654D3F8E385227 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1D08CB8CD748289F171C49 /* Lato-LightItalic.ttf */; };
+		81759F9421807804002650B7 /* spotinappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759F9321807804002650B7 /* spotinappUITests.swift */; };
+		81759FC22180784D002650B7 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759FC12180784D002650B7 /* SnapshotHelper.swift */; };
 		81A11DB421502C4B006E574D /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81A11DB321502C4B006E574D /* Lato-Bold.ttf */; };
 		81C46991210F31C6007DD095 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46961210F31C6007DD095 /* Octicons.ttf */; };
 		81C46992210F31C6007DD095 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46962210F31C6007DD095 /* Feather.ttf */; };
@@ -340,6 +342,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		81759F9621807804002650B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = spotinapp;
+		};
 		81A11DB12150293C006E574D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E74DB02BBA754C55AD0355D0 /* RNVectorIcons.xcodeproj */;
@@ -406,6 +415,10 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7B5AA557D0F64421A4031878 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		80AC4209A7C2456E807E84A3 /* Lato-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Italic.ttf"; path = "../src/assets/fonts/Lato-Italic.ttf"; sourceTree = "<group>"; };
+		81759F9121807804002650B7 /* spotinappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spotinappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		81759F9321807804002650B7 /* spotinappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spotinappUITests.swift; sourceTree = "<group>"; };
+		81759F9521807804002650B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81759FC12180784D002650B7 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		81A11DB321502C4B006E574D /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		81C46961210F31C6007DD095 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		81C46962210F31C6007DD095 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -488,6 +501,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81759F8E21807804002650B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +693,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		81759F9221807804002650B7 /* spotinappUITests */ = {
+			isa = PBXGroup;
+			children = (
+				81759FC12180784D002650B7 /* SnapshotHelper.swift */,
+				81759F9321807804002650B7 /* spotinappUITests.swift */,
+				81759F9521807804002650B7 /* Info.plist */,
+			);
+			path = spotinappUITests;
+			sourceTree = "<group>";
+		};
 		81A11DAE2150293C006E574D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +767,7 @@
 				13B07FAE1A68108700A75B9A /* spotinapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* spotinappTests */,
+				81759F9221807804002650B7 /* spotinappUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E43792964B62A6C17D34B76A /* Pods */,
@@ -755,6 +786,7 @@
 				00E356EE1AD99517003FC87E /* spotinappTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* spotinapp-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* spotinapp-tvOSTests.xctest */,
+				81759F9121807804002650B7 /* spotinappUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -816,6 +848,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				3BCBC47E08BD22541D2FFB3E /* [CP] Copy Pods Resources */,
+				7EC572C0E5C6FE64DCE6D9E3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -862,12 +895,31 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* spotinapp-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		81759F9021807804002650B7 /* spotinappUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81759FC021807804002650B7 /* Build configuration list for PBXNativeTarget "spotinappUITests" */;
+			buildPhases = (
+				81759F8D21807804002650B7 /* Sources */,
+				81759F8E21807804002650B7 /* Frameworks */,
+				81759F8F21807804002650B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81759F9721807804002650B7 /* PBXTargetDependency */,
+			);
+			name = spotinappUITests;
+			productName = spotinappUITests;
+			productReference = 81759F9121807804002650B7 /* spotinappUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -888,6 +940,12 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					81759F9021807804002650B7 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = 4882BD98NS;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -962,6 +1020,7 @@
 				00E356ED1AD99517003FC87E /* spotinappTests */,
 				2D02E47A1E0B4A5D006451C7 /* spotinapp-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* spotinapp-tvOSTests */,
+				81759F9021807804002650B7 /* spotinappUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1307,6 +1366,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81759F8F21807804002650B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1380,6 +1446,25 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spotinapp/Pods-spotinapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7EC572C0E5C6FE64DCE6D9E3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spotinapp/Pods-spotinapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F51884B60F6FAE7439914E85 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1395,7 +1480,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1435,6 +1520,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81759F8D21807804002650B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81759F9421807804002650B7 /* spotinappUITests.swift in Sources */,
+				81759FC22180784D002650B7 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1447,6 +1541,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* spotinapp-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		81759F9721807804002650B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* spotinapp */;
+			targetProxy = 81759F9621807804002650B7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1689,6 +1788,86 @@
 			};
 			name = Release;
 		};
+		81759F9821807804002650B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4882BD98NS;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = spotinappUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = it.guarrakesh.spotinappUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = spotinapp;
+			};
+			name = Debug;
+		};
+		81759F9921807804002650B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4882BD98NS;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = spotinappUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = it.guarrakesh.spotinappUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = spotinapp;
+			};
+			name = Release;
+		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1800,6 +1979,15 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81759FC021807804002650B7 /* Build configuration list for PBXNativeTarget "spotinappUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81759F9821807804002650B7 /* Debug */,
+				81759F9921807804002650B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
