@@ -13,11 +13,11 @@ const Fonts = themes.base.fonts;
 const colors = themes.base.colors;
 
 const ReservationFloatingCard = ({
-    reservation,
-    onPress,
-    elevation,
-    dark
-}) => {
+                                   reservation,
+                                   onPress,
+                                   elevation,
+                                   dark
+                                 }) => {
 
   const { broadcast, createdAt } = reservation;
   const { offer } = broadcast;
@@ -37,72 +37,47 @@ const ReservationFloatingCard = ({
   };
 
   return(
-      <View style={styles.outerContainer} elevation={1}>
-        <Touchable onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
-          <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
-            { ({record: business}) =>
-                <ImageBackground
-                    imageStyle={{borderRadius: themes.base.borderRadius}}
-                    source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
-                    style={styles.imgBackground}
-                >
-                  <View style={styles.status} elevation={2}>
-                    {reservation.used ? <Icon name="check" size={32} color={themes.base.colors.primary.default}/>
-                        : <Icon name="clock" size={32} color={themes.base.colors.text.default}/>}
-                  </View>
-                  <View
-                      style={[{...styles.bottomContainer}, (dark ? {...styles.darkBackground} : {...styles.lightBackground})]}>
-
+    <View style={styles.outerContainer} elevation={1}>
+      <Touchable onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
+        <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
+          { ({record: business}) =>
+            <ImageBackground
+              imageStyle={{borderRadius: themes.base.borderRadius}}
+              source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
+              style={styles.imgBackground}
+              resizeMode={'cover'}
+            >
+              <View style={styles.bottomContainer}>
+                <ReferenceField source="event" record={broadcast} resource="events" reference="events">
+                  {({record: event}) =>
                     <View style={styles.leftInfo}>
+                      <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>
+                        {business.name}
+                      </Text>
+                      <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>
+                        {event.name}
+                      </Text>
                       <Text
-                          style={[styles.name, dark ? {color: colors.white.default} : {color: colors.text.default}]}>{business.name}</Text>
-
-                      <ReferenceField source="event" record={broadcast} resource="events" reference="events">
-                        {({record: event}) =>
-                            <View>
-
-                              <Text
-                                  style={[styles.eventName, dark ? {color: colors.white.default} : {color: colors.text.default}]}>
-                                {event.name}
-                              </Text>
-                              <View>
-                                <Text
-                                    style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}</Text>
-                              </View>
-
-                            </View>
-
-                        }
-                      </ReferenceField>
-                    </View>
-                    <View style={styles.offerValue}>
-                      <Text style={{
-                        fontSize: 24,
-                        color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
-                        textAlign: 'center'
-                      }}>
-                        {discount(offer.type)}
-                      </Text>
-                      <Text style={{
-                        fontSize: 13,
-                        color: dark ? colors.danger.light : colors.danger.default,
-                        fontWeight: 'bold',
-                        textAlign: 'center'
-                      }}>
-                        alla cassa
+                        style={styles.eventDate} numberOfLines={1} adjustsFontSizeToFit={true}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}
                       </Text>
                     </View>
-                  </View>
-                </ImageBackground>
+                  }
+                </ReferenceField>
+                <View style={styles.offerView}>
+                  <Text style={styles.offerValue}>{discount(offer.type)}</Text>
+                  <Text style={styles.offerValueText}>alla cassa</Text>
+                </View>
+
+              </View>
+            </ImageBackground>
 
 
-            }
-          </ReferenceField>
+          }
+        </ReferenceField>
 
 
-        </Touchable>
-      </View>
+      </Touchable>
+    </View>
   )
 };
 
@@ -118,33 +93,26 @@ const styles = StyleSheet.create({
     backgroundColor: themes.base.colors.white.light,
     borderRadius: themes.base.borderRadius,
     flexDirection: 'column',
-    justifyContent: 'center',
     //I padding servono per dare spazio all'ombra
-    height: 250,
+    height: themes.base.deviceDimensions.height/3,
     margin: 8
 
   },
   imgBackground: {
-    position: 'relative',
     flex: 1,
-    paddingTop: 200,
-    resizeMode: 'stretch',
+    justifyContent: 'flex-end',
     borderRadius: themes.base.borderRadius,
   },
   bottomContainer: {
-    zIndex: 9,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
+    backgroundColor: 'rgba(255,255,255,.8)',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     padding: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    backgroundColor: 'rgba(255,255,255,1)'
-
+    alignItems: 'flex-end'
   },
   darkBackground: {
     backgroundColor: 'rgba(43,39,39,.8)',
@@ -153,41 +121,39 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,1)'
   },
   leftInfo: {
-
+    flexWrap: 'wrap',
+    marginRight: 8
+  },
+  offerView: {
+    alignSelf: 'flex-end'
   },
   offerValue: {
-    alignSelf: 'center'
+    fontFamily: Fonts.LatoHeavy,
+    fontSize: 24,
+    color: colors.danger.default,
+    textAlign: 'center'
+  },
+  offerValueText: {
+    fontSize: 14,
+    fontFamily: Fonts.LatoBold,
+    color: colors.danger.default,
+    textAlign: 'center'
   },
   name: {
     fontSize: 14,
-
-    fontWeight: '300',
+    fontFamily: Fonts.LatoMedium,
+    color: themes.base.colors.text.default
   },
   eventName: {
     fontFamily: Fonts.LatoBold,
     fontSize: 16,
-    backgroundColor: 'transparent'
-
-
+    color: themes.base.colors.text.default
   },
   eventDate: {
-    fontWeight: '500',
+    fontFamily: Fonts.LatoLight,
     color: themes.base.colors.text.default,
-    fontSize: 12,
-  },
-  status: {
-    zIndex: 10,
-    position: 'absolute',
-    right: 16,
-    height: 55,
-    width: 55,
-    bottom: 70,
-    padding: 12,
-    backgroundColor: '#fff',
-    borderRadius: 50,
-
+    fontSize: 14,
   }
-
 
 })
 

@@ -30,10 +30,10 @@ const BroadcastFloatingCard = ({
 
   const component = (
       <View style={styles.innerContainer}>
-        <Text style={styles.name}>
+        <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>
           {business.name}
         </Text>
-        <Text style={styles.type}>
+        <Text style={styles.type} numberOfLines={1} adjustsFontSizeToFit={true}>
           {business.type.join(' • ')}
         </Text>
         <View style={styles.distanceContainer}>

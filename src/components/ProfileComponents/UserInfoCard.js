@@ -16,8 +16,8 @@ const UserInfoCard = (props) =>{
         <Image source={{uri: user.picture ? user.picture : "https://media.licdn.com/dms/image/C4E03AQFX_8NZvj7RVw/profile-displayphoto-shrink_800_800/0?e=1544054400&v=beta&t=v9cAr2sCqtOCIMmBCR4UlMxxTqpz3c240x0GPHHCUK4"}} style={styles.userImage}/>
       </View>
       <View style={styles.infoView}>
-        <Text style={styles.userName}>{user.name}</Text>
-        <Text style={styles.userEmail}>{user.email}</Text>
+        <Text style={styles.userName} numberOfLines={1} adjustsFontSizeToFit={true}>{user.name}</Text>
+        <Text style={styles.userEmail} numberOfLines={1} adjustsFontSizeToFit={true}>{user.email}</Text>
       </View>
       <TouchableOpacity onPress={onLogoutPress}>
         <Icon name={"logout"} size={30} color={themes.base.colors.accent.default}/>

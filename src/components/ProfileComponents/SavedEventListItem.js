@@ -39,8 +39,7 @@ const SavedEventListItem = (props) => {
         <View style={{flexDirection: 'row', flex: 1}}>
           <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
                                imgSize={{width: 32, height: 32}}/>
-
-          <Text style={styles.eventName}>{event.name}</Text>
+          <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
           <View style={styles.dateContainer}>
             <Text style={styles.eventTime}>{time}</Text>
             <Text style={styles.eventDate}>{date}</Text>
@@ -70,7 +69,8 @@ const styles = StyleSheet.create({
     color: themes.base.colors.text.default,
     flex: 1,
     alignSelf: 'center',
-    marginLeft: 8
+    marginLeft: 8,
+    marginRight: 8
   },
   dateContainer: {
     alignItems: 'flex-end',
