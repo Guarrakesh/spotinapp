@@ -45,12 +45,12 @@ const BroadcastFloatingCard = ({
 
   const businessInfoComponent = (business) => (
     <View style={styles.businessContainer}>
-      <Text style={styles.businessName}>{business.name}</Text>
+      <Text style={styles.businessName} numberOfLines={1} adjustsFontSizeToFit={true}>{business.name}</Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
+        <Text style={styles.businessType} numberOfLines={1} adjustsFontSizeToFit={true}>{business.type.join(' • ')}</Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
-          <Text style={styles.businessDistance}>{roundedDistance} km</Text>
+          <Text style={styles.businessDistance} numberOfLines={1} adjustsFontSizeToFit={true}>{roundedDistance} km</Text>
         </View>
       </View>
     </View>);
@@ -82,7 +82,7 @@ const BroadcastFloatingCard = ({
                     {({record: event}) => (
                       <View style={styles.eventInfoView}>
                         <View style={{flex: 1}}>
-                          <Text style={styles.eventName}>{event.name}</Text>
+                          <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
                           <Text
                             style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMM • HH:mm")}</Text>
                         </View>
@@ -100,7 +100,7 @@ const BroadcastFloatingCard = ({
                 }
               </View>
               <View style={styles.offerView}>
-                <Text style={styles.offerTitle}>{(newsfeed === 0 || !offer.title || offer.title === "") ? "Sconto alla cassa" : offer.title}</Text>
+                <Text style={styles.offerTitle} numberOfLines={1} adjustsFontSizeToFit={true}>{(newsfeed === 0 || !offer.title || offer.title === "") ? "Sconto alla cassa" : offer.title}</Text>
                 <Text style={styles.offerValue}>{discount(offer.type)}</Text>
               </View>
             </View>
@@ -199,7 +199,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: Fonts.LatoMedium,
     color: colors.text.default,
-    flex: 1
+    flex: 1,
+    marginRight: 5
   },
   offerValue: {
     fontSize: 24,
