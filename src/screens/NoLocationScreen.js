@@ -2,17 +2,22 @@ import React from 'react';
 import {connect} from "react-redux";
 import Permissions from 'react-native-permissions';
 import AndroidOpenSettings from 'react-native-android-open-settings'
-import {View, StyleSheet, ImageBackground, Text, Platform, Linking, AppState} from "react-native";
+import {View, StyleSheet, ImageBackground, Text, Platform, ActivityIndicator} from "react-native";
 import {Button} from "react-native-elements";
+import { Button as MyButton } from '../components/common'
 import Icon from "react-native-vector-icons/MaterialIcons";
 import themes from "../styleTheme";
-import {Fonts} from "../components/common/Fonts";
 
+
+import { REFRESH_SCREEN } from '../actions/integrity';
 const BackgroundPattern = require('../assets/img/wave_pattern.png');
+const Fonts = themes.base.fonts;
 
 class NoLocationScreen extends React.Component{
 
-
+  handleRefresh() {
+    this.props.dispatch({type: REFRESH_SCREEN });
+  }
   render(){
     return(
       <View style={styles.container}>
@@ -21,16 +26,18 @@ class NoLocationScreen extends React.Component{
           source={BackgroundPattern} style={{height: '100%', width: '100%', marginTop: -20}}
         >
           <View style={styles.middleContainerStyle}>
-            <Text style={styles.text1}>Spot In non puo' funzionare senza la tua posizione...</Text>
-            <Text style={styles.text2}>Abilita l'accesso alla tua posizione nelle Impostazioni.</Text>
-            {Platform.OS === "android" ?
-            <Text style={styles.text3}>Geolocalizzazione > Autorizz. a livello di app > Spot In</Text> : null}
-            <Button
+            <Text style={styles.text1}>Spot In ha bisogno della tua posizione per trovare i locali più vicini...</Text>
+            <Text style={styles.text2}> {"Abilita l'accesso alla tua posizione nelle Impostazioni."} </Text>
+
+              {this.props.fetching && <ActivityIndicator size="small"/>}
+
+              <Button
               title={"Impostazioni"}
               titleStyle={styles.sendButtonText}
               buttonStyle={[styles.sendButton, {borderColor: themes.base.colors.accent.default}]}
               onPress={() => {Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()}}
             />
+              <MyButton disabled={this.props.fetching} clear variant="primary" onPress={this.handleRefresh.bind(this)} >Aggiorna</MyButton>
           </View>
         </ImageBackground>
       </View>
@@ -102,4 +109,6 @@ const styles = StyleSheet.create({
   },
 
 });
-export default NoLocationScreen;
+export default connect(state => ({
+  fetching: state.location.device.fetching
+}))(NoLocationScreen);

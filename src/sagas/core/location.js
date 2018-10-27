@@ -23,8 +23,9 @@ import { REFRESH_SCREEN } from '../../actions/integrity';
 
 
 
-const geolocationSettings = { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 };
+const geolocationSettings = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
 export const locationChannel = channel();
+let watchTask;
 let watcher;
 
 
@@ -55,9 +56,10 @@ function* watchLocationChannel() {
 
 function* watchPosition() {
   if (Platform.OS === "android") {
+
     try {
       const data = yield call(RNAndroidLocationEnabler.promptForEnableLocationIfNeeded, {interval: 10000, fastInterval: 5000});
-        let granted = yield call(Permissions.check, 'location',  {
+      let granted = yield call(Permissions.request, 'location',  {
         title: "Accesso a posizione",
         message: "Spot In richiede l'accesso alla tua posizione per individuare i locali più vicini a te."
       });
@@ -70,11 +72,12 @@ function* watchPosition() {
         }
       }
     } catch (err) {
-      locationChannel.put({type: LOCATION_SET_ERROR });
+      locationChannel.put({type: LOCATION_SET_ERROR, error: err });
+
     }
   }
 
-  locationChannel.put({type: LOCATION_REQUEST});
+  watcher = locationChannel.put({type: LOCATION_REQUEST});
   navigator.geolocation.watchPosition(
       position => {
 
@@ -87,9 +90,10 @@ function* watchPosition() {
 }
 
 function* resetWatcher() {
-  cancel(watcher);
+  yield cancel(watchTask);
   navigator.geolocation.stopObserving();
-  watcher = fork(watchPosition);
+  navigator.geolocation.clearWatch(watcher);
+  watchTask = yield fork(watchPosition);
 }
 export default function* root() {
   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
@@ -99,7 +103,7 @@ export default function* root() {
   yield take(action => action.actions && action.actions[0].routeName === "Main");
 
   yield spawn(watchLocationChannel);
-  yield watcher = fork(watchPosition);
+  yield watchTask = yield fork(watchPosition);
 
   yield takeEvery(REFRESH_SCREEN, resetWatcher);
 

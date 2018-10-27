@@ -192,7 +192,7 @@ class BroadcastsScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { latitude, longitude } = state.location.coordinates;
+  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
   const { loggedIn } = state.auth;
   return {
     loggedIn, latitude, longitude

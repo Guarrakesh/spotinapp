@@ -11,7 +11,6 @@ import { View, SearchBar} from '../../components/common';
 import BusinessList from '../../components/BusinessComponents/BusinessList';
 import Icon  from 'react-native-vector-icons/Feather';
 
-import { getLocationRequest } from "../../actions/location";
 
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
@@ -104,10 +103,6 @@ class BusinessScreen extends React.Component {
     }
   }
 
-  componentDidMount() {
-    //Dispatch la richiesta della posizione
-    this.props.dispatch(getLocationRequest());
-  }
 
   handleBusinessPress(businessId, distance) {
     this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
@@ -197,7 +192,9 @@ class BusinessScreen extends React.Component {
 }
 const mapStateToProps = (state) => {
 
-  const { latitude, longitude } = state.location.coordinates;
+  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+
+
   const { loggedIn } = state.auth;
   return {
     loggedIn, latitude, longitude,

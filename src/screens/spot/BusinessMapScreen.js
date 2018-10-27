@@ -152,9 +152,10 @@ const mapStateToProps = (state, props) => {
 
 
 
+
+  const  {latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {}
   return {
-    latitude: state.location.latitude,
-    longitude: state.location.longitude,
+    latitude, longitude,
     businesses: businesses,
   };
 };

@@ -146,7 +146,7 @@ class ContactUsScreen extends React.Component{
           contentContainerStyle={styles.container}
           bounces={false}
         >
-          <Text style={styles.header}>Organizziamo l'evento per te!</Text>
+          <Text style={styles.header}>{"Organizziamo l'evento per te!"}</Text>
           <View style={styles.eventContainer}>
             <Text style={styles.competitionName}>{event.competition.name}</Text>
             <View style={styles.eventRow}>
@@ -252,7 +252,7 @@ class ContactUsScreen extends React.Component{
 
 const mapStateToProps = (state) => {
 
-  const { latitude, longitude } = state.location.coordinates;
+  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
   const isLoading = state.loading > 0;
   const userId = state.auth.profile._id;
 
