@@ -73,7 +73,7 @@ function* watchPosition() {
       }
     } catch (err) {
       locationChannel.put({type: LOCATION_SET_ERROR, error: err });
-
+      return;
     }
   }
 
