@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Animated } from 'react-native';
 
 import SignupForm from '../../components/forms/SignupForm';
 import signup from '../../validations/signup';
@@ -23,13 +25,11 @@ import {
 import { userRegister } from '../../actions/authActions';
 
 
-import { Animated } from 'react-native';
 
 
 
 import themes from '../../styleTheme';
 const colors = themes.base.colors;
-
 
 
 
@@ -103,6 +103,7 @@ class SignupScreen extends React.Component {
         <ImageBackground source={SignupBackground} style={styles.container}>
 
             <StatusBar barStyle="dark-content" backgroundColor={colors.primary.default}/>
+          <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1, justifyContent: 'center'}}>
             <Image source={Logo} style={{height: 32, width: '100%', marginBottom: 32,}} resizeMode={"contain"}/>
             <View style={styles.formContainer}>
                 <SignupForm
@@ -118,7 +119,7 @@ class SignupScreen extends React.Component {
                     onSubmit={this.register}
                 />
             </View>
-
+          </KeyboardAwareScrollView>
 
 
         </ImageBackground>
@@ -136,21 +137,21 @@ class SignupScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    justifyContent: 'space-between',
+
     paddingTop: 64,
     backgroundColor: themes.base.backgroundColor,
     flexDirection: 'column',
     justifyContent: 'center',
 
 
-    height: '100%',
-    width: '100%',
+    height: null,
+    width: null,
 
   },
   formContainer: {
     marginTop:32,
-    marginLeft: 32,
-    marginRight: 32,
+    marginLeft: 16,
+    marginRight: 16,
     justifyContent: 'flex-end'
   }
 

@@ -66,32 +66,32 @@ const auth = {
 
   check(payload) {
 
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-        Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
-          const token = values[0];
-          const user = values[1];
-          if (!token) return reject({status: 401, message: "No auth token"});
+      Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
+        const token = values[0];
+        const user = values[1];
+        if (!token) return reject({status: 401, message: "No auth token"});
 
-          const dateNow = Date.now();
-          const tokenExpire = Date.parse(token.expiresIn);
+        const dateNow = Date.now();
+        const tokenExpire = Date.parse(token.expiresIn);
 
-          if (tokenExpire < dateNow) {
+        if (tokenExpire < dateNow) {
 
-            const {email} = user;
-            const refreshToken = token.refreshToken;
+          const {email} = user;
+          const refreshToken = token.refreshToken;
 
-            if (!email || !refreshToken) return reject("Failed to refresh: no email or token stored");
+          if (!email || !refreshToken) return reject("Failed to refresh: no email or token stored");
 
-            auth.refresh(email, refreshToken).then(response => {
-              resolve(response);
-            }).catch(e => reject(e));
+          auth.refresh(email, refreshToken).then(response => {
+            resolve(response);
+          }).catch(e => reject(e));
 
-          } else {
-            return resolve();
-          }
-        })
-      });
+        } else {
+          return resolve();
+        }
+      })
+    });
 
   },
 
@@ -157,20 +157,20 @@ const auth = {
       };
 
 
-        fetch(`${vars.apiUrl}/auth/register`, config)
-            .then(response => response.json()
-                .then(data => {
-                  if (response.status < 200 || response.status >= 300) {
-                    return reject({status: response.status, message: data.message});
-                  }
-                  Promise.all([
-                    auth.setAuthToken(data.token),
-                    auth.setUserInfo(data.user)
-                  ]).then(() =>  resolve(data)).catch((e) => reject(e));
+      fetch(`${vars.apiUrl}/auth/register`, config)
+          .then(response => response.json()
+              .then(data => {
+                if (response.status < 200 || response.status >= 300) {
+                  return reject({status: response.status, message: data.message});
+                }
+                Promise.all([
+                  auth.setAuthToken(data.token),
+                  auth.setUserInfo(data.user)
+                ]).then(() =>  resolve(data)).catch((e) => reject(e));
 
-                })
-            ).catch(e => reject(e));
-    });<x>  </x>
+              })
+          ).catch(e => reject(e));
+    });
   },
   async refresh(username, token) {
 
@@ -215,6 +215,28 @@ const auth = {
           .catch((e) => reject(e))
     })
 
+  },
+
+  async forgotPassword(email) {
+    return new Promise((resolve, reject) => {
+      try {
+        const config = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'X-Client-Type': 'mobileapp'},
+          body: JSON.stringify({email})
+        };
+        fetch(`${vars.apiUrl}/auth/forgot-password`, config)
+            .then(response => {
+              if (response && response.status === 200) resolve(response);
+              else reject(response);
+            })
+            .catch(error => {
+              reject(error);
+            })
+      } catch (error) {
+        reject(error);
+      }
+    });
   },
   async getAuthToken() {
     return JSON.parse(await AsyncStorage.getItem('token'));

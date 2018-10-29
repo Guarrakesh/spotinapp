@@ -53,6 +53,7 @@ class LoginScreen extends React.Component {
 
     this.login = this.login.bind(this);
     this.facebookLogin = this.facebookLogin.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
   }
 
   login() {
@@ -74,7 +75,9 @@ class LoginScreen extends React.Component {
       });
     }
   }
-
+  forgotPassword() {
+    this.props.navigation.navigate('ForgotPassword')
+  }
   facebookLogin() {
     this.props.facebookLogin();
   }
@@ -190,6 +193,7 @@ class LoginScreen extends React.Component {
                     fixNativeFeedbackRadius={true}
                     title='Password dimenticata?'
                     flat
+                    onPress={this.forgotPassword}
                     titleStyle={{color: colors.text.default, fontSize: 16}}
                     buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
                     clear={true}

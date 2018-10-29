@@ -26,6 +26,14 @@ export const dangerColor = {
   default: '#B80638',
   light: '#FF356E',
 };
+export const warningColor = {
+  default: '#F79F1F',
+  light: '#F79F1F',
+};
+export const infoColor = {
+  default: '#12CBC4',
+  light: '#12CBC4'
+};
 
 const themes = {
   old: {
@@ -51,7 +59,7 @@ const themes = {
         default: '#FAFAFA',
         light: '#FFFFFF',
         divisor: '#EEEEEE' //colore per le linee divisorie
-      }
+      },
     },
     //Si dovrebbero calcolare diversamente su iOS ...
     elevations: {
@@ -92,6 +100,8 @@ const themes = {
       text: textColor,
       white: whiteColor,
       danger: dangerColor,
+      info: infoColor,
+      warning: warningColor
     },
     elevations: {
       depth1: {
@@ -239,7 +249,7 @@ const themes = {
     facebook: '#3F51B5'
   },
 
-}
+};
 
 
 export default themes;

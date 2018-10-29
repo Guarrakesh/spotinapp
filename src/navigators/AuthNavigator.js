@@ -8,6 +8,8 @@ import { createStackNavigator }  from 'react-navigation';
 
 import LoginScreen from '../screens/spot/LoginScreen';
 import SignupScreen from '../screens/spot/SignupScreen';
+import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
+
 import { TouchableHighlight } from 'react-native';
 import DismissButton from '../components/common/DismissButton';
 import themes from '../styleTheme';
@@ -55,6 +57,19 @@ const AuthNavigator = createStackNavigator(
             borderBottomWidth: 0,
           }
 
+
+        })
+      },
+      ForgotPassword: {
+        screen: ForgotPasswordScreen,
+        navigationOptions: ({navigation}) => ({
+          headerTransparent: true,
+          headerTintColor: themes.base.colors.text.default,
+
+          headerStyle: {
+            shadowColor: 'transparent',
+            borderBottomWidth: 0,
+          },
 
         })
       }

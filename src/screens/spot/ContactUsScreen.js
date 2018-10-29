@@ -17,7 +17,7 @@ import {fetchStart, fetchEnd} from "../../actions/fetchActions";
 import {showNotification} from "../../actions/notificationActions";
 import NavigationService from '../../navigators/NavigationService';
 
-const colors = themes.base.colors
+const colors = themes.base.colors;
 
 const BackgroundPattern = require('../../assets/img/wave_pattern.png');
 
@@ -85,8 +85,6 @@ class ContactUsScreen extends React.Component{
           })
           .then(function(res){
             if(res.status === 204){
-              console.log(res);
-              console.log("Richiesta inviata con successo");
               self.props.dispatch(fetchEnd());
               //mostra notifica
               self.props.dispatch(showNotification(
@@ -107,13 +105,11 @@ class ContactUsScreen extends React.Component{
                   title: "Qualcosa è andato storto..."
                 }
               ));
-              console.log(res);
-              console.log("Errore nell'invio")
+
               self.props.dispatch(fetchEnd());
             }
           })
           .catch(function(res){
-            console.log(res);
             self.props.dispatch(showNotification(
               "Controlla la tua connessione ad internet.",
               "error",
@@ -125,7 +121,6 @@ class ContactUsScreen extends React.Component{
           })
       })
     }).catch(function(e){
-      console.log(e);
       NavigationService.navigate("Auth", {}, true);
       self.props.dispatch(fetchEnd());
     })

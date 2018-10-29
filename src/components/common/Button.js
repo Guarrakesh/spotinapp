@@ -1,10 +1,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {  Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Button as BaseButton } from 'react-native-elements'
 
 import themes from '../../styleTheme';
+const fonts = themes.base.fonts;
+
 const buttonBaseStyle = themes.base.button;
 export default class Button extends React.Component {
   static propTypes = {
@@ -17,28 +19,37 @@ export default class Button extends React.Component {
 
   render() {
 
-    const { clear, variant, round, buttonStyle, titleStyle} = this.props;
+    const { clear, variant, round, buttonStyle, titleStyle, capitalize, children } = this.props;
 
     //TODO tutta la roba dell'ombra e dei ripple
 
-    const style = [
+    const style = StyleSheet.flatten([
       clear ? {} : buttonBaseStyle[variant],
       round ? buttonBaseStyle.round : {},
       buttonBaseStyle.base,
       buttonStyle,
-    ];
+
+
+    ]);
     const titleBaseStyle = [
-        buttonBaseStyle.titleBase,
+      buttonBaseStyle.titleBase,
       clear ? buttonBaseStyle[`${variant}Simple`] : {},
-      titleStyle
+      titleStyle,
+      capitalize && {fontFamily: fonts.LatoBold}
     ];
+    const loadingProps = {
+      size: capitalize ? "large" : "small",
+      color: clear ? themes.base.colors[variant] : "#fff",
+    };
     return (
         <BaseButton
             rounded
             activeOpacity={0.2}
             buttonStyle={style}
             titleStyle={titleBaseStyle}
-            title={this.props.children}
+            title={typeof children === "string"  && capitalize ? children.toUpperCase() : children}
+
+            loadingProps={loadingProps}
             {...this.props}
         />
     )
@@ -51,6 +62,7 @@ Button.defaultProps = {
   variant: 'primary'
 };
 Button.propTypes = {
+  capitalize: PropTypes.bool,
   variant: PropTypes.string,
   clear: PropTypes.bool,
 };
