@@ -8,7 +8,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {View, Text, Button, Platform} from 'react-native';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
-import ProfileScreen from '../screens/profile/ProfileScreen'
+import ProfileScreen from '../screens/profile/ProfileScreen';
+import EditProfileScreen from '../screens/profile/EditProfileScreen';
 
 import themes from "../styleTheme";
 import AuthNavigator from './AuthNavigator';
@@ -28,7 +29,25 @@ export const ProfileStack = createStackNavigator({
             textAlign: 'center',
             alignSelf: 'center',
             color: themes.base.colors.text.default,
-            //marginRight: Platform.OS === 'android' ? 75 : null,
+            marginLeft: Platform.OS === 'android' ? 30 : null,
+          },
+        }
+      },
+      EditProfileScreen: {
+        screen: EditProfileScreen,
+        navigationOptions: {
+          title: null,
+          headerTransparent: true,
+          headerStyle: {
+            shadowColor: 'transparent',
+            borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            width: '100%',
+            textAlign: 'center',
+            alignSelf: 'center',
+            color: themes.base.colors.text.default,
+            marginLeft: Platform.OS === 'android' ? -30 : null,
           },
         }
       },
@@ -47,7 +66,6 @@ export const ProfileStack = createStackNavigator({
       },
       BroadcastsList: {
         screen: BroadcastsScreen,
-
 
       },
       BusinessProfileScreen: {

@@ -1,6 +1,7 @@
 import {
-  GET_PROFILE
+  GET_PROFILE, UPDATE
 } from './types';
+import {CRUD_UPDATE} from "./dataActions";
 
 
 export const PROFILE_GET_INFO = 'PROFILE_GET_INFO';
@@ -22,3 +23,27 @@ export const profileGetInfo = () => ({
     }
   }
 });
+
+export const updateProfile = (profile) => ({
+  resource: "users",
+  type: CRUD_UPDATE,
+  payload: {
+    id: profile.userId,
+    data: {
+      name: profile.name,
+      password: profile.password
+    },
+  },
+  meta: {
+    basePath: "/users/"+profile.userId,
+    resource: "profile",
+    fetch: UPDATE,
+    onSuccess: {
+      notification: {
+        body: "I dati del profilo sono stati aggiornati",
+        level: "success",
+        title: "Dati aggiornati"
+      }
+    }
+  }
+})

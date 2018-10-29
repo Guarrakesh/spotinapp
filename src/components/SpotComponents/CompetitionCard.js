@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     flexDirection: 'column',
     flexWrap: 'wrap',
-    flex: 1
+    flex: 1,
   },
   container: {
     width: '100%',
     backgroundColor: themes.base.colors.white.light,
     height: 100,
-
+    justifyContent: 'center',
     marginBottom: 8,
     borderRadius: themes.base.borderRadius,
 
@@ -98,8 +98,7 @@ const styles = StyleSheet.create({
   },
   arrowIconView: {
     justifyContent: 'center',
-    right: 0,
-    height: '100%',
+    alignSelf: 'center'
   },
   arrowImg: {
     marginRight: 8

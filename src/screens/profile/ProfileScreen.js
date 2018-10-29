@@ -2,7 +2,9 @@ import React from 'react';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 import View from '../../components/common/View';
-import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+import {ScrollView, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { userLogout, userCheck } from '../../actions/authActions';
 import { crudDelete } from '../../actions/dataActions';
@@ -12,12 +14,6 @@ import ReservationsCarousel from '../../components/ProfileComponents/Reservation
 import SavedEventsList from '../../components/ProfileComponents/SavedEventsList';
 import { connect } from 'react-redux';
 import themes from "../../styleTheme";
-
-const user = {
-  name: "Armando Catalano",
-  email: "armocata@libero.it",
-  image: "https://media.licdn.com/dms/image/C4E03AQFX_8NZvj7RVw/profile-displayphoto-shrink_800_800/0?e=1543449600&v=beta&t=GCd4X8KnsajmTIzz2Ue_6F_-AFgX2JaDuu8kZir_uZk"
-}
 
 class ProfileScreen extends React.Component {
 
@@ -30,6 +26,27 @@ class ProfileScreen extends React.Component {
     this.handleFavoriteEventRemove = this.handleFavoriteEventRemove.bind(this);
     this.handleFavoriteEventPress = this.handleFavoriteEventPress.bind(this);
     this.handleReservationPress = this.handleReservationPress.bind(this);
+  }
+
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerRight: (
+        <Button
+          title={""}
+          icon={
+            <Icon
+              name='edit'
+              size={24}
+              color={themes.base.colors.text.default}
+
+            />
+          }
+          buttonStyle={{backgroundColor: 'transparent', marginRight: 16}}
+          clear={true}
+          onPress={() => navigation.navigate('EditProfileScreen')}
+        />
+      )
+    }
   }
 
 
@@ -56,8 +73,13 @@ class ProfileScreen extends React.Component {
     this.props.navigation.navigate('BroadcastsList', {eventId, event});
 
   }
+
   handleReservationPress(reservation){
     this.props.navigation.navigate('ReservationScreen', {reservation});
+  }
+
+  handleEditProfile(){
+    this.props.navigation.navigate('EditProfileScreen');
   }
 
 
@@ -74,7 +96,7 @@ class ProfileScreen extends React.Component {
               {loggedIn && profile._id ?
 
                 <View>
-                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout}/>
+                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout} onEditProfilePress={this.handleEditProfile}/>
                   <InlineListController basePath={`/users/${profile._id}`}
                                         id="profile_reservations_list" resource="reservations">
                     {controllerProps =>
