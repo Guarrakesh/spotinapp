@@ -29,7 +29,7 @@ export const ProfileStack = createStackNavigator({
             textAlign: 'center',
             alignSelf: 'center',
             color: themes.base.colors.text.default,
-            marginLeft: Platform.OS === 'android' ? 30 : null,
+            marginLeft: Platform.OS === 'android' ? 75 : null,
           },
         }
       },

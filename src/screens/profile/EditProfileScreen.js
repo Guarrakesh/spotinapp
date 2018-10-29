@@ -65,7 +65,7 @@ class EditProfileScreen extends React.Component{
     }
     else{
       console.log('Nessun errore!')
-      this.dispatch(updateProfile(this.state));
+      this.props.updateProfile(this.state);
     }
   }
 
@@ -163,7 +163,7 @@ class EditProfileScreen extends React.Component{
                 numberOfLines = {1}
                 onChangeText={(text) => this.setState({passwordConfirm: text})}
                 onSubmitEditing={() => {
-                  this.refs.password.focus()
+                  this.updateProfile();
                 }}
               />
               <Button
@@ -267,4 +267,4 @@ const mapStateToProps = (state) => {
     profile: state.auth.profile
   });
 };
-export default connect(mapStateToProps, { userCheck, userLogout, crudDelete})(EditProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout, crudDelete, updateProfile})(EditProfileScreen);
