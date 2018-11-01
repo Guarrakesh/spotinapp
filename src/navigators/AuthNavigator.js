@@ -11,8 +11,9 @@ import SignupScreen from '../screens/spot/SignupScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 
 import { TouchableHighlight } from 'react-native';
-import DismissButton from '../components/common/DismissButton';
+
 import themes from '../styleTheme';
+import i18n from '../i18n/i18n';
 
 const BackButton = ({onPress}) => (
     <TouchableHighlight onPress={onPress}>
@@ -41,7 +42,7 @@ const AuthNavigator = createStackNavigator(
         screen: SignupScreen,
 
         navigationOptions: ({navigation}) => ({
-          title: 'Registrazione'.toUpperCase(),
+          title: i18n.t("auth.register.title").toUpperCase(),
           headerTitleStyle: {
             fontFamily: themes.base.fonts.LatoMedium,
             textAlign: 'center',

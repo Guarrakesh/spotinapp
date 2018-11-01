@@ -1,20 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import View from '../common/View';
-import {Text, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native';
+import {Text, StyleSheet, Image, Alert} from 'react-native';
+import { withNamespaces } from 'react-i18next';
+import DeviceInfo from 'react-native-device-info';
+import moment from "moment";
+import 'moment/min/moment-with-locales';
+
+import { Button, Touchable, View } from '../common';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from '../../helpers';
-import moment from "moment";
-import 'moment/locale/it';
+
 import {Fonts} from "../common/Fonts";
 import Icon from 'react-native-vector-icons/Feather'
 import VersionedImageField from '../common/VersionedImageField';
 import ReferenceField from '../common/ReferenceField'
 
+moment.locale(DeviceInfo.getDeviceLocale());
+
 const BroadcastCardInProfile = (props) => {
 
-  let { broadcast, onReservePress } = props;
+  let { broadcast, onReservePress, t} = props;
   const { offer, newsfeed, reserved } = broadcast;
 
 
@@ -33,70 +39,67 @@ const BroadcastCardInProfile = (props) => {
 
 
   return (
-    <ReferenceField reference="events" record={broadcast} source="event">
-      {({record: event, isLoading}) => {
-        if (isLoading) return null;
+      <ReferenceField reference="events" record={broadcast} source="event">
+        {({record: event, isLoading}) => {
+          if (isLoading) return null;
 
-        let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-        let time = moment(event.start_at).locale('it').format('HH:mm');
-        const { competitors } = event;
+          let date = moment(event.start_at).format('dddd D MMMM');
+          let time = moment(event.start_at).format('HH:mm');
+          const { competitors } = event;
 
-        return (
-          <View style={(newsfeed || newsfeed > 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
-            {(newsfeed || newsfeed > 0) ?
-              <View style={styles.redHeader} elevation={3}>
-                <Text style={styles.headerText}>Offerta consigliata</Text>
-              </View> : null
-            }
-            <View style={styles.eventInfoView}>
+          return (
+              <View style={(newsfeed || newsfeed > 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
+                {(newsfeed || newsfeed > 0) ?
+                    <View style={styles.redHeader} elevation={3}>
+                      <Text style={styles.headerText}>{t("browse.getOffer.recommended")}</Text>
+                    </View> : null
+                }
+                <View style={styles.eventInfoView}>
 
-              {    event.competition.competitorsHaveLogo
-                ?
-                <View style={styles.competitorsLogoView}>
-                  <VersionedImageField source={competitors[0]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
-                  <VersionedImageField source={competitors[1]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} style={{marginTop: 8}}/>
-                </View>
-                :
-                <View style={{marginTop: 8, marginLeft: 16}}>
-                  { <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
-                </View>
+                  {    event.competition.competitorsHaveLogo
+                      ?
+                      <View style={styles.competitorsLogoView}>
+                        <VersionedImageField source={competitors[0]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
+                        <VersionedImageField source={competitors[1]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} style={{marginTop: 8}}/>
+                      </View>
+                      :
+                      <View style={{marginTop: 8, marginLeft: 16}}>
+                        { <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
+                      </View>
 
-              }
-              <View style={{flex: 1, marginLeft: 16, justifyContent: 'space-between'}}>
-                <Text style={styles.eventNameText}>{event.name}</Text>
-                <Text style={styles.eventDateText}>{date}</Text>
-                <Text style={styles.eventTimeText}>{time}</Text>
-              </View>
-              <View style={styles.sportIconView}>
-                <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-              </View>
-            </View>
-            {(newsfeed || newsfeed > 0 ) ?
-              <View style={styles.offerInfoView}>
-                <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? "Sconto alla cassa" : offer.title}</Text>
-                <Text style={styles.offerDescriptionText}>{offer.description}</Text>
-              </View> : null
-            }
-            <View style={styles.offerReservationView}>
-              <View style={styles.offerContainer}>
-                <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
-              </View>
-              {!reserved && !props.reserved ?
-                <TouchableOpacity onPress={onReservePress}>
-                  <View style={styles.reservationButton} elevation={2}>
-                    <Text style={styles.reservationText}>OTTIENI OFFERTA</Text>
+                  }
+                  <View style={{flex: 1, marginLeft: 16, justifyContent: 'space-between'}}>
+                    <Text style={styles.eventNameText}>{event.name}</Text>
+                    <Text style={styles.eventDateText}>{date}</Text>
+                    <Text style={styles.eventTimeText}>{time}</Text>
                   </View>
-                </TouchableOpacity>
-                :
-                <View style={styles.reservedView}>
-                  <Icon name={'check-circle'} size={20} color={themes.base.colors.accent.default} style={{marginRight: 3}}/>
-                  <Text style={styles.reservedText}>PRENOTATO</Text>
+                  <View style={styles.sportIconView}>
+                    <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+                  </View>
                 </View>
-              }
-            </View>
-          </View>
-        )}}
-    </ReferenceField>
+                {(newsfeed || newsfeed > 0 ) ?
+                    <View style={styles.offerInfoView}>
+                      <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
+                      <Text style={styles.offerDescriptionText}>{offer.description}</Text>
+                    </View> : null
+                }
+                <View style={styles.offerReservationView}>
+                  <View style={styles.offerContainer}>
+                    <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
+                  </View>
+                  {!reserved && !props.reserved ?
+                      <Button round uppercase variant="primary" onPress={onReservePress}>{t('browse.getOffer.buttonTitle')}</Button>
+
+                      :
+                      <View style={styles.reservedView}>
+                        <Icon name={'check-circle'} size={20} color={themes.base.colors.accent.default} style={{marginRight: 3}}/>
+                        <Text style={styles.reservedText}>{t("browse.getOffer.booked")}</Text>
+                      </View>
+                  }
+                </View>
+              </View>
+          )}}
+      </ReferenceField>
 
   );
 };
@@ -185,25 +188,11 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.LatoBold,
     color: themes.base.colors.danger.default,
   },
-  reservationButton: {
-    backgroundColor: themes.base.colors.accent.default,
-    borderRadius: 100,
-    margin: 5
-  },
   reservedView: {
     flexDirection: 'row',
     backgroundColor: 'transparent',
     borderRadius: 100,
     margin: 5
-  },
-  reservationText: {
-    fontSize: 16,
-    fontFamily: Fonts.LatoBold,
-    color: themes.base.colors.white.light,
-    marginRight: 16,
-    marginLeft: 16,
-    marginTop: 8,
-    marginBottom: 8
   },
   reservedText: {
     fontSize: 16,
@@ -233,4 +222,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default BroadcastCardInProfile;
+export default withNamespaces()(BroadcastCardInProfile);

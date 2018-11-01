@@ -1,7 +1,9 @@
 import React from 'react';
-import BroadcastCardInProfile from './BroadcastCardInProfile';
 import {View, StyleSheet, FlatList, Text, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
+
+import BroadcastCardInProfile from './BroadcastCardInProfile';
 import broadcasts from "../../api/broadcasts";
 import {Fonts} from "../common/Fonts";
 import themes from '../../styleTheme';
@@ -15,6 +17,7 @@ const BroadcastInProfileList = (
         isRefreshing,
         onReservePress,
         reservedBroadcasts,
+        t
     }
 ) => {
 
@@ -31,7 +34,7 @@ const BroadcastInProfileList = (
       <FlatList
           ListHeaderComponent={
             <Text style={themes.base.inlineListTitleStyle}>
-              {ids.length === 0 ? "Nessuna offerta al momento" : "Eventi in programma"}
+              {ids.length === 0 ? t("browse.businessProfile.noEvents") : t("browse.businessProfile.plannedEvents")}
             </Text>
           }
           data={ids}
@@ -63,4 +66,4 @@ const BroadcastInProfileList = (
   };
 
 
-  export default BroadcastInProfileList;
+  export default withNamespaces()(BroadcastInProfileList);

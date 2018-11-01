@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {  Text, StyleSheet, Alert } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import moment from "moment";
-import 'moment/locale/it';
+import DeviceInfo from 'react-native-device-info';
+
+import 'moment/min/moment-with-locales';
 
 import { Touchable, View } from '../../components/common';
 
@@ -12,20 +14,22 @@ import {Fonts} from "../common/Fonts";
 import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
 
+moment.locale(DeviceInfo.getDeviceLocale());
 const SavedEventListItem = (props) => {
 
-  const { event, onRemovePress, onPress} = props;
+  const { event, onRemovePress, onPress, t} = props;
 
-  const date = moment(event.start_at).locale('it').format('ddd D MMM').toString();
-  const time = moment(event.start_at).locale('it').format('HH:mm').toUpperCase();
+  const date = moment(event.start_at).format('ddd D MMM').toString();
+  const time = moment(event.start_at).format('HH:mm').toUpperCase();
 
   const onLongPress = (event) => {
+
     Alert.alert(
         `${event.name}`,
-        'Vuoi rimuoverlo dagli eventi preferiti?',
+        t('profile.favoriteEvent.alertDelete'),
         [
-          {text: 'Annulla', onPress: () => {}, style: 'cancel'},
-          {text: 'Rimuovi', onPress: () => props.onRemovePress()},
+          {text: t('common.cancel'), onPress: () => {}, style: 'cancel'},
+          {text: t('profile.favoriteEvent.removeButton'), onPress: () => props.onRemovePress()},
         ],
         { cancelable: true }
     )

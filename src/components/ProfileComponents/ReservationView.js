@@ -2,14 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import {get} from "lodash";
 import {Text, StyleSheet, ImageBackground, Image, Alert} from "react-native";
-import {Button} from "../common";
-import moment from "moment";
-import "moment/locale/it";
+import { withNamespaces } from 'react-i18next';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import DeviceInfo from 'react-native-device-info';
+
+import moment from "moment";
+import "moment/min/moment-with-locales";
+
+import { Button, View } from "../common";
+
 import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
 import Images from "../../assets/images";
-import View from "../common/View";
 import themes from "../../styleTheme";
 import Helpers from "../../helpers";
 
@@ -17,7 +21,8 @@ import Helpers from "../../helpers";
 const colors = themes.base.colors;
 const Fonts = themes.base.fonts;
 
-const ReservationView = ({reservation, onCancel}) => {
+moment.locale(DeviceInfo.getDeviceLocale());
+const ReservationView = ({reservation, onCancel, t}) => {
 
   const { broadcast, createdAt } = reservation;
   const { offer, newsfeed } = broadcast;
@@ -28,13 +33,13 @@ const ReservationView = ({reservation, onCancel}) => {
 
   let date = (startAt) => {
     return(
-        moment(startAt).locale('it').format('dddd D MMMM')
+        moment(startAt).format('dddd D MMMM')
     )
   }
 
   let time = (startAt) => {
     return(
-        moment(startAt).locale('it').format('HH:mm')
+        moment(startAt).format('HH:mm')
     )
   };
 
@@ -53,11 +58,11 @@ const ReservationView = ({reservation, onCancel}) => {
 
   const deletePress = () => {
     Alert.alert(
-        'Eliminare la prenotazione?',
-        'Eliminando la prenotazione non avrai più diritto allo sconto',
+        t("profile.bookedOffer.alertDelete.title"),
+        t("profile.bookedOffer.alertDelete.message"),
         [
-          {text: 'Annulla', style: 'cancel'},
-          {text: 'Elimina', onPress: () => onCancel()},
+          {text: t("common.cancel"), style: 'cancel'},
+          {text: t("profile.bookedOffer.alertDelete.delete"), onPress: () => onCancel()},
         ],
         { cancelable: true }
     )
@@ -142,19 +147,17 @@ const ReservationView = ({reservation, onCancel}) => {
         }
         <View style={styles.offerReservationView}>
           <View style={styles.offerContainer}>
-            <Text style={styles.offerText}>{discount(offer.type)} alla cassa</Text>
+            <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
           </View>
 
           <View style={styles.reservedView}>
 
             <Button
-                title={"Elimina".toUpperCase()}
                 clear
                 variant="danger"
-
-                containerStyle={{borderRadius: 50}}
+                uppercase
                 onPress={() => deletePress()}
-            />
+            >{t("profile.bookedOffer.delete")}</Button>
           </View>
 
         </View>
@@ -312,4 +315,4 @@ const styles = StyleSheet.create({
 
 
 
-export default (ReservationView);
+export default withNamespaces()(ReservationView);

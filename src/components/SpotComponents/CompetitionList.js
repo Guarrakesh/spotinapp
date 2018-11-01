@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import CompetitionCard from './CompetitionCard';
-import {FlatList, View, StyleSheet, Text, ActivityIndicator} from 'react-native';
-
-import themes from '../../styleTheme';
+import {FlatList, View, StyleSheet, ActivityIndicator} from 'react-native';
 import Icon from "react-native-vector-icons/Entypo";
+import { withNamespaces } from 'react-i18next';
+import { Typography } from '../common';
+import CompetitionCard from './CompetitionCard';
+import themes from '../../styleTheme';
 import {Fonts} from "../common/Fonts";
 
 const CompetitionList = ({
@@ -16,6 +16,7 @@ const CompetitionList = ({
     isRefreshing,
     onItemPress,
     noContent,
+    t
 }) => {
 
 
@@ -54,7 +55,7 @@ const CompetitionList = ({
       <View style={styles.noContentView}>
         <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>
         <Text style={styles.noContentText}>
-          Non ci sono competizioni al momento
+          {t("browse.noCompetitions")}
         </Text>
       </View>
     )
@@ -62,7 +63,8 @@ const CompetitionList = ({
   return (
 
       <FlatList
-          ListHeaderComponent={ <Text style={themes.base.listTitleStyle}>Seleziona la competizione</Text>}
+          ListHeaderComponent={ <Typography variant="heading"  gutterBottom
+          style={themes.base.listTitleStyle}>{t("browse.selectCompetition")}</Typography>}
           contentContainerStyle={styles.container}
           data={ids}
           keyExtractor={keyExtractor}
@@ -109,4 +111,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default CompetitionList;
+export default withNamespaces()(CompetitionList);

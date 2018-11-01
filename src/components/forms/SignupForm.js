@@ -3,10 +3,12 @@
 import React from 'react';
 import { Text, Platform, TouchableNativeFeedback } from 'react-native';
 import { View, Input , Button }   from '../common';
+import { withNamespaces } from 'react-i18next';
+import Icon from "react-native-vector-icons/FontAwesome";
+
 
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
-import Icon from "react-native-vector-icons/FontAwesome";
 
 
 /**
@@ -27,10 +29,11 @@ const colors = themes.base.colors;
 
 const SignupForm = props => {
 
+  const { t } = props;
   return (
       <View style={styles.container}>
         <Input
-            placeholder="Nome completo"
+            placeholder={t("auth.register.fullname")}
             id="name"
 
             rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
@@ -42,7 +45,7 @@ const SignupForm = props => {
             blurOnSubmit={true}
         />
         <Input
-            placeholder="Email"
+            placeholder={t("common.email")}
 
             id="email"
 
@@ -61,7 +64,7 @@ const SignupForm = props => {
             blurOnSubmit={true}
         />
         <Input
-            placeholder="Password"
+            placeholder={t("common.password")}
 
             id="password"
             rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
@@ -75,7 +78,7 @@ const SignupForm = props => {
             blurOnSubmit={true}
         />
         <Input
-            placeholder="Conferma password"
+            placeholder={t("common.passwordConfirm")}
             id="passwordConfirm"
             rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
             rightIcon={props.passConfirmError ? <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="key" size={18}/>}
@@ -90,15 +93,12 @@ const SignupForm = props => {
         />
 
         <Button
-            clear
-            rounded={true}
+            round
+            uppercase
             variant={"primary"}
             loading={props.isLoading}
-            title={'Registrati'.toUpperCase()}
-
-          //  buttonStyle={styles.signUpButton}
             onPress={props.onSubmit}
-        />
+          >{t("auth.register.button")}</Button>
 
 
       </View>
@@ -143,4 +143,4 @@ const styles = {
     ...themes.base.elevations.depth1,
   }
 };
-export default SignupForm;
+export default withNamespaces()(SignupForm);

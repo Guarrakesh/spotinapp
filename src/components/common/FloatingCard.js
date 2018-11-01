@@ -42,7 +42,6 @@ const FloatingCard = (props) => {
 
 const styles = {
   card: {
-    margin: 8,
 
     backgroundColor: '#fff',
 

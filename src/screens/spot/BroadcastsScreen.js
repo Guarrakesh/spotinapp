@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import View from '../../components/common/View';
 import {Text, StyleSheet, Animated, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
-import ActionButton from 'react-native-action-button';
+import DeviceInfo from 'react-native-device-info';
 import moment from 'moment';
-import 'moment/locale/it';
+import 'moment/min/moment-with-locales';
 
+
+import View from '../../components/common/View';
 import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
 import ListController from '../../controllers/ListController';
 
-import { Fonts } from "../../components/common/Fonts";
-
 import themes from "../../styleTheme";
+import i18n from '../../i18n/i18n';
 
+const Fonts = themes.base.fonts;
 const HEADER_HEIGHT = 100;
-
-
+moment.locale(DeviceInfo.getDeviceLocale());
 class BroadcastsScreen extends React.Component {
 
   state = {
@@ -42,7 +42,7 @@ class BroadcastsScreen extends React.Component {
 
     return {
       headerBackTitle: null,
-      title: "Offerte vicino a te",
+      title:  i18n.t("browse.nearOffers"),
       headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
@@ -135,7 +135,7 @@ class BroadcastsScreen extends React.Component {
 
 
 
-    let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
+    let date = moment(event.start_at).format('D MMMM [' + i18n.t("common.at") +'] HH:mm');
 
     //TODO: Fare qualcosa qui in caso di mancata posizione!
     if (!position) return null;

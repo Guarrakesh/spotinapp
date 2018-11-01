@@ -6,23 +6,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 
 import {View, Text, Button, Platform} from 'react-native';
-
+// Screens
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import EditProfileScreen from '../screens/profile/EditProfileScreen';
-
-import themes from "../styleTheme";
-import AuthNavigator from './AuthNavigator';
 import ReservationScreen from "../screens/profile/ReservationScreen";
-
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
+
+import AuthNavigator from './AuthNavigator';
+
+import i18n from '../i18n/i18n';
+import themes from "../styleTheme";
+
 
 
 export const ProfileStack = createStackNavigator({
       ProfileScreen: {
         screen: ProfileScreen,
         navigationOptions: {
-          title: 'Profilo',
+          title: i18n.t('common.Profile'),
           headerBackTitle: null,
           headerTitleStyle: {
             flex: 1,
@@ -36,12 +38,15 @@ export const ProfileStack = createStackNavigator({
       EditProfileScreen: {
         screen: EditProfileScreen,
         navigationOptions: {
-          title: null,
           headerTransparent: true,
+          headerTintColor: themes.base.colors.text.default,
+
           headerStyle: {
             shadowColor: 'transparent',
             borderBottomWidth: 0,
           },
+          title: null,
+
           headerTitleStyle: {
             width: '100%',
             textAlign: 'center',
@@ -54,7 +59,7 @@ export const ProfileStack = createStackNavigator({
       ReservationScreen: {
         screen: ReservationScreen,
         navigationOptions: {
-          title: 'Offerta prenotata',
+          title: i18n.t("profile.bookedOffer.title"),
           headerTitleStyle: {
             width: '100%',
             textAlign: 'center',

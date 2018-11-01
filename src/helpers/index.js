@@ -1,6 +1,8 @@
 import moment from 'moment';
+import "moment/min/moment-with-locales";
+import DeviceInfo from 'react-native-device-info';
 
-
+moment.locale(DeviceInfo.getDeviceLocale());
 const helpers = {
 
   sportSlugIconMap(slug) {
@@ -26,7 +28,7 @@ const helpers = {
 
   formattedEventDate(datetime, format = "D MMM HH:mm") {
 
-    return moment(datetime).locale('it').format(format);
+    return moment(datetime).format(format);
 
   }
 

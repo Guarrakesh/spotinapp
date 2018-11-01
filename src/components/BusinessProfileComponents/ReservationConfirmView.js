@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+import { withNamespaces } from 'react-i18next';
 import {Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import moment from "moment";
+import 'moment/min/moment-with-locales';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
-import View from '../common/View';
+import { View, Button } from '../common';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from "../../helpers";
@@ -24,15 +28,15 @@ class ReservationConfirmView extends Component {
 
   render() {
 
-    const {onCancelPress, onConfirmPress, event} = this.props;
+    const {onCancelPress, onConfirmPress, event, t} = this.props;
     if (!this.props.data || !event) return null;
 
     const { broadcast } = this.props.data;
 
     const { offer } = broadcast;
-
-    let date = moment(event.start_at).locale('it').format('dddd D MMMM');
-    let time = moment(event.start_at).locale('it').format('HH:mm');
+    moment.locale(DeviceInfo.getDeviceLocale());
+    let date = moment(event.start_at).format('dddd D MMMM');
+    let time = moment(event.start_at).format('HH:mm');
     const discount = (type) => {
       switch (parseInt(type)) {
         case 0:
@@ -48,7 +52,7 @@ class ReservationConfirmView extends Component {
     return (
 
         <View style={styles.container} elevation={3}>
-          <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>Vuoi ottenere questa offerta?</Text>
+          <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>{t("browse.getOffer.title")}</Text>
           <View style={styles.eventInfoView}>
             <View style={styles.competitorsLogoView}>
               { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
@@ -64,19 +68,20 @@ class ReservationConfirmView extends Component {
             </View>
           </View>
           <View style={styles.offerView}>
-            <Text style={styles.headerOfferText}>Partecipando all'evento puoi usufruire del:</Text>
-            <Text style={styles.offerText}>{discount(offer.type)} alla cassa*</Text>
-            <Text style={styles.noteText}>*l'offerta non include la prenotazione del tavolo presso il locale</Text>
+            <Text style={styles.headerOfferText}>{t("browse.getOffer.info")}</Text>
+            <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}*</Text>
+            <Text style={styles.noteText}>*{t("browse.getOffer.additionalInfo")}</Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 16, alignItems: 'center'}}>
-            <TouchableOpacity onPress={onCancelPress}>
-              <Text style={styles.cancelButtonText}>ANNULLA</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onConfirmPress}>
-              <View style={styles.confirmButton} elevation={2}>
-                <Text style={styles.confirmText}>CONFERMA</Text>
-              </View>
-            </TouchableOpacity>
+            <Button clear uppercase onPress={onCancelPress}>
+              {t("browse.getOffer.cancel")}
+            </Button>
+
+            <Button elevation={1} onPress={onConfirmPress}
+                     uppercase clear variant="primary" round>
+              {t("browse.getOffer.confirm")}
+            </Button>
+
           </View>
         </View>
 
@@ -190,4 +195,7 @@ const mapStateToProps = (state, props) => {
 
 
 
-export default connect(mapStateToProps)(ReservationConfirmView);
+export default compose(
+    connect(mapStateToProps),
+    withNamespaces()
+)(ReservationConfirmView);

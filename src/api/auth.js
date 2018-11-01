@@ -39,7 +39,6 @@ const auth = {
           body: JSON.stringify({ email: username, password: password })
 
         };
-
         fetch(`${vars.apiUrl}/auth/login`, config)
             .then(response => {
               response.json().then(data => {

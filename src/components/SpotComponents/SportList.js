@@ -1,8 +1,10 @@
 import React from 'react';
-
-import SportCard from './SportCard';
-import {View, StyleSheet, ScrollView, Image, ActivityIndicator, Text} from 'react-native'
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import {View, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native'
+import { withNamespaces } from 'react-i18next';
+
+import { Typography } from '../common';
+import SportCard from './SportCard';
 import Images from '../../assets/images';
 import PropTypes from 'prop-types';
 import Helpers from '../../helpers';
@@ -15,7 +17,8 @@ const SportList = ({
     onItemPress,
     isLoading,
     total,
-    version
+    version,
+    t
 }) => {
 
   if (isLoading) {
@@ -49,8 +52,10 @@ const SportList = ({
 
 
   return (
-      <ScrollView >
-        <Text style={themes.base.listTitleStyle}>Seleziona lo sport che vuoi seguire</Text>
+      <ScrollView>
+        <Typography
+            style={{margin: 8}}
+            variant="heading"  gutterBottom>{t("browse.selectSport")}</Typography>
         <Grid>
           {content}
         </Grid>
@@ -73,4 +78,4 @@ SportList.propTypes = {
 };
 
 
-export default SportList;
+export default withNamespaces()(SportList);

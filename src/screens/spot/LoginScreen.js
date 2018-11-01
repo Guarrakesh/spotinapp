@@ -4,9 +4,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground,
   Platform, ScrollView, StatusBar, KeyboardAvoidingView, TouchableNativeFeedback } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { withNamespaces } from 'react-i18next';
 
 import {Input} from "react-native-elements";
-import {Button, View} from '../../components/common';
+import {Button, View, Typography} from '../../components/common';
 
 
 import login from '../../validations/login';
@@ -82,8 +83,8 @@ class LoginScreen extends React.Component {
     this.props.facebookLogin();
   }
   render() {
-    const { navigation, isLoading } = this.props;
-    const {isLoggedIn, errorMessage} = this.props;
+
+    const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
 
     const { email: emailError, password: passwordError } = this.state.formErrors;
 
@@ -99,7 +100,7 @@ class LoginScreen extends React.Component {
           <ScrollView
               contentContainerStyle={styles.container}
               bounces={false}
-
+              keyboardShouldPersistTaps
           >
 
             <StatusBar
@@ -107,7 +108,7 @@ class LoginScreen extends React.Component {
                 barStyle="dark-content"
             />
             <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
-            <Text style={styles.title}>{"Entra nel tuo account".toUpperCase()}</Text>
+            <Text style={styles.title}>{t("auth.login.title").toUpperCase()}</Text>
 
             <ImageBackground source={BackgroundPattern} style={{
             height: '100%',
@@ -120,7 +121,7 @@ class LoginScreen extends React.Component {
               <View style={styles.middleContainerStyle}>
 
                 <Input
-                    placeholder="email"
+                    placeholder={t("common.email")}
                     placeholderTextColor={themes.base.inputPlaceholderColor}
                     leftIcon={<Icon name={emailError ? "times" : "user"}
                                 color={emailError ? colors.danger.default : colors.text.default} size={21}/>}
@@ -141,7 +142,7 @@ class LoginScreen extends React.Component {
 
                 />
                 <Input
-                    placeholder="password"
+                    placeholder={t("common.password")}
                     ref="password"
                     placeholderTextColor={themes.base.inputPlaceholderColor}
                     leftIcon={<Icon name={passwordError ? "times" : "key"}
@@ -163,22 +164,21 @@ class LoginScreen extends React.Component {
                 />
                 <Button
                     disabled={isLoading || this.state.username === "" || this.state.password === ""}
-                    disabledStyle={{ backgroundColor: colors.white.default, borderColor:themes.base.inputPlaceholderColor, borderRadius: 100}}
-                    disabledTitleStyle={{color: themes.base.inputPlaceholderColor}}
-                    title={'Accedi'.toUpperCase()}
+                    round
+                    variant="primary"
+                    uppercase
                     onPress={this.login}
-                    buttonStyle={[styles.signInButton, {borderRadius: 100}]}
-                    titleStyle={{color: colors.accent.default, fontSize: 16, fontWeight: '700'}}
+                    block
                     loading={isLoading}
                     loadingProps={{color: colors.accent.default}}
-                />
+                >{t("auth.login.signIn")}</Button>
                 <Button
-                    titleStyle={{color: colors.white.default, fontSize: 16}}
-                    title={'Entra con Facebook'}
                     loading={isLoading}
-                    disabledStyle={{borderRadius: 100}}
-                    containerViewStyle={{borderRadius: 100}}
-                    buttonStyle={[styles.fbSignInButton, {borderRadius: 100}]}
+                    round
+                    block
+                    uppercase
+                    containerStyle={[{backgroundColor: themes.commonColors.facebook,}, {borderRadius: 100}]}
+                    titleStyle={{color: '#fff'}}
                     onPress={this.facebookLogin}
                     icon={<Icon
                   name='facebook'
@@ -187,30 +187,35 @@ class LoginScreen extends React.Component {
                 />
                 }
                     iconContainerStyle={{alignSelf: 'flex-start'}}
-                />
+                  >{t("auth.login.facebookSignIn")}</Button>
 
                 <Button
-                    fixNativeFeedbackRadius={true}
-                    title='Password dimenticata?'
-                    flat
+                    block
+                    clear
                     onPress={this.forgotPassword}
-                    titleStyle={{color: colors.text.default, fontSize: 16}}
-                    buttonStyle={{marginTop: 8, backgroundColor: '', shadowOpacity: 0}}
-                    clear={true}
+                > {t("auth.login.passwordForgot")}
+                </Button>
 
-                />
-                <View style={{overflow: "hidden"}}>
                   <Button
-                      fixNativeFeedbackRadius={true}
-                      clear={true}
-                      rounded={true}
+                      clear
+                      block
+                      uppercase
                       disabled={isLoading}
-                      title={['Non hai un account?', <Text style={{fontWeight: '700'}}> Registrati</Text>]}
-                      titleStyle={{color: colors.accent.default, fontSize: 14, alignSelf: 'center'}}
-                      buttonStyle={styles.signUpButton}
+                      variant="primary"
                       onPress={() => this.props.navigation.navigate('SignUp')}
-                  />
-                </View>
+                  >
+                    <Text
+                                uppercase
+                                style={{fontWeight: '700', color: themes.base.colors.accent.default}}>
+                      {t("auth.login.noAccount").toUpperCase()}
+                      </Text>
+                      <Text
+                          uppercase
+                        style={{paddingLeft: 8, fontWeight: '700', color: themes.base.colors.accent.default}}>
+                      {" " + t("auth.login.register").toUpperCase()}
+                    </Text>
+                  </Button>
+
               </View>
             </ImageBackground>
           </ScrollView>
@@ -275,7 +280,7 @@ const styles = StyleSheet.create({
     paddingRight: 24,
     paddingTop: 100,
     justifyContent: 'center',
-    alignItems: 'stretch',
+    alignItems: 'center',
     flexDirection: 'column',
     ...themes.base.elevations.depth2
   },
@@ -299,38 +304,6 @@ const styles = StyleSheet.create({
 
   },
 
-  signInButton: {
-    position: 'relative',
-    backgroundColor: colors.white.light,
-    borderColor: colors.accent.default,
-    borderWidth: 1,
-
-    height: 43,
-    justifyContent: 'center',
-    elevation: 1,
-
-  },
-  fbSignInButton: {
-
-    backgroundColor: themes.commonColors.facebook,
-    marginTop: 8,
-    height: 43,
-    elevation: 1,
-    ...themes.base.elevations.depth1,
-  },
-  signUpButton: {
-
-    //marginTop: 20,
-    backgroundColor: 'transparent',
-
-    height: 47,
-    marginTop: 16,
-    width: '90%',
-    borderRadius: 100,
-    alignSelf: 'center',
-    ...themes.base.elevations.depth1,
-    elevation: 1
-  },
   bottomView: {
     width:'100%',
     height: 200,
@@ -353,4 +326,4 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   userLogin,
   facebookLogin: oAuthFacebookLogin,
-})(LoginScreen);
+})(withNamespaces()(LoginScreen));

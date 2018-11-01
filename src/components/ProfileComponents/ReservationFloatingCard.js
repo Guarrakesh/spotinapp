@@ -13,11 +13,12 @@ const Fonts = themes.base.fonts;
 const colors = themes.base.colors;
 
 const ReservationFloatingCard = ({
-                                   reservation,
-                                   onPress,
-                                   elevation,
-                                   dark
-                                 }) => {
+    reservation,
+    onPress,
+    elevation,
+    dark,
+    t
+}) => {
 
   const { broadcast, createdAt } = reservation;
   const { offer } = broadcast;
@@ -37,47 +38,47 @@ const ReservationFloatingCard = ({
   };
 
   return(
-    <View style={styles.outerContainer} elevation={1}>
-      <Touchable onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
-        <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
-          { ({record: business}) =>
-            <ImageBackground
-              imageStyle={{borderRadius: themes.base.borderRadius}}
-              source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
-              style={styles.imgBackground}
-              resizeMode={'cover'}
-            >
-              <View style={styles.bottomContainer}>
-                <ReferenceField source="event" record={broadcast} resource="events" reference="events">
-                  {({record: event}) =>
-                    <View style={styles.leftInfo}>
-                      <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>
-                        {business.name}
-                      </Text>
-                      <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>
-                        {event.name}
-                      </Text>
-                      <Text
-                        style={styles.eventDate} numberOfLines={1} adjustsFontSizeToFit={true}>{Helpers.formattedEventDate(event.start_at, "D MMMM [alle] HH:mm")}
-                      </Text>
+      <View style={styles.outerContainer} elevation={1}>
+        <Touchable onPress={onPress} style={{flex: 1, borderRadius: themes.base.borderRadius}}>
+          <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
+            { ({record: business}) =>
+                <ImageBackground
+                    imageStyle={{borderRadius: themes.base.borderRadius}}
+                    source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://media-cdn.tripadvisor.com/media/photo-s/0f/aa/db/0d/ristorante-a-mano.jpg"}}
+                    style={styles.imgBackground}
+                    resizeMode={'cover'}
+                >
+                  <View style={styles.bottomContainer}>
+                    <ReferenceField source="event" record={broadcast} resource="events" reference="events">
+                      {({record: event}) =>
+                          <View style={styles.leftInfo}>
+                            <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>
+                              {business.name}
+                            </Text>
+                            <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>
+                              {event.name}
+                            </Text>
+                            <Text
+                                style={styles.eventDate} numberOfLines={1} adjustsFontSizeToFit={true}>{Helpers.formattedEventDate(event.start_at, "D MMMM ["+ t('common.at') +"] HH:mm")}
+                            </Text>
+                          </View>
+                      }
+                    </ReferenceField>
+                    <View style={styles.offerView}>
+                      <Text style={styles.offerValue}>{discount(offer.type)}</Text>
+                      <Text style={styles.offerValueText}>{t("common.atCheckout")}</Text>
                     </View>
-                  }
-                </ReferenceField>
-                <View style={styles.offerView}>
-                  <Text style={styles.offerValue}>{discount(offer.type)}</Text>
-                  <Text style={styles.offerValueText}>alla cassa</Text>
-                </View>
 
-              </View>
-            </ImageBackground>
+                  </View>
+                </ImageBackground>
 
 
-          }
-        </ReferenceField>
+            }
+          </ReferenceField>
 
 
-      </Touchable>
-    </View>
+        </Touchable>
+      </View>
   )
 };
 

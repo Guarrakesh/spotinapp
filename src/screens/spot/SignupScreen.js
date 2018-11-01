@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Animated } from 'react-native';
+import { withNamespaces } from 'react-i18next';
+import validate from 'validate.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import SignupForm from '../../components/forms/SignupForm';
 import signup from '../../validations/signup';
-import validate from 'validate.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const SignupBackground = require('../../assets/img/signup_background.png');
 const Logo = require('../../assets/img/logo-text/logo-text.png');
@@ -157,11 +159,11 @@ const styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   const registerError = state.auth.registerError;
   let errorMessage = null;
   if (registerError && registerError.status == 409) {
-    errorMessage = "Questa email è già stata usata";
+    errorMessage = props.t("auth.login.usedEmail")
   }
   return ({
     errorMessage,
@@ -169,4 +171,5 @@ const mapStateToProps = (state) => {
     isLoading: state.loading > 0
   });
 };
-export default connect(mapStateToProps, { userRegister })(SignupScreen);
+export default connect(mapStateToProps, { userRegister })
+(withNamespaces()(SignupScreen));

@@ -41,7 +41,7 @@ export default function configureStore(initialState) {
       initialState,
       composeEnhancers(
           appstateMiddleware(),
-          applyMiddleware(sagaMiddleware, navMiddleware)
+          applyMiddleware(sagaMiddleware, navMiddleware, logger)
           //offline(offlineConfig)
       )
   );

@@ -8,12 +8,14 @@ import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import BusinessScreen from '../screens/business/BusinessScreen';
 
+import i18n from '../i18n/i18n';
 import Icon from 'react-native-vector-icons/Ionicons';
 //import DismissButton from '../components/common/DismissButton';
 
-
 const HomeStack = createStackNavigator({
-    Home: HomeScreen,
+    Home: {
+      screen: HomeScreen,
+    },
     BusinessProfileScreen: {
       screen: BusinessProfileScreen,
       navigationOptions: {
@@ -30,6 +32,8 @@ const HomeStack = createStackNavigator({
     BusinessScreen: {
       screen: BusinessScreen,
       navigationOptions: {
+        title: i18n.t('home.closestBusinesses'),
+
         headerTitleStyle: {
           width: '100%',
           textAlign: 'center',

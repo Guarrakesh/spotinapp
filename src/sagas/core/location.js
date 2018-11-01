@@ -41,7 +41,6 @@ function* watchLocationChannel() {
     const action = yield take(locationChannel);
     const navigation = yield select(navigationSelector);
     const location = yield select(locationSelector);
-
     if (action.type === LOCATION_SET_ERROR && !location.position) {
 
       yield put(NavigationService.navigate('NoLocationScreen', {}, true));
@@ -58,7 +57,7 @@ function* watchPosition() {
   if (Platform.OS === "android") {
 
     try {
-      const data = yield call(RNAndroidLocationEnabler.promptForEnableLocationIfNeeded, {interval: 10000, fastInterval: 5000});
+
       let granted = yield call(Permissions.request, 'location',  {
         title: "Accesso a posizione",
         message: "Spot In richiede l'accesso alla tua posizione per individuare i locali più vicini a te."
@@ -100,7 +99,7 @@ export default function* root() {
 
 
   //Aspetto che il Check è stato effettuato (o il Login) e che si stia aprendo la Home
-  yield take(action => action.actions && action.actions[0].routeName === "Main");
+  yield take(action => action.type === "Navigation/RESET" && action.actions && action.actions[0].routeName === "Main");
 
   yield spawn(watchLocationChannel);
   yield watchTask = yield fork(watchPosition);

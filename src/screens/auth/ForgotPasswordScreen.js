@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { withNamespaces } from 'react-i18next';
 import {
   Platform,
   View,
@@ -80,6 +81,8 @@ class ForgotPasswordScreen extends React.Component {
       } else {
 
         const self = this;
+
+        const { t } = self.props;
         self.props.hideNotification();
 
         self.props.fetchStart();
@@ -90,11 +93,13 @@ class ForgotPasswordScreen extends React.Component {
             })
             .catch(error => {
               if (error && error.status === 404) {
-                self.props.showNotification("Non abbiamo trovato account con questa email.", "warning",
-                    { title: "Email non esistente" }
+                self.props.showNotification(t("auth.passwordForgot.notification.failure.message"), "warning",
+                    { title: t("auth.passwordForgot.notification.failure.title") }
                 );
               } else {
-                self.props.showNotification("Qualcosa è andato storto.", "danger", {title: "Ops..."});
+                self.props.showNotification(t("common.notificationFailure.message"), "danger", {
+                  title: t("common.notificationFailure.title")
+                });
               }
             })
             .finally(() => {
@@ -106,7 +111,7 @@ class ForgotPasswordScreen extends React.Component {
       //Eventuali errori dati dal server (email già esistente o altri)
       //Sono diversi da quelli in this.state.errors, quelli sono errori di convalida fatti lato client
       const { errors, email, } = this.state;
-      const { isLoading } = this.props;
+      const { isLoading, t } = this.props;
 
 
 
@@ -116,13 +121,14 @@ class ForgotPasswordScreen extends React.Component {
 
             <StatusBar barStyle="dark-content" translucent backgroundColor={"transparent"}/>
             <View style={[styles.formContainer, this.state.index === 0 ? {flex: 1, opacity: 1} : {flex: 0,height: 0, opacity: 0} ]}>
-              <Typography h4 gutterBottom align="center">{"Password dimenticata?"}</Typography>
-              <Typography gutterBottom align="center">{"Inserisci la tua email e ti invieremo le istruzioni per reimpostare la tua password"}</Typography>
+              <Typography h4 gutterBottom align="center">{t("auth.passwordForgot.title")}</Typography>
+              <Typography gutterBottom align="center">{t("auth.passwordForgot.subtitle")}</Typography>
               <Input
-                  placeholder="Email"
+                  placeholder={t("common.email")}
                   id="email"
+                  block
                   value={email}
-                  inputOuterContainer={{marginTop: 16}}
+                  inputOuterContainer={{marginTop: 16, marginBottom: 8}}
                   autoCapitalize="none"
                   shake={!!errors.email}
                   onChangeText={(email) => this.setState({email})}
@@ -131,18 +137,19 @@ class ForgotPasswordScreen extends React.Component {
                   blurOnSubmit={true}
               />
               <Button variant="primary"
+                      clear
                       loading={isLoading}
                       disabled={isLoading}
                       onPress={this.submit}
-                      capitalize
-                      buttonStyle={{marginTop: 16}}
-                      clear
-                      round>Reimposta password</Button>
+                      uppercase
+                      block
+
+                      round>{t("auth.passwordForgot.button")}</Button>
             </View>
             <View style={[styles.confirm, this.state.index === 1 ? {flex: 1, opacity: 1} : {flex: 0, height: 0, opacity: 0}]}>
               <Icon name="check-circle" size={48} style={styles.successIcon}/>
-              <Typography h3 variant="accent">Controlla la tua email</Typography>
-              <Typography>Ti abbiamo inviato le istruzioni per reimpostare la tua password.</Typography>
+              <Typography h3 variant="accent">{t("auth.passwordForgot.notification.success.title")}</Typography>
+              <Typography>{t("auth.passwordForgot.notification.success.message")}</Typography>
             </View>
 
 
@@ -194,4 +201,6 @@ class ForgotPasswordScreen extends React.Component {
     notification: state.notifications[0]
   });
 };
-  export default connect(mapStateToProps, { showNotification, fetchEnd, fetchStart, hideNotification })(ForgotPasswordScreen);
+  export default
+  connect(mapStateToProps, { showNotification, fetchEnd, fetchStart, hideNotification })
+  (withNamespaces()(ForgotPasswordScreen));

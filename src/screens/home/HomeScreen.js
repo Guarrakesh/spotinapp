@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import { Button } from 'react-native-elements';
+import { withNamespaces } from 'react-i18next';
+
 import HomeController from '../../controllers/HomeController';
 import InlineListController from '../../controllers/InlineListController';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -61,7 +63,7 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-
+    const { t } = this.props;
     return (
       <Authenticated location={{pathName: "Profile"}}>
         <HomeController>
@@ -80,7 +82,7 @@ class HomeScreen extends React.Component {
                       <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                          <Text style={styles.inlineListHeader}>Offerte intorno a te</Text>
+                          <Text style={styles.inlineListHeader}>{t('home.nearOffers')}</Text>
                         </View>
 
                       </View>
@@ -100,11 +102,11 @@ class HomeScreen extends React.Component {
                       <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                          <Text style={styles.inlineListHeader}>Prossimi eventi</Text>
+                          <Text style={styles.inlineListHeader}>{t('home.nextEvents')}</Text>
                         </View>
                         <View>
                           <Button
-                            title={'VEDI TUTTI ➔'}
+                            title={t('home.seeAll').toUpperCase()}
                             titleStyle={styles.seeAllTitle}
                             buttonStyle={styles.seeAllButton}
                             onPress={() => this.props.navigation.navigate('SportList')}
@@ -125,11 +127,11 @@ class HomeScreen extends React.Component {
                       <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
-                          <Text style={styles.inlineListHeader}>Locali intorno a te</Text>
+                          <Text style={styles.inlineListHeader}>{t("home.nearBusinesses")}</Text>
                         </View>
                         <View>
                           <Button
-                            title={'VEDI TUTTI ➔'}
+                            title={t('home.seeAll').toUpperCase()}
                             titleStyle={styles.seeAllTitle}
                             buttonStyle={styles.seeAllButton}
                             onPress={() => this.props.navigation.navigate('BusinessScreen')}
@@ -175,10 +177,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.LatoMedium,
     fontSize: 14,
     paddingBottom: 0,
-    textDecorationLine: 'underline'
+
   }
 
 });
 
 
-export default HomeScreen;
+export default withNamespaces()(HomeScreen);

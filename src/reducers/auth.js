@@ -1,3 +1,6 @@
+import { omit } from 'lodash';
+
+
 import {
   USER_LOGIN_SUCCESS,
   OAUTH_LOGIN_SUCCESS,
@@ -11,7 +14,11 @@ import {
 
 } from '../actions/authActions';
 
-import {PROFILE_GET_INFO_SUCCESS} from "../actions/profile";
+import {
+  PROFILE_GET_INFO_SUCCESS,
+  PROFILE_UPDATE,
+
+} from "../actions/profile";
 
 let initialState = {
 
@@ -32,7 +39,8 @@ export default function authReducer(state = initialState, { payload, type, error
     case USER_REGISTER_SUCCESS:
       return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, registerError: null};
     case PROFILE_GET_INFO_SUCCESS:
-      return { ...state, profile: payload.data};
+    case PROFILE_UPDATE:
+      return { ...state, profile: {...state.profile, ...omit(payload.data, "password")}};
     case USER_LOGOUT:
       return { ...state, isLoggedIn: false, token: null, profile: {}};
 

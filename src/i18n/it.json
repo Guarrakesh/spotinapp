@@ -1,0 +1,165 @@
+{
+  "home": {
+    "nearOffers"          : "Offerte intorno a te",
+    "nextEvents"          : "Prossimi eventi",
+    "seeAll"              :  "Vedi tutti",
+    "nearBusinesses"      : "Locali intorno a te",
+    "closestBusinesses"   : "Locali vicini",
+    "searchBusiness"      : "Cerca locale..."
+
+  },
+  "browse": {
+    "selectSport"         : "Seleziona lo sport che vuoi seguire",
+    "selectCompetition"   : "Seleziona la competizione",
+    "weekEvents"          : "{{count}} evento questa settimana",
+    "weekEvents_plural"   : "{{count}} eventi questa settimana",
+    "selectEvent"         : "Seleziona evento",
+    "noCompetitions"      : "Non ci sono competizioni al momento",
+    "noEvents"            : "Non ci sono eventi al moment",
+    "noBroadcasts"  : {
+      "contactUsCta"  : {
+        "title"             : "Non ci sono locali che trasmettono questo evento...",
+        "subtitle"          : "Contattaci e organizzeremo l'evento per te!",
+        "buttonTitle"       : "Richiedi evento"
+      },
+
+
+      "contactUs"          : "Contattaci",
+      "weOrganizeForYou"  : "Organizziamo l'evento per te!",
+      "whereToWatch"      : "Dove vuoi guardare l'evento?",
+      "howMuchTravel"     : "Quanto sei disposto a spostarti?",
+      "howManyPeople"     : "Quante persone sarete?",
+      "addNotes"          : "Aggiungi eventuali note",
+      "send"              : "Invia",
+      "notification": {
+        "success": {
+          "title": "Richiesta inviata",
+          "message": "Lavoreremo per soddisfare la tua richiesta. \nVerrai ricontattato al tuo indirizzo email."
+        },
+        "failure": {
+          "title": "Qualcosa è andato storto...",
+          "message": "Ricontrolla i dati."
+        }
+      }
+    },
+    "nearOffers"         : "Offerte intorno a te",
+    "getOffer": {
+      "buttonTitle"            : "Ottieni offerta",
+      "title"                  : "Vuoi ottenere quest'offerta?",
+      "info"                   : "Partecipando all'evento puoi usufruire del {{offer}}",
+      "additionalInfo"         : "L'offerta non include la prenotazione del tavolo presso il locale",
+      "cancel"                 : "Annulla",
+      "confirm"                : "Conferma",
+      "notification": {
+        "title"                : "Ottimo",
+        "message"              : "Hai ottenuto l'offerta"
+      },
+      "booked"                 : "Prenotato",
+
+    },
+    "businessProfile": {
+      "plannedEvents"   : "Eventi in programma",
+      "noEvents"         : "Nessun evento al momento"
+
+    }
+
+
+
+  },
+
+  "profile": {
+    "bookerOffers"           : "Offerte prenotate",
+    "favoriteEvents"         : "Preferiti",
+    "favoriteEvent": {
+      "alertDelete"          : "Vuoi rimuoverlo dagli eventi preferiti?",
+      "removeButton"         : "Rimuovi"
+    },
+
+    "bookedOffer": {
+      "title"                : "Offerta prenotata",
+      "noReservations"       : "Non hai ancora nessuna prenotazione",
+      "browseOffers"         : "Esplora offerte",
+      "listTitle"            : "Offerte",
+      "delete"               : "Elimina",
+      "alertDelete": {
+        "title": "Eliminare la prenotazione?",
+        "message": "Eliminando la prenotazione non avrai più diritto allo sconto",
+        "delete": "Elimina"
+      },
+      "deleteNotification": {
+        "success": {
+          "title"              : "Fatto",
+          "message"            : "La prenotazione è stata annullata"
+        }
+
+      },
+      "bookedNotification": {
+        "success": {
+          "title"              : "Ottimo!",
+          "message"            : "Hai ottenuto l'offerta! \nPuoi rivederla nel tuo profilo"
+        },
+        "failure": {
+          "title"             : "Qualcosa è andato storto...",
+          "message"           : "Non è stato possibile ottenere questa offerta, riproa più tardi."
+        }
+      }
+
+
+    }
+
+  },
+
+
+  "common": {
+    "Home": "Home",
+    "Browse": "Esplora",
+    "Profile": "Profilo",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "at": "Alle",
+    "discountAtCheckout": "Sconto alla cassa",
+    "atCheckout": "alla cassa",
+    "notificationFailure": {
+      "title": "Ops...",
+      "message": "Non abbiamo idea di cosa sia successo, ma lavoreremo per risolverlo. \nRiprova più tardi"
+    }
+  },
+
+
+
+  "auth": {
+    "login": {
+      "title"        : "Enter nel tuo account",
+
+      "signIn"              : "Accedi",
+      "facebookSignIn"      : "Entra con Facebook",
+      "passwordForgot"      : "Password dimenticata?",
+      "noAccount"           : "Non hai un account?",
+      "register"            : "Registrati",
+      "usedEmail"           : "Questa email è già stata usata"
+    },
+    "register": {
+      "title"               : "Registrazione",
+      "fullname"            : "Nome completo",
+      "button"              : "Registrati"
+
+    },
+    "passwordForgot": {
+      "title"               : "Password dimenticata?",
+      "subtitle"            : "Inserisci la tua email e ti invieremo le istruzioni per reimpostare la tua password",
+      "button"              : "Reimposta password",
+      "notification"  : {
+        "success": {
+          "title"           : "Controlla la tua email",
+          "message"         : "Ti abbiamo inviato le istruzioni per reimpostare la tua password"
+        },
+        "failure": {
+          "title"             : "Email non esistente",
+          "message"           : "Non abbiamo trovato account con questa email."
+        }
+      }
+
+    }
+
+  }
+}

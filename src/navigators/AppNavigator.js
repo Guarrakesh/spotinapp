@@ -15,6 +15,9 @@ import HomeStack from './HomeStack';
 import Launcher from '../screens/Launcher';
 import NoLocationScreen from '../screens/NoLocationScreen';
 
+import i18n from '../i18n/i18n';
+
+
 
 
 import themes from '../styleTheme';
@@ -30,7 +33,7 @@ const FavoriteStack = createStackNavigator({
 export const MainNavigation = createTabNavigator(
   {
     Home: HomeStack,
-    Esplora: SpotStack,
+    Browse: SpotStack,
     Profile: ProfileStack,
   },
   {
@@ -47,7 +50,7 @@ export const MainNavigation = createTabNavigator(
           case 'Home':
             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
             break;
-          case 'Esplora':
+          case 'Browse':
             image = focused ? Images.icons.barIcons.newsSelected : Images.icons.barIcons.news;
             break;
           case 'Profile':
@@ -56,7 +59,9 @@ export const MainNavigation = createTabNavigator(
 
         return <Image source={image} style={{height: 24, width: 24}} />;
       },
+      title: i18n.t(`common.${navigation.state.routeName}`)
     }),
+
     initialRouteName: "Home",
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',

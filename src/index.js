@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-
+import { compose } from 'recompose';
 import { Provider, connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, BackHandler } from 'react-native';
 import codePush from 'react-native-code-push';
 
 
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
-
-
+import { I18nextProvider, NamespacesConsumer, withNamespaces } from 'react-i18next';
+import i18n from './i18n/i18n'
 import configureStore from './store';
 
 import NavigationService from './navigators/NavigationService';
@@ -19,9 +19,9 @@ import Notification from './components/Notification/Notification';
 
 import RootNavigator from './navigators/AppNavigator';
 
-
 const store = configureStore();
-const ReduxifiedNavigator = connect(state => ({state: state.navigation}))(reduxifyNavigator(RootNavigator, "root"));
+const ReduxifiedNavigator = connect(
+    (state, props) => ({state: state.navigation}))(reduxifyNavigator(RootNavigator, "root"));
 
 console.disableYellowBox = true;
 
@@ -33,33 +33,68 @@ class ResourceInitializer extends Component {
     'events', 'broadcasts', 'businesses', 'reservations'];
   componentWillMount() {
     this.resources.map(res => this.props.register({name: res}));
-
-
+  }
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
   componentWillUnmount() {
     this.resources.map(res => this.props.unregister({name: res}));
+
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
+  /**
+   * Gestisce correttamente il tasto back sui dispositivi android
+   * @returns {boolean}
+   */
+  onBackPress = () => {
+    const { navigation } = store.getState();
+    const { dispatch } = store;
+    //Get current route as url and check if it's one of the routes that should close the app
+    switch (this.getCurrentRoute(navigation)) {
+      case 'Home/Home':
+      case 'Auth/SignIn':
+        return false;
+    }
+    dispatch(NavigationService.back());
+
+    return true;
+  };
+  getCurrentRoute = (navigation) => {
+    const route = (name, state) => {
+      if (state.index !== undefined) return route(state.routeName, state.routes[state.index]);
+      return `${name}/${state.routeName}`;
+    };
+    return route('', navigation)
+  };
 
   render() {
+    const { t } = this.props;
     return (
-        <View  style={{flex: 1}}>
-          <Notification/>
+        <I18nextProvider i18n={i18n}>
 
-          <ReduxifiedNavigator
-              ref={navigatorRef => {
+          <View  style={{flex: 1}}>
+            <Notification/>
+
+            <ReduxifiedNavigator
+                screenProps={{t}}
+                ref={navigatorRef => {
                 NavigationService.setTopLevelNavigator(navigatorRef)
               }} />
-        </View>
+          </View>
+        </I18nextProvider>
     )
   }
 };
 
 
-const ConnectedResourceInit = connect(null, {
-  register: registerResource,
-  unregister: unregisterResource
-})(ResourceInitializer);
+const ConnectedResourceInit = compose(
+    connect(null, {
+      register: registerResource,
+      unregister: unregisterResource
+    }),
+    withNamespaces()
+)(ResourceInitializer);
 
 
 class App extends React.Component {

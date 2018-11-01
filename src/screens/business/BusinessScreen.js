@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Text, StyleSheet, InteractionManager, Animated} from 'react-native';
+import { withNamespaces } from 'react-i18next';
 
 import ActionButton from 'react-native-action-button';
 
@@ -113,7 +114,7 @@ class BusinessScreen extends React.Component {
 
   render() {
 
-    const { latitude, longitude } = this.props;
+    const { latitude, longitude, t } = this.props;
 
     if (!latitude || !longitude) return null;
 
@@ -157,7 +158,7 @@ class BusinessScreen extends React.Component {
                     onClear={() => controllerProps.setFilters({q: undefined})}
                     value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
 
-                    placeholder="Cerca locale..."
+                    placeholder={t("home.searchBusiness")}
                 />
                 </Animated.View>
                 <AnimatedBusinessList
@@ -244,4 +245,4 @@ const styles = StyleSheet.create({
 
   }
 });
-export default connect(mapStateToProps)(BusinessScreen);
+export default connect(mapStateToProps)(withNamespaces()(BusinessScreen));

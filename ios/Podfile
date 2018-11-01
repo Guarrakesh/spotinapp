@@ -20,6 +20,7 @@ target 'spotinapp' do
         'DevSupport'
     ]
 
+    pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
     pod 'GoogleMaps'  # <~~ remove this line if you do not want to support GoogleMaps on iOS
     pod 'react-native-maps', path: '../node_modules/react-native-maps/'
     pod 'react-native-google-maps', path: '../node_modules/react-native-maps/'  # <~~ if you need GoogleMaps support on iOS
@@ -39,6 +40,8 @@ target 'spotinapp' do
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
 end
 post_install do |installer|

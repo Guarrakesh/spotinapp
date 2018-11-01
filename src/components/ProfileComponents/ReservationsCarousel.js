@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 import View from '../../components/common/View';
 import { Text, StyleSheet } from 'react-native';
@@ -18,20 +19,21 @@ class ReservationsCarousel extends React.Component{
 
   render() {
 
-    const { ids, data, isLoading,  onBrowsePress} = this.props;
+    const { ids, data, isLoading,  onBrowsePress, t} = this.props;
     if (isLoading) return null;
     const emptyComponent = (
         <View style={styles.emptyComponentView} elevation={2}>
           <Text style={styles.emptyComponentText}>
-            {'Non hai ancora nessuna prenotazione'}
+            {t('profile.bookedOffer.noReservations')}
           </Text>
-          <Button clear={true} onPress={onBrowsePress}> Esplora offerte </Button>
+          <Button onPress={onBrowsePress}
+              variant="primary" uppercase clear>{t('profile.bookedOffer.browseOffers')}</Button>
         </View>
     );
     return(
 
         <View>
-          <Text style={themes.base.inlineListTitleStyle}>Offerte prenotate</Text>
+          <Text style={themes.base.inlineListTitleStyle}>{t("profile.bookedOffer.listTitle")}</Text>
 
           {
             ids.length === 0 ? emptyComponent :
@@ -53,6 +55,7 @@ class ReservationsCarousel extends React.Component{
                       removeClippedSubviews={false}
                       renderItem={({item}) =>
                           <ReservationFloatingCard
+                              t={t}
                               elevation={0}
                               reservation={data[item]}
                               onPress={() => this.handleReservationPress(data[item])}/>}
@@ -90,4 +93,4 @@ ReservationsCarousel.propTypes = {
   data: PropTypes.object,
   onBrowsePress: PropTypes.func
 };
-export default ReservationsCarousel;
+export default withNamespaces()(ReservationsCarousel);

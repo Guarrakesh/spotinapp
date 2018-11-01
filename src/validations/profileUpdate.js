@@ -1,12 +1,4 @@
 const profileUpdate = {
-  email: {
-    presence: {
-      message: "^L'email è obbligatoria"
-    },
-    email: {
-      message: "^Inserisci una email valida"
-    },
-  },
 
   password: {
     length: {
@@ -28,6 +20,9 @@ const profileUpdate = {
     }
   },
   passwordConfirm: {
+
+
+
     equality: {
       attribute: 'password',
       message: '^Le password non coincidono'

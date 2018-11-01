@@ -1,6 +1,8 @@
 import {CREATE, DELETE} from "./types";
 import {CRUD_CREATE, CRUD_DELETE_OPTIMISTIC} from "./dataActions";
 
+import i18n from '../i18n/i18n';
+i18n.init();
 
 export const reserveBroadcast = (broadcast, userId, callback) => ({
   type: CRUD_CREATE,
@@ -14,19 +16,19 @@ export const reserveBroadcast = (broadcast, userId, callback) => ({
     onSuccess: {
       callback,
       notification: {
-        body: "Hai ottenuto l'offerta con successo!",
+        body: i18n.t("profile.bookedOffer.bookedNotification.success.message"),
         level: 'success',
         messageArgs: {
           smart_count: 1,
         },
-        title: "Ottimo!"
+        title: i18n.t("profile.bookedOffer.bookedNotification.success.title")
       },
 
     },
     onFailure: {
       notification: {
-        title: "Qualcosa è andato storto...",
-        body: "Non è stato possibile ottenere questa offerta, riprova più tardi.",
+        title: i18n.t("profile.bookedOffer.bookedNotification.failure.title"),
+        body: i18n.t("profile.bookedOffer.bookedNotification.failure.message"),
         level: 'warning',
       },
     },
@@ -49,9 +51,9 @@ export const cancelReservation = (userId, reservationId) => ({
     listId: "profile_reservations_list",
     onSuccess: {
       notification: {
-        body: "La prenotazione è stata annullata.",
+        body: i18n.t("profile.bookedOffer.deleteNotification.success.message"),
         level: "info",
-        title: "Fatto"
+        title: i18n.t("profile.bookedOffer.deleteNotification.success.title")
       }
     }
   }

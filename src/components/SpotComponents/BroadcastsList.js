@@ -1,10 +1,11 @@
 import React from "react";
-import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
-import {StyleSheet, FlatList, View, Text, Animated, ActivityIndicator} from "react-native";
-import {Button} from 'react-native-elements';
+import {StyleSheet, FlatList, View, Animated, ActivityIndicator} from "react-native";
 import PropTypes from "prop-types";
 //import broadcasts from "../../api/broadcasts";
+import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
+import { withNamespaces, Trans } from 'react-i18next';
 
+import { Button, Typography } from '../../components/common';
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import Icon from 'react-native-vector-icons/Feather';
@@ -36,23 +37,18 @@ class BroadcastsList extends React.Component {
         onFavoritePress,
         style,
         noContent,
+        t,
         ...rest} = this.props;
 
 
     if (noContent) {
       return (
           <View style={themes.base.noContentView}>
-            <Text style={styles.noBroadcastText}>Non ci sono locali che trasmettono questo evento...</Text>
-            <Button
-                title={"Contattaci"}
-                titleStyle={styles.contactUsButtonText}
-                buttonStyle={[styles.contactUsButton, {borderColor: colors.accent.default}]}
-                onPress={() => onContactUsPress()}
-            />
-            <Text style={styles.noBroadcastText}>
-              ...e organizzeremo l'evento per te!
-            </Text>
-          </View>
+              <Typography variant="title" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
+              <Typography variant="subheading" gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
+            <Button variant="primary" onPress={onContactUsPress}
+                    round uppercase>{t("browse.noBroadcasts.contactUsCta.buttonTitle")}</Button>
+        </View>
       )
     }
 
@@ -139,4 +135,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BroadcastsList;
+export default withNamespaces()(BroadcastsList);

@@ -1,7 +1,7 @@
 
 /**
  *  @see https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html
-*
+ *
  */
 
 import { NavigationActions, StackActions} from 'react-navigation';
@@ -9,9 +9,11 @@ import { NavigationActions, StackActions} from 'react-navigation';
 let _navigator;
 
 function setTopLevelNavigator(navigatorRef) {
-    _navigator = navigatorRef;
+  _navigator = navigatorRef;
 }
-
+function back() {
+  return NavigationActions.back();
+}
 function navigate(routeName, params, setRoot = false) {
 
 
@@ -25,15 +27,16 @@ function navigate(routeName, params, setRoot = false) {
   } else {
 
 
-      return NavigationActions.navigate({
-            routeName,
-            params
-        })
+    return NavigationActions.navigate({
+      routeName,
+      params
+    })
 
   }
 }
 
 export default {
-    navigate,
-    setTopLevelNavigator
+  back,
+  navigate,
+  setTopLevelNavigator
 };

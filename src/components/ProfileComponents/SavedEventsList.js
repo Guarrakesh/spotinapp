@@ -1,41 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
-import View from "../../components/common/View";
 import {Text, Image, FlatList, StyleSheet} from "react-native";
+import { withNamespaces } from 'react-i18next';
+
+import { View } from "../../components/common";
 import themes from "../../styleTheme";
 import SavedEventListItem from "./SavedEventListItem";
 import Button from '../common/Button';
 
 
 const SavedEventsList = ({
-                           ids,
-                           data,
-                           isLoading,
-                           onItemPress,
-                           onItemRemovePress,
-                           ...rest,
-                         }) => {
+    ids,
+    data,
+    isLoading,
+    onItemPress,
+    onItemRemovePress,
+    t,
+    ...rest,
+}) => {
 
   const emptyComponent = null;
 
   return (
-    ids.length === 0 ? emptyComponent :
-      <View>
-        <Text style={themes.base.inlineListTitleStyle}>Eventi preferiti</Text>
-        <View style={styles.container} elevation={2}>
-          <FlatList
-            data={ids}
-            renderItem={({item}) =>
+      ids.length === 0 ? emptyComponent :
+          <View>
+            <Text style={themes.base.inlineListTitleStyle}>{t("profile.favoriteEvents")}</Text>
+            <View style={styles.container} elevation={2}>
+              <FlatList
+                  data={ids}
+                  renderItem={({item}) =>
               <SavedEventListItem
+                t={t}
                 onPress={() => onItemPress(item, data[item])}
                 onRemovePress={() => onItemRemovePress(item)}
                 event={data[item]}/>
             }
-            {...rest}
-          />
+                  {...rest}
+              />
 
-        </View>
-      </View>
+            </View>
+          </View>
   )
 }
 
@@ -80,4 +84,4 @@ SavedEventsList.propTypes = {
 
 };
 
-export default SavedEventsList;
+export default withNamespaces()(SavedEventsList);

@@ -24,21 +24,29 @@ export const profileGetInfo = () => ({
   }
 });
 
-export const updateProfile = (profile) => ({
-  resource: "users",
-  type: CRUD_UPDATE,
+export const PROFILE_UPDATE = 'PROFILE_UPDATE';
+export const PROFILE_UPDATE_LOADING = 'PROFILE_UPDATE_LOADING';
+export const PROFILE_UPDATE_FAILURE = 'PROFILE_UPDATE_FAILURE';
+export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
+
+export const updateProfile = ({userId: id, name, email, password}, callback) => ({
+  type: PROFILE_UPDATE,
   payload: {
-    id: profile.userId,
+    id,
     data: {
-      name: profile.name,
-      password: profile.password
+      id,
+      name,
+      password
     },
   },
   meta: {
-    basePath: "/users/"+profile.userId,
-    resource: "profile",
+    //  basePath: "/users/"+profile.userId, Per @Ale: Non c'è bisogno dato che l'update prende la resource e l'id e forma l'url PATCH /users/:userID
+    //Quello che c'è da fare è, aggiornare i dati nel reducer auth.js
+    resource: "users",
     fetch: UPDATE,
+
     onSuccess: {
+      callback,
       notification: {
         body: "I dati del profilo sono stati aggiornati",
         level: "success",

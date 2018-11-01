@@ -1,9 +1,11 @@
 
 
 import React from 'react';
-import {View, VersionedImageField, Touchable} from '../common';
 import { Text, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
+import {View, VersionedImageField, Touchable} from '../common';
+
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Fonts } from "../common/Fonts";
@@ -12,11 +14,12 @@ import { Fonts } from "../common/Fonts";
 const CompetitionCard = (props) => {
 
   const {
-    sport_id,
-    name,
-    country,
-    week_events,
-    image_versions
+      sport_id,
+      name,
+      country,
+      week_events,
+      image_versions,
+      t
 
   } = props;
 
@@ -28,22 +31,22 @@ const CompetitionCard = (props) => {
       <Touchable onPress={props.onPress} style={[styles.container, {elevation: 1, ...themes.base.elevations.depth1}]}>
         <View style={{flexDirection: 'row'}}>
 
-        <View style={styles.image}>
-          { image_versions
-            ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
-            : <Icon name="sports-club" size={42}/> }
+          <View style={styles.image}>
+            { image_versions
+                ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
+                : <Icon name="sports-club" size={42}/> }
+          </View>
+          <View style={styles.info}>
+            <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
+            <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
+            { week_events && week_events.length > 0 && <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
+              {t('browse.weekEvents', { count: week_events.length})}
+            </Text> }
+          </View>
+          <View style={styles.arrowIconView}>
+            <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
+          </View>
         </View>
-        <View style={styles.info}>
-          <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
-          <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
-          { week_events && week_events.length > 0 && <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>{week_events.length}
-            {week_events.length === 1 ? " evento" : " eventi"} questa settimana
-          </Text> }
-        </View>
-        <View style={styles.arrowIconView}>
-          <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
-        </View>
-      </View>
       </Touchable>
 
   );
@@ -105,6 +108,6 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CompetitionCard;
+export default withNamespaces()(CompetitionCard);
 
 

@@ -4,9 +4,12 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {Text, StyleSheet, ActivityIndicator, ImageBackground,
   Platform, Alert, ScrollView, TextInput } from "react-native";
+import { withNamespaces } from 'react-i18next';
 import {createRequest} from "../../actions/requests";
-import {Input, Button, Slider} from "react-native-elements";
-import View from "../../components/common/View";
+import { Slider } from "react-native-elements";
+
+
+import { View, Input, Button } from "../../components/common";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import {VersionedImageField} from "../../components/common";
@@ -65,60 +68,60 @@ class ContactUsScreen extends React.Component{
       auth.getAuthToken().then(token => {
 
         self.props.dispatch(fetchStart());
-
+        const { t } = self.props;
         fetch(`${vars.apiUrl}/users/${userId}/requests`,
-          {
-            headers: {
-              'Authorization':`Bearer ${token.accessToken}`,
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-              event,
-              location,
-              maxDistance,
-              numOfPeople,
-              userPosition,
-              note: notes
+            {
+              headers: {
+                'Authorization':`Bearer ${token.accessToken}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              method: "POST",
+              body: JSON.stringify({
+                event,
+                location,
+                maxDistance,
+                numOfPeople,
+                userPosition,
+                note: notes
+              })
             })
-          })
-          .then(function(res){
-            if(res.status === 204){
-              self.props.dispatch(fetchEnd());
-              //mostra notifica
-              self.props.dispatch(showNotification(
-                "Lavoreremo per soddisfare la tua richiesta.\nVerrai ricontattato al tuo indirizzo email.",
-                "success",
-                {
-                  title: "Richiesta inviata"
-                }
-              ));
-              self.props.navigation.navigate('BroadcastsList');
-            }
-            else{
-              //mostra notifica
-              self.props.dispatch(showNotification(
-                "Ricontrolla i tuoi dati.",
-                "warning",
-                {
-                  title: "Qualcosa è andato storto..."
-                }
-              ));
-
-              self.props.dispatch(fetchEnd());
-            }
-          })
-          .catch(function(res){
-            self.props.dispatch(showNotification(
-              "Controlla la tua connessione ad internet.",
-              "error",
-              {
-                title: "Qualcosa è andato storto..."
+            .then(function(res){
+              if(res.status === 204){
+                self.props.dispatch(fetchEnd());
+                //mostra notifica
+                self.props.dispatch(showNotification(
+                    t("browse.noBroadcasts.notification.success.message"),
+                    "success",
+                    {
+                      title:    t("browse.noBroadcasts.notification.success.title"),
+                    }
+                ));
+                self.props.navigation.navigate('BroadcastsList');
               }
-            ));
-            self.props.dispatch(fetchEnd());
-          })
+              else{
+                //mostra notifica
+                self.props.dispatch(showNotification(
+                    t("browse.noBroadcasts.notification.failure.message"),
+                    "warning",
+                    {
+                      title: t("browse.noBroadcasts.notification.success.title"),
+                    }
+                ));
+
+                self.props.dispatch(fetchEnd());
+              }
+            })
+            .catch(function(res){
+              self.props.dispatch(showNotification(
+                  t("common.notificationFailure.message"),
+                  "error",
+                  {
+                    title: t("common.notificationFailure.title")
+                  }
+              ));
+              self.props.dispatch(fetchEnd());
+            })
       })
     }).catch(function(e){
       NavigationService.navigate("Auth", {}, true);
@@ -132,115 +135,121 @@ class ContactUsScreen extends React.Component{
 
     const {event} = this.props.navigation.state.params;
     const distances = [5, 10, 20, 50, 100];
+    const { t } = this.props;
 
-    let date = moment(event.start_at).locale('it').format('D MMMM [alle] HH:mm');
+    let date = moment(event.start_at).format('D MMMM [alle] HH:mm');
 
     return(
-      <View>
-        <ScrollView
-          contentContainerStyle={styles.container}
-          bounces={false}
-        >
-          <Text style={styles.header}>{"Organizziamo l'evento per te!"}</Text>
-          <View style={styles.eventContainer}>
-            <Text style={styles.competitionName}>{event.competition.name}</Text>
-            <View style={styles.eventRow}>
-              <VersionedImageField
-                source={event.competition.competitorsHaveLogo ? event.competitors[0]._links.image_versions : event.competition.image_versions}
-                minSize={{width: 62, height: 62}}
-                imgSize={{width: 42, height: 42}}
-              />
-              <View style={{flex:1, flexWrap: 'wrap'}}>
-                <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-              </View>
-              {event.competition.competitorsHaveLogo ?
+        <View>
+          <ScrollView
+              contentContainerStyle={styles.container}
+              bounces={false}
+          >
+            <Text style={styles.header}>{t("browse.noBroadcasts.weOrganizeForYou")}</Text>
+            <View style={styles.eventContainer}>
+              <Text style={styles.competitionName}>{event.competition.name}</Text>
+              <View style={styles.eventRow}>
                 <VersionedImageField
-                  source={event.competitors[1]._links.image_versions}
-                  minSize={{width: 62, height: 62}}
-                  imgSize={{width: 42, height: 42}}
-                /> :
-                <View style={{width: 42, height: 42}}/>
-              }
+                    source={event.competition.competitorsHaveLogo ? event.competitors[0]._links.image_versions : event.competition.image_versions}
+                    minSize={{width: 62, height: 62}}
+                    imgSize={{width: 42, height: 42}}
+                />
+                <View style={{flex:1, flexWrap: 'wrap'}}>
+                  <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+                </View>
+                {event.competition.competitorsHaveLogo ?
+                    <VersionedImageField
+                        source={event.competitors[1]._links.image_versions}
+                        minSize={{width: 62, height: 62}}
+                        imgSize={{width: 42, height: 42}}
+                    /> :
+                    <View style={{width: 42, height: 42}}/>
+                }
 
+              </View>
+              <Text style={styles.eventDate}>{date}</Text>
             </View>
-            <Text style={styles.eventDate}>{date}</Text>
-          </View>
-          <ImageBackground source={BackgroundPattern} style={{
+            <ImageBackground source={BackgroundPattern} style={{
             height: '100%',
+            alignItems: 'center',
+
             width: '100%',
             marginTop: -20
           }}
-                           resizeMode={'cover'}>
-            <View style={styles.middleContainerStyle}>
-              <Input
-                placeholder="Dove vuoi guardare l’evento ?"
-                placeholderTextColor={themes.base.inputPlaceholderColor}
-                leftIcon={<Icon name={"map-marker-radius"}
+                             resizeMode={'cover'}>
+              <View style={styles.middleContainerStyle}>
+                <Input
+                    placeholder={t("browse.noBroadcasts.whereToWatch")}
+                    placeholderTextColor={themes.base.inputPlaceholderColor}
+                    leftIcon={<Icon name={"map-marker-radius"}
                                 color={colors.text.default} size={25}/>}
-                leftIconContainerStyle={{width: 25, height: 25, marginLeft: 0}}
-                containerStyle={styles.inputOuterContainer}
-                inputContainerStyle={{borderBottomWidth: 0}}
-                inputStyle={styles.textInputStyle}
-                autoCapitalize="none"
-                numberOfLines = {1}
-                displayError={true}
-                errorStyle={styles.errorMessage}
-                shake={true}
-                onChangeText={(text) => this.setState({location: text})}
+                    leftIconContainerStyle={{width: 25, height: 25, marginLeft: 0}}
+                    containerStyle={styles.inputOuterContainer}
+                    inputContainerStyle={{borderBottomWidth: 0}}
+                    inputStyle={styles.textInputStyle}
+                    autoCapitalize="none"
+                    numberOfLines = {1}
+                    displayError={true}
+                    errorStyle={styles.errorMessage}
+                    shake={true}
+                    onChangeText={(text) => this.setState({location: text})}
 
-              />
-              <Text style={[styles.header, {marginTop: 0}]}>Quanto sei disposto a spostarti?</Text>
-              <View style={styles.distancesContainer}>
-                {distances.map(dist => (
-                  <Button
-                    title={dist + ' km'}
-                    titleStyle={this.state.maxDistance === dist ? [styles.distanceTextButton, {fontFamily: Fonts.LatoBold}] : [styles.distanceTextButton, {fontFamily: Fonts.LatoLight}]}
-                    buttonStyle={this.state.maxDistance === dist ? [styles.distanceButton, {borderColor: colors.accent.default}] : [styles.distanceButton, {borderColor: colors.white.light}]}
-                    onPress={() => { this.setState({maxDistance: dist}) }}
-                  />
-                ))}
-              </View>
-              <Text style={[styles.header, {marginTop: 8}]}>Quante persone sarete?</Text>
-              <View style={styles.peopleCard} elevation={2}>
-                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
-                  <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
+                />
+                <Text style={[styles.header, {marginTop: 0}]}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
+                <View style={styles.distancesContainer}>
+                  {distances.map(dist => (
+                      <Button
+
+                          containerStyle={[{flexGrow: 1, flexBasis: 30, maxHeight: 40},
+                            dist === distances[0]
+                            ? {borderTopLeftRadius: 50, borderBottomLeftRadius: 50 }
+                            : dist === distances[distances.length-1] ? {borderTopRightRadius: 50, borderBottomRightRadius: 50} : {} ]}
+                          variant={this.state.maxDistance === dist ? "primary" : "default"}
+                          //buttonStyle={this.state.maxDistance === dist ? {borderColor: colors.accent.default} :  {borderColor: colors.white.light}}
+                          onPress={() => { this.setState({maxDistance: dist}) }}
+                      >{dist + ' km'}</Button>
+                  ))}
                 </View>
-                <Slider
-                  value={this.state.numOfPeople}
-                  minimumValue={1}
-                  maximumValue={20}
-                  step={1}
-                  style={{justifyContent: 'center'}}
-                  //trackStyle={{height: 1}}
-                  thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
-                  thumbTintColor={colors.white.light}
-                  onValueChange={(numOfPeople) => this.setState({numOfPeople})} />
+                <Text style={[styles.header, {marginTop: 8}]}>{t("browse.noBroadcasts.howManyPeople")}</Text>
+                <View style={styles.peopleCard} elevation={2}>
+                  <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
+                    <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
+                  </View>
+                  <Slider
+                      value={this.state.numOfPeople}
+                      minimumValue={1}
+                      maximumValue={20}
+                      step={1}
+                      style={{justifyContent: 'center'}}
+                      //trackStyle={{height: 1}}
+                      thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
+                      thumbTintColor={colors.white.light}
+                      onValueChange={(numOfPeople) => this.setState({numOfPeople})} />
+                </View>
               </View>
-            </View>
-            <View style={styles.noteCard} elevation={2}>
-              <TextInput
-                multiline = {true}
-                numberOfLines = {4}
-                placeholder={"Aggiungi eventuali note"}
-                style={{textAlignVertical: "top"}}
-                onChangeText={(text) => this.setState({notes: text})}
-              />
-            </View>
-            <Button
-              title={"Invia"}
-              titleStyle={styles.sendButtonText}
-              buttonStyle={[styles.sendButton, {borderColor: colors.accent.default}]}
-              disabled={this.state.location === "" || this.state.maxDistance === 0}
-              loading={this.props.isLoading}
-              loadingProps={{color: colors.accent.default}}
-              loadingStyle={{padding: 16, paddingTop: 8, paddingBottom: 8}}
-              onPress={() => this._sendRequest()}
-            />
-          </ImageBackground>
-        </ScrollView>
-        <View style={styles.bottomView}/>
-      </View>
+              <View style={styles.noteCard} elevation={2}>
+                <TextInput
+                    multiline = {true}
+                    numberOfLines = {4}
+                    placeholder={t("browse.noBroadcasts.addNotes")}
+                    style={{textAlignVertical: "top"}}
+                    onChangeText={(text) => this.setState({notes: text})}
+                />
+              </View>
+              <Button
+                  round
+                  variant="primary"
+                  disabled={this.state.location === "" || this.state.maxDistance === 0}
+                  loading={this.props.isLoading}
+                  loadingProps={{color: colors.accent.default}}
+                  loadingStyle={{padding: 16, paddingTop: 8, paddingBottom: 8}}
+                  onPress={() => this._sendRequest()}
+              >{t("browse.noBroadcasts.send")}</Button>
+            </ImageBackground>
+          </ScrollView>
+          <View style={styles.bottomView}/>
+        </View>
     );
   }
 }
@@ -267,7 +276,8 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.LatoBold,
     fontSize: 20,
     color: themes.base.colors.text.default,
-    marginTop: 12
+    marginTop: 12,
+    paddingTop: 32,
   },
   eventContainer: {
     alignItems: 'center',
@@ -337,20 +347,12 @@ const styles = StyleSheet.create({
   },
   distancesContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     marginTop: 8
   },
-  distanceButton: {
-    borderRadius: 20,
-    margin: 5,
-    backgroundColor: colors.white.light,
-    borderWidth: 1,
-    borderColor: colors.accent.default
 
-  },
-  distanceTextButton: {
-    color: colors.text.default,
-    fontSize: 14,
-  },
+
   peopleCard: {
     width: '100%',
     backgroundColor: colors.white.light,
@@ -375,9 +377,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
     padding: 16,
     paddingTop: 8,
+
     backgroundColor: colors.white.light,
     borderRadius: themes.base.borderRadius,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    width: '90%',
   },
   sendButton: {
     paddingLeft: 48,
@@ -401,4 +405,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps)(ContactUsScreen);
+export default connect(mapStateToProps)(withNamespaces()(ContactUsScreen));

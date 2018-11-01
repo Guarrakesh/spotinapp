@@ -106,8 +106,8 @@ const themes = {
     elevations: {
       depth1: {
         shadowOffset: {height: 1},
-        shadowRadius: 3,
-        shadowOpacity: 0.12,
+        shadowRadius: 1,
+        shadowOpacity: 0.05,
       },
       depth2: {
         shadowOffset: {height: 3},
@@ -143,11 +143,9 @@ const themes = {
       color: '#555555'
     },
     listTitleStyle: {
-      fontFamily: Fonts.LatoBold,
-      textAlign: 'left',
-      fontSize: 21,
+
       padding: 8,
-      color: '#555555'
+
     },
 
     noContentView: {
@@ -209,37 +207,7 @@ const themes = {
 
       }
     },
-    button: {
-      base: {
-        fontFamily: 'Lato-Medium',
-        color: '#555'
-      },
-      titleBase: {
-        fontSize: 16,
-        fontFamily: 'Lato-Medium',
-        color: '#555'
-      },
-      primary: {
-        backgroundColor: accentColor.default,
-        color: whiteColor.default,
-      },
-      primarySimple: {
-        backgroundColor: 'transparent',
-        color: accentColor.default,
 
-      },
-      danger: {
-        backgroundColor: dangerColor.light
-      },
-      dangerSimple: {
-        backgroundColor: 'transparent',
-        color: dangerColor.light,
-
-      },
-      round: {
-        borderRadius: 50
-      }
-    }
 
 
   },

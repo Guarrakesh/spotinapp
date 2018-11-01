@@ -1,0 +1,168 @@
+{
+  "home": {
+    "nearOffers"          : "Offers near you",
+    "nextEvents"          : "Upcoming events",
+    "seeAll"              :  "See all",
+    "nearBusinesses"      : "Restaurants near you",
+    "closestBusinesses"   : "Closest restaurants",
+    "searchBusiness"      : "Look for a restaurant..."
+
+  },
+  "browse": {
+    "selectSport"         : "Select the sport you would like to follow",
+    "selectCompetition"   : "Select the tournament",
+    "weekEvents"          : "{{count}} match this week",
+    "weekEvents_plural"   : "{{count}} matches this week",
+    "selectEvent"         : "Select the event",
+    "noCompetitions"      : "No tournaments for now",
+    "noEvents"            : "No events for now",
+    "noBroadcasts"  : {
+      "contactUsCta"  : {
+        "title"             : "This event is not broadcasted anywhere...",
+        "subtitle"          : "Contact us and we will organize the event for you!",
+        "buttonTitle"       : "Ask for an event"
+      },
+
+      "contactUs"         : "Contact Us",
+      "weOrganizeForYou"  : "We organize the event for you!",
+      "whereToWatch"      : "Where would you like to watch this?",
+      "howMuchTravel"     : "How far are you willing to travel?",
+      "howManyPeople"     : "How many people will there be?",
+      "addNotes"          : "Add more details",
+      "send"              : "Send",
+      "notification": {
+        "success": {
+          "title": "Request sent",
+          "message": "We will work to satisfy your request. \nYou'll be contacted on your email address."
+        },
+        "failure": {
+          "title": "Something went wrong...",
+          "message": "Check what you typed"
+        }
+      }
+    },
+    "nearOffers"         : "Near offers",
+    "getOffer": {
+      "buttonTitle"       : "Get offer",
+      "title"             : "Would you like to get this offer?",
+      "info"              : "If you get this offer you will receive {{offer}}",
+      "additionalInfo"    : "The offer doesn't include a booked table in this restaurant",
+      "cancel"            : "Cancel",
+      "confirm"           : "Confirm",
+      "notification" : {
+        "title"           : "Great!",
+        "message"         : "You obtained this deal"
+      },
+      "recommended"       : "Recommended offer",
+      "booked"            : "Booked"
+
+    },
+    "businessProfile": {
+      "plannedEvents"   : "Planned events",
+      "noEvents"         : "No events for now"
+
+    }
+
+
+
+  },
+
+  "profile": {
+    "bookerOffers"           : "Booked offers",
+    "favoriteEvents"         : "Favorites",
+    "favoriteEvent": {
+      "alertDelete"          : "Do you want to remove this event from the favorites list?",
+      "removeButton"         : "Remove"
+    },
+    "bookedOffer": {
+      "title"                : "Booked offer",
+      "noReservations"       : "You have no booked offers yet",
+      "browseOffers"         : "Browse offers",
+      "listTitle"            : "Your offers",
+      "delete"               : "Delete",
+      "alertDelete": {
+        "title"              : "Are you sure you want to delete this offer?",
+        "message"            : "If you delete this offer you will lose your deal",
+        "delete"            : "Delete"
+      },
+      "deleteNotification": {
+        "success": {
+          "title"              : "Done",
+          "message"            : "The booking was deleted"
+        }
+
+      },
+      "bookedNotification": {
+        "success": {
+          "title"              : "Great",
+          "message"            : "You got the offer! \nYou can view it in your profile"
+        },
+        "failure": {
+          "title"             : "Something went wrong...",
+          "message"           : "It was not possible to get this offer, try again later."
+        }
+      }
+
+
+    }
+
+  },
+
+  "common": {
+    "Home": "Home",
+    "Browse": "Browse",
+    "Profile": "Profile",
+    "cancel": "Cancel",
+    "confirm": "Conferma",
+    "at": "at",
+    "atCheckout": "at checkout",
+    "discountAtCheckout": "Discount at checkout",
+    "notificationFailure": {
+      "title": "Ops...",
+      "message": "We have no idea of what just happened, but we'll work to make it fixed. \nTry again later"
+    },
+    "email"               : "Email",
+    "password"            : "Password",
+    "passwordConfirm"     : "Conferma password"
+
+  },
+
+
+  "auth": {
+    "login": {
+      "title"        : "Sign In to your account",
+
+      "signIn"              : "Sign In",
+      "facebookSignIn"      : "Sign In with Facebook",
+      "passwordForgot"      : "Forgot your password?",
+      "noAccount"           : "No account yet?",
+      "register"            : "Sign Up"
+    },
+    "register": {
+      "title"               : "Registration",
+      "fullname"            : "Full name",
+      "button"              : "Sign Up"
+
+    },
+    "passwordForgot": {
+      "title"               : "Forgot your password?",
+      "subtitle"            : "Enter your email and we will send you all the instructions to reset your password",
+      "button"              : "Reset password",
+      "notification"  : {
+        "success": {
+          "title"           : "Check your email",
+          "message"         : "We sent you instructions to reset your password"
+        },
+        "failure": {
+          "title"             : "Email not found",
+          "message"           : "No account exists with this email."
+        }
+      }
+
+    }
+
+  }
+
+
+
+}

@@ -1,15 +1,20 @@
 import React from "react";
 import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import {StyleSheet, SectionList, Text, View, ActivityIndicator} from "react-native";
+import {StyleSheet, SectionList, View, ActivityIndicator} from "react-native";
+import { withNamespaces } from 'react-i18next';
+import DeviceInfo from 'react-native-device-info';
 import {groupBy, debounce} from "lodash";
 import moment from "moment";
-import "moment/locale/it";
-import {Fonts} from "../common/Fonts";
-import themes from "../../styleTheme";
+import "moment/min/moment-with-locales"
 import Icon from "react-native-vector-icons/Entypo";
 
 
+import { Typography } from '../common';
+import themes from "../../styleTheme";
+
+moment.locale(DeviceInfo.getDeviceLocale());
+const Fonts = themes.base.fonts;
 class EventList extends React.Component {
 
   state = {isLoadingMore: false};
@@ -43,6 +48,7 @@ class EventList extends React.Component {
         page,
         total,
         noContent,
+        t,
 
         ...props
     } = this.props;
@@ -72,16 +78,16 @@ class EventList extends React.Component {
 
     const headerSection = ({section}) => {
 
-      const date = moment(data[section.data[0]].start_at).locale('it').format('dddd D MMMM').toString();
+      const date = moment(data[section.data[0]].start_at).format('dddd D MMMM').toString();
 
-      return <Text style={styles.sectionHeader}>{date}</Text>
+      return <Typography variant="subheading" gutterBottom style={{paddingLeft: 8, marginTop: 16}}>{date}</Typography>
     };
 
     if (noContent){
       return (  <View style={styles.noContentView}>
-              <Text style={styles.noContentText}>
-              Non ci sono eventi al momento
-            </Text>
+              <Typography style={styles.noContentText}>
+                {t("browse.noEvents")}
+            </Typography>
           </View>
       )
     }
@@ -102,7 +108,8 @@ class EventList extends React.Component {
             onRefresh={refresh}
             refreshing={isRefreshing}
             ListFooterComponent={isLoading && <ActivityIndicator/>}
-            ListHeaderComponent={<Text style={themes.base.listTitleStyle}>Seleziona l'evento</Text> }
+            ListHeaderComponent={<Typography gutterBottom variant="heading" style={{padding: 8}}
+            >{t("browse.selectEvent")}</Typography> }
         />
     );
   }
@@ -156,4 +163,4 @@ const styles = StyleSheet.create({
       }
 });
 
-export default EventList;
+export default withNamespaces()(EventList);

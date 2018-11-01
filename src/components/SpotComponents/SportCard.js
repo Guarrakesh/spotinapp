@@ -32,8 +32,7 @@ const SportCard = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 8,
-    paddingRight: 8
+    margin: 8,
   },
 
   cardFooter: {
