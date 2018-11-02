@@ -17,6 +17,7 @@ import AuthNavigator from './AuthNavigator';
 
 import i18n from '../i18n/i18n';
 import themes from "../styleTheme";
+import IntroSwiper from "../screens/intro/AppIntro";
 
 
 

@@ -54,6 +54,7 @@ class ResourceInitializer extends Component {
     switch (this.getCurrentRoute(navigation)) {
       case 'Home/Home':
       case 'Auth/SignIn':
+      case "AppIntro/AppIntro":
         return false;
     }
     dispatch(NavigationService.back());

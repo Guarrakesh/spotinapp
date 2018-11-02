@@ -68,7 +68,7 @@
   },
 
   "profile": {
-    "bookerOffers"           : "Booked offers",
+    "bookedOffers"           : "Booked offers",
     "favoriteEvents"         : "Favorites",
     "favoriteEvent": {
       "alertDelete"          : "Do you want to remove this event from the favorites list?",
@@ -161,6 +161,28 @@
 
     }
 
+  },
+  "intro": {
+    "slide1": {
+      "title": "Welcome to Spot In",
+      "message": "Join the first online community for sports enthusiasts!"
+    },
+    "slide2": {
+      "title": "Search",
+      "message": "Search for your favorite sporting events"
+    },
+    "slide3": {
+      "title": "Find",
+      "message": "Find the perfect place for you"
+    },
+    "slide4": {
+      "title": "Save",
+      "message": "Save with exclusive Spot In discounts!"
+    },
+    "button": {
+      "continue": "Next",
+      "start": "Get started"
+    }
   }
 
 

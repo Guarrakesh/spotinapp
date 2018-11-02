@@ -25,6 +25,11 @@ const images = {
       waterpolo: require('./img/waterpolo/Waterpolo.png'),
       hockey: require('./img/hockey/Hockey.png'),
       baseball: require('./img/baseball/Baseball.png'),
+    },
+    intro: {
+      sportsIcon: require('./img/intro/sports.png'),
+      businessIcon: require('./img/intro/businessIcon.png'),
+      saveIcon: require('./img/intro/saveIcon.png')
     }
   }
 };

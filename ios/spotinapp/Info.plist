@@ -4,67 +4,24 @@
 <dict>
 	<key/>
 	<string/>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
-	</array>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleVersion</key>
-	<string>4</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Spot In</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>it.spotin.spotinapp</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.2</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>FacebookAppID</key>
-	<string>301945323939544</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>codepush.blob.core.windows.net</key>
-			<string/>
-			<key>codepushupdates.azureedge.net</key>
-			<string/>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-			<key>codepush.azurewebsites.net</key>
-			<string/>
-		</dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-		<string>location-services</string>
-	</array>
-	<key>FacebookDisplayName</key>
-	<string>Spot IN</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -74,18 +31,60 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleIdentifier</key>
-	<string>it.spotin.spotinapp</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>4</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODEPUSH_KEY)</string>
+	<key>FacebookAppID</key>
+	<string>301945323939544</string>
+	<key>FacebookDisplayName</key>
+	<string>Spot IN</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>CFBundleDisplayName</key>
-	<string>Spot In</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>codepush.azurewebsites.net</key>
+			<string/>
+			<key>codepush.blob.core.windows.net</key>
+			<string/>
+			<key>codepushupdates.azureedge.net</key>
+			<string/>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Spot In ha bisogno della tua posizione per poter trovare i locali più vicini a te</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>
@@ -118,19 +117,18 @@
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-ThinItalic.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+		<string>location-services</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Spot In ha bisogno della tua posizione per poter trovare i locali più vicini a te</string>
 </dict>
 </plist>

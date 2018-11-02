@@ -2,7 +2,7 @@ import React from 'react';
 import {Image} from 'react-native';
 import PropTypes from 'prop-types';
 
-import { createStackNavigator, createTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
 
 import AuthNavigator from './AuthNavigator';
 import FavoriteScreen from '../components/FavoriteScreen';
@@ -14,6 +14,7 @@ import HomeStack from './HomeStack';
 
 import Launcher from '../screens/Launcher';
 import NoLocationScreen from '../screens/NoLocationScreen';
+import AppIntro from "../screens/intro/AppIntro"
 
 import i18n from '../i18n/i18n';
 
@@ -30,7 +31,7 @@ const FavoriteStack = createStackNavigator({
 
 
 
-export const MainNavigation = createTabNavigator(
+export const MainNavigation = createBottomTabNavigator(
   {
     Home: HomeStack,
     Browse: SpotStack,
@@ -63,7 +64,7 @@ export const MainNavigation = createTabNavigator(
     }),
 
     initialRouteName: "Home",
-    tabBarComponent: TabBarBottom,
+    //tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: themes.base.colors.text.default,
@@ -100,6 +101,7 @@ const RootNavigator = createStackNavigator(
       }
     },
 
+    AppIntro: AppIntro,
     BusinessMapInSpot: BusinessMapNavigatorInSpot,
     BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
     ContactUs: ContactUsNavigator

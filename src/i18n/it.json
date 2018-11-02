@@ -68,7 +68,7 @@
   },
 
   "profile": {
-    "bookerOffers"           : "Offerte prenotate",
+    "bookedOffers"           : "Offerte prenotate",
     "favoriteEvents"         : "Preferiti",
     "favoriteEvent": {
       "alertDelete"          : "Vuoi rimuoverlo dagli eventi preferiti?",
@@ -129,7 +129,7 @@
 
   "auth": {
     "login": {
-      "title"        : "Enter nel tuo account",
+      "title"        : "Entra nel tuo account",
 
       "signIn"              : "Accedi",
       "facebookSignIn"      : "Entra con Facebook",
@@ -161,5 +161,28 @@
 
     }
 
+  },
+
+  "intro": {
+    "slide1": {
+      "title": "Benvenuto in Spot In",
+      "message": "La prima piattaforma per tutti gli appassionati di sport!"
+    },
+    "slide2": {
+      "title": "Scegli",
+      "message": "Scegli il tuo evento sportivo preferito"
+    },
+    "slide3": {
+      "title": "Scopri",
+      "message": "Scopri il locale più adatto a te"
+    },
+    "slide4": {
+      "title": "Risparmia",
+      "message": "Risparmia grazie agli esclusivi sconti Spot In"
+    },
+    "button": {
+      "continue": "Continua",
+      "start": "Inizia"
+    }
   }
 }

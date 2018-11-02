@@ -71,6 +71,9 @@ Button.defaultProps = {
   elevation: 1,
 };
 Button.propTypes = {
+  block: PropTypes.bool,
+  elevation: PropTypes.number,
+  round: PropTypes.bool,
   uppercase: PropTypes.bool,
   variant: PropTypes.string,
   clear: PropTypes.bool,
