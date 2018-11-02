@@ -54,7 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNDeviceInfo(),
             new RNAndroidLocationEnablerPackage(),
-            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+            new CodePush(BuildConfig.CODEPUSH_KEY, getApplicationContext(), BuildConfig.DEBUG),
             new VectorIconsPackage(),
             new SvgPackage(),
             new MapsPackage(),

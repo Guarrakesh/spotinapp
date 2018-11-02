@@ -133,9 +133,21 @@ android {
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            buildConfigField "String", "CODEPUSH_KEY", '"aoetyyAdwgh5FbL35ecwdeYbxOrCH1MqxDijX"'
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
+        debug {
+            applicationIdSuffix ".debug"
+            buildConfigField "String", "CODEPUSH_KEY", '""'
+        }
+        releaseStaging {
+            initWith(buildTypes.release)
+            buildConfigField "String", "CODEPUSH_KEY", '"uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ"'
+            applicationIdSuffix ".staging"
+            matchingFallbacks = ['release', 'debug']
+        }
+
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->

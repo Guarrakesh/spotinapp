@@ -116,8 +116,6 @@ class LoginScreen extends React.Component {
             width: '100%',
             marginTop: -30
           }} resizeMode={'cover'}>
-
-
               <View style={styles.middleContainerStyle}>
 
                 <Input
