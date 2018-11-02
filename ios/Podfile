@@ -43,6 +43,8 @@ target 'spotinapp' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|

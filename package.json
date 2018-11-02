@@ -35,6 +35,7 @@
     "react-native-android-open-settings": "^1.2.0",
     "react-native-cli": "^2.0.1",
     "react-native-code-push": "^5.4.2",
+    "react-native-config": "^0.11.5",
     "react-native-content-loader": "^0.1.6",
     "react-native-device-info": "^0.24.3",
     "react-native-easy-grid": "^0.2.0",

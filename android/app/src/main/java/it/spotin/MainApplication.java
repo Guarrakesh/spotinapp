@@ -3,6 +3,7 @@
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeConfigPackage(),
             new RNDeviceInfo(),
             new RNAndroidLocationEnablerPackage(),
             new CodePush(BuildConfig.CODEPUSH_KEY, getApplicationContext(), BuildConfig.DEBUG),
