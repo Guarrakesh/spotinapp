@@ -45,6 +45,7 @@
     "nearOffers"         : "Offerte intorno a te",
     "getOffer": {
       "buttonTitle"            : "Ottieni offerta",
+      "recommended"            : "Offerta consigliata",
       "title"                  : "Vuoi ottenere quest'offerta?",
       "info"                   : "Partecipando all'evento puoi usufruire del {{offer}}",
       "additionalInfo"         : "L'offerta non include la prenotazione del tavolo presso il locale",
@@ -100,7 +101,7 @@
         },
         "failure": {
           "title"             : "Qualcosa è andato storto...",
-          "message"           : "Non è stato possibile ottenere questa offerta, riproa più tardi."
+          "message"           : "Non è stato possibile ottenere questa offerta, riprova più tardi."
         }
       }
 

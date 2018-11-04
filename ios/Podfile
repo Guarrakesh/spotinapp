@@ -4,6 +4,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
 target 'spotinapp' do
+  pod 'AppCenter/Crashes', '~> 1.10.0'
+  pod 'AppCenter/Analytics', '~> 1.10.0'
+  pod 'AppCenterReactNativeShared', '~> 1.9.0'
     pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'Core',
@@ -43,8 +46,6 @@ target 'spotinapp' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
 end
 post_install do |installer|

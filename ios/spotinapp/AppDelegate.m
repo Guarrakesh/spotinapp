@@ -27,7 +27,7 @@
 
   [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
 
-  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:false];  // Initialize AppCenter analytics
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
 
   [AppCenterReactNative register];  // Initialize AppCenter 
     
@@ -39,7 +39,6 @@
     #else
         jsCodeLocation = [CodePush bundleURL];
     #endif
-
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"spotinapp"
                                                initialProperties:nil
