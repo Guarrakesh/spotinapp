@@ -2,4 +2,6 @@
    <string name="app_name">Spot In</string>
     <string name="facebook_app_id">301945323939544</string>
     <string name="fb_login_protocol_scheme">fb301945323939544</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true">ALWAYS_SEND</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true">ALWAYS_SEND</string>
 </resources>

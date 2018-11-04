@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next';
 import {Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import moment from "moment";
-import 'moment/min/moment-with-locales';
+import 'moment/min/locales';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
@@ -15,6 +15,7 @@ import Images from "../../assets/images";
 import Helpers from "../../helpers";
 import {Fonts} from "../common/Fonts";
 
+moment.locale(DeviceInfo.getDeviceLocale());
 class ReservationConfirmView extends Component {
 
 
@@ -34,7 +35,7 @@ class ReservationConfirmView extends Component {
     const { broadcast } = this.props.data;
 
     const { offer } = broadcast;
-    moment.locale(DeviceInfo.getDeviceLocale());
+
     let date = moment(event.start_at).format('dddd D MMMM');
     let time = moment(event.start_at).format('HH:mm');
     const discount = (type) => {

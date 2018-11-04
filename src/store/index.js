@@ -28,7 +28,6 @@ export default function configureStore(initialState) {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const navMiddleware = createReactNavigationReduxMiddleware("root", state => state.navigation);
 
-
   let middleware = [sagaMiddleware, navMiddleware];
 
   if (Config.ENV === "development")

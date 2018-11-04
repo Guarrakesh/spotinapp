@@ -113,7 +113,7 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 3
         versionName "0.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -172,6 +172,10 @@ android {
 }
 
 dependencies {
+    implementation project(':appcenter-crashes')
+    implementation project(':appcenter-analytics')
+    implementation project(':appcenter')
+
     implementation project(':react-native-config')
     implementation project(':react-native-device-info')
     implementation project(':react-native-android-open-settings')

@@ -19,8 +19,8 @@
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "Non ci sono locali che trasmettono questo evento...",
-        "subtitle"          : "Contattaci e organizzeremo l'evento per te!",
-        "buttonTitle"       : "Richiedi evento"
+        "subtitle"          : "Organizziamolo insieme!",
+        "buttonTitle"       : "Continua"
       },
 
 
@@ -45,6 +45,7 @@
     "nearOffers"         : "Offerte intorno a te",
     "getOffer": {
       "buttonTitle"            : "Ottieni offerta",
+      "recommended"            : "Offerta consigliata",
       "title"                  : "Vuoi ottenere quest'offerta?",
       "info"                   : "Partecipando all'evento puoi usufruire del {{offer}}",
       "additionalInfo"         : "L'offerta non include la prenotazione del tavolo presso il locale",
@@ -54,7 +55,7 @@
         "title"                : "Ottimo",
         "message"              : "Hai ottenuto l'offerta"
       },
-      "booked"                 : "Prenotato",
+      "booked"                 : "Prenotato"
 
     },
     "businessProfile": {
@@ -79,7 +80,7 @@
       "title"                : "Offerta prenotata",
       "noReservations"       : "Non hai ancora nessuna prenotazione",
       "browseOffers"         : "Esplora offerte",
-      "listTitle"            : "Offerte",
+      "listTitle"            : "Le tue offerte",
       "delete"               : "Elimina",
       "alertDelete": {
         "title": "Eliminare la prenotazione?",
@@ -100,7 +101,7 @@
         },
         "failure": {
           "title"             : "Qualcosa è andato storto...",
-          "message"           : "Non è stato possibile ottenere questa offerta, riproa più tardi."
+          "message"           : "Non è stato possibile ottenere questa offerta, riprova più tardi."
         }
       }
 

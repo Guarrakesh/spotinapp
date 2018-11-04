@@ -23,7 +23,7 @@ import { REFRESH_SCREEN } from '../../actions/integrity';
 
 
 
-const geolocationSettings = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+const geolocationSettings = { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 };
 export const locationChannel = channel();
 let watchTask;
 let watcher;

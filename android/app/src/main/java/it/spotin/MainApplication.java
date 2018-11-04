@@ -3,11 +3,13 @@
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
+import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
+import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -24,7 +26,6 @@ import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 
 import java.util.Arrays;
 import java.util.List;
-
 
 import it.spotin.BuildConfig;
 import it.spotin.R;
@@ -53,7 +54,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
+            new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
+            new AppCenterReactNativePackage(MainApplication.this),
             new ReactNativeConfigPackage(),
+
             new RNDeviceInfo(),
             new RNAndroidLocationEnablerPackage(),
             new CodePush(BuildConfig.CODEPUSH_KEY, getApplicationContext(), BuildConfig.DEBUG),
