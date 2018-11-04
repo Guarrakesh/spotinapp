@@ -38,7 +38,7 @@ export const MainNavigation = createBottomTabNavigator(
     Profile: ProfileStack,
   },
   {
-
+    lazy: false,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
 
