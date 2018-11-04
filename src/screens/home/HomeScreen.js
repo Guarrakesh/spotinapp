@@ -68,7 +68,7 @@ class HomeScreen extends React.Component {
       <Authenticated location={{pathName: "Profile"}}>
         <HomeController>
           {({isLoading, position,...rest}) =>
-              !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
+            !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
               <ScrollView style={styles.homeContainer}>
                 <InlineListController
                   id="home_broadcasts_list"

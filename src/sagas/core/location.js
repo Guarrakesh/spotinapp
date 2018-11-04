@@ -1,7 +1,7 @@
 import React from 'react';
 import { take, call, put, spawn, fork, select, takeEvery, cancel} from 'redux-saga/effects';
 import { channel } from 'redux-saga';
-
+import Geolocation from 'react-native-geolocation-service';
 import { Platform} from 'react-native';
 import Permissions from 'react-native-permissions';
 
@@ -45,7 +45,7 @@ function* watchLocationChannel() {
 
       yield put(NavigationService.navigate('NoLocationScreen', {}, true));
 
-    } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName == "NoLocationScreen"){
+    } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "NoLocationScreen"){
       yield put(NavigationService.navigate('Main', {}, true));
 
     }
@@ -76,8 +76,22 @@ function* watchPosition() {
     }
   }
 
-  watcher = locationChannel.put({type: LOCATION_REQUEST});
-  navigator.geolocation.watchPosition(
+  if(Platform.OS === "android"){
+    watcher = locationChannel.put({type: LOCATION_REQUEST});
+      Geolocation.watchPosition(
+        (position) => {
+          locationChannel.put({type: LOCATION_SET_POSITION, position})
+        },
+        (error) => {
+          locationChannel.put({type: LOCATION_SET_ERROR, error})
+        },
+         geolocationSettings
+      );
+
+  }
+  else{
+    watcher = locationChannel.put({type: LOCATION_REQUEST});
+    navigator.geolocation.watchPosition(
       position => {
 
         locationChannel.put({type: LOCATION_SET_POSITION, position})
@@ -85,7 +99,10 @@ function* watchPosition() {
       (error) => locationChannel.put({type: LOCATION_SET_ERROR, error}),
       geolocationSettings
 
-  );
+    );
+  }
+
+
 }
 
 function* resetWatcher() {

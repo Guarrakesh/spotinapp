@@ -12,11 +12,9 @@
     "test": "jest",
     "clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
-
     "android-dev": "ENVFILE=.env.dev react-native run-android",
-    "android-staging":  "ENVFILE=.env.staging react-native run-android",
-    "android-prod"  : "ENVFILE=.env.prod react-native run-android",
-
+    "android-staging": "ENVFILE=.env.staging react-native run-android",
+    "android-prod": "ENVFILE=.env.prod react-native run-android",
     "build-android-prod": "export ENV=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
     "build-android-staging": "export ENV=.env.staging && cd android && ./gradlew assembleReleaseStaging && cd .."
   },
@@ -50,6 +48,7 @@
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^1.0.0-beta6",
     "react-native-fbsdk": "^0.8.0",
+    "react-native-geolocation-service": "^1.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.3",
     "react-native-maps": "^0.21.0",
     "react-native-modal": "^6.5.0",

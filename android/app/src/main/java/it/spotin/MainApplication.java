@@ -9,7 +9,7 @@ import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnabler
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import com.microsoft.codepush.react.CodePush;
-
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -61,7 +61,8 @@ public class MainApplication extends Application implements ReactApplication {
             new SvgPackage(),
             new MapsPackage(),
             new FBSDKPackage(mCallbackManager),
-            new AndroidOpenSettingsPackage()
+            new AndroidOpenSettingsPackage(),
+            new RNFusedLocationPackage()
       );
     }
 
