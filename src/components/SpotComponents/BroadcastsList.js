@@ -44,8 +44,8 @@ class BroadcastsList extends React.Component {
     if (noContent) {
       return (
           <View style={themes.base.noContentView}>
-              <Typography variant="title" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
-              <Typography variant="subheading" gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
+              <Typography variant="subheading" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
+              <Typography variant="title" gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
             <Button variant="primary" onPress={onContactUsPress}
                     round uppercase>{t("browse.noBroadcasts.contactUsCta.buttonTitle")}</Button>
         </View>

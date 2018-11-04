@@ -19,8 +19,8 @@
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "This event is not broadcasted anywhere...",
-        "subtitle"          : "Contact us and we will organize the event for you!",
-        "buttonTitle"       : "Ask for an event"
+        "subtitle"          : "Let's organize it!",
+        "buttonTitle"       : "Continue"
       },
 
       "contactUs"         : "Contact Us",

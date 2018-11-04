@@ -19,8 +19,8 @@
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "Non ci sono locali che trasmettono questo evento...",
-        "subtitle"          : "Contattaci e organizzeremo l'evento per te!",
-        "buttonTitle"       : "Richiedi evento"
+        "subtitle"          : "Organizziamolo insieme!",
+        "buttonTitle"       : "Continua"
       },
 
 
@@ -54,7 +54,7 @@
         "title"                : "Ottimo",
         "message"              : "Hai ottenuto l'offerta"
       },
-      "booked"                 : "Prenotato",
+      "booked"                 : "Prenotato"
 
     },
     "businessProfile": {
@@ -79,7 +79,7 @@
       "title"                : "Offerta prenotata",
       "noReservations"       : "Non hai ancora nessuna prenotazione",
       "browseOffers"         : "Esplora offerte",
-      "listTitle"            : "Offerte",
+      "listTitle"            : "Le tue offerte",
       "delete"               : "Elimina",
       "alertDelete": {
         "title": "Eliminare la prenotazione?",

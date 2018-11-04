@@ -26,7 +26,7 @@ class Notification extends React.Component {
       this.toggleNotification(nextProps);
     }
 
-  }r
+  }
   componentDidMount() {
     this.toggleNotification(this.props);
 
@@ -45,7 +45,8 @@ class Notification extends React.Component {
 
     Animated.timing(this.state.animated, {
       toValue: open ? 1 : 0,
-      duration: 300
+      duration: 300,
+      useNativeDriver: true,
     }).start(open ? this.timeOutHandler(props) : this.props.hideNotification );
   }
   timeOutHandler(props) {
