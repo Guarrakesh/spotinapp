@@ -93,8 +93,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
                         right: 8,
                         bottom: 8
                       }}>
-                        <Icon name="map-marker-radius" color={colors.white.light} size={20}/>
-                        <Text style={styles.businessDistance}>1,2 km</Text>
+
                       </View>
                     </View>
                   </View>

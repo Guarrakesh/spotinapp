@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Animated, View, Text, PanResponder } from 'react-native';
+import { Animated, View, Text, PanResponder, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { isEqual } from 'lodash';
@@ -23,10 +23,12 @@ class Notification extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     if (!isEqual(nextProps.notification, this.props.notification)) {
-      this.toggleNotification(nextProps);
+      InteractionManager.runAfterInteractions(() => {
+        this.toggleNotification(nextProps);
+      });
     }
 
-  }r
+  }
   componentDidMount() {
     this.toggleNotification(this.props);
 

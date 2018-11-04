@@ -171,5 +171,4 @@ const mapStateToProps = (state, props) => {
     isLoading: state.loading > 0
   });
 };
-export default connect(mapStateToProps, { userRegister })
-(withNamespaces()(SignupScreen));
+export default withNamespaces()(connect(mapStateToProps, { userRegister })(SignupScreen));

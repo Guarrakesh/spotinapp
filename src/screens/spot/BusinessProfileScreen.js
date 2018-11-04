@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {View, StyleSheet, Text, ScrollView, ActivityIndicator, Animated} from 'react-native';
 import Modal from "react-native-modal";
 import { connect } from 'react-redux';
+
+
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
