@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, Text, ScrollView, ActivityIndicator, Animated} from 'react-native';
+import {View, StyleSheet, InteractionManager, ScrollView, ActivityIndicator, Animated} from 'react-native';
 import Modal from "react-native-modal";
 import { connect } from 'react-redux';
 
@@ -57,23 +57,30 @@ class BusinessProfileScreen extends React.Component {
   }
 
   handleReservePress(broadcast) {
-    this.setState({
-      modalVisible: true,
-      currentBroadcast: broadcast,
-      modalData: {
-        broadcast
-      }
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        modalVisible: true,
+        currentBroadcast: broadcast,
+        modalData: {
+          broadcast
+        }
+      });
     });
+
   }
   handleModalDismiss() {
-    this.setState({
-      modalVisible: false,
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        modalVisible: false,
+      });
     });
   }
-  handleConfirm() {
-    this.setState({
-      modalVisible: false,
 
+  handleConfirm() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        modalVisible: false,
+      });
     });
 
     this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId, ({payload, requestPayload}) => {
@@ -142,7 +149,7 @@ class BusinessProfileScreen extends React.Component {
                     {controllerProps => <BroadcastInProfileList
                       {...controllerProps}
 
-                        reservedBroadcasts={this.state.reservedBroadcasts}
+                      reservedBroadcasts={this.state.reservedBroadcasts}
                       onReservePress={this.handleReservePress.bind(this)}/>}
 
                   </ReferenceManyFieldController>

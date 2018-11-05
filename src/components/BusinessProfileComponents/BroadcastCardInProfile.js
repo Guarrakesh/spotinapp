@@ -48,8 +48,8 @@ const BroadcastCardInProfile = (props) => {
           const { competitors } = event;
 
           return (
-              <View style={(newsfeed || newsfeed > 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
-                {(newsfeed || newsfeed > 0) ?
+              <View style={(1 === 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
+                {(1 === 0) ?
                     <View style={styles.redHeader} elevation={3}>
                       <Text style={styles.headerText}>{t("browse.getOffer.recommended")}</Text>
                     </View> : null
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: themes.base.colors.white.light,
   },
+  // TODO: da attivare nel render sostituendo nell'if (newsfeed || newsfeed > 0) quando differenzieremo le plus
   redHeader: {
     backgroundColor: themes.base.colors.danger.default,
     marginTop: 0,
