@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { createStackNavigator, createBottomTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
 
 import AuthNavigator from './AuthNavigator';
-import FavoriteScreen from '../components/FavoriteScreen';
 import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotStack';
@@ -22,14 +21,6 @@ import i18n from '../i18n/i18n';
 
 
 import themes from '../styleTheme';
-
-const FavoriteStack = createStackNavigator({
-  Favorite: FavoriteScreen,
-});
-
-
-
-
 
 export const MainNavigation = createBottomTabNavigator(
   {

@@ -113,11 +113,12 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.2"
+        versionCode 1
+        versionName "0.2.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        resValue "string", "build_config_package", "it.spotin"
     }
     signingConfigs {
             release {

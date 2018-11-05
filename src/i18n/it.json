@@ -15,7 +15,7 @@
     "weekEvents_plural"   : "{{count}} eventi questa settimana",
     "selectEvent"         : "Seleziona evento",
     "noCompetitions"      : "Non ci sono competizioni al momento",
-    "noEvents"            : "Non ci sono eventi al moment",
+    "noEvents"            : "Non ci sono eventi al momento",
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "Non ci sono locali che trasmettono questo evento...",
