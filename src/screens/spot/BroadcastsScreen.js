@@ -135,7 +135,7 @@ class BroadcastsScreen extends React.Component {
 
 
 
-    let date = moment(event.start_at).format('D MMMM [' + i18n.t("common.at") +'] HH:mm');
+    let date = event ? moment(event.start_at).format('D MMMM [' + i18n.t("common.at") +'] HH:mm') : "";
 
     //TODO: Fare qualcosa qui in caso di mancata posizione!
     if (!position) return null;

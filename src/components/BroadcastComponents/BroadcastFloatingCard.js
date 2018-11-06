@@ -25,7 +25,7 @@ const BroadcastFloatingCard = ({
     t
 }) => {
 
-  const { business, offer, dist, newsfeed } = broadcast;
+  const { business, offer, dist, newsfeed } = broadcast ? broadcast : {};
   let roundedDistance = Math.round(dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
@@ -55,6 +55,8 @@ const BroadcastFloatingCard = ({
       </View>);
 
   return (
+    !broadcast ?
+      null :
       <View style={styles.outerContainer} elevation={2}>
         <TouchableOpacity onPress={onPress} delayPressIn={50}>
           <ReferenceField reference="businesses" source="business" record={broadcast}>
@@ -108,7 +110,6 @@ const BroadcastFloatingCard = ({
           </ReferenceField>
         </TouchableOpacity>
       </View>
-
   );
 };
 

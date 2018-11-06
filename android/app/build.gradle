@@ -175,7 +175,6 @@ dependencies {
     implementation project(':appcenter-crashes')
     implementation project(':appcenter-analytics')
     implementation project(':appcenter')
-
     implementation project(':react-native-config')
     implementation project(':react-native-device-info')
     implementation project(':react-native-android-open-settings')
