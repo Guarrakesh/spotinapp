@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { Provider, connect } from 'react-redux';
 import { View, BackHandler } from 'react-native';
 import codePush from 'react-native-code-push';
-
+import Config from 'react-native-config';
 
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
 import { I18nextProvider, NamespacesConsumer, withNamespaces } from 'react-i18next';
@@ -14,8 +14,7 @@ import NavigationService from './navigators/NavigationService';
 import { registerResource, unregisterResource } from './actions/entities';
 
 import Notification from './components/Notification/Notification';
-
-
+import EnvironmentBar from './components/common/EnvironmentBar';
 
 import RootNavigator from './navigators/AppNavigator';
 
@@ -73,10 +72,9 @@ class ResourceInitializer extends Component {
     const { t } = this.props;
     return (
         <I18nextProvider i18n={i18n}>
-
           <View  style={{flex: 1}}>
             <Notification/>
-
+            {(["staging","development"].includes(Config.ENV)) && <EnvironmentBar env={Config.ENV}/>}
             <ReduxifiedNavigator
                 screenProps={{t}}
                 ref={navigatorRef => {

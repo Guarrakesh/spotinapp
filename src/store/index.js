@@ -22,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 //Array dei middleware da usare
 
 
-
+console.log(Config);
 export default function configureStore(initialState) {
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

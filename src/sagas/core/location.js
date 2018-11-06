@@ -2,7 +2,7 @@ import React from 'react';
 import { take, call, put, spawn, fork, select, takeEvery, cancel} from 'redux-saga/effects';
 import { channel } from 'redux-saga';
 import Geolocation from 'react-native-geolocation-service';
-import { Platform} from 'react-native';
+import { Platform } from 'react-native';
 import Permissions from 'react-native-permissions';
 
 import NavigationService from '../../navigators/NavigationService'
@@ -23,7 +23,7 @@ import { REFRESH_SCREEN } from '../../actions/integrity';
 
 
 
-const geolocationSettings = { enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 };
+const geolocationSettings = { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 };
 export const locationChannel = channel();
 let watchTask;
 let watcher;
@@ -71,12 +71,13 @@ function* watchPosition() {
         }
       }
     } catch (err) {
+      console.log(err);
       locationChannel.put({type: LOCATION_SET_ERROR, error: err });
       return;
     }
   }
 
-  if(Platform.OS === "android"){
+  if (Platform.OS === "android"){
     watcher = locationChannel.put({type: LOCATION_REQUEST});
       Geolocation.watchPosition(
         (position) => {
@@ -88,8 +89,7 @@ function* watchPosition() {
          geolocationSettings
       );
 
-  }
-  else{
+  } else {
     watcher = locationChannel.put({type: LOCATION_REQUEST});
     navigator.geolocation.watchPosition(
       position => {
@@ -107,9 +107,15 @@ function* watchPosition() {
 
 function* resetWatcher() {
   yield cancel(watchTask);
-  navigator.geolocation.stopObserving();
-  navigator.geolocation.clearWatch(watcher);
+  if (Platform.OS === "android") {
+    Geolocation.clearWatch(watcher);
+    Geolocation.stopObserving();
+  } else {
+    navigator.geolocation.stopObserving();
+    navigator.geolocation.clearWatch(watcher);
+  }
   watchTask = yield fork(watchPosition);
+
 }
 export default function* root() {
   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
