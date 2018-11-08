@@ -31,7 +31,7 @@ const Typography = ({
     variant === "display1" && { fontSize: normalize(28) },
     variant === "title" && { fontSize: normalize(22) },
     variant === "heading" && { fontSize: normalize(18)},
-    variant === "subheading" && { fontSize: normalize(16)},
+    variant === "subheading" && { fontSize: normalize(18)},
     variant === "body" && { fontSize: normalize(14)},
     variant === "caption" && { fontSize: normalize(12)},
       block && { width: '100%', paddingLeft: 16},

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { compose } from 'recompose';
 import { Provider, connect } from 'react-redux';
-import { View, BackHandler } from 'react-native';
+import { View, BackHandler, Text } from 'react-native';
 import codePush from 'react-native-code-push';
 import Config from 'react-native-config';
 
@@ -24,6 +24,9 @@ const ReduxifiedNavigator = connect(
 
 console.disableYellowBox = true;
 
+if (Text.defaultProps == null) Text.defaultProps = {};
+Text.defaultProps.allowFontScaling = false;
+Text.defaultProps.adjustsFontSizeToFit = true;
 
 class ResourceInitializer extends Component {
 
@@ -108,5 +111,5 @@ class App extends React.Component {
 }
 
 //Controllo aggiornamenti ad ogni resume dell'app
-let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_START };
 export default codePush(App);

@@ -113,6 +113,7 @@ class EditProfileScreen extends React.Component{
                     onEndEditing={() => this.handleBlur('name')}
                     block
                     autoCapitalize="none"
+                    allowFontScaling={false}
                     displayError={true}
                     errorStyle={styles.errorMessage}
                     errorMessage={<Text>{errors.name ? errors.name[0] : ""}</Text>}
@@ -133,6 +134,7 @@ class EditProfileScreen extends React.Component{
                     placeholderTextColor={themes.base.inputPlaceholderColor}
                     ref={input => this.password = input}
                     autoCapitalize="none"
+                    allowFontScaling={false}
                     displayError={true}
                     secureTextEntry={true}
                     errorMessage={<Text>{errors.password ? errors.password[0] : ""}</Text>}
@@ -149,6 +151,7 @@ class EditProfileScreen extends React.Component{
                     onEndEditing={() => this.handleBlur('passwordConfirm')}
                     ref={input => this.passwordConfirm = input}
                     autoCapitalize="none"
+                    allowFontScaling={false}
                     displayError={true}
                     secureTextEntry={true}
                     errorMessage={<Text>{errors.passwordConfirm ? errors.passwordConfirm[0]: ""}</Text>}

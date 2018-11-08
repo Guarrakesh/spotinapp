@@ -171,9 +171,9 @@ class BusinessScreen extends React.Component {
                 <AnimatedSearchBar
                   showLoading={controllerProps.isLoading}
                   onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
-                  onClear={() => this.clearFilter(controllerProps)}
+                  onClear={() => this.cleanFilter(controllerProps)}
                   value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
-
+                  allowFontScaling={false}
                   placeholder={t("home.searchBusiness")}
                 />
               </Animated.View>

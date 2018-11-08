@@ -73,13 +73,13 @@ class ReservationConfirmView extends Component {
             <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}*</Text>
             <Text style={styles.noteText}>*{t("browse.getOffer.additionalInfo")}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingTop: 16, alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
             <Button clear uppercase onPress={onCancelPress}>
               {t("browse.getOffer.cancel")}
             </Button>
 
             <Button elevation={1} onPress={onConfirmPress}
-                     uppercase clear variant="primary" round>
+                     uppercase clear variant="primary">
               {t("browse.getOffer.confirm")}
             </Button>
 

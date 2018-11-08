@@ -33,13 +33,13 @@ const ReservationView = ({reservation, onCancel, t}) => {
 
   let date = (startAt) => {
     return(
-        moment(startAt).format('dddd D MMMM')
+      moment(startAt).format('dddd D MMMM')
     )
   }
 
   let time = (startAt) => {
     return(
-        moment(startAt).format('HH:mm')
+      moment(startAt).format('HH:mm')
     )
   };
 
@@ -58,109 +58,103 @@ const ReservationView = ({reservation, onCancel, t}) => {
 
   const deletePress = () => {
     Alert.alert(
-        t("profile.bookedOffer.alertDelete.title"),
-        t("profile.bookedOffer.alertDelete.message"),
-        [
-          {text: t("common.cancel"), style: 'cancel'},
-          {text: t("profile.bookedOffer.alertDelete.delete"), onPress: () => onCancel()},
-        ],
-        { cancelable: true }
+      t("profile.bookedOffer.alertDelete.title"),
+      t("profile.bookedOffer.alertDelete.message"),
+      [
+        {text: t("common.cancel"), style: 'cancel'},
+        {text: t("profile.bookedOffer.alertDelete.delete"), onPress: () => onCancel()},
+      ],
+      { cancelable: true }
     )
   };
 
   return(
-      <View style={styles.container} elevation={2}>
-        <View style={styles.imgContainer}>
-          <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
-            { ({record: business}) =>
-                <ImageBackground
-                    source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
-                    style={styles.imgBackground}
-                >
-                  <View style={styles.businessContainer}>
-                    <Text style={styles.businessName}>{business.name}</Text>
-                    <View style={{flexDirection: 'row'}}>
-                      <View style={{flexDirection: 'column', flex: 1}}>
-                        <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
-                        <Text style={styles.businessAddress}>{business.address.street} {business.address.number}</Text>
-                        <Text style={styles.businessAddress}>{business.address.city}
-                          ({business.address.province})</Text>
-                      </View>
-                      <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        position: 'absolute',
-                        right: 8,
-                        bottom: 8
-                      }}>
-
-                      </View>
-                    </View>
+    <View style={styles.container} elevation={2}>
+      <View style={styles.imgContainer}>
+        <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
+          { ({record: business}) =>
+            <ImageBackground
+              source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+              style={styles.imgBackground}
+            >
+              <View style={styles.businessContainer}>
+                <Text style={styles.businessName}>{business.name}</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'column', flex: 1}}>
+                    <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
+                    <Text style={styles.businessAddress}>{business.address.street} {business.address.number}</Text>
+                    <Text style={styles.businessAddress}>{business.address.city}
+                      ({business.address.province})</Text>
                   </View>
-                </ImageBackground>
-            }
-          </ReferenceField>
-        </View>
-        <ReferenceField source="event" record={broadcast} resource="events" reference="events">
-          {({record: event}) =>
-              <View style={styles.eventInfoView}>
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    right: 8,
+                    bottom: 8
+                  }}>
 
-                {event.competition.competitorsHaveLogo
-                    ? <View style={styles.competitorsLogoView}>
-                  {event.competitors.map(comp => {
-                    return comp._links &&
-                        <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}}
-                                             imgSize={{width: 32, height: 32}}/>
-
-                  })}
+                  </View>
                 </View>
-                    :
-                    <View style={{marginTop: 8, marginLeft: 16}}>
-                      { <VersionedImageField source={event.competition.image_versions}
-                                             minSize={{width: 128, height: 128}}
-                                             imgSize={{width: 48, height: 48}}/>}
-                    </View>
-
-                }
-
-                <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
-                  <Text style={styles.eventNameText}>{event.name}</Text>
-                  <Text style={styles.eventDateText}>{date(event.start_at)}</Text>
-                  <Text style={styles.eventTimeText}>{time(event.start_at)}</Text>
-                </View>
-                <View style={styles.sportIconView}>
-                  <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
-                </View>
-
-
               </View>
+            </ImageBackground>
           }
         </ReferenceField>
-
-
-        {(newsfeed || newsfeed > 0) ?
-            <View style={styles.offerInfoView}>
-              <Text style={styles.offerTitleText}>{offer.title}</Text>
-              <Text style={styles.offerDescriptionText}>{offer.description}</Text>
-            </View> : null
-        }
-        <View style={styles.offerReservationView}>
-          <View style={styles.offerContainer}>
-            <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
-          </View>
-
-          <View style={styles.reservedView}>
-
-            <Button
-                clear
-                variant="danger"
-                uppercase
-                onPress={() => deletePress()}
-            >{t("profile.bookedOffer.delete")}</Button>
-          </View>
-
-        </View>
       </View>
+      <ReferenceField source="event" record={broadcast} resource="events" reference="events">
+        {({record: event}) =>
+          <View style={styles.eventInfoView}>
+
+            {event.competition.competitorsHaveLogo
+              ? <View style={styles.competitorsLogoView}>
+                {event.competitors.map(comp => {
+                  return comp._links &&
+                    <VersionedImageField source={comp._links.image_versions} minSize={{width: 62, height: 62}}
+                                         imgSize={{width: 32, height: 32}}/>
+
+                })}
+              </View>
+              :
+              <View style={{marginTop: 8, marginLeft: 16}}>
+                { <VersionedImageField source={event.competition.image_versions}
+                                       minSize={{width: 128, height: 128}}
+                                       imgSize={{width: 48, height: 48}}/>}
+              </View>
+
+            }
+
+            <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+              <Text style={styles.eventNameText}>{event.name}</Text>
+              <Text style={styles.eventDateText}>{date(event.start_at)}</Text>
+              <Text style={styles.eventTimeText}>{time(event.start_at)}</Text>
+            </View>
+            <View style={styles.sportIconView}>
+              <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+            </View>
+
+
+          </View>
+        }
+      </ReferenceField>
+
+
+      {(newsfeed || newsfeed > 0) ?
+        <View style={styles.offerInfoView}>
+          <Text style={styles.offerTitleText}>{offer.title}</Text>
+          <Text style={styles.offerDescriptionText}>{offer.description}</Text>
+        </View> : null
+      }
+      <View style={styles.offerReservationView}>
+        <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
+        <Button
+          clear
+          variant="danger"
+          uppercase
+          style={{marginTop: 8, marginLeft: 8}}
+          onPress={() => deletePress()}
+        >{t("profile.bookedOffer.delete")}</Button>
+      </View>
+    </View>
   )
 
 
@@ -274,7 +268,7 @@ const styles = StyleSheet.create({
   },
   offerReservationView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     margin: 16
   },
@@ -287,6 +281,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
     color: themes.base.colors.danger.default,
+    alignSelf: 'center'
   },
   reservedView: {
     flexDirection: 'row',

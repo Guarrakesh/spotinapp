@@ -1,5 +1,5 @@
-import { AppState } from 'react-native';
-
+import { AppState, Platform } from 'react-native';
+import CodePush from 'react-native-code-push';
 import { FOREGROUND, BACKGROUND, INACTIVE } from '../actions/appstate';
 
 export default () => (createStore) => (...args) => {
@@ -8,6 +8,14 @@ export default () => (createStore) => (...args) => {
   let currentState = "";
 
   const  handleAppStateChange = (nextAppState) => {
+
+    //currentState = "inactive";
+
+    if(Platform.OS === "android" && currentState === "inactive" && nextAppState === "active"){
+      console.log("Da inactive ad active");
+      CodePush.restartApp();
+    }
+
     if (currentState !== nextAppState) {
       let type;
       if (nextAppState === 'active') {

@@ -129,6 +129,7 @@ class ForgotPasswordScreen extends React.Component {
                   block
                   value={email}
                   inputOuterContainer={{marginTop: 16, marginBottom: 8}}
+                  allowFontScaling={false}
                   autoCapitalize="none"
                   shake={!!errors.email}
                   onChangeText={(email) => this.setState({email})}

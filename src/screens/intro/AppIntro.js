@@ -69,8 +69,8 @@ class AppIntro extends React.Component {
       >
         <Image source={props.image} style={props.imageStyle}/>
         <View level={200}>
-          <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.text}>{props.text}</Text>
+          <Text style={styles.title} allowFontScaling={false}>{props.title}</Text>
+          <Text style={styles.text} allowFontScaling={false}>{props.text}</Text>
         </View>
       </ImageBackground>
     </View>
@@ -79,7 +79,6 @@ class AppIntro extends React.Component {
   render() {
     return (
       <AppIntroSlider
-
         slides={slides({t: this.props.t})}
         onDone={this.props.navigation.state.params.onGetStarted}
         renderItem={this._renderItem}
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginTop: 112,
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
   },
   title: {
     fontSize: 30,
@@ -141,7 +140,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: themes.base.colors.accent.default,
     fontFamily: themes.base.fonts.LatoBold,
-    fontSize: 18
+    fontSize: 18,
+    alignSelf: 'center'
   }
 });
 

@@ -182,10 +182,10 @@ class BroadcastsScreen extends React.Component {
                         style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
                     />}
           </ListController>
-          <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}]}]}>
-            <Animated.Text style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
-            <Text style={styles.eventName}>{event.name}</Text>
-            <Animated.Text style={styles.date}>{date}</Animated.Text>
+          <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}], flexWrap: 'wrap'}]}>
+            <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+            <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.eventName}>{event.name}</Text>
+            <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.date}>{date}</Animated.Text>
           </Animated.View>
         </View>
     )

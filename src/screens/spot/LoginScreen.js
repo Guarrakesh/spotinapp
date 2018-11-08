@@ -108,7 +108,7 @@ class LoginScreen extends React.Component {
                 barStyle="dark-content"
             />
             <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
-            <Text style={styles.title}>{t("auth.login.title").toUpperCase()}</Text>
+            <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
 
             <ImageBackground source={BackgroundPattern} style={{
             height: '100%',
@@ -128,6 +128,7 @@ class LoginScreen extends React.Component {
                     inputContainerStyle={{borderBottomWidth: 0}}
                     inputStyle={styles.textInputStyle}
                     autoCapitalize="none"
+                    allowFontScaling={false}
                     errorMessage={emailError}
                     displayError={true}
                     errorStyle={styles.errorMessage}
@@ -149,6 +150,7 @@ class LoginScreen extends React.Component {
                     leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
                     inputContainerStyle={{borderBottomWidth: 0}}
                     inputStyle={styles.textInputStyle}
+                    allowFontScaling={false}
                     //errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
                     shake={errorMessage !== null }
                     onChangeText={(text) => this.setState({password: text})}
