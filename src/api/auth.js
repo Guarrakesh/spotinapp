@@ -171,28 +171,31 @@ const auth = {
           ).catch(e => reject(e));
     });
   },
-  async refresh(username, token) {
+  refresh(username, token) {
+    return new Promise((resolve, reject) => {
+      const config = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username, refreshToken: token })
+      };
+      try {
 
-    const config = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: username, refreshToken: token })
-    };
-    try {
+        fetch(`${vars.apiUrl}/auth/refresh-token`, config)
+            .then(response => response.json().then(data => {
 
-      let response = await fetch(`${vars.apiUrl}/auth/refresh-token`, config);
-      let data = await response.json();
+                  if (response.status < 200 || response.status >= 300) {
+                    return reject({status: response.status, message: data.message});
+                  }
+                  auth.setAuthToken(data).then(() => resolve(data));
 
-      if (response.status < 200 || response.status >= 300) {
-        return await Promise.reject({status: response.status, message: data.message});
+                })
+            );
+      } catch (err) {
+        reject(err);
       }
-      await auth.setAuthToken(data);
+    });
 
-      return data;
-    } catch (err) {
 
-      throw new Error(err);
-    }
   },
   async loggedIn() {
     let token = await AsyncStorage.getItem('token');

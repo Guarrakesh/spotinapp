@@ -13,7 +13,10 @@ export default class Button extends React.Component {
   render() {
 
     const { clear, variant, round, buttonStyle, titleStyle, uppercase, children
-        , loadingProps, loadingStyle, block, containerStyle, elevation, titleProps,...props} = this.props;
+        , loadingProps, loadingStyle, block, containerStyle, elevation, titleProps,
+        icon,
+
+        ...props} = this.props;
 
     //TODO tutta la roba dell'ombra e dei ripple
 
@@ -29,6 +32,7 @@ export default class Button extends React.Component {
 
       round || clear ? styles.round : {},
       block ? { width: '100%' } : { width: 150 },
+
       !clear && { elevation, ...themes.base.elevations[`depth${elevation}`] },
 
       styles.container,
@@ -55,6 +59,7 @@ export default class Button extends React.Component {
               ...titleProps
             }}
             titleStyle={_titleBaseStyle}
+            icon={icon}
             title={typeof children === "string"  && uppercase ? children.toUpperCase() : children}
             loadingStyle={[{fontSize: styles.titleBase.fontSize, padding: 8}, loadingStyle]}
             loadingProps={_loadingProps}
@@ -69,6 +74,8 @@ export default class Button extends React.Component {
 Button.defaultProps = {
   variant: 'default',
   elevation: 1,
+  children: null,
+
 };
 Button.propTypes = {
   block: PropTypes.bool,
@@ -77,6 +84,7 @@ Button.propTypes = {
   uppercase: PropTypes.bool,
   variant: PropTypes.string,
   clear: PropTypes.bool,
+  icon: PropTypes.element,
 };
 
 const styles = StyleSheet.create({
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 8,
   },
+
   base: {
     width: '100%',
     fontFamily: 'Lato-Medium',

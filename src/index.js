@@ -2,23 +2,37 @@ import React, {Component} from 'react';
 import { compose } from 'recompose';
 import { Provider, connect } from 'react-redux';
 import { View, BackHandler, Text } from 'react-native';
+/* CodePush */
 import codePush from 'react-native-code-push';
+/* RN Config */
 import Config from 'react-native-config';
+/* Redux Persist */
 
+//import { PersistGate } from "redux-persist/lib/integration/react";
+
+
+/* React Navigation with Redux */
 import { reduxifyNavigator, createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers';
+
+/* Internationalization */
 import { I18nextProvider, NamespacesConsumer, withNamespaces } from 'react-i18next';
 import i18n from './i18n/i18n'
-import configureStore from './store';
 
+/* Store, navigation and actions */
+import createStore from './store';
 import NavigationService from './navigators/NavigationService';
 import { registerResource, unregisterResource } from './actions/entities';
 
+/* Root components */
 import Notification from './components/Notification/Notification';
 import EnvironmentBar from './components/common/EnvironmentBar';
-
+/* Navigators */
 import RootNavigator from './navigators/AppNavigator';
 
-const store = configureStore();
+/* Redux Store */
+const { store, persistor } = createStore();
+
+
 const ReduxifiedNavigator = connect(
     (state, props) => ({state: state.navigation}))(reduxifyNavigator(RootNavigator, "root"));
 
@@ -104,7 +118,9 @@ class App extends React.Component {
 
     return (
         <Provider store={store}>
-          <ConnectedResourceInit/>
+
+            <ConnectedResourceInit/>
+
         </Provider>
     );
   }

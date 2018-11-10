@@ -56,7 +56,20 @@ export const addRecordsFactory = getFetchedAt => (
     return records;
 };
 
-const addRecords = addRecordsFactory(getFetchedAt);
+//const addRecords = addRecordsFactory(getFetchedAt);
+
+//Disabilitato caching dei record per evitare problemi di stato corrotto durante la navigazione
+const addRecords = (newRecords = [], oldRecords) => {
+    const newRecordsById = newRecords.reduce(
+        (acc, record) => ({
+            ...acc,
+            [record.id]: record
+        })
+    , {});
+    const records = { ...oldRecords, ...newRecordsById };
+
+    return records;
+};
 
 const initialState = {};
 Object.defineProperty(initialState, 'fetchedAt', { value: {} }); // non enumerable by default

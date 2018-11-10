@@ -4,6 +4,8 @@ import { take, put, call, fork, race } from 'redux-saga/effects';
 import NavigationService from '../navigators/NavigationService';
 import { delay } from 'redux-saga';
 
+import { AppEventsLogger } from 'react-native-fbsdk';
+
 import { wait } from './core/helpers';
 import {
     LOGIN,
@@ -22,6 +24,7 @@ import {
 } from '../actions';
 import auth from '../api/auth';
 import { PROFILE_GET_INFO_SUCCESS } from '../actions/profile';
+
 
 
 /**
