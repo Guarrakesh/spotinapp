@@ -54,9 +54,9 @@ const CompetitionList = ({
     return (
       <View style={styles.noContentView}>
         <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>
-        <Text style={styles.noContentText}>
+        <Typography style={styles.noContentText}>
           {t("browse.noCompetitions")}
-        </Text>
+        </Typography>
       </View>
     )
   }

@@ -263,7 +263,7 @@ const mapStateToProps = (state) => {
   return {
     latitude, longitude, userId, isLoading
   }
-}
+};
 
 const styles = StyleSheet.create({
 
