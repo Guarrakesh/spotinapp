@@ -172,6 +172,8 @@ android {
 }
 
 dependencies {
+    implementation project(':appcenter-push')
+    implementation project(':react-native-push-notification')
     implementation project(':appcenter-crashes')
     implementation project(':appcenter-analytics')
     implementation project(':appcenter')
@@ -190,6 +192,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-base:+"
     implementation project(':react-native-android-location-enabler')
     implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
 
 }
 
@@ -199,3 +202,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

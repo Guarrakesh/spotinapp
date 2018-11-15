@@ -40,8 +40,8 @@ class BusinessProfileScreen extends React.Component {
       /* headerTransparent: false
 
        headerStyle: {
-       shadowColor: 'transparent',
-       borderBottomWidth: 1,
+         shadowColor: 'transparent',
+         borderBottomWidth: 1,
 
        },*/
       headerStyle: {
@@ -155,15 +155,15 @@ class BusinessProfileScreen extends React.Component {
                             reservedBroadcasts={this.state.reservedBroadcasts}
                             onReservePress={this.handleReservePress.bind(this)}/>}
 
-                      </ReferenceManyFieldController>
+                  </ReferenceManyFieldController>
 
-                    </View>
-                  </Animated.ScrollView>
                 </View>
+              </Animated.ScrollView>
+            </View>
 
-            )}
-          }
-        </ShowController>
+          )}
+        }
+      </ShowController>
     );
   }
 

@@ -183,8 +183,15 @@
       "continue": "Next",
       "start": "Get started"
     }
-  }
+  },
 
+
+  "pushNotification": {
+    "favorite": {
+      "title": "will start in 6 hours!",
+      "message": "Find the right place for you to watch the event!"
+    }
+  }
 
 
 }

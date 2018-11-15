@@ -7,7 +7,7 @@ export default () => (createStore) => (...args) => {
 
   let currentState = "";
 
-  const  handleAppStateChange = (nextAppState) => {
+  const handleAppStateChange = (nextAppState) => {
 
     //currentState = "inactive";
 

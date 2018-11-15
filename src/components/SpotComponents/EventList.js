@@ -97,7 +97,7 @@ class EventList extends React.Component {
             renderItem={({item}) => <EventCard
                 key={data[item]._id}
                 onPress={ ()=> onItemPress(item, data[item])}
-                onFavoritePress={ () => !data[item].isUserFavorite && onFavoritePress(item)}
+                onFavoritePress={ () => onFavoritePress(item, data[item])}
                 {...data[item]}/>}
             contentContainerStyle={styles.container}
             onEndReached={this.loadMore.bind(this)}
