@@ -7,14 +7,10 @@ import { withNamespaces, Trans } from 'react-i18next';
 
 import { Button, Typography } from '../../components/common';
 import themes from "../../styleTheme";
-import {Fonts} from "../../components/common/Fonts";
 import Icon from 'react-native-vector-icons/Feather';
-import ActionButton from 'react-native-action-button';
-
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const colors = themes.base.colors;
-
+const Fonts = themes.base.fonts;
 class BroadcastsList extends React.Component {
 
   _keyExtractor = (item) => item._id;
@@ -22,6 +18,7 @@ class BroadcastsList extends React.Component {
   _onItemPress = (id, businessId, distance) => {
     this.props.onItemPress(id, businessId, distance);
   };
+
 
   render(){
 
@@ -67,19 +64,16 @@ class BroadcastsList extends React.Component {
 
               contentContainerStyle={[styles.container, style]}
           />
-
-          <ActionButton
-              active={ids.length !== 0}
-              fixNativeFeedbackRadius={true}
-              title=''
-              position={"right"}
-              buttonColor={themes.base.colors.accent.default}
-              size={52}
-              offsetY={32}
-              degrees={0}
+          <Button
+              disabled={isLoading}
               onPress={() => onMapPress({data, ids})}
-              renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
-          />
+              variant="primary"
+              containerStyle={styles.mapButton}
+              titleStyle={{fontSize: 24}}
+          >
+            <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+          </Button>
+
         </View>
 
     );
@@ -132,6 +126,15 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.LatoBold,
     fontSize: 18,
     color: colors.accent.default
+  },
+  mapButton: {
+    position: 'absolute',
+    width: 54,
+    height: 54,
+    right: 32,
+    bottom: 16,
+    borderRadius: 32,
+    justifyContent: 'center',
   }
 });
 

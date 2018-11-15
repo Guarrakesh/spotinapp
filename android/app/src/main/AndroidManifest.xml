@@ -13,6 +13,7 @@
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
       android:name="it.spotin.MainApplication"

@@ -58,7 +58,7 @@ class BroadcastsScreen extends React.Component {
         backgroundColor: themes.base.colors.primary.default
       },
     }
-  }
+  };
 
   componentDidMount() {
     this.state.scrollAnim.addListener(this._handleScroll);

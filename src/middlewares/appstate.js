@@ -12,7 +12,7 @@ export default () => (createStore) => (...args) => {
     //currentState = "inactive";
 
     if(Platform.OS === "android" && currentState === "inactive" && nextAppState === "active"){
-      console.log("Da inactive ad active");
+
       CodePush.restartApp();
     }
 

@@ -54,7 +54,9 @@ class BusinessProfileScreen extends React.Component {
       headerBackTitle: null
 
     }
-  }
+  };
+
+
 
   handleReservePress(broadcast) {
     InteractionManager.runAfterInteractions(() => {
@@ -105,53 +107,53 @@ class BusinessProfileScreen extends React.Component {
     const {businessId, distance} = this.props.navigation.state.params;
 
     return (
-      <ShowController resource="businesses"
-                      id={businessId}
-                      navigation={this.props.navigation}
-                      navigationTitle={(record) => record.name}
-                      basePath="/businesses">
-        { ({record, isLoading}) => {
+        <ShowController resource="businesses"
+                        id={businessId}
+                        navigation={this.props.navigation}
+                        navigationTitle={(record) => record.name}
+                        basePath="/businesses">
+          { ({record, isLoading}) => {
 
-          if (isLoading || !record) return null;
+            if (isLoading || !record) return null;
 
 
-          return (
-            <View style={styles.scrollView}
-                  contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
+            return (
+                <View style={styles.scrollView}
+                      contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
 
-              <Animated.ScrollView
-                //  onScroll={this.handleScroll.bind(this)}
-                scrollEventThrottle={16}
-                bounces={false}
-                style={styles.generalContainer}>
-                <ImagesScrollView business={record}/>
+                  <Animated.ScrollView
+                      //  onScroll={this.handleScroll.bind(this)}
+                      scrollEventThrottle={16}
+                      bounces={false}
+                      style={styles.generalContainer}>
+                    <ImagesScrollView business={record}/>
 
-                <View style={styles.cardContainer}>
-                  { record && <BusinessInfoCard distance={distance} business={record}/>}
-                  <Modal
-                    animationIn={'slideInUp'}
-                    animationOut="slideOutDown"
-                    isVisible={this.state.modalVisible}
+                    <View style={styles.cardContainer}>
+                      { record && <BusinessInfoCard distance={distance} business={record}/>}
+                      <Modal
+                          animationIn={'slideInUp'}
+                          animationOut="slideOutDown"
+                          isVisible={this.state.modalVisible}
 
-                  >
-                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                              onCancelPress={this.handleModalDismiss.bind(this)}
+                      >
+                        <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                                  onCancelPress={this.handleModalDismiss.bind(this)}
 
-                                              data={this.state.modalData}/>
-                  </Modal>
-                  <ReferenceManyFieldController
-                    resource="broadcasts"
-                    reference="broadcasts"
-                    target="business"
-                    source="id"
-                    sort={{field: "broadcast.event.start_at.getTime()"}}
-                    record={record}
-                  >
-                    {controllerProps => <BroadcastInProfileList
-                      {...controllerProps}
-
-                      reservedBroadcasts={this.state.reservedBroadcasts}
-                      onReservePress={this.handleReservePress.bind(this)}/>}
+                                                  data={this.state.modalData}/>
+                      </Modal>
+                      <ReferenceManyFieldController
+                          resource="broadcasts"
+                          reference="broadcasts"
+                          target="business"
+                          source="id"
+                          sort={{field: "broadcast.event.start_at"}}
+                          record={record}
+                      >
+                        {controllerProps => <BroadcastInProfileList
+                            {...controllerProps}
+                            selectedBroadcast={this.props.navigation.state.params.broadcastId}
+                            reservedBroadcasts={this.state.reservedBroadcasts}
+                            onReservePress={this.handleReservePress.bind(this)}/>}
 
                   </ReferenceManyFieldController>
 

@@ -25,7 +25,8 @@ const BroadcastFloatingCard = ({
     t
 }) => {
 
-  const { business, offer, dist, newsfeed } = broadcast ? broadcast : {};
+  if (!broadcast) return null;
+  const { business, offer, dist, newsfeed } = broadcast;
   let roundedDistance = Math.round(dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
