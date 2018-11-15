@@ -1,8 +1,9 @@
 import React from 'react';
+import PushNotification from 'react-native-push-notification';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 import View from '../../components/common/View';
-import {ScrollView, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import {ScrollView, Text, StyleSheet, ActivityIndicator, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { userLogout, userCheck } from '../../actions/authActions';
@@ -14,6 +15,7 @@ import ReservationsCarousel from '../../components/ProfileComponents/Reservation
 import SavedEventsList from '../../components/ProfileComponents/SavedEventsList';
 import { connect } from 'react-redux';
 import themes from "../../styleTheme";
+import i18n from "../../i18n/i18n";
 
 class ProfileScreen extends React.Component {
 
@@ -46,7 +48,6 @@ class ProfileScreen extends React.Component {
       )
     }
   }
-
 
   checkAuthentication() {
 

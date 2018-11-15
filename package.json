@@ -15,11 +15,9 @@
     "android-dev": "ENVFILE=.env.dev react-native run-android",
     "android-staging": "ENVFILE=.env.staging react-native run-android",
     "android-prod": "ENVFILE=.env.prod react-native run-android",
-
     "ios-dev": "ENVFILE=.env.dev react-native run-ios --scheme 'Spotin Dev'",
     "ios-staging": "ENVFILE=.env.staging react-native run-ios --scheme 'Spotin Staging'",
     "ios-prod": "ENVFILE=.env.prod react-native run-ios --scheme 'Spotin Prod'",
-
     "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
     "build-android-staging": "export ENVFILE=.env.staging && cd android && ./gradlew assembleReleaseStaging && cd .."
   },
@@ -28,6 +26,7 @@
     "appcenter": "^1.9.0",
     "appcenter-analytics": "^1.9.0",
     "appcenter-crashes": "^1.9.0",
+    "appcenter-push": "^1.9.0",
     "babel-jest": "^23.2.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
@@ -60,6 +59,7 @@
     "react-native-modal": "^6.5.0",
     "react-native-permissions": "^1.1.1",
     "react-native-phone-call": "^1.0.8",
+    "react-native-push-notification": "^3.1.2",
     "react-native-snap-carousel": "^3.7.4",
     "react-native-svg": "^7.0.3",
     "react-native-swiper": "^1.5.13",

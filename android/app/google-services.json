@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1078560422223",
+    "firebase_url": "https://spot-debug.firebaseio.com",
+    "project_id": "spot-debug",
+    "storage_bucket": "spot-debug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078560422223:android:2ed91ff13ce3e3b7",
+        "android_client_info": {
+          "package_name": "it.spotin.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078560422223-um0kjf338hj6bsvb2srr2kelpuou7j2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVA7B6C8aVWypOpYYJxxwDy6EOQvnJi5c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

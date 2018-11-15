@@ -185,5 +185,13 @@
       "continue": "Continua",
       "start": "Inizia"
     }
+  },
+
+
+  "pushNotification": {
+    "favorite": {
+      "title": "inizierà tra 6 ore!",
+      "message": "Trova il locale più adatto a te dove seguire l'evento!"
+    }
   }
 }

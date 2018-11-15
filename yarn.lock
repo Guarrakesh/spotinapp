@@ -688,6 +688,12 @@ appcenter-link-scripts@1.9.0:
     which "^1.2.11"
     xcode "^1.0.0"
 
+appcenter-push@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/appcenter-push/-/appcenter-push-1.9.0.tgz#0cf76fcb757e2d7a8c22868e77d94652b7c9f8e7"
+  dependencies:
+    appcenter "1.9.0"
+
 appcenter@1.9.0, appcenter@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.9.0.tgz#00ee98256bf6167c62e1ed2c35a59b448affb963"
@@ -5228,6 +5234,10 @@ react-native-permissions@^1.1.1:
 react-native-phone-call@^1.0.8:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.9.tgz#4468ec6f95856557fbff9bd69a0db04b54c35e1d"
+
+react-native-push-notification@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.2.tgz#a6129fb2897773a19c7b42bba1b51a9a4aac7df3"
 
 react-native-safe-area-view@0.11.0:
   version "0.11.0"

@@ -180,6 +180,7 @@ class BusinessScreen extends React.Component {
               <AnimatedBusinessList
                 searchActive={controllerProps.filterValues.q !== undefined }
                 style={{
+                  marginBottom: this.state.searchBar.open ? 50 : 0, //altrimenti l'ultimo locale della ricerca viene nascosto dalla tab
                   transform: [{
                     translateY: this.state._searchBarY.interpolate({
                       inputRange: [0,1],

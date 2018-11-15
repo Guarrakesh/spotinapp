@@ -144,7 +144,7 @@ class BusinessProfileScreen extends React.Component {
                     reference="broadcasts"
                     target="business"
                     source="id"
-                    sort={{field: "broadcast.event.start_at"}}
+                    sort={{field: "broadcast.event.start_at.getTime()"}}
                     record={record}
                   >
                     {controllerProps => <BroadcastInProfileList
