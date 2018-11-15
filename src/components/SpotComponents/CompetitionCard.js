@@ -39,9 +39,9 @@ const CompetitionCard = (props) => {
           <View style={styles.info}>
             <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
             <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
-            { week_events && week_events.length > 0 && <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
-              {t('browse.weekEvents', { count: week_events.length})}
-            </Text> }
+            <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
+              {week_events && week_events.length > 0 ?  t('browse.weekEvents', { count: week_events.length}) : ""}
+             </Text>
           </View>
           <View style={styles.arrowIconView}>
             <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
