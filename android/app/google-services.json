@@ -1,27 +1,89 @@
 {
   "project_info": {
-    "project_number": "1078560422223",
-    "firebase_url": "https://spot-debug.firebaseio.com",
-    "project_id": "spot-debug",
-    "storage_bucket": "spot-debug.appspot.com"
+    "project_number": "831043503827",
+    "firebase_url": "https://spotin-167c8.firebaseio.com",
+    "project_id": "spotin-167c8",
+    "storage_bucket": "spotin-167c8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1078560422223:android:2ed91ff13ce3e3b7",
+        "mobilesdk_app_id": "1:831043503827:android:7674027153f68a5c",
+        "android_client_info": {
+          "package_name": "it.spotin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831043503827-8lk6ii3oqm1f4dmej447fbtfkg14nja6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmJtIr63KUGoJEirWiouOBEkfX7xkKNKU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831043503827:android:7674027153f68a5c",
+        "android_client_info": {
+          "package_name": "it.spotin.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831043503827-8lk6ii3oqm1f4dmej447fbtfkg14nja6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmJtIr63KUGoJEirWiouOBEkfX7xkKNKU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831043503827:android:7674027153f68a5c",
         "android_client_info": {
           "package_name": "it.spotin.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1078560422223-um0kjf338hj6bsvb2srr2kelpuou7j2u.apps.googleusercontent.com",
+          "client_id": "831043503827-8lk6ii3oqm1f4dmej447fbtfkg14nja6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBVA7B6C8aVWypOpYYJxxwDy6EOQvnJi5c"
+          "current_key": "AIzaSyDmJtIr63KUGoJEirWiouOBEkfX7xkKNKU"
         }
       ],
       "services": {
