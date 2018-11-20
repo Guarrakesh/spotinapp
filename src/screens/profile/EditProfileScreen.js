@@ -43,7 +43,7 @@ class EditProfileScreen extends React.Component{
 
   handleEditPhotoPress = () => {
     //cambio immagine del profilo, valutare react-native-image-picker
-    console.log('CAMBIO IMMAGINE');
+    //TODO:
   };
   handleBlur(inputName) {
     //Sull' endEditing (blur) convalido il singolo input ed eventualmente mostro l'errore
@@ -120,7 +120,7 @@ class EditProfileScreen extends React.Component{
                     shake={true}
                     numberOfLines = {1}
                     onChangeText={(text) => this.handleInputChange("name", text)}
-                    onSubmitEditing={() => { console.log(this);this.password.focus() }}
+                    onSubmitEditing={() => this.password.focus() }
                 />
 
 

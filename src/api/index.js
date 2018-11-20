@@ -17,7 +17,6 @@ export async function request(url, payload, method: 'GET', accessToken = null) {
     if (method ==! 'HEAD' && method ==! 'GET') {
         config.body = payload;
     }
-    console.log(payload);
 
 
     let response = await fetch(url, config);

@@ -37,7 +37,6 @@ class EventScreen extends React.Component {
 
     //Notifica 6 ore prima dell'evento
     this.createPushNotification(eventObj);
-
   }
 
   createPushNotification(event) {
@@ -46,9 +45,6 @@ class EventScreen extends React.Component {
     const eventTimestamp = eventDate.getTime();
     const eventNotification = new Date(eventTimestamp - (6 * 3600000)); //6 ore prima dell'evento
 
-    console.log("Data evento", eventDate);
-    console.log("Data notifica", eventNotification);
-    console.log("CreatePushNotification", event.name);
 
     //Setto il canale
     const channel = new firebase.notifications.Android.Channel(
@@ -63,7 +59,6 @@ class EventScreen extends React.Component {
     // Creo Notification Listener
     firebase.notifications().onNotification((notification: Notification) => {
       // Process your notification as required
-      console.log("NOTIFICATION:", notification);
       notification
         .android.setChannelId('favorite_events_notification')
         .android.setSmallIcon('ic_launcher'); //TODO: icona piccola da settare

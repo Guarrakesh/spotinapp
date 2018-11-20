@@ -50,6 +50,7 @@
 		6AC9D5102A0F46AE94351753 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5ADDBB079244BB3923C89F1 /* Lato-Light.ttf */; };
 		6D86022AF1F94C3BA27F7BD4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41A062B539054070857540F3 /* Ionicons.ttf */; };
 		7DF496E1D5654D3F8E385227 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1D08CB8CD748289F171C49 /* Lato-LightItalic.ttf */; };
+		810631B621A4D0C8004B355B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8106318721A4D0C8004B355B /* GoogleService-Info.plist */; };
 		81759F9421807804002650B7 /* spotinappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759F9321807804002650B7 /* spotinappUITests.swift */; };
 		81759FC22180784D002650B7 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759FC12180784D002650B7 /* SnapshotHelper.swift */; };
 		818D20F4218D1EDD009D2B70 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 818D20F3218D1EC5009D2B70 /* libReactNativeConfig.a */; };
@@ -80,7 +81,6 @@
 		B205B31C17574F1F8E346A5C /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EC9D668B34709AF81A225 /* Lato-ThinItalic.ttf */; };
 		BEF5C31FFB5340869598E8D5 /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC1DE8993C144FC088100073 /* Lato-HeavyItalic.ttf */; };
 		C4E3FD24219604E30076C942 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E3FD212196046D0076C942 /* libRCTPushNotification.a */; };
-		C4FDE5FB21A329D9005A3D04 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4FDE5FA21A329D9005A3D04 /* GoogleService-Info.plist */; };
 		C83FB50239664434AC1DBCD2 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 771B69A9E3CF4A3181612257 /* Lato-SemiboldItalic.ttf */; };
 		C9AB8C2A229C427BA9BA3009 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65620899A51A438C9C2828C1 /* libAppCenterReactNativeCrashes.a */; };
 		D0A612611A104119BA768A14 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F443DD82CFAD409690F6D556 /* MaterialCommunityIcons.ttf */; };
@@ -489,6 +489,7 @@
 		7B5AA557D0F64421A4031878 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		7CF843824AA14934B49415A7 /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNativeAnalytics.xcodeproj; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		80AC4209A7C2456E807E84A3 /* Lato-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Italic.ttf"; path = "../src/assets/fonts/Lato-Italic.ttf"; sourceTree = "<group>"; };
+		8106318721A4D0C8004B355B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81759F9121807804002650B7 /* spotinappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spotinappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81759F9321807804002650B7 /* spotinappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spotinappUITests.swift; sourceTree = "<group>"; };
 		81759F9521807804002650B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -870,6 +871,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8106318721A4D0C8004B355B /* GoogleService-Info.plist */,
 				81A11DB321502C4B006E574D /* Lato-Bold.ttf */,
 				81C46960210F31C6007DD095 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* spotinapp */,
@@ -1563,6 +1565,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				81C46999210F31C6007DD095 /* EvilIcons.ttf in Resources */,
+				810631B621A4D0C8004B355B /* GoogleService-Info.plist in Resources */,
 				81C46995210F31C6007DD095 /* Foundation.ttf in Resources */,
 				81C46998210F31C6007DD095 /* Zocial.ttf in Resources */,
 				81C4699B210F31C6007DD095 /* MaterialIcons.ttf in Resources */,
@@ -1602,7 +1605,6 @@
 				A2E4B6FBA6A6486388E8A81C /* Lato-Semibold.ttf in Resources */,
 				C83FB50239664434AC1DBCD2 /* Lato-SemiboldItalic.ttf in Resources */,
 				B008E7D97DD2411CA3F7E4E0 /* Lato-Thin.ttf in Resources */,
-				C4FDE5FB21A329D9005A3D04 /* GoogleService-Info.plist in Resources */,
 				B205B31C17574F1F8E346A5C /* Lato-ThinItalic.ttf in Resources */,
 				33D1B26A4CF44B89B181B6DB /* AppCenter-Config.plist in Resources */,
 			);
