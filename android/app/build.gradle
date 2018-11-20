@@ -172,6 +172,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
     implementation project(':appcenter-push')
     implementation project(':react-native-push-notification')
     implementation project(':appcenter-crashes')
@@ -193,6 +194,8 @@ dependencies {
     implementation project(':react-native-android-location-enabler')
     implementation 'com.facebook.android:facebook-login:[4,5)'
     implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation "com.google.firebase:firebase-messaging:16.0.1"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
 
 }
 

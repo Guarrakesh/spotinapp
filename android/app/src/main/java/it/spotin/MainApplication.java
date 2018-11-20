@@ -3,7 +3,10 @@ package it.spotin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -58,7 +61,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-
+            new RNFirebasePackage(),
+            new RNFirebaseMessagingPackage(),
+            new RNFirebaseNotificationsPackage(),
             new AppCenterReactNativePushPackage(MainApplication.this),
             new ReactNativePushNotificationPackage(),
             new ReactNativeConfigPackage(),
@@ -85,6 +90,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public ReactNativeHost getReactNativeHost() {
+
     return mReactNativeHost;
   }
 

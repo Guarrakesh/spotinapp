@@ -53,6 +53,7 @@
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^1.0.0-beta6",
     "react-native-fbsdk": "^0.8.0",
+    "react-native-firebase": "^5.1.0",
     "react-native-geolocation-service": "^1.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.3",
     "react-native-maps": "^0.21.0",

@@ -15,6 +15,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTPushNotificationManager.h>
+#import <Firebase.h>
+#import "RNFirebaseNotifications.h"
 @import GoogleMaps;
 
 @implementation AppDelegate
@@ -25,6 +27,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  [FIRApp configure];
+  [RNFirebaseNotifications configure];
+  
   NSURL *jsCodeLocation;
 
   [AppCenterReactNativePush register];  // Initialize AppCenter push
@@ -57,6 +63,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   return YES;
 }
 
@@ -93,7 +100,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-  [RCTPushNotificationManager didReceiveLocalNotification:notification];
+  [[RNFirebaseNotifications instance] didReceiveLocalNotification:notification];
 }
 
 @end
