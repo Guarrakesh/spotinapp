@@ -31,21 +31,14 @@ target 'spotinapp' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-
-
-
-
-
-
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
-
-
-
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
 
 end

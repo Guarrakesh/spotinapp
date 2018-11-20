@@ -37,6 +37,7 @@ import RootNavigator from './navigators/AppNavigator';
 
 /* Push Notification */
 import PushNotification from "react-native-push-notification";
+import themes from "./styleTheme";
 
 
 /* Redux Store */
@@ -67,13 +68,32 @@ class ResourceInitializer extends Component {
     console.log("TOKEN: ", auth.getAuthToken());
 
     /* Firebase Push Notification */
+    firebase.messaging().hasPermission()
+      .then(enabled => {
+        if (enabled) {
+          firebase.messaging().getToken().then(token => {
+            console.log("LOG: ", token);
+          })
+          // user has permissions
+        } else {
+          firebase.messaging().requestPermission()
+            .then(() => {
+              alert("User Now Has Permission")
+            })
+            .catch(error => {
+              alert("Error", error)
+              // User has rejected permissions
+            });
+        }
+      });
+
     console.log("Firebase ID: ", firebase);
     const notificationOpen: NotificationOpen = await firebase.notifications().getInitialNotification();
     if (notificationOpen) {
 
       const action = notificationOpen.action;
       const notification: Notification = notificationOpen.notification;
-      var seen = [];
+      let seen = [];
 
       alert(JSON.stringify(notification.data, function(key, val) {
         if (val != null && typeof val === "object") {
@@ -102,7 +122,11 @@ class ResourceInitializer extends Component {
       console.log("NOTIFICATION:", notification);
       notification
         .android.setChannelId('test-channel')
-        .android.setSmallIcon('ic_launcher'); //TODO: icona piccola da settare
+        .android.setSmallIcon('ic_launcher') //TODO: icona piccola da settare
+        .android.setColor(themes.base.colors.accent.default) // you can set a color here
+        .android.setPriority(firebase.notifications.Android.Priority.High);
+
+
       firebase.notifications()
         .displayNotification(notification);
 
@@ -114,66 +138,23 @@ class ResourceInitializer extends Component {
       // Get information about the notification that was opened
       const notification: Notification = notificationOpen.notification;
 
-      var seen = [];
+      let seen = [];
 
-      alert(JSON.stringify(notification.data, function(key, val) {
-        if (val != null && typeof val == "object") {
-          if (seen.indexOf(val) >= 0) {
-            return;
-          }
-          seen.push(val);
-        }
-        return val;
-      }));
+      // TODO: Azione ad apertura notifica remota
+
+      // alert(JSON.stringify(notification.data, function(key, val) {
+      //   if (val != null && typeof val === "object") {
+      //     if (seen.indexOf(val) >= 0) {
+      //       return;
+      //     }
+      //     seen.push(val);
+      //   }
+      //   return val;
+      // }));
 
       firebase.notifications().removeDeliveredNotification(notification.notificationId);
 
     });
-
-
-    //Listener notifiche locali
-    // PushNotification.configure({
-    //   onNotification: function(notification) {
-    //     console.log('NOTIFICATION: ', notification);
-    //
-    //   }
-    // })
-    //
-    // PushNotification.onNotification();
-    //
-    // //Listener notifiche remote
-    // Push.setListener({
-    //   onPushNotificationReceived: function (pushNotification) {
-    //     console.log("Notifica: ", pushNotification);
-    //
-    //     let message = pushNotification.message;
-    //     let title = pushNotification.title;
-    //
-    //     if (message === null) {
-    //       // Android messages received in the background don't include a message. On Android, that fact can be used to
-    //       // check if the message was received in the background or foreground. For iOS the message is always present.
-    //       title = 'Android background';
-    //       message = '<empty>';
-    //     }
-    //
-    //     // Custom name/value pairs set in the App Center web portal are in customProperties
-    //     if (pushNotification.customProperties && Object.keys(pushNotification.customProperties).length > 0) {
-    //       message += '\nCustom properties:\n' + JSON.stringify(pushNotification.customProperties);
-    //     }
-    //
-    //     if (AppState.currentState === 'active') {
-    //       Alert.alert(title, message);
-    //     }
-    //     else {
-    //       console.log('App inactive');
-    //       // Sometimes the push callback is received shortly before the app is fully active in the foreground.
-    //       // In this case you'll want to save off the notification info and wait until the app is fully shown
-    //       // in the foreground before displaying any UI. You could use AppState.addEventListener to be notified
-    //       // when the app is fully in the foreground.
-    //     }
-    //   }
-    // })
-
 
   }
 
