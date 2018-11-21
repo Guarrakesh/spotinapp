@@ -13,3 +13,5 @@ export const FCM_TOKEN_REFRESHED = "FCM_TOKEN_REFRESHED";
 
 // Init listeners
 export const FCM_INIT = "FCM_INIT";
+
+export const FCM_LISTEN = "FCM_LISTEN";
