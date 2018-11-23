@@ -11,5 +11,7 @@ export const FCM_INITIAL_NOTIFICATION = "FCM_INITIAL_NOTIFICATION";
 // FCM Token refreshed
 export const FCM_TOKEN_REFRESHED = "FCM_TOKEN_REFRESHED";
 
-// Init listeners
+// Init & attach listeners
 export const FCM_INIT = "FCM_INIT";
+// Detach listeners
+export const FCM_DESTROY = "FCM_DESTROY";

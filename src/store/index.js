@@ -25,7 +25,6 @@ import {
 import rootReducer from '../reducers';
 import rootSaga from '../sagas/core';
 
-import firebaseMiddleware from "../firebase/middleware";
 import appstateMiddleware from '../middlewares/appstate';
 
 
@@ -59,7 +58,6 @@ export default function configureStore(initialState) {
       initialState,
       composeEnhancers(
           appstateMiddleware(),
-          firebaseMiddleware(),
           applyMiddleware(...middleware)
           //offline(offlineConfig)
       )
