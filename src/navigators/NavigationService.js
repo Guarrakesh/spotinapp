@@ -16,19 +16,28 @@ function back() {
 }
 function navigate(routeName, params, setRoot = false) {
 
-
+  const routes = routeName.split(".");
+  const actions = routes.map(route => {
+    if (routes.indexOf(route) === (routes.length - 1)) {
+      // Se è l'ultima route del path,p asso i params
+      return NavigationActions.navigate({routeName: route, params});
+    } else {
+      return NavigationActions.navigate({routeName: route, params: {}});
+    }
+  });
+    console.log("FCM",actions);
   if (setRoot) {
     return StackActions.reset({
       index: 0,
       key: null, // @see https://github.com/react-navigation/react-navigation/issues/1127
-      actions: [NavigationActions.navigate({routeName, params})]
+      actions: actions
     });
 
   } else {
 
 
     return NavigationActions.navigate({
-      routeName,
+      routeName: routes.length === 1 ? routeName : routes[0],
       params
     })
 

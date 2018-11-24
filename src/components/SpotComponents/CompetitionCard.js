@@ -17,7 +17,7 @@ const CompetitionCard = (props) => {
       sport_id,
       name,
       country,
-      week_events,
+      weekEvents,
       image_versions,
       t
 
@@ -40,7 +40,7 @@ const CompetitionCard = (props) => {
             <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
             <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
             <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
-              {week_events && week_events.length > 0 ?  t('browse.weekEvents', { count: week_events.length}) : ""}
+              {weekEvents > 0 ?  t('browse.weekEvents', { count: weekEvents}) : ""}
              </Text>
           </View>
           <View style={styles.arrowIconView}>
