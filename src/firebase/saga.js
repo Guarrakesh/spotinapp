@@ -13,6 +13,7 @@ import {
   FCM_DESTROY,
 
 } from "./actions";
+import { RESERVE_BROADCAST_SUCCESS } from "../actions/reservation";
 import { AsyncStorage, Platform } from 'react-native';
 import firebase, { Notification, NotificatonOpen } from 'react-native-firebase';
 
@@ -93,6 +94,7 @@ function* watchfcmNotificationChannel() {
 
 function* initFcm() {
   try {
+    const token = yield call(getToken);
     let enabled = yield call(hasPermission);
     if (!enabled) {
       try {
@@ -102,6 +104,7 @@ function* initFcm() {
         enabled = true;
       } catch (error) {
         yield call(AsyncStorage.setItem, "fcmToken", "0");
+
 
         // Nient'altro da fare, l'utente ha negato il permesso
         return;
@@ -130,7 +133,7 @@ function* initFcm() {
         // "ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification"
       });
       onNotificationUnsubscribe = firebase.notifications().onNotification((notification: Notification) => {
-        console.log("FCM notification", notification);
+
         notification
             .android.setChannelId(ANDROID_MAIN_CHANNEL_ID)
             .android.setSmallIcon('ic_launcher') //TODO: icona piccola da settare

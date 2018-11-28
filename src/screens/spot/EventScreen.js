@@ -8,7 +8,7 @@ import type { Notification, NotificationOpen } from 'react-native-firebase';
 
 import EventList from '../../components/SpotComponents/EventList';
 import ListController from '../../controllers/ListController';
-import { crudCreate } from '../../actions/dataActions';
+import { addFavoriteEvent } from '../../actions/events';
 import PushNotification from "react-native-push-notification";
 import moment from "moment";
 import themes from "../../styleTheme";
@@ -32,8 +32,7 @@ class EventScreen extends React.Component {
   }
   handleEventFavoritePress(event, eventObj) {
     //Se l'utente non è loggato, rimanda alla schermata login
-    this.props
-        .crudCreate('events', { event }, `/users/${this.props.userId}`, undefined, 'profile_savedEvents_list');
+    this.props.addFavoriteEvent(event, this.props.userId, eventObj);
 
     //Notifica 6 ore prima dell'evento
     this.createPushNotification(eventObj);
@@ -129,5 +128,5 @@ export default connect(state => ({
     userId: state.auth.profile ? state.auth.profile._id : undefined
     })
 , {
-  crudCreate
+  addFavoriteEvent
 })(EventScreen);

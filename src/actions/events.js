@@ -1,24 +1,24 @@
+import { CREATE, } from './types';
+
 import { FETCH_EVENTS, GET_LIST } from "./types";
 
-export const EVENT_GET_LIST = 'EVENT_GET_LIST';
+export const ADD_FAVORITE_EVENT = "ADD_FAVORITE_EVENT";
+export const ADD_FAVORITE_EVENT_SUCCESS = "ADD_FAVORITE_EVENT_SUCCESS";
+export const ADD_FAVORITE_EVENT_LOADING = "ADD_FAVORITE_EVENT_LOADING";
+export const ADD_FAVORITE_EVENT_FAILURE = "ADD_FAVORITE_EVENT_FAILURE";
 
-// DEPRECATED:
-export function getEventsRequest(competitionId, pagination = {}, filter = {}){
-    return { type: FETCH_EVENTS.REQUEST, competitionId }
-}
+export const addFavoriteEvent = (event, userId, eventObj) => ({
+  type: ADD_FAVORITE_EVENT,
+  payload: { data: { event, id: event } },
+  meta: {
+    optimisticData: { ...eventObj, isUserFavorite: true },
+    basePath: "/users/" + userId,
+    resource: "events",
+    fetch: CREATE,
+    listId: "profile_savedEvents_list",
+    onLoading: {
+      addToList: true,
+    },
 
-export function getEventsSuccess(events){
-    return {
-        type: FETCH_EVENTS.SUCCESS,
-        events
-    }
-}
-
-export const getEventList = (pagination, sort, filter) => ({
-    type: EVENT_GET_LIST,
-    payload: { pagination, sort, filter },
-    meta: {
-        fetch: GET_LIST,
-    }
+  }
 });
-

@@ -1,6 +1,7 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
+import NotificationRequestPopup from "./NotificationRequestPopup";
 import { FCM_INIT, FCM_DESTROY } from "./actions";
 class FirebaseProvider extends Component {
 
@@ -12,7 +13,14 @@ class FirebaseProvider extends Component {
     this.props.store && this.props.store.dispatch({type: FCM_DESTROY, meta: { firebase: true } })
   }
   render() {
-    return this.props.children;
+    const { children } = this.props;
+    return (
+        <React.Fragment>
+          <NotificationRequestPopup />
+          {children}
+        </React.Fragment>
+    )
+
   }
 }
 

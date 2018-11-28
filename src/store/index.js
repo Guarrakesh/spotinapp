@@ -22,6 +22,10 @@ import {
 
 } from 'react-navigation-redux-helpers';
 
+/* Redux Beacon */
+import { createMiddleware } from "redux-beacon";
+
+
 import rootReducer from '../reducers';
 import rootSaga from '../sagas/core';
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { AsyncStorage } from "react-native";
-import { userCheck } from '../actions/authActions';
+import { connect } from 'react-redux';
+import { View, Image, ActivityIndicator, AsyncStorage} from 'react-native';
 
 import NavigationService from "../navigators/NavigationService";
-import { connect } from 'react-redux';
+import { userCheck } from '../actions/authActions';
+import { ALREADY_STARTED_UP } from "../helpers/asyncStorageKeys";
 
-import { View, Image, ActivityIndicator} from 'react-native';
 
 const Logo = require('../assets/img/logo/logo.png');
 const Together = require('../assets/img/together/together.png');
@@ -15,14 +15,14 @@ class Launcher extends React.Component {
 
     const self = this;
 
-    AsyncStorage.getItem("alreadyStartedUp").then(item => {
+    AsyncStorage.getItem(ALREADY_STARTED_UP).then(item => {
 
       if (item) {
         self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
       } else {
         self.props.navigate("AppIntro", {
           onGetStarted: () => {
-            AsyncStorage.setItem("alreadyStartedUp", "1");
+            AsyncStorage.setItem(ALREADY_STARTED_UP, "1");
             self.props.navigate("Auth", {}, true);
           }
         }, true);
