@@ -13,6 +13,8 @@ import {
   CRUD_GET_NEAR_MANY_SUCCESS,
 } from '../../../actions/dataActions';
 
+
+
 import getFetchedAt from '../../../helpers/getFetchedAt';
 
 export const addRecordIdsFactory = getFetchedAt => (
@@ -33,6 +35,7 @@ export const addRecordIdsFactory = getFetchedAt => (
 const addRecordIds = addRecordIdsFactory(getFetchedAt);
 
 export default (previousState = [], { type, payload, requestPayload, meta }) => {
+
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:
@@ -83,8 +86,13 @@ export default (previousState = [], { type, payload, requestPayload, meta }) => 
 
       return newState;
     }
-    default:
+    default: {
+      if (meta && meta.onLoading && meta.onLoading.addToList) {
+        return addRecordIds([payload.data.id], previousState);
+      }
       return previousState;
+
+    }
   }
 };
 

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="it.spotin">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="it.spotin">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -8,40 +8,44 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+            android:name="${applicationId}.permission.C2D_MESSAGE"
+            android:protectionLevel="signature" />
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="it.spotin.MainApplication"
-        android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:largeHeap="true"
-        android:allowBackup="false"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+            android:name="it.spotin.MainApplication"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:largeHeap="true"
+            android:allowBackup="false"
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI"/>
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI"/>
+
+
         <activity
-            android:name="it.spotin.MainActivity"
-            android:label="@string/app_name"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTop">
+                android:name="it.spotin.MainActivity"
+                android:launchMode="singleTask"
+                android:label="@string/app_name"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-        //Firebase
+
+
+        <!-- Firebase Push Notifications -->
         <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -53,7 +57,7 @@
             </intent-filter>
         </service>
         <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
-        <!-- Schedule notifications -->
+
         <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>
 
         <receiver android:enabled="true" android:exported="true"  android:name="io.invertase.firebase.notifications.RNFirebaseNotificationsRebootReceiver">
@@ -64,32 +68,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-        //React Native Push Notification
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
-
-        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
-        <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
-        <service  android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

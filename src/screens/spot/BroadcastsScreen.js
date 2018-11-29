@@ -9,7 +9,7 @@ import 'moment/min/moment-with-locales';
 import View from '../../components/common/View';
 import BroadcastsList from '../../components/SpotComponents/BroadcastsList';
 import ListController from '../../controllers/ListController';
-
+import ReferenceField from "../../components/common/ReferenceField"
 import themes from "../../styleTheme";
 import i18n from '../../i18n/i18n';
 
@@ -122,6 +122,7 @@ class BroadcastsScreen extends React.Component {
   render() {
     const { scrollAnim, offsetAnim } = this.state;
 
+    console.log("FCM",this.props.navigation);
     const { event, eventId } = this.props.navigation.state.params;
     const position = {
       lat: this.props.latitude,
@@ -147,7 +148,13 @@ class BroadcastsScreen extends React.Component {
       radius: 99999,
 
     };
-
+    const header = event => (
+        <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}], flexWrap: 'wrap'}]}>
+          <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+          <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.eventName}>{event.name}</Text>
+          <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.date}>{date}</Animated.Text>
+        </Animated.View>
+    );
     return (
         <View style={styles.container}>
           <ListController
@@ -182,11 +189,13 @@ class BroadcastsScreen extends React.Component {
                         style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
                     />}
           </ListController>
-          <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}], flexWrap: 'wrap'}]}>
-            <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
-            <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.eventName}>{event.name}</Text>
-            <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.date}>{date}</Animated.Text>
-          </Animated.View>
+          { event
+              ? header(event)
+              : (
+                  <ReferenceField reference="events" source="id" record={{id: eventId}}>
+                    {({record}) => header(record)}
+                  </ReferenceField>
+          )}
         </View>
     )
   }

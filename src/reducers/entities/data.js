@@ -74,7 +74,13 @@ const addRecords = (newRecords = [], oldRecords) => {
 const initialState = {};
 Object.defineProperty(initialState, 'fetchedAt', { value: {} }); // non enumerable by default
 
-export default (previousState = initialState, { type, payload, meta }) => {
+export default (previousState = initialState, { type, payload, meta = {} }) => {
+  /**
+   * optimisticData è il l'object da inserire ottimisticamente prima della richiesta
+   * Dato che verrà sovrascritto una volta avuta la risposta
+   */
+  const { optimisticData, fetchResponse } = meta;
+
     if (type === CRUD_UPDATE_OPTIMISTIC) {
         const updatedRecord = { ...previousState[payload.id], ...payload.data };
         return addRecords([updatedRecord], previousState);
@@ -95,6 +101,10 @@ export default (previousState = initialState, { type, payload, meta }) => {
         });
 
         return newState;
+    }
+    if (meta && meta.optimisticData && meta.fetch && [CREATE, UPDATE].includes(meta.fetch)) {
+        const record = { ...previousState[payload.id], ...meta.optimisticData };
+        return addRecords([record], previousState);
     }
     if (!meta || !meta.fetchResponse || meta.fetchStatus !== FETCH_END) {
         return previousState;

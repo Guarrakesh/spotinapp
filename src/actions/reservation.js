@@ -4,8 +4,12 @@ import {CRUD_CREATE, CRUD_DELETE_OPTIMISTIC} from "./dataActions";
 import i18n from '../i18n/i18n';
 i18n.init();
 
+export const RESERVE_BROADCAST = "RESERVA_BROADCAST";
+export const RESERVE_BROADCAST_FAILURE = "RESERVE_BROADCAST_FAILURE";
+export const RESERVE_BROADCAST_SUCCESS = "RESERVE_BROADCAST_SUCCESS";
+export const RESERVE_BROADCAST_LOADING = "RESERVE_BROADCAST_LOADING";
 export const reserveBroadcast = (broadcast, userId, callback) => ({
-  type: CRUD_CREATE,
+  type: RESERVE_BROADCAST,
   payload: { data: {broadcast} },
   meta: {
     basePath: "/users/"+userId,
@@ -14,6 +18,7 @@ export const reserveBroadcast = (broadcast, userId, callback) => ({
     listId: "profile_reservations_list",
 
     onSuccess: {
+      addToList: true,
       callback,
       notification: {
         body: i18n.t("profile.bookedOffer.bookedNotification.success.message"),

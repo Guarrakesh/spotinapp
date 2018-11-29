@@ -7,6 +7,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -64,6 +65,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebasePackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebaseNotificationsPackage(),
+            new RNFirebaseAnalyticsPackage(),
             new AppCenterReactNativePushPackage(MainApplication.this),
             new ReactNativePushNotificationPackage(),
             new ReactNativeConfigPackage(),

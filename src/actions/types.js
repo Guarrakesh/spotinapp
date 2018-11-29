@@ -18,18 +18,8 @@ export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const LOGIN = createRequestTypes('LOGIN');
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = createRequestTypes('REGISTER');
-export const SET_AUTH = 'SET_AUTH';
-export const FETCH_ALL_SPORTS = createRequestTypes('GET_ALL_SPORTS');
-export const FETCH_FAVORITE_SPORTS = createRequestTypes('GET_FAVORITE_SPORTS');
-export const FETCH_COMPETITIONS = createRequestTypes('GET_COMPETITIONS');
-export const FETCH_EVENTS = createRequestTypes('GET_EVENTS');
-export const FETCH_BUSINESSES = createRequestTypes('GET_BUSINESSES');
 
 
-
-//Broadcast
-export const FETCH_BROADCASTS = createRequestTypes('GET_BROADCASTS');
-export const RESERVE_BROADCAST = createRequestTypes('RESERVE_BROADCAST');
 
 
 
@@ -51,3 +41,5 @@ export const REFRESH_VIEW = 'REFRESH_VIEW';
 /* Profile fetch actions */
 //Simile a GET_ONE, con l'eccezione che non viene  mandato l'ID nel payload perché già c'à la token per riconoscere il profilo utente
 export const GET_PROFILE = 'GET_PROFILE';
+
+export const NAVIGATE = "Navigation/NAVIGATE";

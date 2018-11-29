@@ -11,6 +11,7 @@ import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotS
 import ProfileStack from './ProfileStack';
 import HomeStack from './HomeStack';
 
+import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import Launcher from '../screens/Launcher';
 import NoLocationScreen from '../screens/NoLocationScreen';
 import AppIntro from "../screens/intro/AppIntro"
@@ -91,11 +92,13 @@ const RootNavigator = createStackNavigator(
 
       }
     },
-
     AppIntro: AppIntro,
     BusinessMapInSpot: BusinessMapNavigatorInSpot,
     BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
-    ContactUs: ContactUsNavigator
+    ContactUs: ContactUsNavigator,
+
+    //For push notifications
+    BroadcastList: BroadcastsScreen,
   }, {
     headerMode: 'none',
     mode: "modal",

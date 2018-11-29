@@ -106,6 +106,7 @@ class ResourceInitializer extends Component {
           <FirebaseProvider store={store}>
             <View  style={{flex: 1}}>
               <Notification/>
+
               {(["staging","development"].includes(Config.ENV)) && <EnvironmentBar env={Config.ENV}/>}
               <ReduxifiedNavigator
                   screenProps={{t}}

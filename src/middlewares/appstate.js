@@ -8,11 +8,11 @@
     let currentState = "";
 
     const handleAppStateChange = (nextAppState) => {
-
+/*
       if(Platform.OS === "android" && currentState === "inactive" && nextAppState === "active"){
 
         CodePush.restartApp();
-      }
+      }*/
 
       if (currentState !== nextAppState) {
         let type;

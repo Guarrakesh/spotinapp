@@ -17,6 +17,7 @@ const logoImg = require('../../assets/img/logo-text/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
 import Authenticated  from '../../components/Auth/Authenticated';
 
+
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
 
@@ -66,6 +67,7 @@ class HomeScreen extends React.Component {
     const { t } = this.props;
     return (
       <Authenticated location={{pathName: "Profile"}}>
+
         <HomeController>
           {({isLoading, position,...rest}) =>
             !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
