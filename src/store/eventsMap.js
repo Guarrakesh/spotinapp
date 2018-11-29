@@ -14,6 +14,11 @@ import { LOCATION_SET_POSITION } from "../actions/location";
 export const SET_USER_ID = "SET_USER_ID";
 export const SCREEN_VIEW = "SCREEN_VIEW";
 export const TRACK_LOCATION = "TRACK_LOCATION";
+
+// SportEvents 
+export const EVENT_FAVORITE = "EVENT_FAVORITE";
+export const MORE_EVENTS_SCROLL = "MORE_EVENTS_SCROLL";
+
 const eventsMap = {
     [PROFILE_GET_INFO_SUCCESS]: ({ payload }) => ({
         type: SET_USER_ID,

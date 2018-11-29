@@ -20,6 +20,9 @@ const target = () => (events) => {
         Analytics.setCurrentScreen(routeName);
         break;
       }
+      case TRACK_LOCATION: {
+        Analytics.logEvent("user_location_changed", action.position);
+      }
     }
 
 

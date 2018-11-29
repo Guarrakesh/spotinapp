@@ -15,8 +15,8 @@ class BroadcastsList extends React.Component {
 
   _keyExtractor = (item) => item._id;
 
-  _onItemPress = (id, businessId, distance) => {
-    this.props.onItemPress(id, businessId, distance);
+  _onItemPress = (broadcast, distance) => {
+    this.props.onItemPress(broadcast, distance);
   };
 
 
@@ -59,7 +59,7 @@ class BroadcastsList extends React.Component {
                   overlayOpacity={0.8}
                   titleStyle={{fontSize: 18}}
                   elevation={2}
-                  onPress={() =>  this._onItemPress(item, data[item].business, data[item].dist)}
+                  onPress={() =>  this._onItemPress(data[item], data[item].dist)}
                   broadcast={data[item]}/>}
 
               contentContainerStyle={[styles.container, style]}

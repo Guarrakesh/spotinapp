@@ -38,7 +38,7 @@ const BroadcastCarousel = ({
                                  showEvent
                                  broadcast={data[item]}
                                  style={{flex: 1}}
-                                 onPress={() => {onItemPress(item, data[item].business, data[item].dist)}}/>
+                                 onPress={() => {onItemPress(data[item], data[item].dist)}}/>
         }
         itemWidth={sliderWidth - 50}
         layout={'default'}

@@ -48,13 +48,23 @@ class HomeScreen extends React.Component {
   }
 
 
-  handleBroadcastPress(broadcastId, businessId, distance) {
-    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
+  handleBroadcastPress(broadcast, distance) {
+    this.props.navigation.navigate('BusinessProfileScreen', {
+      broadcastId: broadcast._id,
+      businessId: broadcast.business,
+      distance,
+      id: broadcast.business //for analytics
+    });
   }
 
 
   handleBusinessPress(businessId, distance) {
-    this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
+    this.props.navigation.navigate('BusinessProfileScreen', { 
+      businessId,
+      distance,
+      id: businessId, //for analytics
+      
+    });
 
   }
 

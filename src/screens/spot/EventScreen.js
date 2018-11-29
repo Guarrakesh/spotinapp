@@ -27,7 +27,7 @@ class EventScreen extends React.Component {
 
   handleEventPress(eventId, event) {
 
-    this.props.navigation.navigate('BroadcastsList', {eventId, event});
+    this.props.navigation.navigate('BroadcastsList', {eventId, event, title: event.name});
 
   }
   handleEventFavoritePress(event, eventObj) {
