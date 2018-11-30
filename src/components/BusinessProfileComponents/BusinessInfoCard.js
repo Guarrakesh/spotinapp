@@ -1,11 +1,12 @@
 import React from 'react';
 import View from '../common/View';
-import {Text, StyleSheet, TouchableOpacity, Linking, Platform} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity, Linking, Platform, Alert} from 'react-native';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
 import call from 'react-native-phone-call'
+import i18n from '../../i18n/i18n';
 
 const BusinessInfoCard = (props) => {
 
@@ -14,14 +15,29 @@ const BusinessInfoCard = (props) => {
   let roundedDistance = Math.round(distance.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
-  const mapURL = Platform.OS === 'android' ? "google.navigation:q=" : "maps://app?daddr=";
-  const businessAddr = `${distance.location.coordinates[1]}+${distance.location.coordinates[0]}`
+  // Apre navigazione nella mappe
+  //const mapURL = Platform.OS === 'android' ? "google.navigation:q=" : "maps://app?daddr=";
+
+  const mapURL = Platform.OS === 'android' ? "https://www.google.com/maps/search/?api=1&query=" : "http://maps.apple.com/maps?ll=";
+  const businessLatLng = `${distance.location.coordinates[1]},${distance.location.coordinates[0]}&q=${business.name}`;
+
+  const mapAlert = () => {
+    Alert.alert(
+      `${i18n.t("common.openInMaps")}`,
+      '',
+      [
+        {text: `${i18n.t("common.cancel")}`, onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => Linking.openURL(`${mapURL}${businessLatLng}`)},
+      ],
+      { cancelable: true }
+    )
+  };
 
   return (
     <View style={styles.businessInfoView} elevation={2}>
       <Text style={styles.businessNameText}>{business.name}</Text>
       <Text style={styles.businessTypes}>{business.type.join(' • ')}</Text>
-      <TouchableOpacity onPress={() => Linking.openURL(`${mapURL}${businessAddr}`)}>
+      <TouchableOpacity onPress={mapAlert}>
         <View style={styles.topContainer}>
           <View style={styles.distanceItemView}>
             <Icon name="map-marker-radius" color={themes.base.colors.accent.default} size={23}/>

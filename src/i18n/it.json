@@ -120,6 +120,7 @@
     "at": "alle",
     "discountAtCheckout": "Sconto alla cassa",
     "atCheckout": "alla cassa",
+    "openInMaps": "Aprire nelle mappe?",
     "notificationFailure": {
       "title": "Ops...",
       "message": "Non abbiamo idea di cosa sia successo, ma lavoreremo per risolverlo. \nRiprova più tardi"
