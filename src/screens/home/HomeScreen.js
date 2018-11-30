@@ -106,6 +106,7 @@ class HomeScreen extends React.Component {
                 <InlineListController
                   id="home_events_list"
                   resource="events"
+                  filter={{next_events: true}}
                   sort={{field: '_id', order: -1}}
                 >
                   {controllerProps => controllerProps.isLoading ?

@@ -1,9 +1,12 @@
 // Optional: Flow type
 import { take, fork, spawn, call, put, select } from "redux-saga/effects";
 import { channel } from 'redux-saga';
+import { AsyncStorage, Platform } from 'react-native';
+import DeviceInfo from "react-native-device-info"
 import NavigationService from "../navigators/NavigationService";
-
+import { sendFcmToken } from "./actions";
 import { PROFILE_GET_INFO_SUCCESS } from "../actions/profile";
+import { USER_REGISTER_SUCCESS } from "../actions/authActions";
 import {
   FCM_INIT,
   FCM_NOTIFICATION_DISPLAYED,
@@ -14,7 +17,6 @@ import {
 
 } from "./actions";
 import { RESERVE_BROADCAST_SUCCESS } from "../actions/reservation";
-import { AsyncStorage, Platform } from 'react-native';
 import firebase, { Notification, NotificatonOpen } from 'react-native-firebase';
 
 import { getToken, requestPermissions, hasPermission, getInitialNotification } from './helpers';
@@ -34,12 +36,12 @@ export const fcmNotificationChannel = channel();
 function* uploadFcmToken(token) {
 
   let profile = yield select(userProfileSelector);
-  if (!profile || profile._id) {
-    const action = yield take(PROFILE_GET_INFO_SUCCESS);
-    profile = action.payload.data;
+  if (!profile || !profile._id) {
+    const action = yield take([PROFILE_GET_INFO_SUCCESS, USER_REGISTER_SUCCESS] );
+    profile = action.payload.data || action.payload.user;
   }
-
-
+  const deviceId = DeviceInfo.getUniqueID();
+  yield put(sendFcmToken(token, deviceId, profile._id));
 
 }
 
@@ -50,7 +52,6 @@ function* watchfcmNotificationChannel() {
       const {type, payload, meta} = action;
 
 
-      if (!meta || !meta.firebase) continue;
       const notification = payload.notification;
 
       switch (type) {
@@ -58,7 +59,6 @@ function* watchfcmNotificationChannel() {
           //Update Token in Async Storage e mandarla al server
           yield call(AsyncStorage.setItem, "fcmToken", payload);
           yield spawn(uploadFcmToken, payload);
-
           break;
         }
         case FCM_NOTIFICATION_OPENED: {
@@ -87,28 +87,35 @@ function* watchfcmNotificationChannel() {
       yield put(action);
     } catch (e) {
       console.warn(e);
-      return;
+      continue;
     }
   }
 }
 
 function* initFcm() {
   try {
-    const token = yield call(getToken);
+
     let enabled = yield call(hasPermission);
+
     if (!enabled) {
       try {
+
         yield call(requestPermissions);
         const fcmToken = yield call(getToken);
-        yield put({ type: FCM_TOKEN_REFRESHED, payload: fcmToken });
+        yield fcmNotificationChannel.put({ type: FCM_TOKEN_REFRESHED, payload: fcmToken });
         enabled = true;
       } catch (error) {
+
         yield call(AsyncStorage.setItem, "fcmToken", "0");
-
-
         // Nient'altro da fare, l'utente ha negato il permesso
         return;
       }
+    }
+    const token = yield call(getToken);
+    const storedToken = yield call(AsyncStorage.getItem, "fcmToken");
+
+    if (token !== storedToken) {
+      fcmNotificationChannel.put({ type: FCM_TOKEN_REFRESHED, payload: token});
     }
     if (enabled) {
       /** Se Android, registro il canale
@@ -155,6 +162,7 @@ function* initFcm() {
     }
   } catch (error) {
     // Unknwon Error
+    console.warn(error);
   }
 }
 
@@ -162,9 +170,10 @@ function* initFcm() {
 export default function* root() {
 
   yield take(FCM_INIT);
-  yield fork(initFcm);
-  yield spawn(watchfcmNotificationChannel);
-  // Aspetto che il profilo sia disponibile per aggiornare la token
-  yield take(PROFILE_GET_INFO_SUCCESS);
-  yield call(uploadFcmToken);
+  /* TODO: Notifiche disabilitate per iOS al momento */
+  if (Platform.OS !== "ios") {
+    yield fork(initFcm);
+    yield spawn(watchfcmNotificationChannel);
+  }
+
 }

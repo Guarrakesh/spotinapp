@@ -1,5 +1,4 @@
-
-
+import { CREATE } from "../actions/types";
 // If your app is in the foreground, or background, you can listen for when a notification is clicked / tapped / opened
 export const FCM_NOTIFICATION_OPENED = "FCM_NOTIFICATION_OPENED";
 
@@ -15,3 +14,16 @@ export const FCM_TOKEN_REFRESHED = "FCM_TOKEN_REFRESHED";
 export const FCM_INIT = "FCM_INIT";
 // Detach listeners
 export const FCM_DESTROY = "FCM_DESTROY";
+
+export const FCM_SEND_TOKEN = "FCM_SEND_TOKEN";
+
+export const sendFcmToken = (token, deviceId, userId) => ({
+  type: FCM_SEND_TOKEN,
+  payload: { data: { token, deviceId } },
+  meta: {
+    basePath: "/users/"+userId,
+    resource: "fcm_tokens",
+    fetch: CREATE,
+
+  }
+});

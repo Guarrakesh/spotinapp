@@ -108,7 +108,8 @@ class EventScreen extends React.Component {
             id={`${competitionId}_event_list`}
             resource="events"
             infiniteScroll
-            filter={{competition: competitionId}}>
+
+            filter={{next_events: true, competition: competitionId}}>
           { controllerProps => <EventList
               onItemPress={this.handleEventPress}
               onFavoritePress={this.handleEventFavoritePress}

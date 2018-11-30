@@ -20,9 +20,8 @@ const ReservationFloatingCard = ({
     t
 }) => {
 
-  const { broadcast, createdAt } = reservation;
+  const { broadcast, created_at, used } = reservation;
   const { offer } = broadcast;
-  const { business, event } = broadcast;
 
   const discount = (type) => {
     switch (parseInt(type)) {

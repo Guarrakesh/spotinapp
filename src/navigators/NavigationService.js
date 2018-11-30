@@ -25,7 +25,6 @@ function navigate(routeName, params, setRoot = false) {
       return NavigationActions.navigate({routeName: route, params: {}});
     }
   });
-    console.log("FCM",actions);
   if (setRoot) {
     return StackActions.reset({
       index: 0,

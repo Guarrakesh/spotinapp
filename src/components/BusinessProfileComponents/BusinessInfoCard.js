@@ -14,8 +14,10 @@ const BusinessInfoCard = (props) => {
   let roundedDistance = Math.round(distance.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
 
-  const mapURL = Platform.OS === 'android' ? "google.navigation:q=" : "maps://app?daddr=";
-  const businessAddr = `${distance.location.coordinates[1]}+${distance.location.coordinates[0]}`
+  const mapURL = Platform.OS === 'android'
+      ? "http://maps.google.com/maps?daddr="
+      : "http://maps.apple.com/maps?ll=";
+  const businessAddr = `${distance.location.coordinates[1]},${distance.location.coordinates[0]}`;
 
   return (
     <View style={styles.businessInfoView} elevation={2}>

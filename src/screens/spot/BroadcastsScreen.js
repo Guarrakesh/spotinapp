@@ -127,7 +127,6 @@ class BroadcastsScreen extends React.Component {
   render() {
     const { scrollAnim, offsetAnim } = this.state;
 
-    console.log("FCM",this.props.navigation);
     const { event, eventId } = this.props.navigation.state.params;
     const position = {
       lat: this.props.latitude,

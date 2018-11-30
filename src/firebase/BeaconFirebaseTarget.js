@@ -15,7 +15,7 @@ const target = () => (events) => {
         break;
       }
       case SCREEN_VIEW: {
-        const titleParam = action.params ? action.params.title : null;
+        const titleParam = action.params ? action.params.title || action.params.id : null;
         const routeName = titleParam ? `${action.route}/${titleParam}` : action.route;
         Analytics.setCurrentScreen(routeName);
         break;
