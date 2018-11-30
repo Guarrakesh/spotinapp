@@ -113,17 +113,18 @@
     "Browse": "Browse",
     "Profile": "Profile",
     "cancel": "Cancel",
-    "confirm": "Conferma",
+    "confirm": "Confirm",
     "at": "at",
     "atCheckout": "at checkout",
     "discountAtCheckout": "Discount at checkout",
+    "openInMaps": "Open in Maps?",
     "notificationFailure": {
       "title": "Ops...",
       "message": "We have no idea of what just happened, but we'll work to make it fixed. \nTry again later"
     },
     "email"               : "Email",
     "password"            : "Password",
-    "passwordConfirm"     : "Conferma password"
+    "passwordConfirm"     : "Confirm password"
 
   },
 
