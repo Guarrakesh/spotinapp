@@ -64,9 +64,14 @@ class BroadcastsScreen extends React.Component {
     this.state.scrollAnim.addListener(this._handleScroll);
   }
 
-  handleBusinessPress(broadcastId, businessId, distance) {
+  handleBusinessPress(broadcast, distance) {
 
-    this.props.navigation.navigate('BusinessProfileScreen', {broadcastId, businessId, distance});
+    this.props.navigation.navigate('BusinessProfileScreen', {
+      broadcastId: broadcast._id,
+      businessId: broadcast.business, 
+      distance, 
+      //title: broadcast
+    });
   }
 
   //Navigazione alla mappa

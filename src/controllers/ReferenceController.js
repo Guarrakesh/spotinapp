@@ -12,8 +12,8 @@ import { crudGetManyAccumulate as crudGetManyAccumulateAction } from '../actions
 
 export class ReferenceController extends Component {
   componentDidMount() {
-
-    this.fetchReference(this.props);
+    if (!this.props.referenceRecord || this.props.forceFetch)
+      this.fetchReference(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,6 +23,9 @@ export class ReferenceController extends Component {
     }
   }
 
+  refresh() {
+    this.fetchReference(this.props);
+  }
   fetchReference(props) {
 
     const source = get(props.record, props.source);
@@ -57,7 +60,8 @@ ReferenceController.propTypes = {
   reference: PropTypes.string.isRequired,
   referenceRecord: PropTypes.object,
   resource: PropTypes.string,
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
+  forceFetch: PropTypes.bool,
 };
 
 ReferenceController.defaultProps = {
