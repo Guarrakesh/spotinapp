@@ -19,6 +19,7 @@ export const crudGetList = (resource, listId, pagination, sort, filter, basePath
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
+    //selectedId
     resource,
     basePath,
     listId,

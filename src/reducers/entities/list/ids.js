@@ -21,21 +21,20 @@ export const addRecordIdsFactory = getFetchedAt => (
     newRecordIds = [],
     oldRecordIds
 ) => {
-  const newFetchedAt = getFetchedAt(newRecordIds, oldRecordIds.fetchedAt);
+ // const newFetchedAt = getFetchedAt(newRecordIds, oldRecordIds.fetchedAt);
   const recordIds = uniq(
       oldRecordIds.concat(newRecordIds)
   );
 
-  Object.defineProperty(recordIds, 'fetchedAt', {
-    value: newFetchedAt,
-  }); // non enumerable by default
+  // Object.defineProperty(recordIds, 'fetchedAt', {
+  //   value: newFetchedAt,
+  // }); // non enumerable by default
   return recordIds;
 };
 
 const addRecordIds = addRecordIdsFactory(getFetchedAt);
 
 export default (previousState = [], { type, payload, requestPayload, meta }) => {
-
   switch (type) {
     case CRUD_GET_LIST_SUCCESS:
     case CRUD_GET_NEAR_MANY_SUCCESS:

@@ -90,7 +90,7 @@ export class ReferenceManyFieldController extends Component {
     };
 
     fetchReferences(
-        { reference, record, resource, target, perPage, filter, source } = this
+        { reference, record, resource, target, perPage, filter, source, focusedId} = this
             .props
     ) {
         const { crudGetManyReference } = this.props;
@@ -109,7 +109,9 @@ export class ReferenceManyFieldController extends Component {
             relatedTo,
             pagination,
             this.state.sort,
-            filter
+            filter,
+            focusedId
+
         );
     }
 
@@ -155,6 +157,8 @@ ReferenceManyFieldController.propTypes = {
     source: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
     isLoading: PropTypes.bool,
+
+    focusedId: PropTypes.string,
 };
 
 ReferenceManyFieldController.defaultProps = {

@@ -20,7 +20,7 @@ moment.locale(DeviceInfo.getDeviceLocale());
 
 const BroadcastCardInProfile = (props) => {
 
-  let { broadcast, onReservePress, t} = props;
+  let { broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
 
 
@@ -48,7 +48,7 @@ const BroadcastCardInProfile = (props) => {
           const { competitors } = event;
 
           return (
-              <View style={(1 === 0) ? styles.broadcastInfoViewWithHeader : styles.broadcastInfoView} elevation={2}>
+              <View style={(1 === 0) ? styles.broadcastInfoViewWithHeader : [styles.broadcastInfoView, {borderWidth: firstRed ? 1:0, borderColor: 'red'}]} elevation={2}>
                 {(1 === 0) ?
                     <View style={styles.redHeader} elevation={3}>
                       <Text style={styles.headerText}>{t("browse.getOffer.recommended")}</Text>
