@@ -112,8 +112,8 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.2.1"
+        versionCode 5
+        versionName "0.3.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
