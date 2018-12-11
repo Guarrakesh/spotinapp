@@ -102,29 +102,29 @@ class SignupScreen extends React.Component {
     // TODO: Gestire tutti gli eventuali errori del server (per ora gestiamo solo il Conflict 409: Email già esistente)
     return (
 
-        <ImageBackground source={SignupBackground} style={styles.container}>
+      <ImageBackground source={SignupBackground} style={styles.container}>
 
-            <StatusBar barStyle="dark-content" backgroundColor={colors.primary.default}/>
-          <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1, justifyContent: 'center'}}>
-            <Image source={Logo} style={{height: 32, width: '100%', marginBottom: 32,}} resizeMode={"contain"}/>
-            <View style={styles.formContainer}>
-                <SignupForm
-                    isLoading={isLoading}
-                    onChangeTextName={this.onChangeName}
-                    onChangeTextPassword={this.onChangePass}
-                    onChangeTextEmail={this.onChangeEmail}
-                    onChangeTextPasswordConfirm={this.onChangePassConfirm}
-                    emailError={this.state.errors.email ? this.state.errors.email[0] : errorMessage}
-                    nameError={this.state.errors.name ? this.state.errors.name[0] : ""}
-                    passwordError={this.state.errors.password ? this.state.errors.password[0] : ""}
-                    passConfirmError={this.state.errors.passwordConfirm ? this.state.errors.passwordConfirm[0]: ""}
-                    onSubmit={this.register}
-                />
-            </View>
-          </KeyboardAwareScrollView>
+        <StatusBar barStyle="dark-content" backgroundColor={colors.primary.default}/>
+        <KeyboardAwareScrollView contentContainerStyle={{flexGrow:1, justifyContent: 'center'}}>
+          <Image source={Logo} style={{height: 32, width: '100%', marginBottom: 32,}} resizeMode={"contain"}/>
+          <View style={styles.formContainer}>
+            <SignupForm
+              isLoading={isLoading}
+              onChangeTextName={this.onChangeName}
+              onChangeTextPassword={this.onChangePass}
+              onChangeTextEmail={this.onChangeEmail}
+              onChangeTextPasswordConfirm={this.onChangePassConfirm}
+              emailError={this.state.errors.email ? this.state.errors.email[0] : errorMessage}
+              nameError={this.state.errors.name ? this.state.errors.name[0] : ""}
+              passwordError={this.state.errors.password ? this.state.errors.password[0] : ""}
+              passConfirmError={this.state.errors.passwordConfirm ? this.state.errors.passwordConfirm[0]: ""}
+              onSubmit={this.register}
+            />
+          </View>
+        </KeyboardAwareScrollView>
 
 
-        </ImageBackground>
+      </ImageBackground>
     )
   }
 }

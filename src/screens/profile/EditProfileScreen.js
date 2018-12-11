@@ -90,92 +90,92 @@ class EditProfileScreen extends React.Component{
     return(
 
 
-          <ImageBackground source={BackgroundPattern} style={styles.container}>
-            <KeyboardAwareScrollView
-                keyboardShouldPersistTaps
-                bounces={false}
+      <ImageBackground source={BackgroundPattern} style={styles.container}>
+        <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={"handled"}
+          bounces={false}
+        >
+
+          <Touchable style={styles.userImage} onPress={this.handleEditPhotoPress}>
+            <ImageBackground
+              source={profile.picture ? {uri: profile.picture } : userIcon}
+              style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'flex-end'}}
             >
-
-              <Touchable style={styles.userImage} onPress={this.handleEditPhotoPress}>
-                <ImageBackground
-                    source={profile.picture ? {uri: profile.picture } : userIcon}
-                    style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'flex-end'}}
-                >
-                  <View style={{padding: 5, backgroundColor: 'rgba(255,255,255,.8)', borderRadius: 20}}>
-                    <Icon name={"photo-camera"} size={20} color={colors.text.default}/>
-                  </View>
-                </ImageBackground>
-              </Touchable>
-              <View style={styles.middleContainerStyle}>
-                <Typography block variant="caption" style={{marginLeft: 16}} gutterBottom  uppercase h4>Username</Typography>
-                <Input
-                    value={name}
-                    onEndEditing={() => this.handleBlur('name')}
-                    block
-                    autoCapitalize="none"
-                    allowFontScaling={false}
-                    displayError={true}
-                    errorStyle={styles.errorMessage}
-                    errorMessage={<Text>{errors.name ? errors.name[0] : ""}</Text>}
-                    shake={true}
-                    numberOfLines = {1}
-                    onChangeText={(text) => this.handleInputChange("name", text)}
-                    onSubmitEditing={() => this.password.focus() }
-                />
-
-
-                <Typography variant="caption" block align={"left"} style={{marginLeft: 16}} gutterBottom uppercase h4>Password</Typography>
-                <Input
-                    value={password}
-                    placeholder={"Inserisci la nuova password"}
-                    onEndEditing={() => this.handleBlur('password')}
-
-                    block
-                    placeholderTextColor={themes.base.inputPlaceholderColor}
-                    ref={input => this.password = input}
-                    autoCapitalize="none"
-                    allowFontScaling={false}
-                    displayError={true}
-                    secureTextEntry={true}
-                    errorMessage={<Text>{errors.password ? errors.password[0] : ""}</Text>}
-                    shake={true}
-                    numberOfLines = {1}
-                    onChangeText={(text) => this.handleInputChange("password", text)}
-                    onSubmitEditing={() => { this.passwordConfirm.focus() }}
-                />
-                <Input
-                    value={passwordConfirm}
-                    block
-                    placeholder={"Ripeti la password"}
-                    placeholderTextColor={themes.base.inputPlaceholderColor}
-                    onEndEditing={() => this.handleBlur('passwordConfirm')}
-                    ref={input => this.passwordConfirm = input}
-                    autoCapitalize="none"
-                    allowFontScaling={false}
-                    displayError={true}
-                    secureTextEntry={true}
-                    errorMessage={<Text>{errors.passwordConfirm ? errors.passwordConfirm[0]: ""}</Text>}
-                    shake={true}
-                    numberOfLines = {1}
-                    onChangeText={(text) => this.handleInputChange("passwordConfirm", text)}
-                    onSubmitEditing={() => {
-                  this.updateProfile();
-                }}
-                />
-                <Button
-
-                    loading={loading}
-                    uppercase
-                    disabled={loading || !canSubmit}
-                    round
-
-                    variant="primary"
-                    onPress={() => {this.updateProfile()}}
-                >{"Aggiorna"}</Button>
+              <View style={{padding: 5, backgroundColor: 'rgba(255,255,255,.8)', borderRadius: 20}}>
+                <Icon name={"photo-camera"} size={20} color={colors.text.default}/>
               </View>
-            </KeyboardAwareScrollView>
+            </ImageBackground>
+          </Touchable>
+          <View style={styles.middleContainerStyle}>
+            <Typography block variant="caption" style={{marginLeft: 16}} gutterBottom  uppercase h4>Username</Typography>
+            <Input
+              value={name}
+              onEndEditing={() => this.handleBlur('name')}
+              block
+              autoCapitalize="none"
+              allowFontScaling={false}
+              displayError={true}
+              errorStyle={styles.errorMessage}
+              errorMessage={<Text>{errors.name ? errors.name[0] : ""}</Text>}
+              shake={true}
+              numberOfLines = {1}
+              onChangeText={(text) => this.handleInputChange("name", text)}
+              onSubmitEditing={() => this.password.focus() }
+            />
 
-          </ImageBackground>
+
+            <Typography variant="caption" block align={"left"} style={{marginLeft: 16}} gutterBottom uppercase h4>Password</Typography>
+            <Input
+              value={password}
+              placeholder={"Inserisci la nuova password"}
+              onEndEditing={() => this.handleBlur('password')}
+
+              block
+              placeholderTextColor={themes.base.inputPlaceholderColor}
+              ref={input => this.password = input}
+              autoCapitalize="none"
+              allowFontScaling={false}
+              displayError={true}
+              secureTextEntry={true}
+              errorMessage={<Text>{errors.password ? errors.password[0] : ""}</Text>}
+              shake={true}
+              numberOfLines = {1}
+              onChangeText={(text) => this.handleInputChange("password", text)}
+              onSubmitEditing={() => { this.passwordConfirm.focus() }}
+            />
+            <Input
+              value={passwordConfirm}
+              block
+              placeholder={"Ripeti la password"}
+              placeholderTextColor={themes.base.inputPlaceholderColor}
+              onEndEditing={() => this.handleBlur('passwordConfirm')}
+              ref={input => this.passwordConfirm = input}
+              autoCapitalize="none"
+              allowFontScaling={false}
+              displayError={true}
+              secureTextEntry={true}
+              errorMessage={<Text>{errors.passwordConfirm ? errors.passwordConfirm[0]: ""}</Text>}
+              shake={true}
+              numberOfLines = {1}
+              onChangeText={(text) => this.handleInputChange("passwordConfirm", text)}
+              onSubmitEditing={() => {
+                this.updateProfile();
+              }}
+            />
+            <Button
+
+              loading={loading}
+              uppercase
+              disabled={loading || !canSubmit}
+              round
+
+              variant="primary"
+              onPress={() => {this.updateProfile()}}
+            >{"Aggiorna"}</Button>
+          </View>
+        </KeyboardAwareScrollView>
+
+      </ImageBackground>
 
     )
   }

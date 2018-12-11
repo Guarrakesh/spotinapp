@@ -29,14 +29,15 @@ export const PROFILE_UPDATE_LOADING = 'PROFILE_UPDATE_LOADING';
 export const PROFILE_UPDATE_FAILURE = 'PROFILE_UPDATE_FAILURE';
 export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
 
-export const updateProfile = ({userId: id, name, email, password }, callback) => ({
+export const updateProfile = ({userId: id, name, email, password, notificationsEnabled }, callback) => ({
   type: PROFILE_UPDATE,
   payload: {
     id,
     data: {
       id,
       name,
-      password
+      password,
+      notificationsEnabled
     },
   },
   meta: {

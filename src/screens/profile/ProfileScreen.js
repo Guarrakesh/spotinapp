@@ -28,6 +28,7 @@ class ProfileScreen extends React.Component {
     this.handleFavoriteEventRemove = this.handleFavoriteEventRemove.bind(this);
     this.handleFavoriteEventPress = this.handleFavoriteEventPress.bind(this);
     this.handleReservationPress = this.handleReservationPress.bind(this);
+    this.handleEditProfile = this.handleEditProfile.bind(this);
   }
 
   static navigationOptions = ({navigation}) => {
@@ -36,10 +37,10 @@ class ProfileScreen extends React.Component {
           <Touchable
 
               style={{backgroundColor: 'transparent', marginRight: 16, borderRadius: 50}}
-              onPress={() => navigation.navigate('EditProfileScreen')}
+              onPress={() => navigation.navigate('SettingsScreen')}
           >
             <Icon
-                name='edit'
+                name='settings'
                 size={24}
                 color={themes.base.colors.text.default}
 

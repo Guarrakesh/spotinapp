@@ -102,8 +102,20 @@
           "message"           : "It was not possible to get this offer, try again later."
         }
       }
-
-
+    },
+    "settings": {
+      "title": "Settings",
+      "notification": "Notification",
+      "support": "Support",
+      "editProfile": "Edit Profile",
+      "disableNotification": "Disable notification",
+      "privacy": "Terms and Conditions",
+      "contactUs": "Contact Us",
+      "rateUs": "Rate Us",
+      "logout": "Logout",
+      "logoutConfirm": "Do you want to logout?",
+      "no": "No",
+      "yes": "Yes"
     }
 
   },

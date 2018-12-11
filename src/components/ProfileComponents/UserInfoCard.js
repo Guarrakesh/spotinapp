@@ -11,7 +11,7 @@ const userIcon = Images.icons.barIcons.profileSelected;
 
 const UserInfoCard = (props) =>{
 
-  const {user, onLogoutPress} = props;
+  const {user, onEditProfilePress, onLogoutPress} = props;
 
   return (
 
@@ -23,8 +23,8 @@ const UserInfoCard = (props) =>{
         <Text style={styles.userName} numberOfLines={1} adjustsFontSizeToFit={true}>{user.name}</Text>
         <Text style={styles.userEmail} numberOfLines={1} adjustsFontSizeToFit={true}>{user.email}</Text>
       </View>
-      <TouchableOpacity onPress={onLogoutPress}>
-        <Icon name={"logout"} size={30} color={themes.base.colors.accent.default}/>
+      <TouchableOpacity onPress={onEditProfilePress}>
+        <Icon name={"account-edit"} size={30} color={themes.base.colors.accent.default}/>
       </TouchableOpacity>
     </View>
   );

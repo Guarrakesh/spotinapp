@@ -97,10 +97,10 @@ class LoginScreen extends React.Component {
     return (
 
         <View>
-          <ScrollView
+          <KeyboardAwareScrollView
               contentContainerStyle={styles.container}
               bounces={false}
-              keyboardShouldPersistTaps
+              keyboardShouldPersistTaps={"handled"}
           >
 
             <StatusBar
@@ -218,7 +218,7 @@ class LoginScreen extends React.Component {
 
               </View>
             </ImageBackground>
-          </ScrollView>
+          </KeyboardAwareScrollView>
 
         </View>
     )

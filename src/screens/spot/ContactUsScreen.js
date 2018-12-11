@@ -7,7 +7,7 @@ import {Text, StyleSheet, ActivityIndicator, ImageBackground,
 import { withNamespaces } from 'react-i18next';
 import {createRequest} from "../../actions/requests";
 import { Slider } from "react-native-elements";
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { View, Input, Button } from "../../components/common";
 import themes from "../../styleTheme";
@@ -141,7 +141,7 @@ class ContactUsScreen extends React.Component{
 
     return(
         <View>
-          <ScrollView
+          <KeyboardAwareScrollView
               contentContainerStyle={styles.container}
               bounces={false}
           >
@@ -247,7 +247,7 @@ class ContactUsScreen extends React.Component{
                   onPress={() => this._sendRequest()}
               >{t("browse.noBroadcasts.send")}</Button>
             </ImageBackground>
-          </ScrollView>
+          </KeyboardAwareScrollView>
           <View style={styles.bottomView}/>
         </View>
     );

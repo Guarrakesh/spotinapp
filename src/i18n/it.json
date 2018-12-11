@@ -104,8 +104,20 @@
           "message"           : "Non è stato possibile ottenere questa offerta, riprova più tardi."
         }
       }
-
-
+    },
+    "settings": {
+      "title": "Impostazioni",
+      "notification": "Notifiche",
+      "support": "Assistenza",
+      "editProfile": "Modifica Profilo",
+      "disableNotification": "Disabilita notifiche",
+      "privacy": "Informazioni sulla privacy",
+      "contactUs": "Contattaci",
+      "rateUs": "Lascia una recensione",
+      "logout": "Esci",
+      "logoutConfirm": "Vuoi uscire dal tuo account?",
+      "no": "No",
+      "yes": "Si"
     }
 
   },
