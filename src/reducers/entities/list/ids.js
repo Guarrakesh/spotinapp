@@ -86,7 +86,7 @@ export default (previousState = [], { type, payload, requestPayload, meta }) => 
       return newState;
     }
     default: {
-      if (meta && meta.onLoading && meta.onLoading.addToList) {
+      if (meta && meta.addToList) {
         return addRecordIds([payload.data.id], previousState);
       }
       return previousState;
