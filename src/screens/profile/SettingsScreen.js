@@ -24,6 +24,7 @@ class SettingsScreen extends React.Component {
 
   constructor(){
     super();
+
     this.state = {
       notificationDisabled: false,
       modalVisible: false
