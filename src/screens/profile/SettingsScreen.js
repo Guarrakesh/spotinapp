@@ -4,21 +4,22 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   Switch,
   Linking,
   Platform,
   WebView,
   Button,
-  Alert
+  Alert,
+
 } from 'react-native';
 import Modal from "react-native-modal";
 import i18n from '../../i18n/i18n';
-import Touchable from "../../components/common/Touchable";
+import { Touchable } from "../../components/common";
 import themes from "../../styleTheme";
 import connect from "react-redux/es/connect/connect";
 import {userCheck, userLogout} from "../../actions/authActions";
-import {updateProfile} from "../../actions/profile";
+import { updateSettings } from "../../actions/profile";
+
 
 class SettingsScreen extends React.Component {
 
@@ -51,11 +52,11 @@ class SettingsScreen extends React.Component {
   handleSwitchChange(){
     if(this.state.notificationDisabled){
       this.setState({notificationDisabled: false});
-      this.props.updateProfile({userId: this.props.userId, notificationsEnabled: true});
+      this.props.updateSettings({userId: this.props.userId, notificationsEnabled: true});
     }
     else {
       this.setState({notificationDisabled: true});
-      this.props.updateProfile({userId: this.props.userId, notificationsEnabled: false});
+      this.props.updateSettings({userId: this.props.userId, notificationsEnabled: false});
     }
 
   }
@@ -78,7 +79,7 @@ class SettingsScreen extends React.Component {
           style={styles.modalView}
           >
           <WebView
-            source={{uri: 'https://www.iubenda.com/privacy-policy/62969082'}}
+            source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
           />
           <Touchable style={styles.privacyButton} onPress={() => this.setState({modalVisible: false})}>
             <Text style={styles.privacyButtonText}>OK</Text>
@@ -86,13 +87,13 @@ class SettingsScreen extends React.Component {
         </Modal>
         <View style={styles.sectionView}>
           <Text style={styles.headerText}>{i18n.t("common.Profile").toUpperCase()}</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("EditProfileScreen")}>
+          <Touchable onPress={() => this.props.navigation.navigate("EditProfileScreen")}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.editProfile")}</Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
         <View style={styles.sectionView}>
           <Text style={styles.headerText}>{i18n.t("profile.settings.notification").toUpperCase()}</Text>
-          <View style={{flexDirection: "row"}}>
+          <View style={{flexDirection: "row", paddingRight: 16}}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.disableNotification")}</Text>
             <Switch
               value={this.state.notificationDisabled}
@@ -103,21 +104,21 @@ class SettingsScreen extends React.Component {
           </View>
         </View>
         <View style={styles.sectionView}>
-          <Text style={styles.headerText}>{i18n.t("profile.settings.support").toUpperCase()}</Text>
-          <TouchableOpacity onPress={() => this.handleTerms()}>
+          {/*<Text style={styles.headerText}>{i18n.t("profile.settings.support").toUpperCase()}</Text>*/}
+          <Touchable onPress={() => this.handleTerms()}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.privacy")}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.itemText}>{i18n.t("profile.settings.contactUs")}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.sectionView}>
-          <TouchableOpacity onPress={() => this.handleRateUs()}>
+          </Touchable>
+          <Touchable onPress={() => Linking.openURL("https://spotin.it") }>
+            <Text style={styles.itemText}>{i18n.t("profile.settings.visitWebSite")}</Text>
+          </Touchable>
+      {/*  </View>
+        <View style={styles.sectionView}>*/}
+          <Touchable onPress={() => this.handleRateUs()}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.rateUs")}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.handleLogout()}>
+          </Touchable>
+          <Touchable onPress={() => this.handleLogout()}>
             <Text style={[styles.itemText, {color: themes.base.colors.danger.light}]}>{i18n.t("profile.settings.logout")}</Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
       </ScrollView>
     )
@@ -128,12 +129,12 @@ class SettingsScreen extends React.Component {
     //   <SectionList
     //     style={{backgroundColor: 'white', paddingTop: 16}}
     //     renderItem={({item, index, section}) => (
-    //       <TouchableOpacity style={styles.itemView} onPress={item.onPress}>
+    //       <Touchable style={styles.itemView} onPress={item.onPress}>
     //         <Text style={styles.itemText} key={index}>{item.text}</Text>
     //         {item.isSwitchable ?
     //           <Switch/> : null
     //         }
-    //       </TouchableOpacity>
+    //       </Touchable>
     //     )}
     //     renderSectionHeader={({section: {title}}) => (
     //       <View style={styles.headerView}>
@@ -180,7 +181,8 @@ class SettingsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   sectionView: {
-    padding: 8,
+    paddingLeft: 0,
+    paddingRight: 0,
     paddingTop: 16,
     borderBottomColor: themes.base.colors.white.divisor,
     borderBottomWidth: 1
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1
   },
   headerText: {
-    marginBottom: 8,
+    marginLeft: 16,
     fontSize: 20,
     fontFamily: themes.base.fonts.LatoBold,
     color: themes.base.colors.text.default
@@ -204,6 +206,8 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
     paddingTop: 8,
     paddingBottom: 8,
     fontSize: 18,
@@ -236,4 +240,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps, { userCheck, userLogout, updateProfile})(SettingsScreen);;
+export default connect(mapStateToProps, { userCheck, userLogout, updateSettings})(SettingsScreen);;

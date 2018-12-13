@@ -16,9 +16,8 @@ export const addFavoriteEvent = (event, userId, eventObj) => ({
     resource: "events",
     fetch: CREATE,
     listId: "profile_savedEvents_list",
-    onLoading: {
-      addToList: true,
-    },
+    addToList: true,
+
 
   }
 });

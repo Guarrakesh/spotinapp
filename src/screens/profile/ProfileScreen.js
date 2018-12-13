@@ -118,6 +118,7 @@ class ProfileScreen extends React.Component {
                                     onItemPress={this.handleFavoriteEventPress}
                                     onItemRemovePress={this.handleFavoriteEventRemove}
                                     {...controllerProps}/>
+
                             }
                           </InlineListController>
                         </View> :

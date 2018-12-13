@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import {Text, Image, FlatList, StyleSheet} from "react-native";
 import { withNamespaces } from 'react-i18next';
 
-import { View } from "../../components/common";
+import { View, Typography } from "../../components/common";
 import themes from "../../styleTheme";
 import SavedEventListItem from "./SavedEventListItem";
 import Button from '../common/Button';
+
 
 
 const SavedEventsList = ({
@@ -25,6 +26,8 @@ const SavedEventsList = ({
       ids.length === 0 ? emptyComponent :
           <View>
             <Text style={themes.base.inlineListTitleStyle}>{t("profile.favoriteEvents")}</Text>
+         {/*   <Typography  style={{marginLeft: 8}}  variant="caption">{t("common.longPressToRemove")} </Typography>*/}
+
             <View style={styles.container} elevation={2}>
               <FlatList
                   data={ids}

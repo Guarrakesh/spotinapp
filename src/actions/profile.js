@@ -55,4 +55,25 @@ export const updateProfile = ({userId: id, name, email, password, notificationsE
       }
     }
   }
+});
+
+/**
+ * Usato per aggiornare le impostazioni come le notifiche
+ * A differenze del updateProfile, non mostra la notifica di successo
+  */
+
+export const updateSettings = ({ userId: id, notificationsEnabled }, callback ) => ({
+  type: PROFILE_UPDATE,
+  payload: {
+    id,
+    data: {
+      notificationsEnabled
+    },
+  },
+  meta: {
+    //  basePath: "/users/"+profile.userId, Per @Ale: Non c'è bisogno dato che l'update prende la resource e l'id e forma l'url PATCH /users/:userID
+    //Quello che c'è da fare è, aggiornare i dati nel reducer auth.js
+    resource: "users",
+    fetch: UPDATE,
+  }
 })

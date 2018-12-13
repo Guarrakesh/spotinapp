@@ -111,6 +111,7 @@
       "disableNotification": "Disable notification",
       "privacy": "Terms and Conditions",
       "contactUs": "Contact Us",
+      "visitWebSite": "Go to website",
       "rateUs": "Rate Us",
       "logout": "Logout",
       "logoutConfirm": "Do you want to logout?",
@@ -136,7 +137,8 @@
     },
     "email"               : "Email",
     "password"            : "Password",
-    "passwordConfirm"     : "Confirm password"
+    "passwordConfirm"     : "Confirm password",
+    "longPressToRemove": "Long press to remove an item"
 
   },
 

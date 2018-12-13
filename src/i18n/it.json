@@ -113,6 +113,7 @@
       "disableNotification": "Disabilita notifiche",
       "privacy": "Informazioni sulla privacy",
       "contactUs": "Contattaci",
+      "visitWebSite": "Visita il sito",
       "rateUs": "Lascia una recensione",
       "logout": "Esci",
       "logoutConfirm": "Vuoi uscire dal tuo account?",
@@ -136,7 +137,9 @@
     "notificationFailure": {
       "title": "Ops...",
       "message": "Non abbiamo idea di cosa sia successo, ma lavoreremo per risolverlo. \nRiprova più tardi"
-    }
+    },
+
+    "longPressToRemove": "Tieni premuto per rimuovere un elemento"
   },
 
 
