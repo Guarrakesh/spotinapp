@@ -45,7 +45,7 @@ export const VersionedImageField = ({
   if (!sourceValue)
     return  null;
   let version; //oggetto con { url, width, height }
-  if (sourceValue.length == 1) {
+  if (sourceValue.length === 1) {
     version = sourceValue[0];
   } else {
     //Ordino l'array di immagini in ordine crescente di dimensioni in base a minSize (uso la distanza euclidea)

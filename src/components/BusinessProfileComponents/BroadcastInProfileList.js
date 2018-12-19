@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Text, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, FlatList, Text, ActivityIndicator, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 
@@ -12,10 +12,7 @@ class BroadcastInProfileList extends React.Component {
 
   constructor(){
     super();
-    this.state = {
-      firstLoad: true,
-      idsNum: 0,
-    };
+
   }
 
   componentDidMount() {
@@ -45,7 +42,7 @@ class BroadcastInProfileList extends React.Component {
 
   reorderIds(ids, selectedBroadcast) {
 
-    this.setState({idsNum: ids.length});
+    // this.setState({idsNum: ids.length});
 
     let selectedIndex = ids.indexOf(selectedBroadcast);
     let temp = ids[selectedIndex];
@@ -70,44 +67,50 @@ class BroadcastInProfileList extends React.Component {
       onReservePress,
       reservedBroadcasts,
       ref,
+      fetchReferences,
       t
     } = this.props;
 
 
     if (isLoading) {
       return (
-        <View>
+        <View style={{height: themes.base.deviceDimensions.height/2}}>
           <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
         </View>
       )
     }
 
 
-    // if(selectedBroadcast){
-    //   if(this.state.firstLoad || ids.length !== this.state.idsNum){
-    //     this.reorderIds(ids, selectedBroadcast);
-    //     this.setState({firstLoad: false, idsNum: ids.length});
-    //   }
-    // }
-    //
+    if(selectedBroadcast && ids[0] !== selectedBroadcast){
+
+      this.reorderIds(ids, selectedBroadcast);
+      this.setState({firstLoad: false, idsNum: ids.length});
+
+    }
+
     return (
-      <FlatList
-        //ref={ref => this.flatList = ref}
-        ref={"flatlist"}
-        ListHeaderComponent={
-          <Text style={themes.base.inlineListTitleStyle}>
-            {ids.length === 0 ? t("browse.businessProfile.noEvents") : t("browse.businessProfile.plannedEvents")}
-          </Text>
-        }
-        getItemLayout={(data, index) => ({ length: 150, offset: 150 * index, index})}
-        data={ids}
-        renderItem={({item}) =>  <BroadcastCardInProfile
-          firstRed={!!selectedBroadcast && item === 0}
-          reserved={reservedBroadcasts.includes(item)}
-          broadcast={data[item]}
-          onReservePress={() => onReservePress(data[item])}
-        />}
-      />
+
+
+        <FlatList
+          //ref={ref => this.flatList = ref}
+          ref={"flatlist"}
+          refreshing={isLoading}
+          onRefresh={refresh}
+          ListHeaderComponent={
+            <Text style={themes.base.inlineListTitleStyle}>
+              {ids.length === 0 ? t("browse.businessProfile.noEvents") : t("browse.businessProfile.plannedEvents")}
+            </Text>
+          }
+          getItemLayout={(data, index) => ({ length: 150, offset: 150 * index, index})}
+          data={ids}
+          renderItem={({item}) =>  <BroadcastCardInProfile
+            firstRed={!!selectedBroadcast && item === selectedBroadcast}
+            reserved={reservedBroadcasts.includes(item)}
+            broadcast={data[item]}
+            onReservePress={() => onReservePress(data[item])}
+          />}
+        />
+
 
     );
   };

@@ -44,6 +44,7 @@ class InlineListController extends Component {
     return false;
 
   }
+
   updateData() {
 
     const { sort, order, numElems = 20, filter } = this.props;
@@ -75,6 +76,10 @@ class InlineListController extends Component {
 
   }
 
+  refresh(){
+    this.updateData();
+  }
+
   render() {
     const {
         children,
@@ -91,6 +96,7 @@ class InlineListController extends Component {
       ids,
       isLoading,
       listId: id,
+      refresh: this.updateData.bind(this)
     })
 
   }
@@ -131,7 +137,7 @@ function mapStateToProps(state, props) {
     isLoading: list && list.isLoading,
     initialised: !!list,
     ids: !!list ? list.ids : [],
-    data
+    data,
   }
 }
 export default connect(mapStateToProps,

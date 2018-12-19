@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, InteractionManager, ScrollView, ActivityIndicator, Animated} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  InteractionManager,
+  ScrollView,
+  ActivityIndicator,
+  Animated,
+  RefreshControl,
+  Button
+} from 'react-native';
 import Modal from "react-native-modal";
 import { connect } from 'react-redux';
 
@@ -16,6 +25,7 @@ import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesS
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
+import {refresh} from "../../sagas/login";
 
 const HEADER_HEIGHT = 50;
 class BusinessProfileScreen extends React.Component {
@@ -55,6 +65,11 @@ class BusinessProfileScreen extends React.Component {
 
     }
   };
+
+  componentDidMount(){
+    const { broadcastId } = this.props.navigation.state.params;
+    setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
+  }
 
 
 
@@ -102,9 +117,14 @@ class BusinessProfileScreen extends React.Component {
     }
   }
 
+  handleRefresh(){
+    console.log(this.amen);
+    this.amen.fetchReferences();
+  }
+
   render(){
 
-    const {businessId, distance} = this.props.navigation.state.params;
+    const {businessId, distance, broadcastId} = this.props.navigation.state.params;
 
     return (
       <ShowController resource="businesses"
@@ -121,18 +141,23 @@ class BusinessProfileScreen extends React.Component {
             <View style={styles.scrollView}
                   contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
 
-              <Animated.ScrollView
+              <ScrollView
                 //  onScroll={this.handleScroll.bind(this)}
                 scrollEventThrottle={16}
                 bounces={false}
-                style={styles.generalContainer}>
+                style={styles.generalContainer}
+                ref={(ref) => {
+                  this.scroller = ref
+                }}
+                //contentOffset={{x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0}}
+              >
                 <ImagesScrollView business={record}/>
 
                 <View style={styles.cardContainer}>
                   { record && <BusinessInfoCard distance={distance} business={record}/>}
                   <Modal
                     animationIn={'slideInUp'}
-                    animationOut="slideOutDown"
+                    animationOut={"slideOutDown"}
                     isVisible={this.state.modalVisible}
 
                   >
@@ -149,17 +174,20 @@ class BusinessProfileScreen extends React.Component {
                     focusedId={0}
                     sort={{field: "broadcast.event.start_at"}}
                     record={record}
+                    ref={ref => this.amen = ref}
                   >
                     {controllerProps => <BroadcastInProfileList
                       {...controllerProps}
-                      selectedBroadcast={this.props.navigation.state.params.broadcastId}
+
+                      selectedBroadcast={broadcastId}
                       reservedBroadcasts={this.state.reservedBroadcasts}
-                      onReservePress={this.handleReservePress.bind(this)}/>}
+                      onReservePress={this.handleReservePress.bind(this)}
+                    />}
 
                   </ReferenceManyFieldController>
 
                 </View>
-              </Animated.ScrollView>
+              </ScrollView>
             </View>
 
           )}

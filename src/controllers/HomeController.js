@@ -29,7 +29,7 @@ export class HomeController extends Component {
     const {
       children,
       isLoading,
-      position
+      position,
     } = this.props;
 
     return children({

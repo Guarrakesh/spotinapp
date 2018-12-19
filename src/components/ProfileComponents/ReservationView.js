@@ -83,8 +83,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
                   <View style={{flexDirection: 'column', flex: 1}}>
                     <Text style={styles.businessType}>{business.type.join(' • ')}</Text>
                     <Text style={styles.businessAddress}>{business.address.street} {business.address.number}</Text>
-                    <Text style={styles.businessAddress}>{business.address.city}
-                      ({business.address.province})</Text>
+                    <Text style={styles.businessAddress}>{business.address.city} ({business.address.province})</Text>
                   </View>
                   <View style={{
                     flexDirection: 'row',
@@ -150,7 +149,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
           clear
           variant="danger"
           uppercase
-          style={{marginTop: 8, marginLeft: 8}}
+          containerStyle={{marginTop: 8, marginLeft: 8}}
           onPress={() => deletePress()}
         >{t("profile.bookedOffer.delete")}</Button>
       </View>

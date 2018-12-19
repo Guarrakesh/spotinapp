@@ -5,13 +5,13 @@ import isEqual from 'lodash/isEqual';
 
 import { crudGetManyReference as crudGetManyReferenceAction } from '../actions/dataActions';
 import {
-    SORT_ASC,
-    SORT_DESC,
+  SORT_ASC,
+  SORT_DESC,
 } from '../reducers/entities/list/queryReducer';
 import {
-    getIds,
-    getReferences,
-    nameRelatedTo,
+  getIds,
+  getReferences,
+  nameRelatedTo,
 } from '../reducers/references/oneToMany';
 
 /**
@@ -61,130 +61,132 @@ import {
  * </ReferenceManyField>
  */
 export class ReferenceManyFieldController extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { sort: props.sort };
+  constructor(props) {
+    super(props);
+    this.state = { sort: props.sort };
+  }
+
+  componentDidMount() {
+    this.fetchReferences();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.record.id !== nextProps.record.id) {
+      this.fetchReferences(nextProps);
     }
 
-    componentDidMount() {
-        this.fetchReferences();
+    if (!isEqual(this.props.sort, nextProps.sort)) {
+      this.setState({ sort: nextProps.sort }, this.fetchReferences);
     }
+  }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.record.id !== nextProps.record.id) {
-            this.fetchReferences(nextProps);
-        }
+  setSort = field => {
+    const order =
+      this.state.sort.field === field &&
+      this.state.sort.order === SORT_ASC
+        ? SORT_DESC
+        : SORT_ASC;
+    this.setState({ sort: { field, order } }, this.fetchReferences);
+  };
 
-        if (!isEqual(this.props.sort, nextProps.sort)) {
-            this.setState({ sort: nextProps.sort }, this.fetchReferences);
-        }
-    }
+  fetchReferences(
+    { reference, record, resource, target, perPage, filter, source, focusedId} = this
+      .props
+  ) {
+    const { crudGetManyReference } = this.props;
+    const pagination = { page: 1, perPage };
+    const relatedTo = nameRelatedTo(
+      reference,
+      record[source],
+      resource,
+      target,
+      filter
+    );
+    crudGetManyReference(
+      reference,
+      target,
+      record[source],
+      relatedTo,
+      pagination,
+      this.state.sort,
+      filter,
+      focusedId
 
-    setSort = field => {
-        const order =
-            this.state.sort.field === field &&
-            this.state.sort.order === SORT_ASC
-                ? SORT_DESC
-                : SORT_ASC;
-        this.setState({ sort: { field, order } }, this.fetchReferences);
-    };
+    );
+  }
 
-    fetchReferences(
-        { reference, record, resource, target, perPage, filter, source, focusedId} = this
-            .props
-    ) {
-        const { crudGetManyReference } = this.props;
-        const pagination = { page: 1, perPage };
-        const relatedTo = nameRelatedTo(
-            reference,
-            record[source],
-            resource,
-            target,
-            filter
-        );
-        crudGetManyReference(
-            reference,
-            target,
-            record[source],
-            relatedTo,
-            pagination,
-            this.state.sort,
-            filter,
-            focusedId
-
-        );
-    }
-
-    render() {
-        const {
-            resource,
-            reference,
-            data,
-            ids,
-            children,
-          //  basePath,
-        } = this.props;
+  render() {
+    const {
+      resource,
+      reference,
+      data,
+      ids,
+      children,
+      //  basePath,
+    } = this.props;
 
     //    const referenceBasePath = basePath.replace(resource, reference);
 
-        return children({
-            currentSort: this.state.sort,
-            data,
-            ids,
-            isLoading: typeof ids === 'undefined',
-          //  referenceBasePath,
-            setSort: this.setSort,
-        });
-    }
+    return children({
+      currentSort: this.state.sort,
+      data,
+      ids,
+      isLoading: typeof ids === 'undefined',
+      //  referenceBasePath,
+      setSort: this.setSort,
+      fetchReferences: this.fetchReferences
+    });
+  }
 }
 
 ReferenceManyFieldController.propTypes = {
-   // basePath: PropTypes.string.isRequired,
-    children: PropTypes.func.isRequired,
-    crudGetManyReference: PropTypes.func.isRequired,
-    filter: PropTypes.object,
-    ids: PropTypes.array,
-    perPage: PropTypes.number,
-    record: PropTypes.object,
-    reference: PropTypes.string.isRequired,
-    data: PropTypes.object,
-    resource: PropTypes.string.isRequired,
-    sort: PropTypes.shape({
-        field: PropTypes.string,
-        order: PropTypes.oneOf(['ASC', 'DESC']),
-    }),
-    sortBy: PropTypes.string,
-    source: PropTypes.string.isRequired,
-    target: PropTypes.string.isRequired,
-    isLoading: PropTypes.bool,
+  // basePath: PropTypes.string.isRequired,
+  children: PropTypes.func.isRequired,
+  crudGetManyReference: PropTypes.func.isRequired,
+  filter: PropTypes.object,
+  ids: PropTypes.array,
+  perPage: PropTypes.number,
+  record: PropTypes.object,
+  reference: PropTypes.string.isRequired,
+  data: PropTypes.object,
+  resource: PropTypes.string.isRequired,
+  sort: PropTypes.shape({
+    field: PropTypes.string,
+    order: PropTypes.oneOf(['ASC', 'DESC']),
+  }),
+  sortBy: PropTypes.string,
+  source: PropTypes.string.isRequired,
+  target: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
+  focusedId: PropTypes.string,
+  fetchReferences: PropTypes.func
 
-    focusedId: PropTypes.string,
 };
 
 ReferenceManyFieldController.defaultProps = {
-    filter: {},
-    perPage: 25,
-    sort: { field: 'id', order: 'DESC' },
-    source: 'id',
+  filter: {},
+  perPage: 25,
+  sort: { field: 'id', order: 'DESC' },
+  source: 'id',
 };
 
 function mapStateToProps(state, props) {
-    const relatedTo = nameRelatedTo(
-        props.reference,
-        props.record[props.source],
-        props.resource,
-        props.target,
-        props.filter
-    );
-    return {
-        data: getReferences(state, props.reference, relatedTo),
-        ids: getIds(state, relatedTo),
-    };
+  const relatedTo = nameRelatedTo(
+    props.reference,
+    props.record[props.source],
+    props.resource,
+    props.target,
+    props.filter
+  );
+  return {
+    data: getReferences(state, props.reference, relatedTo),
+    ids: getIds(state, relatedTo),
+  };
 }
 
 export default connect(
-    mapStateToProps,
-    {
-        crudGetManyReference: crudGetManyReferenceAction,
-    }
+  mapStateToProps,
+  {
+    crudGetManyReference: crudGetManyReferenceAction,
+  }
 )(ReferenceManyFieldController);

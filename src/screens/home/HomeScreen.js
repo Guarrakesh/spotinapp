@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, RefreshControl} from 'react-native';
 import { Button } from 'react-native-elements';
 import { withNamespaces } from 'react-i18next';
 
@@ -73,6 +73,13 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('BroadcastsList', {eventId, event});
   }
 
+  handleRefresh(){
+    console.log("REFRESH HOME");
+    console.log(this.refs);
+    this.props.refs.aaa.refresh();
+  }
+
+
   render() {
     const { t } = this.props;
     return (
@@ -81,10 +88,19 @@ class HomeScreen extends React.Component {
         <HomeController>
           {({isLoading, position,...rest}) =>
             !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
-              <ScrollView style={styles.homeContainer}>
+              <ScrollView
+                style={styles.homeContainer}
+                // refreshControl={
+                //   <RefreshControl
+                //     refreshing={isLoading}
+                //     onRefresh={() => this.handleRefresh() }
+                //   />
+                // }
+              >
                 <InlineListController
                   id="home_broadcasts_list"
                   resource="broadcasts"
+                  ref={ref => this.aaa = ref}
                   nearPosition={{...position, radius: 99999}}>
                   {controllerProps => controllerProps.isLoading ?
                     <View style={{height: 325, justifyContent: 'center'}}>

@@ -61,6 +61,8 @@ class SettingsScreen extends React.Component {
 
   }
 
+  ha
+
   handleRateUs(){
     Linking.openURL(Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=it.spotin" : "https://itunes.apple.com/it/app/spot-in/id1439906179")
   }
