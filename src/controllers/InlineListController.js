@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { crudGetList as crudGetListAction,
   crudGetNearMany as crudGetManyNearAction } from '../actions/dataActions';
-import {  initList as initListAction } from '../actions/listActions';
+import {  initList as initListAction, refreshList as refreshListAction } from '../actions/listActions';
 
 /*
  * Simile a ListController, ma può essere usato come figlio di altri controller (as. ShowController), dato che non si mette
@@ -23,6 +23,9 @@ class InlineListController extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.initialised !== this.props.initialised) {
       this.updateData()
+    }
+    if (nextProps.version !== this.props.version) {
+      this.updateData();
     }
   }
   shouldComponentUpdate(nextProps) {
@@ -110,9 +113,11 @@ InlineListController.propTypes = {
   basePath: PropTypes.string,
   resource: PropTypes.string,
   id: PropTypes.string.isRequired,
+  version: PropTypes.number,
 };
 InlineListController.defaultProps = {
   initialised: false,
+  version: 0,
 };
 function mapStateToProps(state, props) {
   const resourceState = state.entities[props.resource];
@@ -137,11 +142,13 @@ function mapStateToProps(state, props) {
     isLoading: list && list.isLoading,
     initialised: !!list,
     ids: !!list ? list.ids : [],
+    version: !!list ? list.version : 0,
     data,
   }
 }
 export default connect(mapStateToProps,
     {
+
       initList: initListAction,
       crudGetList: crudGetListAction,
       crudGetManyNear: crudGetManyNearAction,

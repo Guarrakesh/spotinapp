@@ -15,7 +15,7 @@ class ReservationScreen extends React.Component {
 
   onCancel() {
     const { reservation } = this.props.navigation.state.params;
-    this.props.cancelReservation(reservation.user, reservation._id);
+    this.props.cancelReservation(reservation.user, reservation._id, reservation.broadcast._id);
     this.props.navigation.goBack();
   }
   render() {

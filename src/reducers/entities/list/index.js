@@ -3,7 +3,7 @@ import ids from './ids';
 import params from './params';
 import selectedIds from './selectedIds';
 import total from './total';
-
+import version from "./version";
 import { INIT_LIST } from '../../../actions/listActions';
 
 /**
@@ -22,6 +22,7 @@ export default (previousState = initialState, action) => {
       ids: ids(undefined, action),
       params: params(undefined, action),
       selectedIds: selectedIds(undefined, action),
+      version: version(undefined, action),
       total: total(undefined, action)
     };
 
@@ -49,6 +50,7 @@ export default (previousState = initialState, action) => {
             params: params(previousState[id].params, action),
             selectedIds: selectedIds(previousState[id].selectedIds, action),
             total: total(previousState[id].total, action),
+            version: version(previousState[id].version, action),
             noContent,
           }
           : previousState[id]

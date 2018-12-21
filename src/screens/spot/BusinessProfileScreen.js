@@ -7,7 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Animated,
-  RefreshControl,
+  //RefreshControl,
   Button
 } from 'react-native';
 import Modal from "react-native-modal";
@@ -25,7 +25,8 @@ import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesS
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
-import {refresh} from "../../sagas/login";
+import { refreshList as refreshListAction } from '../../actions/listActions';
+
 
 const HEADER_HEIGHT = 50;
 class BusinessProfileScreen extends React.Component {
@@ -108,19 +109,19 @@ class BusinessProfileScreen extends React.Component {
     this.forceUpdate();
   }
 
-  handleScroll(e) {
+ /* handleScroll(e) {
     const scrollY= e.nativeEvent.contentOffset.y;
     if (scrollY > 250 ) {
       this.props.navigation.setParams({headerVisible: true});
     } else {
       this.props.navigation.setParams({headerVisible: false});
     }
-  }
+  }*/
 
-  handleRefresh(){
+  /*handleRefresh(){
     console.log(this.amen);
     this.amen.fetchReferences();
-  }
+  }*/
 
   render(){
 
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
 export default connect((state) => ({
   userId: state.auth.profile._id
 }), {
-  reserveBroadcast
+  reserveBroadcast,
+  //refreshList: refreshListAction
 
 })(BusinessProfileScreen)

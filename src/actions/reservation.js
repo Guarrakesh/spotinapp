@@ -1,5 +1,5 @@
 import {CREATE, DELETE} from "./types";
-import {CRUD_CREATE, CRUD_DELETE_OPTIMISTIC} from "./dataActions";
+import {CRUD_CREATE, CRUD_DELETE_OPTIMISTIC, CRUD_UPDATE_OPTIMISTIC } from "./dataActions";
 
 import i18n from '../i18n/i18n';
 i18n.init();
@@ -16,7 +16,9 @@ export const reserveBroadcast = (broadcast, userId, callback) => ({
     resource: "reservations",
     fetch: CREATE,
     listId: "profile_reservations_list",
-
+    linkedResources: {
+      "broadcasts": { type: CRUD_UPDATE_OPTIMISTIC, payload: { id: broadcast, data: { reserved: true } } }
+    },
     onSuccess: {
       addToList: true,
       callback,
@@ -46,7 +48,7 @@ export const CANCEL_RESERVATION_FAILURE = 'CANCEL_RESERVATION_FAILURE';
 export const CANCEL_RESERVATION_LOADING = 'CANCEL_RESERVATION_LOADING';
 
 
-export const cancelReservation = (userId, reservationId) => ({
+export const cancelReservation = (userId, reservationId, broadcastIdToUpdate) => ({
   type: CRUD_DELETE_OPTIMISTIC,
   payload: { id: reservationId },
   meta: {
@@ -54,6 +56,9 @@ export const cancelReservation = (userId, reservationId) => ({
     resource: "reservations",
     fetch: DELETE,
     listId: "profile_reservations_list",
+    linkedResources: {
+      "broadcasts": { type: CRUD_UPDATE_OPTIMISTIC, payload: { id: broadcastIdToUpdate, data: { reserved: false } } }
+    },
     onSuccess: {
       notification: {
         body: i18n.t("profile.bookedOffer.deleteNotification.success.message"),
