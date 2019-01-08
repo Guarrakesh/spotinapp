@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { crudGetList as crudGetListAction,
   crudGetNearMany as crudGetManyNearAction } from '../actions/dataActions';
-import {  initList as initListAction, refreshList as refreshListAction } from '../actions/listActions';
-
+ˆˆ
 /*
  * Simile a ListController, ma può essere usato come figlio di altri controller (as. ShowController), dato che non si mette
  * in ascolto di state.isLoading e quindi non causa un render loop sui figli

@@ -4,30 +4,34 @@ import themes from "../../styleTheme";
 import {Image, StyleSheet, Text} from "react-native";
 import {VersionedImageField} from "../common";
 
-const deviceWidth = themes.base.deviceDimensions.width
+const deviceWidth = themes.base.deviceDimensions.width;
 
 const ImagesScrollView = (props) => {
 
   let { business } = props;
 
+  const images = [ { versions: business.cover_versions } ].concat(business.pictures || []) || [] ;
   return(
-    <Swiper
-      showsButtons={true}
-      height={230}
-      dotColor={'rgba(255, 255, 255, 0.5)'}
-      activeDotColor={themes.base.colors.white.light}
-      nextButton={<Text style={styles.buttonText}> </Text>}
-      prevButton={<Text style={styles.buttonText}> </Text>}
-    >
-      <VersionedImageField
-        source={business.cover_versions}
-        style={{flex: 1}}
-        minSize={{width: 600, height: 200}}
-        imgSize={{height: 230, width: deviceWidth}}
-        resizeMode={'cover'}
-      />
+      <Swiper
+          showsButtons={true}
+          height={230}
+          dotColor={'rgba(255, 255, 255, 0.5)'}
+          activeDotColor={themes.base.colors.white.light}
+          nextButton={<Text style={styles.buttonText}> </Text>}
+          prevButton={<Text style={styles.buttonText}> </Text>}
+      >
+        {images.length > 0 && images.map(image =>
+            (image.versions && <VersionedImageField
+                    source={image.versions}
+                    style={{flex: 1}}
+                    minSize={{width: 899, height: 350}}
+                    imgSize={{height: 230, width: deviceWidth}}
+                    resizeMode={'cover'}
+                />
+            )
+        )}
 
-    </Swiper>
+      </Swiper>
   );
 
 };
