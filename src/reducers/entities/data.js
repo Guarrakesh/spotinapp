@@ -25,28 +25,28 @@ import getFetchedAt from '../../helpers/getFetchedAt';
  * only once fresh data is fetched.
  */
 export const addRecordsFactory = getFetchedAt => (
-  newRecords = [],
-  oldRecords
+    newRecords = [],
+    oldRecords
 ) => {
   const newFetchedAt = getFetchedAt(
-    newRecords.map(({ id }) => id),
-    oldRecords.fetchedAt
+      newRecords.map(({ id }) => id),
+      oldRecords.fetchedAt
   );
 
   const newRecordsById = newRecords.reduce(
-    (acc, record) => ({
-      ...acc,
-      [record.id]: record,
-    }),
-    {}
+      (acc, record) => ({
+        ...acc,
+        [record.id]: record,
+      }),
+      {}
   );
 
   const records = Object.keys(newFetchedAt).reduce(
-    (acc, id) => ({
-      ...acc,
-      [id]: newRecordsById[id] || oldRecords[id],
-    }),
-    {}
+      (acc, id) => ({
+        ...acc,
+        [id]: newRecordsById[id] || oldRecords[id],
+      }),
+      {}
   );
 
   Object.defineProperty(records, 'fetchedAt', {
@@ -61,11 +61,11 @@ export const addRecordsFactory = getFetchedAt => (
 //Disabilitato caching dei record per evitare problemi di stato corrotto durante la navigazione
 const addRecords = (newRecords = [], oldRecords) => {
   const newRecordsById = newRecords.reduce(
-    (acc, record) => ({
-      ...acc,
-      [record.id]: record
-    })
-    , {});
+      (acc, record) => ({
+        ...acc,
+        [record.id]: record
+      })
+      , {});
   const records = { ...oldRecords, ...newRecordsById };
 
   return records;
@@ -87,14 +87,14 @@ export default (previousState = initialState, { type, payload, meta = {} }) => {
   }
   if (type === CRUD_UPDATE_MANY_OPTIMISTIC) {
     const updatedRecords = payload.ids
-      .reduce((records, id) => records.concat(previousState[id]), [])
-      .map(record => ({ ...record, ...payload.data }));
+        .reduce((records, id) => records.concat(previousState[id]), [])
+        .map(record => ({ ...record, ...payload.data }));
     return addRecords(updatedRecords, previousState);
   }
   if (type === CRUD_DELETE_MANY_OPTIMISTIC) {
     const newState = Object.entries(previousState)
-      .filter(([key]) => !payload.ids.includes(key))
-      .reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {});
+        .filter(([key]) => !payload.ids.includes(key))
+        .reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {});
 
     Object.defineProperty(newState, 'fetchedAt', {
       value: previousState.fetchedAt,
@@ -106,6 +106,7 @@ export default (previousState = initialState, { type, payload, meta = {} }) => {
     const record = { ...previousState[payload.id], ...meta.optimisticData };
     return addRecords([record], previousState);
   }
+
   if (!meta || !meta.fetchResponse || meta.fetchStatus !== FETCH_END) {
     return previousState;
   }

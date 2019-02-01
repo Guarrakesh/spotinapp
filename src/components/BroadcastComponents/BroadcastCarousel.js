@@ -14,15 +14,7 @@ const BroadcastCarousel = ({
                              style,
                              onItemPress
                            }) => {
-  const businessIds = [];
-  ids = ids.filter(id => {
 
-    if (!businessIds.includes(data[id].business))  {
-      businessIds.push(data[id].business);
-      return true;
-    };
-    return false;
-  });
   return (
     <Carousel
         swipeThreshold={0}

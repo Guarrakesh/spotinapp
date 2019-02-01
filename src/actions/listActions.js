@@ -2,6 +2,7 @@ export const CRUD_CHANGE_LIST_PARAMS = 'CRUD_CHANGE_LIST_PARAMS';
 export const SET_LIST_SELECTED_IDS = 'SET_LIST_SELECTED_IDS';
 export const TOGGLE_LIST_ITEM = 'TOGGLE_LIST_ITEM';
 export const INIT_LIST = 'INIT_LIST';
+export const REFRESH_LIST = "REFRESH_LIST";
 
 export const initList = (resource, id) => ({
   type: INIT_LIST,
@@ -24,4 +25,9 @@ export const toggleListItem = (resource, listId,  id) => ({
   type: TOGGLE_LIST_ITEM,
   payload: id,
   meta: { resource, listId },
+});
+
+export const refreshList = (resource, listId) => ({
+  type: REFRESH_LIST,
+  meta: { listId, resource }
 });

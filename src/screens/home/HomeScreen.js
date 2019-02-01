@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, RefreshControl} from 'react-native';
 import { Button } from 'react-native-elements';
 import { withNamespaces } from 'react-i18next';
@@ -16,10 +18,17 @@ import {Fonts} from "../../components/common/Fonts";
 const logoImg = require('../../assets/img/logo-text/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
 import Authenticated  from '../../components/Auth/Authenticated';
+import { refreshList as refreshListAction } from '../../actions/listActions';
+
 
 
 class HomeScreen extends React.Component {
+
+  HOME_BROADCASTS_LIST_ID = "home_broadcasts_list";
+  HOME_EVENTS_LIST_ID = "home_events_list";
+  HOME_BUSINESSES_LIST_ID = "home_businesses_list";
   static navigationOptions = ({ navigation }) => {
+
 
     return {
       headerTitle: (<Image
@@ -59,11 +68,11 @@ class HomeScreen extends React.Component {
 
 
   handleBusinessPress(businessId, distance) {
-    this.props.navigation.navigate('BusinessProfileScreen', { 
+    this.props.navigation.navigate('BusinessProfileScreen', {
       businessId,
       distance,
       id: businessId, //for analytics
-      
+
     });
 
   }
@@ -74,9 +83,9 @@ class HomeScreen extends React.Component {
   }
 
   handleRefresh(){
-    console.log("REFRESH HOME");
-    console.log(this.refs);
-    this.props.refs.aaa.refresh();
+    this.props.refreshList("broadcasts", this.HOME_BROADCASTS_LIST_ID );
+    this.props.refreshList("businesses", this.HOME_BUSINESSES_LIST_ID );
+    this.props.refreshList("events", this.HOME_EVENTS_LIST_ID );
   }
 
 
@@ -90,17 +99,16 @@ class HomeScreen extends React.Component {
             !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
               <ScrollView
                 style={styles.homeContainer}
-                // refreshControl={
-                //   <RefreshControl
-                //     refreshing={isLoading}
-                //     onRefresh={() => this.handleRefresh() }
-                //   />
-                // }
+                 refreshControl={
+                   <RefreshControl
+                     refreshing={isLoading}
+                     onRefresh={() => this.handleRefresh() }
+                   />
+                 }
               >
                 <InlineListController
-                  id="home_broadcasts_list"
+                  id={this.HOME_BROADCASTS_LIST_ID}
                   resource="broadcasts"
-                  ref={ref => this.aaa = ref}
                   nearPosition={{...position, radius: 99999}}>
                   {controllerProps => controllerProps.isLoading ?
                     <View style={{height: 325, justifyContent: 'center'}}>
@@ -120,7 +128,7 @@ class HomeScreen extends React.Component {
                   }
                 </InlineListController>
                 <InlineListController
-                  id="home_events_list"
+                  id={this.HOME_EVENTS_LIST_ID}
                   resource="events"
                   filter={{next_events: true}}
                   sort={{field: '_id', order: -1}}
@@ -147,7 +155,7 @@ class HomeScreen extends React.Component {
                   }
                 </InlineListController>
                 <InlineListController
-                  id="home_businesses_list"
+                  id={this.HOME_BUSINESSES_LIST_ID}
                   resource="businesses"
                   nearPosition={{...position, radius: 99999}}>
                   {controllerProps => controllerProps.isLoading ?
@@ -211,5 +219,8 @@ const styles = StyleSheet.create({
 
 });
 
+const mapDispatchToProps = {
+  refreshList: refreshListAction
+};
 
-export default withNamespaces()(HomeScreen);
+export default withNamespaces()(connect(null, mapDispatchToProps)(HomeScreen));

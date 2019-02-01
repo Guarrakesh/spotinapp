@@ -87,7 +87,7 @@ const BroadcastCardInProfile = (props) => {
               <View style={styles.offerContainer}>
                 <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
               </View>
-              {!reserved && !props.reserved ?
+              {!reserved  ?
                 <Button round uppercase variant="primary" onPress={onReservePress}>{t('browse.getOffer.buttonTitle')}</Button>
 
                 :
