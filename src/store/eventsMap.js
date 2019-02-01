@@ -3,6 +3,12 @@ import { get } from "lodash";
 import { PROFILE_GET_INFO_SUCCESS } from "../actions/profile";
 import { NAVIGATE } from "../actions/types";
 import { LOCATION_SET_POSITION } from "../actions/location";
+import {
+  RESERVE_BROADCAST_SUCCESS,
+  RESERVE_BROADCAST_START,
+  RESERVE_BROADCAST_UNDO
+} from "../actions/reservation";
+import { CRUD_DELETE_OPTIMISTIC } from "../actions/dataActions";
 
 /**
  * Creo una EventsMap da dare poi come argomento al middleware creator di @redux-beacon.
@@ -14,26 +20,48 @@ import { LOCATION_SET_POSITION } from "../actions/location";
 export const SET_USER_ID = "SET_USER_ID";
 export const SCREEN_VIEW = "SCREEN_VIEW";
 export const TRACK_LOCATION = "TRACK_LOCATION";
+export const RESERVATION_COMPLETED = "RESERVATION_COMPLETED";
+export const RESERVATION_START = "RESERVATION_START";
+export const RESERVATION_UNDO = "RESERVATION_UNDO";
+export const RESERVATION_DELETE = "RESERVATION_DELETE";
 
 // SportEvents 
 export const EVENT_FAVORITE = "EVENT_FAVORITE";
 export const MORE_EVENTS_SCROLL = "MORE_EVENTS_SCROLL";
 
 const eventsMap = {
-    [PROFILE_GET_INFO_SUCCESS]: ({ payload }) => ({
-        type: SET_USER_ID,
-        userId: get(payload, "data._id"),
+  [PROFILE_GET_INFO_SUCCESS]: ({ payload }) => ({
+    type: SET_USER_ID,
+    userId: get(payload, "data._id"),
 
-    }),
-    [NAVIGATE]: ({ routeName, params }) => ({
-        type: SCREEN_VIEW,
-        route: routeName,
-        params
-    }),
-    [LOCATION_SET_POSITION]: ({ position }) => ({
-        type: TRACK_LOCATION,
-        position,
-    })
+  }),
+  [NAVIGATE]: ({ routeName, params }) => ({ //QUI PER AGGIUNGERE EVENTI DELLA NAVIGAZIONE
+    type: SCREEN_VIEW,
+    route: routeName,
+    params
+  }),
+  [LOCATION_SET_POSITION]: ({ position }) => ({
+    type: TRACK_LOCATION,
+    position,
+  }),
+  [RESERVE_BROADCAST_SUCCESS]: ({ payload }) => ({ //PRENOTAZIONE COMPLETATA
+    type: RESERVATION_COMPLETED,
+    broadcast: get(payload, "data.broadcast")
+  }),
+  [RESERVE_BROADCAST_START]: ({ payload }) => ({ //INIZIO PRENOTAZIONE (Apertura modal)
+    type: RESERVATION_START,
+    broadcastId: get(payload, "data.broadcastId"),
+    userId: get(payload, "data.userId")
+  }),
+  [RESERVE_BROADCAST_UNDO]: ({ payload }) => ({ //PRENOTAZIONE ANNULLATA (Chiusura modal)
+    type: RESERVATION_UNDO,
+    broadcastId: get(payload, "data.broadcastId"),
+    userId: get(payload, "data.userId")
+  }),
+  [CRUD_DELETE_OPTIMISTIC]: ({ payload }) => ({ //PRENOTAZIONE ELIMINATA
+    type: RESERVATION_DELETE,
+    reservationId: get(payload, "id.reservationId") //non funziona :(
+  })
 };
 
 export default eventsMap;

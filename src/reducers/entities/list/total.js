@@ -8,8 +8,9 @@ import {
 } from '../../../actions/dataActions';
 
 export default (previousState = 0, { type, payload }) => {
+
   if (type === CRUD_GET_ONE_SUCCESS) {
-    return previousState == 0 ? 1 : previousState;
+    return previousState === 0 ? 1 : previousState;
   }
   if (type === CRUD_GET_LIST_SUCCESS || type === CRUD_GET_NEAR_MANY_SUCCESS) {
     return payload.total;
@@ -21,4 +22,5 @@ export default (previousState = 0, { type, payload }) => {
     return previousState - payload.ids.length;
   }
   return previousState;
+
 };

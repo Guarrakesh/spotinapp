@@ -34,7 +34,7 @@ export default function authReducer(state = initialState, { payload, type, error
   switch (type) {
     case USER_LOGIN_SUCCESS:
     case OAUTH_LOGIN_SUCCESS:
-      return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user,  loginError: null };
+      return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, loginError: null };
 
     case USER_REGISTER_SUCCESS:
       return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, registerError: null};

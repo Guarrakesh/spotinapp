@@ -12,7 +12,7 @@ import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldCo
 import Images from '../../assets/images';
 import Helpers from '../../helpers';
 
-const colors = themes.base.colors
+const colors = themes.base.colors;
 
 
 const EventCard = ({

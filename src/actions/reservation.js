@@ -4,10 +4,11 @@ import {CRUD_CREATE, CRUD_DELETE_OPTIMISTIC} from "./dataActions";
 import i18n from '../i18n/i18n';
 i18n.init();
 
-export const RESERVE_BROADCAST = "RESERVA_BROADCAST";
+export const RESERVE_BROADCAST = "RESERVE_BROADCAST";
 export const RESERVE_BROADCAST_FAILURE = "RESERVE_BROADCAST_FAILURE";
 export const RESERVE_BROADCAST_SUCCESS = "RESERVE_BROADCAST_SUCCESS";
 export const RESERVE_BROADCAST_LOADING = "RESERVE_BROADCAST_LOADING";
+
 export const reserveBroadcast = (broadcast, userId, callback) => ({
   type: RESERVE_BROADCAST,
   payload: { data: {broadcast} },
@@ -63,4 +64,28 @@ export const cancelReservation = (userId, reservationId) => ({
     }
   }
 
+});
+
+//Azioni per traking Facebook/Firebase;
+export const RESERVE_BROADCAST_START = "RESERVE_BROADCAST_START"; //Evento dispatchato su APERTURA modal in BusinessProfileScreen
+export const RESERVE_BROADCAST_UNDO = "RESERVE_BROADCAST_UNDO";//Evento dispatchato su CHIUSURA modal in BusinessProfileScreen
+
+export const startReservation = (userId, broadcastId) => ({
+  type: RESERVE_BROADCAST_START,
+  payload: {
+    data: {
+      userId,
+      broadcastId
+    }
+  }
+});
+
+export const undoReservation = (userId, broadcastId) => ({
+  type: RESERVE_BROADCAST_UNDO,
+  payload: {
+    data: {
+      userId,
+      broadcastId
+    }
+  }
 });

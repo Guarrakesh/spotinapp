@@ -22,16 +22,16 @@ const BroadcastCardInProfile = (props) => {
 
   let { broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
-
+  const offerValue = offer.value.toFixed(2);
 
   const discount = (type) => {
     switch (parseInt(type)) {
       case 0:
-        return `${offer.value}€`;
+        return `${offerValue}€`.replace(".",",");
       case 1:
-        return `-${offer.value}%`;
+        return `-${offer.value}%`.replace(".",",");
       case 2:
-        return `-${offer.value}€`;
+        return `-${offer.value}€`.replace(".",",");
       default:
         return null;
     }

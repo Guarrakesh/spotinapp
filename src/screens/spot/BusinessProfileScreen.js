@@ -13,12 +13,11 @@ import {
 import Modal from "react-native-modal";
 import { connect } from 'react-redux';
 
-
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
 import ShowController from '../../controllers/ShowController';
-import { reserveBroadcast } from '../../actions/reservation';
+import { reserveBroadcast, startReservation, undoReservation } from '../../actions/reservation';
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
@@ -83,14 +82,16 @@ class BusinessProfileScreen extends React.Component {
         }
       });
     });
-
+    this.props.startReservation(this.props.userId, broadcast.id); //Dispatch azione per tracking
   }
+
   handleModalDismiss() {
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: false,
       });
     });
+    this.props.undoReservation(this.props.userId, this.state.currentBroadcast._id);
   }
 
   handleConfirm() {
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
 export default connect((state) => ({
   userId: state.auth.profile._id
 }), {
-  reserveBroadcast
-
+  reserveBroadcast,
+  startReservation,
+  undoReservation
 })(BusinessProfileScreen)

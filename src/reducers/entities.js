@@ -5,8 +5,11 @@ import list from './entities/list';
 
 
 const initialState = {};
+
 export default (previousState = initialState, action) => {
+
   if (action.type === REGISTER_RESOURCE) {
+
     const resourceState = {
       props: action.payload,
       data: data(undefined, action),
@@ -20,7 +23,9 @@ export default (previousState = initialState, action) => {
 
     return newState;
   }
+
   if (action.type === UNREGISTER_RESOURCE) {
+
     const newState = Object.keys(previousState).reduce((acc, key) => {
       if (key === action.payload) {
         return acc;

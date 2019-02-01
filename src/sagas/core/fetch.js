@@ -47,9 +47,9 @@ export function* handleFetch(dataProvider, action) {
     //Throttling di 100ms per ogni fetch
     yield call(delay, 100);
     const checking = yield select(isChecking);
-    //Se no è in corso alcun Check, allora lo effettup
+    //Se no è in corso alcun Check, allora lo effettuo
     if (!checking) {
-      yield put({type: AUTH_CHECKING, payload: { checking: true, type}});
+      yield put({type: AUTH_CHECKING, payload: { checking: true, type }});
       yield call(auth.check);
       yield put({type: AUTH_CHECKING, payload: { checking: false, type }});
 

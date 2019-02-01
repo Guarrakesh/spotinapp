@@ -2,7 +2,7 @@ import moment from 'moment';
 import "moment/min/moment-with-locales";
 import DeviceInfo from 'react-native-device-info';
 
-moment.locale(DeviceInfo.getDeviceLocale());
+//moment.locale(DeviceInfo.getDeviceLocale());
 const helpers = {
 
   sportSlugIconMap(slug) {

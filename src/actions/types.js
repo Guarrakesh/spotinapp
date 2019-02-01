@@ -1,6 +1,6 @@
 const REQUEST = 'REQUEST';
 const SUCCESS = 'SUCCESS';
-const FAILURE = 'FAILURE'
+const FAILURE = 'FAILURE';
 
 export const SENDING_REQUEST = 'SENDING_REQUEST';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
@@ -9,7 +9,7 @@ export const REQUEST_ERROR = 'REQUEST_ERROR';
 //es: const LOGIN = createRequest('LOGIN')
 //restituisce:
 //LOGIN.REQUEST, LOGIN.SUCCESS, LOGIN.FAILURE
- export function createRequestTypes(base) {
+export function createRequestTypes(base) {
   const res = {};
   [REQUEST, SUCCESS, FAILURE].forEach(type => res[type] = `${base}_${type}`);
   return res;
@@ -18,8 +18,6 @@ export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const LOGIN = createRequestTypes('LOGIN');
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = createRequestTypes('REGISTER');
-
-
 
 
 
@@ -36,7 +34,6 @@ export const DELETE_MANY = 'DELETE_MANY';
 
 //Usato durante il pull to refresh
 export const REFRESH_VIEW = 'REFRESH_VIEW';
-
 
 /* Profile fetch actions */
 //Simile a GET_ONE, con l'eccezione che non viene  mandato l'ID nel payload perché già c'à la token per riconoscere il profilo utente

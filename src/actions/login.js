@@ -56,3 +56,5 @@ export function setAuthState(newAuthState,token ) {
 
     }
 }
+
+//module.exports = loginRequest;

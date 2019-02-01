@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
 
   base: {
     width: '100%',
-    fontFamily: 'Lato-Medium',
+    fontFamily: fonts.LatoMedium,
     color: '#555',
 
   },
   titleBase: {
     fontSize: 14,
-    fontFamily: 'Lato-Medium',
+    fontFamily: fonts.LatoMedium,
     color: '#fff'
   },
   default: {

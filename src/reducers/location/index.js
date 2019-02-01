@@ -56,5 +56,6 @@ export const locationSelector = (state) => state.location.device;
 export default combineReducers({
     device: locationReducer,
     near,
-})
+});
 
+exports.locationReducer = locationReducer; //export x test
