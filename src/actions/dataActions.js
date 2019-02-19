@@ -15,13 +15,17 @@ export const CRUD_GET_LIST_LOADING = 'CRUD_GET_LIST_LOADING';
 export const CRUD_GET_LIST_FAILURE = 'CRUD_GET_LIST_FAILURE';
 export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 
-export const crudGetList = (resource, listId, pagination, sort, filter, basePath, accumulateResults = false) => ({
+export const crudGetList = (resource, listId, pagination,
+                            sort, filter, basePath,
+                            accumulateResults = false,
+                            unauthorized = false) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
     //selectedId
     resource,
     basePath,
+    unauthorized,
     listId,
     fetch: GET_LIST,
     accumulateResults,

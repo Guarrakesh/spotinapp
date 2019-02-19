@@ -11,6 +11,7 @@ import callback from './callback';
 import fetch from './fetch';
 import sideActions from "./sideActions";
 import firebaseSaga from '../../firebase/saga';
+import setFavorites from "./favorite";
 import dataProvider from '../../api/dataProvider';
 
 export default function* root() {
@@ -22,8 +23,9 @@ export default function* root() {
     fork(notifications),
     fork(callback),
     fork(sideActions),
+    fork(setFavorites),
       //Firebase
-    fork(firebaseSaga)
+    fork(firebaseSaga),
   ]);
 
 }

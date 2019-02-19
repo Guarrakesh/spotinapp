@@ -34,21 +34,21 @@ class ProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
       headerRight: (
-          <Touchable
+        <Touchable
 
-              style={{backgroundColor: 'transparent', marginRight: 16, borderRadius: 50}}
-              onPress={() => navigation.navigate('SettingsScreen')}
-          >
-            <Icon
-                name='settings'
-                size={24}
-                color={themes.base.colors.text.default}
+          style={{backgroundColor: 'transparent', marginRight: 16, borderRadius: 50}}
+          onPress={() => navigation.navigate('SettingsScreen')}
+        >
+          <Icon
+            name='settings'
+            size={24}
+            color={themes.base.colors.text.default}
 
-            />
-          </Touchable>
+          />
+        </Touchable>
       )
     }
-  }
+  };
 
   checkAuthentication() {
 
@@ -64,7 +64,7 @@ class ProfileScreen extends React.Component {
 
   handleFavoriteEventRemove(eventId) {
     this.props.crudDelete('events', eventId, {},
-        `/users/${this.props.userId}`, 'profile_savedEvents_list');
+      `/users/${this.props.userId}`, 'profile_savedEvents_list');
 
   }
 
@@ -88,47 +88,47 @@ class ProfileScreen extends React.Component {
     return (
 
 
-        <ProfileController>
-          {({profile, loggedIn, isLoading}) =>
-              isLoading ?
-                  <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
-                  <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
-                    {loggedIn && profile._id ?
+      <ProfileController>
+        {({profile, loggedIn, isLoading}) =>
+          isLoading ?
+            <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+            <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
+              {loggedIn && profile._id ?
 
-                        <View>
-                          <UserInfoCard user={profile} onLogoutPress={this.handleLogout} onEditProfilePress={this.handleEditProfile}/>
-                          <InlineListController basePath={`/users/${profile._id}`}
-                                                id="profile_reservations_list" resource="reservations">
-                            {controllerProps =>
-                                controllerProps.isLoading ? null :
-                                    <ReservationsCarousel
-                                        {...controllerProps}
-                                        onItemPress={this.handleReservationPress}
-                                        onBrowsePress={this.handleBrowse}
-                                    />
-                            }
-                          </InlineListController>
-                          <InlineListController
-                              basePath={`/users/${profile._id}`}
-                              id="profile_savedEvents_list"
-                              resource="events">
-                            {controllerProps =>
-
-                                <SavedEventsList
-                                    onItemPress={this.handleFavoriteEventPress}
-                                    onItemRemovePress={this.handleFavoriteEventRemove}
-                                    {...controllerProps}/>
-
-                            }
-                          </InlineListController>
-                        </View> :
-                        <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-                          ⊗ Impossibile caricare il profilo ⊗
-                        </Text>
+                <View>
+                  <UserInfoCard user={profile} onLogoutPress={this.handleLogout} onEditProfilePress={this.handleEditProfile}/>
+                  <InlineListController basePath={`/users/${profile._id}`}
+                                        id="profile_reservations_list" resource="reservations">
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <ReservationsCarousel
+                          {...controllerProps}
+                          onItemPress={this.handleReservationPress}
+                          onBrowsePress={this.handleBrowse}
+                        />
                     }
-                  </ScrollView>
-          }
-        </ProfileController>
+                  </InlineListController>
+                  <InlineListController
+                    basePath={`/users/${profile._id}`}
+                    id="profile_savedEvents_list"
+                    resource="events">
+                    {controllerProps =>
+
+                      <SavedEventsList
+                        onItemPress={this.handleFavoriteEventPress}
+                        onItemRemovePress={this.handleFavoriteEventRemove}
+                        {...controllerProps}/>
+
+                    }
+                  </InlineListController>
+                </View> :
+                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
+                  ⊗ Impossibile caricare il profilo ⊗
+                </Text>
+              }
+            </ScrollView>
+        }
+      </ProfileController>
 
     )
   }
@@ -140,4 +140,4 @@ const mapStateToProps = (state) => {
     userId: state.auth.profile ? state.auth.profile._id : undefined
   });
 };
-export default connect(mapStateToProps, { userCheck, userLogout, crudDelete})(ProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout, crudDelete })(ProfileScreen);

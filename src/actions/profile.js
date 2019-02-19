@@ -1,6 +1,7 @@
 import {
   GET_PROFILE, UPDATE
 } from './types';
+import i18n from "../i18n/i18n";
 import {CRUD_UPDATE} from "./dataActions";
 
 
@@ -29,7 +30,8 @@ export const PROFILE_UPDATE_LOADING = 'PROFILE_UPDATE_LOADING';
 export const PROFILE_UPDATE_FAILURE = 'PROFILE_UPDATE_FAILURE';
 export const PROFILE_UPDATE_SUCCESS = 'PROFILE_UPDATE_SUCCESS';
 
-export const updateProfile = ({userId: id, name, email, password, notificationsEnabled }, callback) => ({
+export const updateProfile = ({userId: id, name, email, password, notificationsEnabled, favorite_sports, favorite_competitors }, callback,
+                              showNotification = true) => ({
   type: PROFILE_UPDATE,
   payload: {
     id,
@@ -37,7 +39,9 @@ export const updateProfile = ({userId: id, name, email, password, notificationsE
       id,
       name,
       password,
-      notificationsEnabled
+      notificationsEnabled,
+      favorite_sports,
+      favorite_competitors
     },
   },
   meta: {
@@ -48,11 +52,11 @@ export const updateProfile = ({userId: id, name, email, password, notificationsE
 
     onSuccess: {
       callback,
-      notification: {
-        body: "I dati del profilo sono stati aggiornati",
+      notification: showNotification ? {
+        body: i18n.t("profile.settings.notifications.profileDataUpdateMessage"),
         level: "success",
-        title: "Dati aggiornati"
-      }
+        title: i18n.t("profile.settings.notifications.profileDataUpdateTitle")
+      } : undefined,
     }
   }
 });
@@ -76,4 +80,16 @@ export const updateSettings = ({ userId: id, notificationsEnabled }, callback ) 
     resource: "users",
     fetch: UPDATE,
   }
-})
+});
+
+
+export const SET_FAVORITES = "SET_FAVORITES";
+
+export const setFavorites = ({ userId, favorite_sports, favorite_competitors }) => ({
+  type: SET_FAVORITES,
+  payload: {
+    userId,
+    favorite_sports,
+    favorite_competitors
+  }
+});

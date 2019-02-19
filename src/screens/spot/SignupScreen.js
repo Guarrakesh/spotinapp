@@ -76,7 +76,7 @@ class SignupScreen extends React.Component {
 
     const validationErrors = validate({
       name: name,
-      email: email,
+      email: email.replace(" ", ""),
       password: password,
       passwordConfirm: passwordConfirm
     }, signup);

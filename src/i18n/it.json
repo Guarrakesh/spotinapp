@@ -118,7 +118,21 @@
       "logout": "Esci",
       "logoutConfirm": "Vuoi uscire dal tuo account?",
       "no": "No",
-      "yes": "Si"
+      "yes": "Si",
+      "editFavorites": "Modifica Preferiti",
+      "favorite": {
+        "favoriteSport": "Sport Preferiti",
+        "favoriteTeam": "Squadre Preferite",
+        "searchTeam": "Cerca Squadra...",
+        "done": "Fatto",
+        "selectFavoriteSports": "Seleziona i tuoi sport preferiti",
+        "selectFavoriteCompetitors": "Seleziona massimo 3 squadre preferite",
+        "noTeamsFound": "Nessuna squadra trovata"
+      },
+      "notifications": {
+        "profileDataUpdateTitle": "Dati aggiornati",
+        "profileDataUpdateMessage": "I dati del profilo sono stati aggiornati"
+      }
     }
 
   },
@@ -130,6 +144,7 @@
     "Profile": "Profilo",
     "cancel": "Annulla",
     "confirm": "Conferma",
+    "skip": "Salta",
     "at": "alle",
     "discountAtCheckout": "Sconto alla cassa",
     "atCheckout": "alla cassa",

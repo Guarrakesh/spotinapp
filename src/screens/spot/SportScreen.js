@@ -6,11 +6,6 @@ import ListController from '../../controllers/ListController';
 import SportList from '../../components/SpotComponents/SportList';
 import PropTypes from 'prop-types';
 
-import { View, Text, ActivityIndicator , InteractionManager } from 'react-native';
-
-
-import themes from '../../styleTheme';
-
 class SportScreen extends React.Component {
 
 
@@ -50,4 +45,4 @@ const mapStateToProps = state => {
   })
 };
 
-export default connect(null)(SportScreen)
+export default connect(null)(SportScreen);

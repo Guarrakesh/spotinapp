@@ -48,12 +48,12 @@ function* handleErrorNotification(e) {
 
   let error = {};
 
-  if (e.status == 409) {//Conflict email
+  if (e.status === 409) {//Conflict email
     error = {
       type: 'warning',
       title: "Brutte notizie...",
       message: "Questa email esiste già. Ora ti tocca solo ricordare la password..."}
-  } else if (e.status == 401) {
+  } else if (e.status === 401) {
     error = {
       type: 'warning',
       title: "Sbagliato!",
@@ -192,9 +192,9 @@ function* handleAuth(action) {
 
       //  const nextPathname = yield select(currentPathnameSelector);
         yield call(auth.logout);
-        yield put(NavigationService.navigate("Auth", {
-          nextPath: "Home"
-        }));
+        // yield put(NavigationService.navigate("Auth", {
+        //   nextPath: "Home"
+        // }));
 
         yield put(hideNotification());
       }

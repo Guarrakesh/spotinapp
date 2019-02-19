@@ -17,6 +17,7 @@ import {
 import {
   PROFILE_GET_INFO_SUCCESS,
   PROFILE_UPDATE,
+  PROFILE_UPDATE_SUCCESS
 
 } from "../actions/profile";
 
@@ -40,6 +41,7 @@ export default function authReducer(state = initialState, { payload, type, error
       return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, registerError: null};
     case PROFILE_GET_INFO_SUCCESS:
     case PROFILE_UPDATE:
+    case PROFILE_UPDATE_SUCCESS:
       return { ...state, profile: {...state.profile, ...omit(payload.data, "password")}};
     case USER_LOGOUT:
       return { ...state, isLoggedIn: false, token: null, profile: {}};

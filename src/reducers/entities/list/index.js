@@ -43,7 +43,7 @@ export default (previousState = initialState, action) => {
     (acc, id) => ({
       ...acc,
       [id]:
-        action.meta.listId == id
+        action.meta.listId === id
           ? {
             isLoading: action.type.includes('LOADING'),
             ids: ids(previousState[id].ids, action),

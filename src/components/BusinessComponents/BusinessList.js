@@ -18,7 +18,7 @@ class BusinessList extends React.Component {
   _onItemPress = (id, distance) => {
     //cerco tra i businesses quale ha l'id uguale a _id
     this.props.onItemPress(id, distance);
-  }
+  };
 
   render(){
     const {

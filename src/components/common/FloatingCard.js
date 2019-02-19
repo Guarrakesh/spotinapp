@@ -11,6 +11,7 @@ const FloatingCard = (props) => {
         props.containerStyle && props.containerStyle,
         {elevation: 2, ...themes.base.elevations.depth2}]}
                onPress={props.onPress}
+               disabled={props.disabled}
     >
       <View style={{flexDirection: 'column'}}>
         <View style={[
@@ -42,13 +43,10 @@ const FloatingCard = (props) => {
 
 const styles = {
   card: {
-
     backgroundColor: '#fff',
-
     borderWidth: 0,
     borderRadius: 4,
-    flex: 1,
-
+    flex: 1
   },
   footTitleStyle: {
     backgroundColor: 'transparent'
@@ -64,11 +62,13 @@ const styles = {
     flexWrap: 'wrap'
   },
   contentStyle: {
-    paddingTop: 15, paddingLeft: 15, paddingRight: 15,
+    paddingTop: 15,
+    paddingLeft: 15,
+    paddingRight: 15,
     flexGrow: 1,
   }
 
-}
+};
 
 
 

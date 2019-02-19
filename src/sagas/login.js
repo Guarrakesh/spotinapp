@@ -172,7 +172,7 @@ function* authentication() {
             //Dopo di ché refresho la token (se fallisce il refresh, faccio il logout)
             const dateNow = Date.now();
             const tokenExpire = Date.parse(token.expiresIn);
-            const delayTime = token.expiresIn == 0 ? 0 : tokenExpire-dateNow;
+            const delayTime = token.expiresIn === 0 ? 0 : tokenExpire-dateNow;
 
 
             // Potrebbe accadere un 'LOGOUT' mentre l'effect Authorize è in corso,

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import ListController from '../../controllers/ListController';
-import {Text, ActivityIndicator, ScrollView, View} from 'react-native';
 import CompetitionList from '../../components/SpotComponents/CompetitionList';
 
 import { InteractionManager } from 'react-native';

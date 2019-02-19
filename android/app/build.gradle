@@ -112,8 +112,8 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
-        versionName "0.3.0"
+        versionCode 6
+        versionName "0.4.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -173,12 +173,13 @@ android {
 }
 
 dependencies {
+    implementation project(':appcenter')
     implementation project(':react-native-firebase')
     implementation project(':appcenter-push')
     implementation project(':react-native-push-notification')
     implementation project(':appcenter-crashes')
     implementation project(':appcenter-analytics')
-    implementation project(':appcenter')
+
     implementation project(':react-native-config')
     implementation project(':react-native-device-info')
     implementation project(':react-native-android-open-settings')

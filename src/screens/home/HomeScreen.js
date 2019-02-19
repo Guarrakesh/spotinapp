@@ -99,12 +99,6 @@ class HomeScreen extends React.Component {
             !position ? <View style={{flex: 1, justifyContent: 'center'}}><ActivityIndicator size="large"/></View> :
               <ScrollView
                 style={styles.homeContainer}
-                 refreshControl={
-                   <RefreshControl
-                     refreshing={isLoading}
-                     onRefresh={() => this.handleRefresh() }
-                   />
-                 }
               >
                 <InlineListController
                   id={this.HOME_BROADCASTS_LIST_ID}

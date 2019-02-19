@@ -130,7 +130,7 @@ class ListController extends Component {
 
     const params = query || this.getQuery();
 
-    const { sort, order, page = 1, perPage = 20, filter = {} } = params;
+    const { sort, order, page = 1, perPage = this.props.perPage, filter = {} } = params;
 
     const pagination = {
       page: parseInt(page, 10),
@@ -151,6 +151,7 @@ class ListController extends Component {
           { ...filter, ...permanentFilter },
           this.props.basePath,
           this.props.infiniteScroll, //accumulateResults: infiniteScroll
+          this.props.unauthorized,
       )
     } else {
       this.props.crudGetList(
@@ -160,7 +161,8 @@ class ListController extends Component {
           {field: sort, order},
           {...filter, ...permanentFilter},
           this.props.basePath,
-          this.props.infiniteScroll ////accumulateResults: infiniteScroll
+          this.props.infiniteScroll, ////accumulateResults: infiniteScroll
+          this.props.unauthorized,
       );
     }
 
@@ -310,6 +312,7 @@ ListController.propTypes = {
 
   id: PropTypes.string.isRequired,
 
+  unauthorized: PropTypes.bool,
   infiniteScroll: PropTypes.bool
 
 };
@@ -326,7 +329,8 @@ ListController.defaultProps = {
     order: SORT_DESC
   },
   nearPosition: false,
-  parentLoading: false
+  parentLoading: false,
+  unauthorized: false,
 
 };
 

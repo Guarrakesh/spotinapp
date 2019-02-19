@@ -58,7 +58,7 @@ export default (previousState = [], { type, payload, requestPayload, meta }) => 
 
     case CRUD_DELETE_SUCCESS:{
       const index = previousState
-          .map(el => el == (requestPayload ? requestPayload.id : payload.id)) // eslint-disable-line eqeqeq
+          .map(el => el === (requestPayload ? requestPayload.id : payload.id)) // eslint-disable-line eqeqeq
           .indexOf(true);
       if (index === -1) {
         return previousState;

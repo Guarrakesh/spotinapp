@@ -71,7 +71,7 @@ function* watchPosition() {
         }
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       locationChannel.put({type: LOCATION_SET_ERROR, error: err });
       return;
     }

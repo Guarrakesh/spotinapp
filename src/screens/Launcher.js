@@ -5,7 +5,7 @@ import { View, Image, ActivityIndicator, AsyncStorage} from 'react-native';
 import NavigationService from "../navigators/NavigationService";
 import { userCheck } from '../actions/authActions';
 import { ALREADY_STARTED_UP } from "../helpers/asyncStorageKeys";
-
+import { ALREADY_SET_FAVORITE, FAVORITE_SPORTS, FAVORITE_COMPETITORS } from "../sagas/core/favorite";
 
 const Logo = require('../assets/img/logo/logo.png');
 const Together = require('../assets/img/together/together.png');
@@ -18,12 +18,40 @@ class Launcher extends React.Component {
     AsyncStorage.getItem(ALREADY_STARTED_UP).then(item => {
 
       if (item) {
-        self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
+        //l'utente ha gia l'app e ha fatto l'intro
+        //controllo nello storage se ha selezionato i preferiti
+        //se l'ha gia' fatto in precedenza, allora:
+        AsyncStorage.getItem(ALREADY_SET_FAVORITE).then(setted => {
+          if(setted){
+            self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
+          }
+          else {
+            self.props.navigate("FavoriteNavigator", {
+              onDone: () => {
+                self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
+              },
+              onCancel: () => {
+                self.props.navigate("Auth", {}, true);
+              }
+            })
+          }
+        })
+
+        //altrimenti rimanda al setfavorite
       } else {
         self.props.navigate("AppIntro", {
           onGetStarted: () => {
             AsyncStorage.setItem(ALREADY_STARTED_UP, "1");
-            self.props.navigate("Auth", {}, true);
+            //naviga a setfavorite
+            self.props.navigate("FavoriteNavigator", {
+              onDone: () => {
+                self.props.navigate("Auth", {}, true);
+              },
+              onCancel: () => {
+                self.props.navigate("Auth", {}, true);
+              }
+            })
+
           }
         }, true);
       }
@@ -60,10 +88,12 @@ const styles = {
 
 
 export default connect(state => ({
-    isLoading: state.loading > 0
+    isLoading: state.loading > 0,
+    favoriteSports: state.auth.profile.favorite_sports ? state.auth.profile.favorite_sports : [],
+    favoriteCompetitors: state.auth.profile.favorite_competitors ? state.auth.profile.favorite_competitors : []
   })
   , {
-  userCheck,
+    userCheck,
     navigate: NavigationService.navigate,
 
-})(Launcher);
+  })(Launcher);

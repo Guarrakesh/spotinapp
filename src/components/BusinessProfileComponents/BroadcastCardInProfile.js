@@ -56,8 +56,8 @@ const BroadcastCardInProfile = (props) => {
             }
             <View style={styles.eventInfoView}>
 
-              {    event.competition.competitorsHaveLogo ?
-                competitors[0]._links.image_versions[0] && competitors[1]._links.image_versions[0] ?
+              {event.competition.competitorsHaveLogo  ?
+                competitors[0] && competitors[0]._links && competitors[0]._links.image_versions && competitors[0]._links.image_versions[0] && competitors[1]._links.image_versions[0] ?
                   <View style={styles.competitorsLogoView}>
                     <VersionedImageField source={competitors[0]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}}/>
                     <VersionedImageField source={competitors[1]._links.image_versions} minSize={{width: 62, height: 62}} imgSize={{width: 32, height: 32}} style={{marginTop: 8}}/>
@@ -77,7 +77,7 @@ const BroadcastCardInProfile = (props) => {
                 <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
               </View>
             </View>
-            {(newsfeed || newsfeed > 0 ) ?
+            {(offer && offer.description && offer.description !== "" ) ?
               <View style={styles.offerInfoView}>
                 <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
                 <Text style={styles.offerDescriptionText}>{offer.description}</Text>

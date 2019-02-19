@@ -92,6 +92,16 @@ class SettingsScreen extends React.Component {
           <Touchable onPress={() => this.props.navigation.navigate("EditProfileScreen")}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.editProfile")}</Text>
           </Touchable>
+          <Touchable onPress={() => this.props.navigation.navigate("FavoriteNavigator", {
+            onDone: () => {
+              this.props.navigation.navigate("SettingsScreen");
+            },
+            onCancel: () => {
+              this.props.navigation.navigate("SettingsScreen");
+            }
+          })}>
+            <Text style={styles.itemText}>{i18n.t("profile.settings.editFavorites")}</Text>
+          </Touchable>
         </View>
         <View style={styles.sectionView}>
           <Text style={styles.headerText}>{i18n.t("profile.settings.notification").toUpperCase()}</Text>
@@ -123,60 +133,7 @@ class SettingsScreen extends React.Component {
           </Touchable>
         </View>
       </ScrollView>
-    )
-
-    //HO FATTO LA SECTION LIST MA PERSONALIZZARLA È NU BURDELL!!
-
-    // return(
-    //   <SectionList
-    //     style={{backgroundColor: 'white', paddingTop: 16}}
-    //     renderItem={({item, index, section}) => (
-    //       <Touchable style={styles.itemView} onPress={item.onPress}>
-    //         <Text style={styles.itemText} key={index}>{item.text}</Text>
-    //         {item.isSwitchable ?
-    //           <Switch/> : null
-    //         }
-    //       </Touchable>
-    //     )}
-    //     renderSectionHeader={({section: {title}}) => (
-    //       <View style={styles.headerView}>
-    //         <Text style={styles.headerText}>{title.toUpperCase()}</Text>
-    //       </View>
-    //     )}
-    //     sections={[
-    //       {
-    //         title: i18n.t("common.Profile"),
-    //         data:
-    //           [{
-    //             text: i18n.t("profile.settings.editProfile"),
-    //             onPress: () => this.props.navigation.navigate("EditProfileScreen")
-    //           }]
-    //       },
-    //       {
-    //         title: i18n.t("profile.settings.notification"),
-    //         data: [{
-    //           text: i18n.t("profile.settings.disableNotification"),
-    //           isSwitchable: true
-    //         }]
-    //       },
-    //       {
-    //         title: i18n.t("profile.settings.support"),
-    //         data: [
-    //           {text: i18n.t("profile.settings.privacy")},
-    //           {text: i18n.t("profile.settings.contactUs")}
-    //           ]
-    //       },
-    //       {
-    //         title: "",
-    //         data: [
-    //           {text: i18n.t("profile.settings.rateUs")},
-    //           {text: i18n.t("profile.settings.logout")}
-    //         ]
-    //       }
-    //     ]}
-    //     keyExtractor={(item, index) => item + index}
-    //   />
-    // )
+    );
   }
 
 }

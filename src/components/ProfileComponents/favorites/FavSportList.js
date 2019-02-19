@@ -3,23 +3,25 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import {View, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native'
 import { withNamespaces } from 'react-i18next';
 
-import { Typography } from '../common';
-import SportCard from './SportCard';
-import Images from '../../assets/images';
+import { Typography } from '../../common';
+import FavSportCard from './FavSportCard';
+import Images from '../../../assets/images';
 import PropTypes from 'prop-types';
-import Helpers from '../../helpers';
-import themes from '../../styleTheme';
+import Helpers from '../../../helpers';
+import themes from '../../../styleTheme';
 
 
-const SportList = ({
-                     ids,
-                     data,
-                     onItemPress,
-                     isLoading,
-                     total,
-                     version,
-                     t
-                   }) => {
+const FavSportList = ({
+                        ids,
+                        data,
+                        onItemPress,
+                        favCompetitors,
+                        favSports,
+                        isLoading,
+                        total,
+                        version,
+                        t
+                      }) => {
 
   if (isLoading) {
     return(
@@ -39,15 +41,24 @@ const SportList = ({
     return ids.slice(idx * 3, idx * 3 + 3);
   });
 
+  const isSelected = (sportId) => {
+    for(let sport of favSports){
+      if(sport._id === sportId){
+        return true;
+      }
+    }
+    return false;
+  };
 
   const content = sportRows.map((row, idx) => (
     <Row style={{height:150}} key={idx}>{
 
       row.map(id => <Col>
         {data[id].active ?
-          <SportCard key={id} onPress={() => onItemPress(id, data[id].name)}
-                     icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
-                     {...data[id]}/> : null
+          <FavSportCard key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
+                        isSelected={isSelected(data[id]._id)}
+                        icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
+                        {...data[id]}/> : null
         }</Col>)
     }</Row>
   ));
@@ -67,7 +78,7 @@ const SportList = ({
 
 };
 
-SportList.propTypes = {
+FavSportList.propTypes = {
 
   onItemPress: PropTypes.func.isRequired,
 
@@ -81,4 +92,4 @@ SportList.propTypes = {
 };
 
 
-export default withNamespaces()(SportList);
+export default withNamespaces()(FavSportList);

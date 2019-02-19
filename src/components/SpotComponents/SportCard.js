@@ -1,11 +1,8 @@
-
-
 import React from 'react';
+import { StyleSheet } from 'react-native';
 
 import  FloatingCard  from '../common/FloatingCard';
-import { Text, StyleSheet } from 'react-native';
 import themes from '../../styleTheme';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Fonts} from "../common/Fonts";
 
 const SportCard = (props) => {
@@ -36,20 +33,19 @@ const styles = StyleSheet.create({
   },
 
   cardFooter: {
-
     alignSelf: 'center',
     borderTopWidth: 1,
     borderColor: '#EEEEEE',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cardContent: {
 
+  cardContent: {
     paddingBottom: 8,
     justifyContent: 'center',
     alignItems:'center'
   }
-})
+});
 
 export default SportCard;
 

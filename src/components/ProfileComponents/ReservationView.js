@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {get} from "lodash";
+import {get, isEmpty} from "lodash";
 import {Text, StyleSheet, ImageBackground, Image, Alert} from "react-native";
 import { withNamespaces } from 'react-i18next';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -35,7 +35,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
     return(
       moment(startAt).format('dddd D MMMM')
     )
-  }
+  };
 
   let time = (startAt) => {
     return(
@@ -137,9 +137,9 @@ const ReservationView = ({reservation, onCancel, t}) => {
       </ReferenceField>
 
 
-      {(newsfeed || newsfeed > 0) ?
+      {(offer.description && !offer.description.isEmpty) ?
         <View style={styles.offerInfoView}>
-          <Text style={styles.offerTitleText}>{offer.title}</Text>
+          <Text style={styles.offerTitleText}>{offer.title && offer.title !== "" ? offer.title : t("common.discountAtCheckout")}</Text>
           <Text style={styles.offerDescriptionText}>{offer.description}</Text>
         </View> : null
       }

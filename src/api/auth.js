@@ -64,9 +64,8 @@ const auth = {
 
 
   check(payload) {
-
     return new Promise((resolve, reject) => {
-
+    //AsyncStorage.removeItem("ALREADY_SET_FAVORITE");
       Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
         const token = values[0];
         const user = values[1];

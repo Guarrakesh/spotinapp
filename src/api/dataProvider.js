@@ -13,7 +13,7 @@ const httpClient = async (url, options = {}) => {
   }
 
   const token = await auth.getAuthToken();
-  if (!token) return Promise.reject({status: 401, message: "No Auth Token"});
+  //if (!token) return Promise.reject({status: 401, message: "No Auth Token"});
   if (token) options.headers.set('Authorization', `Bearer ${token.accessToken}`);
   options.headers.set('X-Client-Type', 'mobileapp');
 

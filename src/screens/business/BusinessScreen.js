@@ -100,9 +100,6 @@ class BusinessScreen extends React.Component {
         color={themes.base.colors.text.default}
         size={21}/>,
 
-
-
-
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
         color: themes.base.colors.text.default

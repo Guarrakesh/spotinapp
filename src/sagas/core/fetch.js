@@ -15,7 +15,7 @@ import {
   FETCH_END,
   FETCH_ERROR,
   FETCH_START
-} from '../../actions/fetchActions'
+} from '../../actions/fetchActions';
 
 import { AUTH_CHECKING } from '../../actions/authActions';
 import { isChecking } from '../../reducers/auth';
@@ -48,14 +48,17 @@ export function* handleFetch(dataProvider, action) {
     yield call(delay, 100);
     const checking = yield select(isChecking);
     //Se no è in corso alcun Check, allora lo effettuo
-    if (!checking) {
-      yield put({type: AUTH_CHECKING, payload: { checking: true, type }});
-      yield call(auth.check);
-      yield put({type: AUTH_CHECKING, payload: { checking: false, type }});
 
-    } else {
-      //Se è in corso un check, aspetto che finisca mettendomi in ascolto dell'action AUTH_CHECKING -> false
-      yield take(action => action.type === AUTH_CHECKING && action.payload.checking === false);
+    if (action.meta && !action.meta.unauthorized) {
+      if (!checking) {
+        yield put({type: AUTH_CHECKING, payload: {checking: true, type}});
+        yield call(auth.check);
+        yield put({type: AUTH_CHECKING, payload: {checking: false, type}});
+
+      } else {
+        //Se è in corso un check, aspetto che finisca mettendomi in ascolto dell'action AUTH_CHECKING -> false
+        yield take(action => action.type === AUTH_CHECKING && action.payload.checking === false);
+      }
     }
 
 

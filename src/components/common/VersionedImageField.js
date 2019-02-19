@@ -60,6 +60,7 @@ export const VersionedImageField = ({
   }
 
   return (
+    version ?
     isBackground
       ?
       <ImageBackground source={{uri: version.url, width: imgSize.width, height: imgSize.height}}
@@ -74,6 +75,7 @@ export const VersionedImageField = ({
              style={{width: imgSize.width, height: imgSize.height, ...style}}
              resizeMode={"contain"}
              {...rest}/>
+      : null
 
   );
 

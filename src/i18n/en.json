@@ -116,7 +116,21 @@
       "logout": "Logout",
       "logoutConfirm": "Do you want to logout?",
       "no": "No",
-      "yes": "Yes"
+      "yes": "Yes",
+      "editFavorites": "Edit Favorites",
+      "favorite": {
+        "favoriteSport": "Favorite Sports",
+        "favoriteTeam": "Favorite Teams",
+        "searchTeam": "Search Team...",
+        "done": "Done",
+        "selectFavoriteSports": "Select your favorite sports",
+        "selectFavoriteCompetitors": "Select maximum 3 favorite teams",
+        "noTeamsFound": "No team found"
+      },
+      "notifications": {
+        "profileDataUpdateTitle": "Updated data",
+        "profileDataUpdateMessage": "Profile data has been updated"
+      }
     }
 
   },
@@ -127,6 +141,7 @@
     "Profile": "Profile",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "skip": "Skip",
     "at": "at",
     "atCheckout": "at checkout",
     "discountAtCheckout": "Discount at checkout",

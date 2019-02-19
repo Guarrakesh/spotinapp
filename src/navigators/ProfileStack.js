@@ -13,12 +13,10 @@ import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import ReservationScreen from "../screens/profile/ReservationScreen";
 import SettingsScreen from "../screens/profile/SettingsScreen";
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
-
-import AuthNavigator from './AuthNavigator';
-
 import i18n from '../i18n/i18n';
 import themes from "../styleTheme";
-import IntroSwiper from "../screens/intro/AppIntro";
+import FavoriteCompetitorsScreen from "../screens/profile/FavoriteCompetitorsScreen";
+import FavoriteSportsScreen from "../screens/profile/FavoriteSportsScreen";
 
 
 
@@ -124,5 +122,57 @@ export const ProfileStack = createStackNavigator({
   }
 );
 
+export const FavoriteNavigator = createStackNavigator({
+    FavoriteSportsScreen:{
+      screen: FavoriteSportsScreen,
+      navigationOptions: ({navigation}) => ({
+          title: i18n.t('profile.settings.favorite.favoriteSport'),
+          headerBackTitle: null,
+          headerTitleStyle: {
+            width: '100%',
+            textAlign: 'center',
+            alignSelf: 'center',
+            color: themes.base.colors.text.default,
+            //marginLeft: Platform.OS === 'android' ? 0 : null,
+          },
+          headerBackImage: (<Icon
+            color={themes.base.colors.text.default}
+            name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
+          mode: "modal"
+        }
 
-export default ProfileStack;
+      ),
+    },
+    FavoriteCompetitorsScreen: {
+      screen: FavoriteCompetitorsScreen,
+      navigationOptions: ({navigation}) => ({
+        title: i18n.t('profile.settings.favorite.favoriteTeam'),
+        headerBackTitle: null,
+        headerTitleStyle: {
+          width: '100%',
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: themes.base.colors.text.default,
+          marginLeft: Platform.OS === 'android' ? -30 : null,
+        },
+        headerBackImage: (<Icon
+          color={themes.base.colors.text.default}
+          name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>)
+      }),
+    }
+  },
+  {
+    navigationOptions: {
+      headerBackTitle: null,
+      headerBackImage: (<Icon
+        color={themes.base.colors.text.default}
+        name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
+
+      headerStyle: {
+        backgroundColor: themes.base.colors.primary.default
+
+      },
+      headerTintColor: themes.base.colors.text.default,
+    }
+  }
+);

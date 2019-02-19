@@ -30,8 +30,8 @@ const BackgroundPattern = require('../../assets/img/wave_pattern.png');
 let background;
 if (Platform.Version >= 21) {
   background = TouchableNativeFeedback.Ripple(
-      'ThemeAttrAndroid',
-      true
+    'ThemeAttrAndroid',
+    true
   );
 
 } else {
@@ -61,7 +61,8 @@ class LoginScreen extends React.Component {
 
 
     this.setState({formErrors: {}});
-    const { email, password } = this.state;
+    const { password } = this.state;
+    const email = this.state.email.replace(" ", "");
 
     const validationErrors = validate({
       email,
@@ -96,131 +97,130 @@ class LoginScreen extends React.Component {
 
     return (
 
-        <View>
-          <KeyboardAwareScrollView
-              contentContainerStyle={styles.container}
-              bounces={false}
-              keyboardShouldPersistTaps={"handled"}
-          >
+      <View>
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.container}
+          bounces={false}
+          keyboardShouldPersistTaps={"handled"}
+        >
 
-            <StatusBar
-                backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
-                barStyle="dark-content"
-            />
-            <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
-            <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
+          <StatusBar
+            backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
+            barStyle="dark-content"
+          />
+          <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
+          <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
 
-            <ImageBackground source={BackgroundPattern} style={{
+          <ImageBackground source={BackgroundPattern} style={{
             height: '100%',
-
             width: '100%',
             marginTop: -30
           }} resizeMode={'cover'}>
-              <View style={styles.middleContainerStyle}>
+            <View style={styles.middleContainerStyle}>
 
-                <Input
-                    placeholder={t("common.email")}
-                    placeholderTextColor={themes.base.inputPlaceholderColor}
-                    leftIcon={<Icon name={emailError ? "times" : "user"}
+              <Input
+                placeholder={t("common.email")}
+                placeholderTextColor={themes.base.inputPlaceholderColor}
+                leftIcon={<Icon name={emailError ? "times" : "user"}
                                 color={emailError ? colors.danger.default : colors.text.default} size={21}/>}
-                    leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                    containerStyle={styles.inputOuterContainer}
-                    inputContainerStyle={{borderBottomWidth: 0}}
-                    inputStyle={styles.textInputStyle}
-                    autoCapitalize="none"
-                    allowFontScaling={false}
-                    errorMessage={emailError}
-                    displayError={true}
-                    errorStyle={styles.errorMessage}
-                    shake={true}
-                    numberOfLines = {1}
-                    onChangeText={(text) => this.setState({email: text})}
-                    onSubmitEditing={() => {
+                leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
+                containerStyle={styles.inputOuterContainer}
+                inputContainerStyle={{borderBottomWidth: 0}}
+                inputStyle={styles.textInputStyle}
+                autoCapitalize="none"
+                allowFontScaling={false}
+                errorMessage={emailError}
+                displayError={true}
+                errorStyle={styles.errorMessage}
+                shake={true}
+                numberOfLines = {1}
+                onChangeText={(text) => this.setState({email: text})}
+                onSubmitEditing={() => {
                   this.refs.password.focus()
                 }}
 
-                />
-                <Input
-                    placeholder={t("common.password")}
-                    ref="password"
-                    placeholderTextColor={themes.base.inputPlaceholderColor}
-                    leftIcon={<Icon name={passwordError ? "times" : "key"}
+              />
+              <Input
+                placeholder={t("common.password")}
+                ref="password"
+                placeholderTextColor={themes.base.inputPlaceholderColor}
+                leftIcon={<Icon name={passwordError ? "times" : "key"}
                                 color={passwordError ? colors.danger.default : colors.text.default} size={21}/>}
-                    containerStyle={styles.inputOuterContainer}
-                    leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-                    inputContainerStyle={{borderBottomWidth: 0}}
-                    inputStyle={styles.textInputStyle}
-                    allowFontScaling={false}
-                    //errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
-                    shake={errorMessage !== null }
-                    onChangeText={(text) => this.setState({password: text})}
-                    secureTextEntry={true}
-                    errorMessage={passwordError}
-                    displayError={true}
-                    errorStyle={styles.errorMessage}
-                    onSubmitEditing={this.login}
-                    blurOnSubmit={true}
-                    numberOfLines = {1}
-                />
-                <Button
-                    disabled={isLoading || this.state.username === "" || this.state.password === ""}
-                    round
-                    variant="primary"
-                    uppercase
-                    onPress={this.login}
-                    block
-                    loading={isLoading}
-                    loadingProps={{color: colors.accent.default}}
-                >{t("auth.login.signIn")}</Button>
-                <Button
-                    loading={isLoading}
-                    round
-                    block
-                    uppercase
-                    containerStyle={[{backgroundColor: themes.commonColors.facebook,}, {borderRadius: 100}]}
-                    titleStyle={{color: '#fff'}}
-                    onPress={this.facebookLogin}
-                    icon={<Icon
+                containerStyle={styles.inputOuterContainer}
+                leftIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
+                inputContainerStyle={{borderBottomWidth: 0}}
+                inputStyle={styles.textInputStyle}
+                allowFontScaling={false}
+                //errorMessage={this.props.auth.error != null ? this.props.auth.error.message : ""}
+                shake={errorMessage !== null }
+                onChangeText={(text) => this.setState({password: text})}
+                secureTextEntry={true}
+                errorMessage={passwordError}
+                displayError={true}
+                errorStyle={styles.errorMessage}
+                onSubmitEditing={this.login}
+                blurOnSubmit={true}
+                numberOfLines = {1}
+              />
+              <Button
+                disabled={isLoading || this.state.username === "" || this.state.password === ""}
+                round
+                variant="primary"
+                uppercase
+                onPress={this.login}
+                block
+                loading={isLoading}
+                loadingProps={{color: colors.accent.default}}
+              >{t("auth.login.signIn")}</Button>
+              <Button
+                loading={isLoading}
+                round
+                block
+                uppercase
+                containerStyle={[{backgroundColor: themes.commonColors.facebook,}, {borderRadius: 100}]}
+                titleStyle={{color: '#fff'}}
+                onPress={this.facebookLogin}
+                icon={<Icon
                   name='facebook'
                   size={18}
                   color='white'
                 />
                 }
-                    iconContainerStyle={{alignSelf: 'flex-start'}}
-                  >{t("auth.login.facebookSignIn")}</Button>
+                iconContainerStyle={{alignSelf: 'flex-start'}}
+              >{t("auth.login.facebookSignIn")}</Button>
 
-                <Button
-                    block
-                    clear
-                    onPress={this.forgotPassword}
-                > {t("auth.login.passwordForgot")}
-                </Button>
+              <Button
+                block
+                clear
+                onPress={this.forgotPassword}
+              > {t("auth.login.passwordForgot")}
+              </Button>
 
-                  <Button
-                      clear
-                      block
-                      uppercase
-                      disabled={isLoading}
-                      variant="primary"
-                      onPress={() => this.props.navigation.navigate('SignUp')}
-                  >
-                    <Text
-                                uppercase
-                                style={{fontWeight: '700', color: themes.base.colors.accent.default}}>
-                      {t("auth.login.noAccount").toUpperCase()}
-                      </Text>
-                      <Text
-                          uppercase
-                        style={{paddingLeft: 8, fontWeight: '700', color: themes.base.colors.accent.default}}>
-                      {" " + t("auth.login.register").toUpperCase()}
-                    </Text>
-                  </Button>
+              <Button
+                clear
+                block
+                uppercase
+                disabled={isLoading}
+                variant="primary"
+                onPress={() => this.props.navigation.navigate('SignUp')}
+              >
+                <Text
+                  uppercase
+                  style={{fontWeight: '700', color: themes.base.colors.accent.default}}>
+                  {t("auth.login.noAccount").toUpperCase()}
+                </Text>
+                <Text
+                  uppercase
+                  style={{paddingLeft: 8, fontWeight: '700', color: themes.base.colors.accent.default}}>
+                  {" " + t("auth.login.register").toUpperCase()}
+                </Text>
+              </Button>
 
-              </View>
-            </ImageBackground>
-          </KeyboardAwareScrollView>
+            </View>
+          </ImageBackground>
+        </KeyboardAwareScrollView>
 
-        </View>
+      </View>
     )
   }
 }
