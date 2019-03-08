@@ -11,13 +11,28 @@ const userIcon = Images.icons.barIcons.profileSelected;
 
 const UserInfoCard = (props) =>{
 
-  const {user, onEditProfilePress, onLogoutPress} = props;
+  const { user, onEditProfilePress, onLogoutPress } = props;
+  const { picture, photo } = user;
+
+  const profilePic = () => {
+
+    if(photo.versions && photo.versions[0]){
+      return photo.versions[0].url;
+    }
+    else if (picture){
+      return picture;
+    }
+    else {
+      return userIcon;
+    }
+
+  };
 
   return (
 
     <View style={styles.container} elevation={1}>
       <View style={styles.imageView}>
-        <Image source={user.picture ? {uri: user.picture } : userIcon} style={styles.userImage}/>
+        <Image source={picture || photo ? {uri: profilePic() + `?${Date.now()}`, cache: "reload"} : userIcon} style={styles.userImage}/>
       </View>
       <View style={styles.infoView}>
         <Text style={styles.userName} numberOfLines={1} adjustsFontSizeToFit={true}>{user.name}</Text>

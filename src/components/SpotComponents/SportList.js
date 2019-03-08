@@ -24,7 +24,7 @@ const SportList = ({
   if (isLoading) {
     return(
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+        <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default} />
       </View>
     );
   }

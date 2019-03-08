@@ -24,7 +24,7 @@ const ImagesScrollView = (props) => {
             (image.versions && <VersionedImageField
                     source={image.versions}
                     style={{flex: 1}}
-                    minSize={{width: 899, height: 350}}
+                    minSize={{width: 1200, height: 1200}}
                     imgSize={{height: 230, width: deviceWidth}}
                     resizeMode={'cover'}
                 />

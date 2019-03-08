@@ -14,13 +14,9 @@ const SignupBackground = require('../../assets/img/signup_background.png');
 const Logo = require('../../assets/img/logo-text/logo-text.png');
 import {
   View,
-  Text,
   Image,
   StyleSheet,
-  ActivityIndicator,
-  Dimensions,
   ImageBackground,
-  Platform,
   StatusBar
 } from 'react-native';
 

@@ -7,7 +7,7 @@ import ActionButton from 'react-native-action-button';
 
 import 'moment/locale/it';
 
-import { View, SearchBar} from '../../components/common';
+import { View, SearchBar, Button} from '../../components/common';
 
 import BusinessList from '../../components/BusinessComponents/BusinessList';
 import Icon  from 'react-native-vector-icons/Feather';
@@ -187,19 +187,24 @@ class BusinessScreen extends React.Component {
                 }}
                 onItemPress={this.handleBusinessPress}
                 {...controllerProps}/>
-              <ActionButton
-                title=''
-                position={"right"}
-                fixNativeFeedbackRadius={true}
-                buttonColor={themes.base.colors.accent.default}
-                size={52}
-                offsetY={32}
-                onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
-                  data: controllerProps.data,
-                  ids: controllerProps.ids
-                })}
-                renderIcon={() => <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>}
-              />
+              {
+                !controllerProps.isLoading ?
+                  <Button
+                    disabled={controllerProps.isLoading}
+                    variant={"primary"}
+                    containerStyle={styles.mapButton}
+                    titleStyle={{fontSize: 24}}
+                    onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
+                      data: controllerProps.data,
+                      ids: controllerProps.ids
+                    })}
+
+                  >
+                    <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+                  </Button>
+                  : null
+              }
+
             </View>)}}
       </ListController>
     )
@@ -255,8 +260,14 @@ const styles = StyleSheet.create({
     color: themes.base.colors.text.default,
 
   },
-  mapIcon: {
-
+  mapButton: {
+    position: 'absolute',
+    width: 54,
+    height: 54,
+    right: 32,
+    bottom: 16,
+    borderRadius: 32,
+    justifyContent: 'center'
   }
 });
 export default connect(mapStateToProps)(withNamespaces()(BusinessScreen));

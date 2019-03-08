@@ -18,7 +18,7 @@ import {
 } from '../../actions/fetchActions';
 
 import { AUTH_CHECKING } from '../../actions/authActions';
-import { isChecking } from '../../reducers/auth';
+import { isChecking, isAuthenticated } from '../../reducers/auth';
 import { hideNotification } from '../../actions/notificationActions';
 
 import auth from '../../api/auth'
@@ -48,6 +48,11 @@ export function* handleFetch(dataProvider, action) {
     yield call(delay, 100);
     const checking = yield select(isChecking);
     //Se no è in corso alcun Check, allora lo effettuo
+    const isAuth = yield select(isAuthenticated);
+
+    // if(!isAuth){
+    //  action.meta.unauthorized = true;
+    //  }
 
     if (action.meta && !action.meta.unauthorized) {
       if (!checking) {

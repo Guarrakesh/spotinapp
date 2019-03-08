@@ -9,6 +9,7 @@ import {
   RESERVE_BROADCAST_UNDO
 } from "../actions/reservation";
 import { CRUD_DELETE_OPTIMISTIC } from "../actions/dataActions";
+import { SET_FAVORITES } from "../actions/profile";
 
 /**
  * Creo una EventsMap da dare poi come argomento al middleware creator di @redux-beacon.
@@ -24,6 +25,7 @@ export const RESERVATION_COMPLETED = "RESERVATION_COMPLETED";
 export const RESERVATION_START = "RESERVATION_START";
 export const RESERVATION_UNDO = "RESERVATION_UNDO";
 export const RESERVATION_DELETE = "RESERVATION_DELETE";
+export const FAVORITE_SETTED = "FAVORITE_SETTED";
 
 // SportEvents 
 export const EVENT_FAVORITE = "EVENT_FAVORITE";
@@ -61,6 +63,12 @@ const eventsMap = {
   [CRUD_DELETE_OPTIMISTIC]: ({ payload }) => ({ //PRENOTAZIONE ELIMINATA
     type: RESERVATION_DELETE,
     reservationId: get(payload, "id.reservationId") //non funziona :(
+  }),
+  [SET_FAVORITES]: ({ payload }) => ({  //SELEZIONE SPORT E COMPETITORS PREFERITI
+    type: FAVORITE_SETTED,
+    userId: get(payload, "userId"),
+    favorite_sports: get(payload, "favorite_sports"),
+    favorite_competitors: get(payload, "favorite_competitors")
   })
 };
 

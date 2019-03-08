@@ -1,5 +1,5 @@
 <resources>
-
+    <color name="accent">#B47CFF</color>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->

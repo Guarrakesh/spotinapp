@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import {View, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native'
+import {View, ScrollView, Image, ActivityIndicator } from 'react-native'
 import { withNamespaces } from 'react-i18next';
 
 import { Typography } from '../../common';
@@ -26,7 +26,7 @@ const FavSportList = ({
   if (isLoading) {
     return(
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color={themes.base.colors.accent.default} />
+        <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default} />
       </View>
     );
   }

@@ -16,6 +16,7 @@ import Helpers from "../../helpers";
 import {Fonts} from "../common/Fonts";
 
 moment.locale(DeviceInfo.getDeviceLocale());
+
 class ReservationConfirmView extends Component {
 
 
@@ -29,7 +30,7 @@ class ReservationConfirmView extends Component {
 
   render() {
 
-    const {onCancelPress, onConfirmPress, event, t} = this.props;
+    const {onCancelPress, onConfirmPress, onLoginPress, event, t, isAuth} = this.props;
     if (!this.props.data || !event) return null;
 
     const { broadcast } = this.props.data;
@@ -78,9 +79,9 @@ class ReservationConfirmView extends Component {
               {t("browse.getOffer.cancel")}
             </Button>
 
-            <Button elevation={1} onPress={onConfirmPress}
+            <Button elevation={1} onPress={isAuth ? onConfirmPress : onLoginPress}
                      uppercase clear variant="primary">
-              {t("browse.getOffer.confirm")}
+              {isAuth ? t("browse.getOffer.confirm") : t("auth.login.signIn")}
             </Button>
 
           </View>

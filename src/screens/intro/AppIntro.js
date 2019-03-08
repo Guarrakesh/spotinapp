@@ -15,8 +15,8 @@ const slides = ({t}) => [
     text: t("intro.slide1.message"),
     image: require('../../assets/img/logo-full.png'),
     imageStyle: {
-      width: 200,
-      height: 100,
+      width: 250,
+      height: 110,
       marginTop: -150,
       marginBottom: 32
     }

@@ -2,7 +2,8 @@ import React from 'react';
 import { omitBy, isEmpty, pick, isEqual, omit} from 'lodash';
 
 import {connect} from "react-redux";
-import {View, StyleSheet, ImageBackground, Text, Platform, ScrollView, CameraRoll, TouchableOpacity} from "react-native";
+import {View, StyleSheet, ImageBackground, Text, Alert, Platform} from "react-native";
+import ImagePicker from 'react-native-image-picker';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import validate from 'validate.js';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -10,25 +11,29 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Button, Input, Typography, Touchable } from '../../components/common';
 import profileUpdate from '../../validations/profileUpdate';
 import themes from "../../styleTheme";
+import i18n from "../../i18n/i18n";
 import {userCheck, userLogout} from "../../actions/authActions";
-import {updateProfile} from "../../actions/profile";
+import {updateProfile, uploadImage} from "../../actions/profile";
 import {crudDelete} from "../../actions/dataActions";
 import Images from "../../assets/images";
+import Permissions from "react-native-permissions";
+import AndroidOpenSettings from "react-native-android-open-settings";
 
 const colors = themes.base.colors;
 const BackgroundPattern = require('../../assets/img/patterns/liquid-cheese.png');
 const userIcon = Images.icons.barIcons.profileSelected;
-const Fonts = themes.base.fonts;
 class EditProfileScreen extends React.Component{
 
   state = {
     userId: "",
     name: "",
-    picture: "",
+    picture: null,
+    pictureData: null,
     password: "",
     passwordConfirm: "",
     errors: {},
-    canSubmit: false
+    canSubmit: false,
+    imageIsEdited: false
   };
 
   constructor(props) {
@@ -37,19 +42,82 @@ class EditProfileScreen extends React.Component{
   }
   componentDidMount(){
     const { userId } = this.props;
-    const { name, picture } = this.props.profile;
-    this.setState({ userId, name, picture });
+    const { name, picture, photo } = this.props.profile;
+
+    const profilePic = () => {
+
+      if(photo.versions && photo.versions[0]){
+        return photo.versions[0].url + `?${Date.now()}`;
+      }
+      else if (picture){
+        return picture;
+      }
+      else {
+        return userIcon;
+      }
+
+    };
+
+    this.setState({ userId, name, picture: profilePic() });
   }
 
-  handleEditPhotoPress = () => {
-    //cambio immagine del profilo, valutare react-native-image-picker
-    //TODO:
-  };
+  handleEditPhotoPress() {
+    //cambio immagine del profilo
+    const options = {
+      title: 'Seleziona foto',
+      //customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+      storageOptions: {
+        skipBackup: true,
+        path: 'Spot In',
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+
+        Alert.alert(
+          'Spot In non ha i permessi per leggere le tue foto',
+          'Abilita i permessi nelle impostazioni',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'Impostazioni',
+              onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.memoryCardSettings()
+            },
+          ],
+          {cancelable: true},
+        );
+
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const image = response.uri;
+        console.log(image);
+
+        this.setState({
+          pictureData: response,
+          picture: image,
+          canSubmit: true,
+          imageIsEdited: true
+        });
+      }
+    });
+  }
+
   handleBlur(inputName) {
     //Sull' endEditing (blur) convalido il singolo input ed eventualmente mostro l'errore
 
     this.state[inputName] !== "" && this.setState({errors: {...this.state.errors, [inputName]: validate.single(this.state[inputName], profileUpdate[inputName]) || {}}});
   }
+
   handleInputChange(inputName, inputValue) {
     this.setState({ [inputName] : inputValue });
     const { password, passwordConfirm, name } = this.state;
@@ -65,8 +133,9 @@ class EditProfileScreen extends React.Component{
 
     this.setState(newState);
   }
+
   updateProfile() {
-    const {name, password, passwordConfirm, userId} = this.state;
+    const {name, password, passwordConfirm, userId, imageIsEdited, pictureData} = this.state;
     this.setState({errors: {}});
 
 
@@ -74,11 +143,16 @@ class EditProfileScreen extends React.Component{
 
     if(validationErrors) {
       this.setState({errors: validationErrors});
-    } else {
+    }
+    else {
       const self = this;
       this.props.updateProfile(omitBy({userId, name, password}, isEmpty), (payload) => {
         this.setState({...pick(self.props.profile,['name','picture']), password: "", passwordConfirm: "", canSubmit: false});
       });
+      if(imageIsEdited){
+        this.props.uploadImage(userId, pictureData);
+      }
+      this.props.navigation.goBack();
     }
   }
 
@@ -86,9 +160,9 @@ class EditProfileScreen extends React.Component{
 
     const { profile, loading } = this.props;
     const { name, password, passwordConfirm, errors, canSubmit} = this.state;
-    const { email } = profile;
-    return(
 
+
+    return(
 
       <ImageBackground source={BackgroundPattern} style={styles.container}>
         <KeyboardAwareScrollView
@@ -96,10 +170,10 @@ class EditProfileScreen extends React.Component{
           bounces={false}
         >
 
-          <Touchable style={styles.userImage} onPress={this.handleEditPhotoPress}>
+          <Touchable style={styles.userImageTouchable} onPress={() => this.handleEditPhotoPress()}>
             <ImageBackground
-              source={profile.picture ? {uri: profile.picture } : userIcon}
-              style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'flex-end'}}
+              source={this.state.picture ? {uri: this.state.picture, cache: "reload" } : userIcon}
+              style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'flex-end'}}
             >
               <View style={{padding: 5, backgroundColor: 'rgba(255,255,255,.8)', borderRadius: 20}}>
                 <Icon name={"photo-camera"} size={20} color={colors.text.default}/>
@@ -127,7 +201,7 @@ class EditProfileScreen extends React.Component{
             <Typography variant="caption" block align={"left"} style={{marginLeft: 16}} gutterBottom uppercase h4>Password</Typography>
             <Input
               value={password}
-              placeholder={"Inserisci la nuova password"}
+              placeholder={i18n.t("profile.settings.editProfileScreen.insertNewPassword")}
               onEndEditing={() => this.handleBlur('password')}
 
               block
@@ -146,7 +220,7 @@ class EditProfileScreen extends React.Component{
             <Input
               value={passwordConfirm}
               block
-              placeholder={"Ripeti la password"}
+              placeholder={i18n.t("profile.settings.editProfileScreen.repeatPassword")}
               placeholderTextColor={themes.base.inputPlaceholderColor}
               onEndEditing={() => this.handleBlur('passwordConfirm')}
               ref={input => this.passwordConfirm = input}
@@ -171,7 +245,7 @@ class EditProfileScreen extends React.Component{
 
               variant="primary"
               onPress={() => {this.updateProfile()}}
-            >{"Aggiorna"}</Button>
+            >{i18n.t("common.update")}</Button>
           </View>
         </KeyboardAwareScrollView>
 
@@ -187,7 +261,6 @@ const styles = StyleSheet.create({
 
   container: {
     flex:1,
-    paddingTop: 64,
     backgroundColor: themes.base.backgroundColor,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -196,17 +269,17 @@ const styles = StyleSheet.create({
     height: null,
     width: null,
   },
-  userImage: {
+  userImageTouchable: {
     zIndex: 1,
     alignSelf: 'center',
     overflow: 'hidden',
-    borderRadius: 50,
+    borderRadius: themes.base.deviceDimensions.width/6,
     borderWidth: 1,
     borderColor: themes.base.colors.accent.default,
-
-    marginBottom: 100,
-    width: 100,
-    height: 100
+    marginTop: 64,
+    marginBottom: 50,
+    width: themes.base.deviceDimensions.width/3,
+    height: themes.base.deviceDimensions.width/3
   },
   middleContainerStyle: {
     width: '100%',
@@ -231,4 +304,4 @@ const mapStateToProps = (state) => {
     profile: state.auth.profile
   });
 };
-export default connect(mapStateToProps, { userCheck, userLogout, crudDelete, updateProfile })(EditProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout, crudDelete, updateProfile, uploadImage })(EditProfileScreen);

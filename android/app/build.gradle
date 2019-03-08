@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+import com.google.gms.googleservices.GoogleServicesPlugin
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -105,15 +106,17 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:+'
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.2'
 
     defaultConfig {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "0.4.0"
+        versionCode 8
+        versionName "0.4.1"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -151,7 +154,7 @@ android {
         }
         releaseStaging {
             initWith(buildTypes.release)
-            buildConfigField "String", "CODEPUSH_KEY", '"uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ"'
+            buildConfigField "String", "CODEPUSH_KEY", '"aoetyyAdwgh5FbL35ecwdeYbxOrCH1MqxDijX"' //uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ
             applicationIdSuffix ".staging"
             matchingFallbacks = ['release', 'debug']
         }
@@ -173,6 +176,10 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-code-push')
+    implementation project(':react-native-code-push')
+    implementation project(':react-native-image-resizer')
+    implementation project(':react-native-image-picker')
     implementation project(':appcenter')
     implementation project(':react-native-firebase')
     implementation project(':appcenter-push')
@@ -194,9 +201,9 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "com.google.android.gms:play-services-base:+"
     implementation project(':react-native-android-location-enabler')
-    implementation 'com.facebook.android:facebook-login:[4,5)'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation "com.google.firebase:firebase-messaging:16.0.1"
+    implementation 'com.facebook.android:facebook-login:+'
+    implementation 'com.google.firebase:firebase-core:+'
+    implementation "com.google.firebase:firebase-messaging:+"
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
 
 }
@@ -209,4 +216,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
-com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+GoogleServicesPlugin.config.disableVersionCheck = true

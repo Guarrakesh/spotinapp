@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import Carousel from 'react-native-snap-carousel';
 import themes from '../../styleTheme'
-//import BusinessFloatingCardLoader from './BusinessFloatingCardLoader';
 import EventFloatingCard from './EventFloatingCard';
-import {ActivityIndicator, View} from "react-native";
 
 const sliderWidth = themes.base.deviceDimensions.width;
 

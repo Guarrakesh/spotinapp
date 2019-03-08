@@ -27,6 +27,7 @@ import queryReducer, {
   SET_PER_PAGE,
   SORT_DESC,
 } from '../reducers/entities/list/queryReducer';
+import themes from "../styleTheme";
 
 /**
  * List Controller
@@ -236,7 +237,7 @@ class ListController extends Component {
 
       return (
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <ActivityIndicator size="large" />
+            <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
           </View>
       )
     }

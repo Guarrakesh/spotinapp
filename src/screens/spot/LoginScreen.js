@@ -1,19 +1,21 @@
 import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {Text, Image, StyleSheet, ActivityIndicator, ImageBackground,
-  Platform, ScrollView, StatusBar, KeyboardAvoidingView, TouchableNativeFeedback } from "react-native";
+import {
+  Text, Image, StyleSheet, ImageBackground,
+  Platform, StatusBar, KeyboardAvoidingView, TouchableNativeFeedback, Linking, WebView
+} from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { withNamespaces } from 'react-i18next';
 
 import {Input} from "react-native-elements";
-import {Button, View, Typography} from '../../components/common';
-
-
+import {Button, Touchable, View} from '../../components/common';
 import login from '../../validations/login';
 import validate from 'validate.js';
 import themes from "../../styleTheme";
 import { userLogin, oAuthFacebookLogin } from "../../actions/authActions";
+import i18n from "../../i18n/i18n";
+import Modal from "react-native-modal";
 
 
 
@@ -49,7 +51,8 @@ class LoginScreen extends React.Component {
     this.state = {
       email: "",
       password: "",
-      formErrors: {}
+      formErrors: {},
+      termsModalVisible: false
     };
 
     this.login = this.login.bind(this);
@@ -74,15 +77,23 @@ class LoginScreen extends React.Component {
       this.props.userLogin({
         email,
         password
-      });
+      }, "Main");
     }
   }
+
   forgotPassword() {
     this.props.navigation.navigate('ForgotPassword')
   }
+
   facebookLogin() {
     this.props.facebookLogin();
   }
+
+  handleTermsPress() {
+    this.setState({termsModalVisible: true});
+  }
+
+
   render() {
 
     const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
@@ -95,6 +106,22 @@ class LoginScreen extends React.Component {
     // }
     //else {
 
+    const termsModal = (
+      <Modal
+        animationIn={"slideInUp"}
+        animationOut={"slideOutDown"}
+        isVisible={this.state.termsModalVisible}
+        style={styles.modalView}
+      >
+        <WebView
+          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
+        />
+        <Touchable style={styles.privacyButton} onPress={() => this.setState({termsModalVisible: false})}>
+          <Text style={styles.privacyButtonText}>OK</Text>
+        </Touchable>
+      </Modal>
+    );
+
     return (
 
       <View>
@@ -103,13 +130,14 @@ class LoginScreen extends React.Component {
           bounces={false}
           keyboardShouldPersistTaps={"handled"}
         >
-
+          {termsModal}
           <StatusBar
             backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
             barStyle="dark-content"
           />
           <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
           <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
+          <Text style={styles.subtitle} allowFontScaling={false}>{t("auth.login.subtitle")}</Text>
 
           <ImageBackground source={BackgroundPattern} style={{
             height: '100%',
@@ -215,7 +243,11 @@ class LoginScreen extends React.Component {
                   {" " + t("auth.login.register").toUpperCase()}
                 </Text>
               </Button>
-
+              <Text style={styles.policy}>
+                {i18n.t("auth.terms.policyFirstPart")}
+                <Text style={styles.policyAccent} onPress={() => this.handleTermsPress()}>{i18n.t("auth.terms.termsAndCond")}</Text>
+                {i18n.t("auth.terms.policySecondPart")}
+              </Text>
             </View>
           </ImageBackground>
         </KeyboardAwareScrollView>
@@ -235,18 +267,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white.default
   },
   logo: {
-    marginTop: 55,
-    height: 128,
+    marginTop: 30,
+    height: 80,
 
   },
   title: {
-
-    marginTop: 16 ,
+    marginTop: 40,
     fontSize: 18,
     fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.text.default,
+    color: colors.accent.default,
     textAlign: 'center',
     textTransform: 'uppercase'
+  },
+  subtitle: {
+    marginBottom: 20,
+    marginTop: 8,
+    fontSize: 16,
+    fontFamily: themes.base.fonts.LatoMedium,
+    color: colors.text.default,
+    textAlign: 'center'
   },
 
   inputOuterContainer: {
@@ -303,12 +342,39 @@ const styles = StyleSheet.create({
 
 
   },
+  policy: {
+    fontSize: 12,
+    fontFamily: themes.base.fonts.LatoBold,
+    color: colors.text.default,
+    marginBottom: 8
+  },
+  policyAccent: {
+    color: colors.accent.default
+  },
 
   bottomView: {
     width:'100%',
     height: 200,
     backgroundColor: colors.primary.default
+  },
+  modalView: {
+    borderTopRightRadius: themes.base.borderRadius,
+    borderTopLeftRadius: themes.base.borderRadius,
+    overflow: "hidden"
+  },
+  privacyButton: {
+    backgroundColor: themes.base.colors.accent.default,
+    padding: 16,
+    alignItems: "center",
+    borderBottomRightRadius: themes.base.borderRadius,
+    borderBottomLeftRadius: themes.base.borderRadius
+  },
+  privacyButtonText: {
+    fontSize: 16,
+    fontFamily: themes.base.fonts.LatoBold,
+    color: themes.base.colors.white.default
   }
+
 });
 
 const mapStateToProps = (state) => {

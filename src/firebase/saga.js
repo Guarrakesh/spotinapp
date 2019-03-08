@@ -114,6 +114,8 @@ function* initFcm() {
     const token = yield call(getToken);
     const storedToken = yield call(AsyncStorage.getItem, "fcmToken");
 
+    //console.log("FCM TOKEN: ", storedToken);
+
     if (token !== storedToken) {
       fcmNotificationChannel.put({ type: FCM_TOKEN_REFRESHED, payload: token});
     }
@@ -143,7 +145,7 @@ function* initFcm() {
 
         notification
             .android.setChannelId(ANDROID_MAIN_CHANNEL_ID)
-            .android.setSmallIcon('ic_launcher') //TODO: icona piccola da settare
+            .android.setSmallIcon('notification_icon') //TODO: icona piccola da settare
             .android.setColor(themes.base.colors.accent.default) // you can set a color here
             .android.setPriority(firebase.notifications.Android.Priority.High);
         firebase.notifications()

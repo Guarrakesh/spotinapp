@@ -2,8 +2,6 @@ import React from 'react';
 
 import BusinessCard from './BusinessCard';
 import {ActivityIndicator, FlatList, View, Text} from 'react-native';
-
-import Images from '../../assets/images';
 import PropTypes from 'prop-types';
 import themes from "../../styleTheme";
 //import broadcasts from "../../api/broadcasts";
@@ -37,7 +35,7 @@ class BusinessList extends React.Component {
     if(isLoading){
       return(
           <View style={[{flex: 1, justifyContent: 'center'}]}>
-            <ActivityIndicator size="large" color={themes.base.colors.text.default}/>
+            <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
           </View>
       )
     }
@@ -54,6 +52,7 @@ class BusinessList extends React.Component {
         <FlatList
             {...rest}
             style={[style]}
+            contentContainerStyle={{paddingBottom: 85}}
             data={ids}
             renderItem={({item}) => <BusinessCard
                 business={data[item]}

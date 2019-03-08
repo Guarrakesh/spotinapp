@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Text, StyleSheet} from "react-native";
+import {Text, StyleSheet, Platform} from "react-native";
 
 import ListController from '../../controllers/ListController';
 import i18n from "../../i18n/i18n";
@@ -27,7 +27,7 @@ class FavoriteSportsScreen extends React.Component {
     return {
       headerRight: (
         <Touchable
-          style={{backgroundColor: 'transparent', marginRight: 16, borderRadius: 50}}
+          style={{backgroundColor: 'transparent', marginRight: Platform.OS === "android" ? null : 16, borderRadius: 50}}
           onPress={() => navigation.getParam('handleDonePress')()}
         >
           <Text style={styles.doneButton}>{i18n.t("profile.settings.favorite.done")}</Text>
@@ -35,7 +35,7 @@ class FavoriteSportsScreen extends React.Component {
       ),
       headerLeft: (
         <Touchable
-          style={{backgroundColor: 'transparent', marginLeft: 16, borderRadius: 50}}
+          style={{backgroundColor: 'transparent', marginLeft: Platform.OS === "android" ? null : 16, borderRadius: 50}}
           onPress={() => navigation.getParam("handleCancelPress")()}
         >
           <Text style={styles.cancelButton}>{i18n.t("common.cancel")}</Text>
@@ -46,7 +46,10 @@ class FavoriteSportsScreen extends React.Component {
 
   componentDidMount(){
     this.setState({favSports: this.props.favoriteSports, favCompetitors: this.props.favoriteCompetitors});
-    this.props.navigation.setParams({ handleDonePress: this.handleDonePress, handleCancelPress: this.handleCancelPress });
+    this.props.navigation.setParams({
+      handleDonePress: this.handleDonePress,
+      handleCancelPress: this.handleCancelPress
+    });
 
   }
 
@@ -124,7 +127,6 @@ class FavoriteSportsScreen extends React.Component {
   render() {
     return (
       <ListController
-        unauthorized
         id="sport_screen_list"
         resource="sports"
         perPage={20}
@@ -144,11 +146,13 @@ class FavoriteSportsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   doneButton: {
+    margin: Platform.OS === "android" ? 16 : null,
     color: themes.base.colors.accent.default,
     fontSize: 16,
     fontFamily: Fonts.LatoBold
   },
   cancelButton: {
+    margin: Platform.OS === "android" ? 16 : null,
     color: themes.base.colors.text.dark,
     fontSize: 16,
     fontFamily: Fonts.Lato

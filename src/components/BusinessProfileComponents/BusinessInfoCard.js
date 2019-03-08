@@ -166,6 +166,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 25
   }
-})
+});
 
 export default BusinessInfoCard;

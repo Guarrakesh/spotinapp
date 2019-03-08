@@ -78,7 +78,6 @@ class FavoriteCompetitorsScreen extends React.Component {
     return(
 
       <ListController
-        unauthorized
         id={`${sportId}_favorite_list`}
         resource={"competitors"}
         perPage={15}

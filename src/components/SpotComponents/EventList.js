@@ -37,20 +37,20 @@ class EventList extends React.Component {
   render() {
 
     const {
-        isLoading = true,
-        data,
-        ids,
-        refresh,
-        isRefreshing,
-        onItemPress,
-        onFavoritePress,
-        setPage,
-        page,
-        total,
-        noContent,
-        t,
+      isLoading = true,
+      data,
+      ids,
+      refresh,
+      isRefreshing,
+      onItemPress,
+      onFavoritePress,
+      setPage,
+      page,
+      total,
+      noContent,
+      t,
 
-        ...props
+      ...props
     } = this.props;
 
 
@@ -63,7 +63,7 @@ class EventList extends React.Component {
         sections.push(sectionKey);
 
       return sections;
-    }, new Array());
+    }, []);
 
     const sections = sectionKeys.map(key => {
       const section = {key};
@@ -84,33 +84,34 @@ class EventList extends React.Component {
     };
 
     if (noContent){
-      return (  <View style={styles.noContentView}>
-              <Typography style={styles.noContentText}>
-                {t("browse.noEvents")}
-            </Typography>
-          </View>
+      return (
+        <View style={styles.noContentView}>
+          <Typography style={styles.noContentText}>
+            {t("browse.noEvents")}
+          </Typography>
+        </View>
       )
     }
 
     return (
-        <SectionList
-            renderItem={({item}) => <EventCard
-                key={data[item]._id}
-                onPress={ ()=> onItemPress(item, data[item])}
-                onFavoritePress={ () => onFavoritePress(item, data[item])}
-                {...data[item]}/>}
-            contentContainerStyle={styles.container}
-            onEndReached={this.loadMore.bind(this)}
-            onEndReachedThreshold={0.5}
-            renderSectionHeader={headerSection}
-            sections={sections}
-            stickySectionHeadersEnabled={false}
-            onRefresh={refresh}
-            refreshing={isRefreshing}
-            ListFooterComponent={isLoading && <ActivityIndicator/>}
-            ListHeaderComponent={<Typography gutterBottom variant="heading" style={{padding: 8}}
-            >{t("browse.selectEvent")}</Typography> }
-        />
+      <SectionList
+        renderItem={({item}) => <EventCard
+          key={data[item]._id}
+          onPress={ ()=> onItemPress(item, data[item])}
+          onFavoritePress={ () => onFavoritePress(item, data[item])}
+          {...data[item]}/>}
+        contentContainerStyle={styles.container}
+        onEndReached={this.loadMore.bind(this)}
+        onEndReachedThreshold={0.5}
+        renderSectionHeader={headerSection}
+        sections={sections}
+        stickySectionHeadersEnabled={false}
+        onRefresh={refresh}
+        refreshing={isRefreshing}
+        ListFooterComponent={isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
+        ListHeaderComponent={<Typography gutterBottom variant="heading" style={{padding: 8}}
+        >{t("browse.selectEvent")}</Typography> }
+      />
     );
   }
 }
@@ -153,14 +154,14 @@ const styles = StyleSheet.create({
     color: themes.base.colors.text.default
   },
   sectionHeader:
-      {
-        marginLeft: 16,
-        marginTop: 16,
-        fontSize: 20,
-        color: themes.base.colors.text.default,
-        textTransform: 'capitalize',
-        fontFamily: Fonts.LatoBold
-      }
+    {
+      marginLeft: 16,
+      marginTop: 16,
+      fontSize: 20,
+      color: themes.base.colors.text.default,
+      textTransform: 'capitalize',
+      fontFamily: Fonts.LatoBold
+    }
 });
 
 export default withNamespaces()(EventList);

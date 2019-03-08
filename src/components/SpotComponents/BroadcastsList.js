@@ -1,9 +1,8 @@
 import React from "react";
-import {StyleSheet, FlatList, View, Animated, ActivityIndicator} from "react-native";
+import {StyleSheet, FlatList, View, Animated} from "react-native";
 import PropTypes from "prop-types";
-//import broadcasts from "../../api/broadcasts";
 import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
-import { withNamespaces, Trans } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 
 import { Button, Typography } from '../../components/common';
 import themes from "../../styleTheme";
@@ -107,6 +106,7 @@ BroadcastsList.propTypes = {
 const styles = StyleSheet.create({
   container: {
     marginTop: -20,
+    paddingBottom: 80 //l'ultimo viene coperto dal MapButton
   },
   noBroadcastText: {
     marginBottom: 16,

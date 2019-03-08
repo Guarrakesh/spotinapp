@@ -26,15 +26,15 @@ class CompetitionsScreen extends React.Component {
 
 
     return (
-        <ListController
-            id={`${sportId}_competition_list`}
-            resource="competitions"
-            perPage={100}
-            filter={{sport: sportId}}
-        >
-          { controllerProps => <CompetitionList onItemPress={this.handleItemPress} { ...controllerProps}/> }
+      <ListController
+        id={`${sportId}_competition_list`}
+        resource="competitions"
+        perPage={100}
+        filter={{sport: sportId}}
+      >
+        { controllerProps => <CompetitionList onItemPress={this.handleItemPress} { ...controllerProps}/> }
 
-        </ListController>
+      </ListController>
     );
 
   }

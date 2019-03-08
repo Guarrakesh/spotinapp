@@ -3,13 +3,13 @@ import PushNotification from 'react-native-push-notification';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 import View from '../../components/common/View';
-import {ScrollView, Text, StyleSheet, ActivityIndicator, Button} from 'react-native';
+import {ScrollView, Text, StyleSheet, ActivityIndicator, Button, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { userLogout, userCheck } from '../../actions/authActions';
-import { crudDelete } from '../../actions/dataActions';
-import {Touchable} from '../../components/common';
-
+import { deleteFavoriteEvent } from '../../actions/events';
+import {Touchable, Typography} from '../../components/common';
+import NotLoggedView from "../../components/BusinessProfileComponents/NotLoggedView";
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
 import SavedEventsList from '../../components/ProfileComponents/SavedEventsList';
@@ -29,6 +29,8 @@ class ProfileScreen extends React.Component {
     this.handleFavoriteEventPress = this.handleFavoriteEventPress.bind(this);
     this.handleReservationPress = this.handleReservationPress.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
+    this.handleLoginPress = this.handleLoginPress.bind(this);
+
   }
 
   static navigationOptions = ({navigation}) => {
@@ -36,13 +38,14 @@ class ProfileScreen extends React.Component {
       headerRight: (
         <Touchable
 
-          style={{backgroundColor: 'transparent', marginRight: 16, borderRadius: 50}}
+          style={{backgroundColor: 'transparent', marginRight: Platform.OS === "android" ? null : 16, borderRadius: 50}}
           onPress={() => navigation.navigate('SettingsScreen')}
         >
           <Icon
             name='settings'
             size={24}
             color={themes.base.colors.text.default}
+            style={{margin: Platform.OS === "android" ? 16 : null,}}
 
           />
         </Touchable>
@@ -63,9 +66,7 @@ class ProfileScreen extends React.Component {
   }
 
   handleFavoriteEventRemove(eventId) {
-    this.props.crudDelete('events', eventId, {},
-      `/users/${this.props.userId}`, 'profile_savedEvents_list');
-
+    this.props.deleteFavoriteEvent(this.props.userId, eventId);
   }
 
   handleFavoriteEventPress(eventId, event) {
@@ -82,6 +83,9 @@ class ProfileScreen extends React.Component {
     this.props.navigation.navigate('EditProfileScreen');
   }
 
+  handleLoginPress(){
+    this.props.navigation.navigate("Auth")
+  }
 
   render() {
 
@@ -91,7 +95,7 @@ class ProfileScreen extends React.Component {
       <ProfileController>
         {({profile, loggedIn, isLoading}) =>
           isLoading ?
-            <ActivityIndicator size="large" color={themes.base.colors.accent.default}/> :
+            <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/> :
             <ScrollView style={{flex: 1, backgroundColor: themes.base.colors.white.default}}>
               {loggedIn && profile._id ?
 
@@ -122,9 +126,7 @@ class ProfileScreen extends React.Component {
                     }
                   </InlineListController>
                 </View> :
-                <Text style={{alignSelf: 'center', fontSize: 20, marginTop: 16}}>
-                  ⊗ Impossibile caricare il profilo ⊗
-                </Text>
+                <NotLoggedView onLoginPress={this.handleLoginPress}/>
               }
             </ScrollView>
         }
@@ -140,4 +142,4 @@ const mapStateToProps = (state) => {
     userId: state.auth.profile ? state.auth.profile._id : undefined
   });
 };
-export default connect(mapStateToProps, { userCheck, userLogout, crudDelete })(ProfileScreen);
+export default connect(mapStateToProps, { userCheck, userLogout, deleteFavoriteEvent })(ProfileScreen);

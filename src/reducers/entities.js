@@ -17,8 +17,8 @@ export default (previousState = initialState, action) => {
     };
 
     const newState = {
-        ...previousState,
-        [action.payload.name]: resourceState
+      ...previousState,
+      [action.payload.name]: resourceState
     };
 
     return newState;
@@ -41,18 +41,18 @@ export default (previousState = initialState, action) => {
 
   const resources = Object.keys(previousState);
   const newState = resources.reduce(
-      (acc, resource) => ({
-          ...acc,
-          [resource]:
-              action.meta.resource === resource
-                ? {
-                      props: previousState[resource].props,
-                      data: data(previousState[resource].data, action),
-                      list: list(previousState[resource].list, action)
-                  }
-                : previousState[resource]
-      }),
-      {}
+    (acc, resource) => ({
+      ...acc,
+      [resource]:
+        action.meta.resource === resource
+          ? {
+            props: previousState[resource].props,
+            data: data(previousState[resource].data, action),
+            list: list(previousState[resource].list, action)
+          }
+          : previousState[resource]
+    }),
+    {}
   );
   return newState;
 };

@@ -212,7 +212,6 @@ export const crudDelete = (
     id,
     previousData,
     basePath,
-
     listId,
 ) => ({
   type: CRUD_DELETE,

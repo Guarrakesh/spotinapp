@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -80,6 +79,8 @@
 		B008E7D97DD2411CA3F7E4E0 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4971F59F611F43A5BCA2ADBC /* Lato-Thin.ttf */; };
 		B205B31C17574F1F8E346A5C /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EC9D668B34709AF81A225 /* Lato-ThinItalic.ttf */; };
 		BEF5C31FFB5340869598E8D5 /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC1DE8993C144FC088100073 /* Lato-HeavyItalic.ttf */; };
+		C422D26D222D88C20064D312 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C422D26B222D88770064D312 /* libRNImagePicker.a */; };
+		C4A0AC1F222FE2680036BC16 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A0ABFB222FE2520036BC16 /* libRCTImageResizer.a */; };
 		C4E3FD24219604E30076C942 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E3FD212196046D0076C942 /* libRCTPushNotification.a */; };
 		C83FB50239664434AC1DBCD2 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 771B69A9E3CF4A3181612257 /* Lato-SemiboldItalic.ttf */; };
 		C9AB8C2A229C427BA9BA3009 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65620899A51A438C9C2828C1 /* libAppCenterReactNativeCrashes.a */; };
@@ -387,6 +388,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		C422D26A222D88770064D312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C422D239222D88770064D312 /* RNImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
+			remoteInfo = RNImagePicker;
+		};
 		C48EF47E218B96F500DB0ADF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E55DC01179E7453D87927CA2 /* AppCenterReactNative.xcodeproj */;
@@ -414,6 +422,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = BA189FAA1EEE74F100CAD13F;
 			remoteInfo = AppCenterReactNativePush;
+		};
+		C4A0ABFA222FE2520036BC16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4A0ABEA222FE2520036BC16 /* RCTImageResizer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
+			remoteInfo = RCTImageResizer;
 		};
 		C4B9696E21A047C1000C03C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -518,6 +533,8 @@
 		A98AF76EA55C40B19183AFE7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B4501641154243228880F3A7 /* Lato-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Semibold.ttf"; path = "../src/assets/fonts/Lato-Semibold.ttf"; sourceTree = "<group>"; };
+		C422D239222D88770064D312 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
+		C4A0ABEA222FE2520036BC16 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		C4E3FD1B2196046D0076C942 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		C4FDE5FA21A329D9005A3D04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5ADDBB079244BB3923C89F1 /* Lato-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
@@ -548,6 +565,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A0AC1F222FE2680036BC16 /* libRCTImageResizer.a in Frameworks */,
+				C422D26D222D88C20064D312 /* libRNImagePicker.a in Frameworks */,
 				C4E3FD24219604E30076C942 /* libRCTPushNotification.a in Frameworks */,
 				818D20F4218D1EDD009D2B70 /* libReactNativeConfig.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -835,6 +854,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C4A0ABEA222FE2520036BC16 /* RCTImageResizer.xcodeproj */,
+				C422D239222D88770064D312 /* RNImagePicker.xcodeproj */,
 				C4E3FD1B2196046D0076C942 /* RCTPushNotification.xcodeproj */,
 				818D20EE218D1EC5009D2B70 /* ReactNativeConfig.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -911,6 +932,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C422D23A222D88770064D312 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C422D26B222D88770064D312 /* libRNImagePicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C47C25F521371B6200230ADD /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +981,14 @@
 			isa = PBXGroup;
 			children = (
 				C4929134219CA1D600BEE89B /* libAppCenterReactNativePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4A0ABEB222FE2520036BC16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4A0ABFB222FE2520036BC16 /* libRCTImageResizer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1098,7 +1135,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
 								enabled = 1;
@@ -1172,6 +1209,10 @@
 					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
 				},
 				{
+					ProductGroup = C4A0ABEB222FE2520036BC16 /* Products */;
+					ProjectRef = C4A0ABEA222FE2520036BC16 /* RCTImageResizer.xcodeproj */;
+				},
+				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
 				},
@@ -1210,6 +1251,10 @@
 				{
 					ProductGroup = C4B9696B21A047C1000C03C9 /* Products */;
 					ProjectRef = A26C995643C74835B2614A5D /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = C422D23A222D88770064D312 /* Products */;
+					ProjectRef = C422D239222D88770064D312 /* RNImagePicker.xcodeproj */;
 				},
 				{
 					ProductGroup = 81A11DAE2150293C006E574D /* Products */;
@@ -1501,6 +1546,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C422D26B222D88770064D312 /* libRNImagePicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNImagePicker.a;
+			remoteRef = C422D26A222D88770064D312 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C48EF47F218B96F500DB0ADF /* libAppCenterReactNative.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1527,6 +1579,13 @@
 			fileType = archive.ar;
 			path = libAppCenterReactNativePush.a;
 			remoteRef = C4929133219CA1D600BEE89B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4A0ABFB222FE2520036BC16 /* libRCTImageResizer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTImageResizer.a;
+			remoteRef = C4A0ABFA222FE2520036BC16 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C4B9696F21A047C1000C03C9 /* libRNFirebase.a */ = {

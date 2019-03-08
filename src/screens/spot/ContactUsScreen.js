@@ -2,10 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import {Text, StyleSheet, ActivityIndicator, ImageBackground,
-  Platform, Alert, ScrollView, TextInput } from "react-native";
+import {Text, StyleSheet, ImageBackground, TextInput } from "react-native";
 import { withNamespaces } from 'react-i18next';
-import {createRequest} from "../../actions/requests";
 import { Slider } from "react-native-elements";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 

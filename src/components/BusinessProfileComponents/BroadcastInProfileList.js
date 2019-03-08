@@ -1,11 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Text, ActivityIndicator, Button} from 'react-native';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 
 import BroadcastCardInProfile from './BroadcastCardInProfile';
-import broadcasts from "../../api/broadcasts";
-import {Fonts} from "../common/Fonts";
 import themes from '../../styleTheme';
 
 class BroadcastInProfileList extends React.Component {
@@ -75,7 +73,7 @@ class BroadcastInProfileList extends React.Component {
     if (isLoading) {
       return (
         <View style={{height: themes.base.deviceDimensions.height/2}}>
-          <ActivityIndicator size="large" color={themes.base.colors.accent.default}/>
+          <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
         </View>
       )
     }

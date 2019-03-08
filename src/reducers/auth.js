@@ -61,3 +61,4 @@ export default function authReducer(state = initialState, { payload, type, error
 //Selector
 export const isLoggedIn = state => state.auth.isLoggedIn;
 export const isChecking = state => state.auth.checking;
+export const isAuthenticated = state => state.auth.profile.id;

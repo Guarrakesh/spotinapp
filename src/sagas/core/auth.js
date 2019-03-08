@@ -79,7 +79,7 @@ function* handleAuth(action) {
           type: USER_LOGIN_SUCCESS,
           payload: authResponse
         });
-        yield put(NavigationService.navigate(meta.pathName || 'Main', {}, true ));
+        yield put(NavigationService.navigate(meta.pathName || 'Main', {}, false ));
       } catch (e) {
         yield call(handleErrorNotification,e);
 

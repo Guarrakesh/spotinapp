@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Text, StyleSheet, Animated, ActivityIndicator, InteractionManager, Button, Platform} from 'react-native';
+import {Text, StyleSheet, Animated, ActivityIndicator, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import moment from 'moment';
 import 'moment/min/moment-with-locales';
@@ -24,7 +24,7 @@ class BroadcastsScreen extends React.Component {
   };
 
   listId = (eventId) => (
-      `${eventId}_broadcasts_list`
+    `${eventId}_broadcasts_list`
   );
 
   constructor() {
@@ -68,8 +68,8 @@ class BroadcastsScreen extends React.Component {
 
     this.props.navigation.navigate('BusinessProfileScreen', {
       broadcastId: broadcast._id,
-      businessId: broadcast.business, 
-      distance, 
+      businessId: broadcast.business,
+      distance,
       //title: broadcast
     });
   }
@@ -153,54 +153,53 @@ class BroadcastsScreen extends React.Component {
 
     };
     const header = event => (
-        <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}], flexWrap: 'wrap'}]}>
-          <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
-          <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.eventName}>{event.name}</Text>
-          <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.date}>{date}</Animated.Text>
-        </Animated.View>
+      <Animated.View elevation={2} style={[styles.subHeader, { transform: [{translateY}], flexWrap: 'wrap'}]}>
+        <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={[styles.competitionName]}>{event.competition.name}</Animated.Text>
+        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.eventName}>{event.name}</Text>
+        <Animated.Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.date}>{date}</Animated.Text>
+      </Animated.View>
     );
     return (
-        <View style={styles.container}>
-          <ListController
-              id={this.listId(eventId)}
-              perPage="15"
-              resource="broadcasts"
-              sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
-              filter={{event: eventId}}
-              nearPosition={nearPosition}
-          >
-            { controllerProps =>
-                controllerProps.isLoading
-                    ? (
-                    <View style={themes.base.noContentView}>
-                      <ActivityIndicator />
+      <View style={styles.container}>
+        <ListController
+          id={this.listId(eventId)}
+          perPage="15"
+          resource="broadcasts"
+          sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
+          filter={{event: eventId}}
+          nearPosition={nearPosition}
+        >
+          { controllerProps =>
+            controllerProps.isLoading
+              ? (
+                <View style={themes.base.noContentView}>
+                  <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
+                </View>
+              )
+              :
+              <BroadcastsList
+                onScroll={Animated.event(
+                  [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
 
-                    </View>
-                )
-                    :
-                    <BroadcastsList
-                        onScroll={Animated.event(
-                        [ { nativeEvent: { contentOffset: { y: this.state.scrollAnim }}}]
-
-                    )}
-                        { ...controllerProps }
-                        onMapPress={this.handleMapPress}
-                        onContactUsPress={this.handleContactUsPress}
-                        onMomentumScrollBegin={ this._handleMomentumScrollBegin }
-                        onMomentumScrollEnd={this._handleMomentumScrollEnd }
-                        onScrollEndDrag={this._handleScrollEndDrag}
-                        onItemPress={this.handleBusinessPress}
-                        style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
-                    />}
-          </ListController>
-          { event
-              ? header(event)
-              : (
-                  <ReferenceField reference="events" source="id" record={{id: eventId}}>
-                    {({record}) => header(record)}
-                  </ReferenceField>
+                )}
+                { ...controllerProps }
+                onMapPress={this.handleMapPress}
+                onContactUsPress={this.handleContactUsPress}
+                onMomentumScrollBegin={ this._handleMomentumScrollBegin }
+                onMomentumScrollEnd={this._handleMomentumScrollEnd }
+                onScrollEndDrag={this._handleScrollEndDrag}
+                onItemPress={this.handleBusinessPress}
+                style={{paddingTop: HEADER_HEIGHT + 32, paddingLeft: 8, paddingRight: 8 }}
+              />}
+        </ListController>
+        { event
+          ? header(event)
+          : (
+            <ReferenceField reference="events" source="id" record={{id: eventId}}>
+              {({record}) => header(record)}
+            </ReferenceField>
           )}
-        </View>
+      </View>
     )
   }
 }

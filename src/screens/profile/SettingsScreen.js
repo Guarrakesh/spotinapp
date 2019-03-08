@@ -17,9 +17,8 @@ import i18n from '../../i18n/i18n';
 import { Touchable } from "../../components/common";
 import themes from "../../styleTheme";
 import connect from "react-redux/es/connect/connect";
-import {userCheck, userLogout} from "../../actions/authActions";
+import { userCheck, userLogout } from "../../actions/authActions";
 import { updateSettings } from "../../actions/profile";
-
 
 class SettingsScreen extends React.Component {
 
@@ -61,9 +60,8 @@ class SettingsScreen extends React.Component {
 
   }
 
-  ha
 
-  handleRateUs(){
+  static handleRateUs(){
     Linking.openURL(Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=it.spotin" : "https://itunes.apple.com/it/app/spot-in/id1439906179")
   }
 
@@ -72,6 +70,9 @@ class SettingsScreen extends React.Component {
   }
 
   render(){
+
+    const isAuth = this.props.userId;
+
     return(
       <ScrollView style={{backgroundColor: themes.base.colors.white.light}}>
         <Modal
@@ -79,42 +80,50 @@ class SettingsScreen extends React.Component {
           animationOut={"slideOutDown"}
           isVisible={this.state.modalVisible}
           style={styles.modalView}
-          >
+        >
           <WebView
-            source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
+            source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}} //Bug del simulatore iOS lo da sempre in inglese
           />
           <Touchable style={styles.privacyButton} onPress={() => this.setState({modalVisible: false})}>
             <Text style={styles.privacyButtonText}>OK</Text>
           </Touchable>
         </Modal>
-        <View style={styles.sectionView}>
-          <Text style={styles.headerText}>{i18n.t("common.Profile").toUpperCase()}</Text>
-          <Touchable onPress={() => this.props.navigation.navigate("EditProfileScreen")}>
-            <Text style={styles.itemText}>{i18n.t("profile.settings.editProfile")}</Text>
-          </Touchable>
-          <Touchable onPress={() => this.props.navigation.navigate("FavoriteNavigator", {
-            onDone: () => {
-              this.props.navigation.navigate("SettingsScreen");
-            },
-            onCancel: () => {
-              this.props.navigation.navigate("SettingsScreen");
-            }
-          })}>
-            <Text style={styles.itemText}>{i18n.t("profile.settings.editFavorites")}</Text>
-          </Touchable>
-        </View>
-        <View style={styles.sectionView}>
-          <Text style={styles.headerText}>{i18n.t("profile.settings.notification").toUpperCase()}</Text>
-          <View style={{flexDirection: "row", paddingRight: 16}}>
-            <Text style={styles.itemText}>{i18n.t("profile.settings.disableNotification")}</Text>
-            <Switch
-              value={this.state.notificationDisabled}
-              onValueChange={() => this.handleSwitchChange()}
-              thumbTintColor={themes.base.colors.white.divisor}
-              onTintColor={themes.base.colors.accent.default}
-            />
-          </View>
-        </View>
+        {
+          isAuth ?
+            <View style={styles.sectionView}>
+              <Text style={styles.headerText}>{i18n.t("common.Profile").toUpperCase()}</Text>
+              <Touchable onPress={() => this.props.navigation.navigate("EditProfileScreen")}>
+                <Text style={styles.itemText}>{i18n.t("profile.settings.editProfile")}</Text>
+              </Touchable>
+              <Touchable onPress={() => this.props.navigation.navigate("FavoriteNavigator", {
+                onDone: () => {
+                  this.props.navigation.navigate("SettingsScreen");
+                },
+                onCancel: () => {
+                  this.props.navigation.navigate("SettingsScreen");
+                }
+              })}>
+                <Text style={styles.itemText}>{i18n.t("profile.settings.editFavorites")}</Text>
+              </Touchable>
+            </View>
+            : null
+        }
+        {
+          isAuth ?
+            <View style={styles.sectionView}>
+              <Text style={styles.headerText}>{i18n.t("profile.settings.notification").toUpperCase()}</Text>
+              <View style={{flexDirection: "row", paddingRight: 16}}>
+                <Text style={styles.itemText}>{i18n.t("profile.settings.disableNotification")}</Text>
+                <Switch
+                  value={this.state.notificationDisabled}
+                  onValueChange={() => this.handleSwitchChange()}
+                  thumbTintColor={themes.base.colors.white.divisor}
+                  onTintColor={themes.base.colors.accent.default}
+                />
+              </View>
+            </View>
+            : null
+        }
         <View style={styles.sectionView}>
           {/*<Text style={styles.headerText}>{i18n.t("profile.settings.support").toUpperCase()}</Text>*/}
           <Touchable onPress={() => this.handleTerms()}>
@@ -123,14 +132,19 @@ class SettingsScreen extends React.Component {
           <Touchable onPress={() => Linking.openURL("https://spotin.it") }>
             <Text style={styles.itemText}>{i18n.t("profile.settings.visitWebSite")}</Text>
           </Touchable>
-      {/*  </View>
+          {/*  </View>
         <View style={styles.sectionView}>*/}
-          <Touchable onPress={() => this.handleRateUs()}>
+          <Touchable onPress={() => SettingsScreen.handleRateUs()}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.rateUs")}</Text>
           </Touchable>
-          <Touchable onPress={() => this.handleLogout()}>
-            <Text style={[styles.itemText, {color: themes.base.colors.danger.light}]}>{i18n.t("profile.settings.logout")}</Text>
-          </Touchable>
+          {
+            isAuth ?
+              <Touchable onPress={() => this.handleLogout()}>
+                <Text style={[styles.itemText, {color: themes.base.colors.danger.light}]}>{i18n.t("profile.settings.logout")}</Text>
+              </Touchable>
+              : null
+          }
+
         </View>
       </ScrollView>
     );

@@ -11,8 +11,11 @@ import BroadcastFloatingCard from '../../components/BroadcastComponents/Broadcas
 
 class BusinessMapScreen extends React.Component {
 
-  state = {transitionFinished: false, region: null,
-    carouselVisible: true, carouselY: new Animated.Value(20)
+  state = {
+    transitionFinished: false,
+    region: null,
+    carouselVisible: true,
+    carouselY: new Animated.Value(20)
   };
 
   latitudeDelta = 0.1;
@@ -66,13 +69,15 @@ class BusinessMapScreen extends React.Component {
             <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
           </View>
       )
-    };
+    }
+
     const region = {
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
     };
+
     const sliderWidth = themes.base.deviceDimensions.width;
 
     return (

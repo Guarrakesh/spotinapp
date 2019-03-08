@@ -5,7 +5,6 @@ import {
   StyleSheet,
   InteractionManager,
   ScrollView,
-  ActivityIndicator,
   Animated,
   //RefreshControl,
   Button
@@ -26,8 +25,8 @@ import ReservationConfirmView from "../../components/BusinessProfileComponents/R
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 import { refreshList as refreshListAction } from '../../actions/listActions';
 
-
 const HEADER_HEIGHT = 50;
+
 class BusinessProfileScreen extends React.Component {
 
   state = {
@@ -110,6 +109,16 @@ class BusinessProfileScreen extends React.Component {
     this.forceUpdate();
   }
 
+  handleLogin() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        modalVisible: false,
+      });
+      this.props.navigation.navigate("Auth");
+    });
+
+  }
+
  /* handleScroll(e) {
     const scrollY= e.nativeEvent.contentOffset.y;
     if (scrollY > 250 ) {
@@ -164,8 +173,9 @@ class BusinessProfileScreen extends React.Component {
 
                   >
                     <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
+                                              onLoginPress={this.handleLogin.bind(this)}
                                               onCancelPress={this.handleModalDismiss.bind(this)}
-
+                                              isAuth={this.props.userId}
                                               data={this.state.modalData}/>
                   </Modal>
                   <ReferenceManyFieldController
@@ -176,7 +186,6 @@ class BusinessProfileScreen extends React.Component {
                     focusedId={0}
                     sort={{field: "broadcast.event.start_at"}}
                     record={record}
-                    ref={ref => this.amen = ref}
                   >
                     {controllerProps => <BroadcastInProfileList
                       {...controllerProps}

@@ -6,12 +6,18 @@ import NavigationService from "../navigators/NavigationService";
 import { userCheck } from '../actions/authActions';
 import { ALREADY_STARTED_UP } from "../helpers/asyncStorageKeys";
 import { ALREADY_SET_FAVORITE, FAVORITE_SPORTS, FAVORITE_COMPETITORS } from "../sagas/core/favorite";
+import themes from "../styleTheme";
 
 const Logo = require('../assets/img/logo/logo.png');
 const Together = require('../assets/img/together/together.png');
 
 class Launcher extends React.Component {
   componentDidMount() {
+
+    // AsyncStorage.removeItem(FAVORITE_COMPETITORS);
+    // AsyncStorage.removeItem(FAVORITE_SPORTS);
+    // AsyncStorage.removeItem(ALREADY_SET_FAVORITE);
+    // AsyncStorage.removeItem(ALREADY_STARTED_UP);
 
     const self = this;
 
@@ -23,15 +29,16 @@ class Launcher extends React.Component {
         //se l'ha gia' fatto in precedenza, allora:
         AsyncStorage.getItem(ALREADY_SET_FAVORITE).then(setted => {
           if(setted){
-            self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
+            self.props.navigate("Main", {}, true);
           }
           else {
             self.props.navigate("FavoriteNavigator", {
               onDone: () => {
-                self.props.userCheck({redirectOnResolve: {pathName: "Main"}});
+                self.props.navigate("Main", {}, true);
               },
               onCancel: () => {
-                self.props.navigate("Auth", {}, true);
+                AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
+                self.props.navigate("Main", {}, true);
               }
             })
           }
@@ -45,10 +52,11 @@ class Launcher extends React.Component {
             //naviga a setfavorite
             self.props.navigate("FavoriteNavigator", {
               onDone: () => {
-                self.props.navigate("Auth", {}, true);
+                self.props.navigate("Main", {}, true);
               },
               onCancel: () => {
-                self.props.navigate("Auth", {}, true);
+                AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
+                self.props.navigate("Main", {}, true);
               }
             })
 
@@ -65,7 +73,7 @@ class Launcher extends React.Component {
       <View style={styles.container}>
         <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Logo}/>
         <Image source={Together} resizeMethod={"scale"} resizeMode="contain" style={{marginTop: 12, width: 240, height: 128}}/>
-        {isLoading && <ActivityIndicator size="large"/>}
+        {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
       </View>
     );
   }

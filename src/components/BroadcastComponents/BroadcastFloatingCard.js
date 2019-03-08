@@ -103,7 +103,7 @@ const BroadcastFloatingCard = ({
                 </View>
                 <View style={styles.offerView}>
                   <Text style={styles.offerTitle} numberOfLines={1} adjustsFontSizeToFit={true}>
-                    {(newsfeed === 0 || !offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
+                    {(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
                   <Text style={styles.offerValue}>{discount(offer.type)}</Text>
                 </View>
               </View>

@@ -132,6 +132,11 @@
       "notifications": {
         "profileDataUpdateTitle": "Dati aggiornati",
         "profileDataUpdateMessage": "I dati del profilo sono stati aggiornati"
+      },
+      "editProfileScreen": {
+        "imagePickerTitle": "Seleziona immagine del profilo",
+        "insertNewPassword": "Inserisci la nuova password",
+        "repeatPassword": "Ripeti la password"
       }
     }
 
@@ -153,16 +158,19 @@
       "title": "Ops...",
       "message": "Non abbiamo idea di cosa sia successo, ma lavoreremo per risolverlo. \nRiprova più tardi"
     },
-
-    "longPressToRemove": "Tieni premuto per rimuovere un elemento"
+    "email"               : "Email",
+    "password"            : "Password",
+    "passwordConfirm"     : "Conferma la password",
+    "longPressToRemove": "Tieni premuto per rimuovere un elemento",
+    "update": "Aggiorna"
   },
 
 
 
   "auth": {
     "login": {
-      "title"        : "Entra nel tuo account",
-
+      "title"               : "Vieni a tifare con noi!",
+      "subtitle"            : "Accedi e scopri i tuoi vantaggi",
       "signIn"              : "Accedi",
       "facebookSignIn"      : "Entra con Facebook",
       "passwordForgot"      : "Password dimenticata?",
@@ -176,6 +184,11 @@
       "button"              : "Registrati"
 
     },
+    "terms": {
+      "policyFirstPart"     : "Accedendo accetti i",
+      "termsAndCond"        : " Termini e Condizioni ",
+      "policySecondPart"    : "di Spot In"
+    },
     "passwordForgot": {
       "title"               : "Password dimenticata?",
       "subtitle"            : "Inserisci la tua email e ti invieremo le istruzioni per reimpostare la tua password",
@@ -186,11 +199,15 @@
           "message"         : "Ti abbiamo inviato le istruzioni per reimpostare la tua password"
         },
         "failure": {
-          "title"             : "Email non esistente",
-          "message"           : "Non abbiamo trovato account con questa email."
+          "title"           : "Email non esistente",
+          "message"         : "Non abbiamo trovato account con questa email."
         }
       }
 
+    },
+    "notLogged": {
+      "title"               : "Non sei loggato",
+      "addFavorite"         : "Devi essere loggato per aggiungere un evento ai preferiti"
     }
 
   },
@@ -224,5 +241,10 @@
       "title": "inizierà tra 6 ore!",
       "message": "Trova il locale più adatto a te dove seguire l'evento!"
     }
+  },
+
+  "noLocation": {
+    "needPosition": "Spot In ha bisogno della tua posizione per trovare i locali più vicini...",
+    "enablePosition": "Abilita l'accesso alla tua posizione nelle Impostazioni."
   }
 }

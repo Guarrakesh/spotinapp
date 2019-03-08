@@ -101,7 +101,8 @@ const themes = {
       white: whiteColor,
       danger: dangerColor,
       info: infoColor,
-      warning: warningColor
+      warning: warningColor,
+      activityIndicator: accentColor
     },
     elevations: {
       depth1: {

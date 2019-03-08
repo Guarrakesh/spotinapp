@@ -53,7 +53,6 @@ Text.defaultProps.adjustsFontSizeToFit = true;
 
 class ResourceInitializer extends Component {
 
-
   resources = ['sports', 'competitions', 'competitors',
     'events', 'broadcasts', 'businesses', 'reservations'];
   componentWillMount() {

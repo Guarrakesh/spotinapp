@@ -3,12 +3,10 @@ import { Image, Text, Dimensions, StyleSheet} from 'react-native';
 import {View, Touchable} from '../common';
 import moment from 'moment';
 import 'moment/locale/it';
+import i18n from "../../i18n/i18n";
 import themes from '../../styleTheme';
-import ReferenceField from '../common/ReferenceField'
 import VersionedImageField from '../common/VersionedImageField';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
-import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 import Images from '../../assets/images';
 import Helpers from '../../helpers';
 
@@ -56,7 +54,7 @@ const EventCard = ({
         <View style={styles.detailContainer}>
           <Text style={styles.eventNameText} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.dateText}>{date} alle {time}</Text>
+            <Text style={styles.dateText}>{date} {i18n.t("common.at")} {time}</Text>
             {event.sport && <View style={styles.sportIconView}>
               <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
             </View>}
@@ -115,7 +113,7 @@ const styles = {
     flexWrap: 'wrap'
   },
   eventNameText: {
-    fontSize: 18,
+    fontSize: 20,
     color: themes.base.colors.text.default,
     fontFamily: Fonts.Lato,
   },
@@ -126,7 +124,7 @@ const styles = {
   },
   dateText: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 18,
     fontFamily: Fonts.LatoLight
   },
   arrowIconView: {

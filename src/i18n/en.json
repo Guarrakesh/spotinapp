@@ -130,6 +130,11 @@
       "notifications": {
         "profileDataUpdateTitle": "Updated data",
         "profileDataUpdateMessage": "Profile data has been updated"
+      },
+      "editProfileScreen": {
+        "imagePickerTitle": "Select profile image",
+        "insertNewPassword": "Enter new password",
+        "repeatPassword": "Confirm password"
       }
     }
 
@@ -153,15 +158,16 @@
     "email"               : "Email",
     "password"            : "Password",
     "passwordConfirm"     : "Confirm password",
-    "longPressToRemove": "Long press to remove an item"
+    "longPressToRemove": "Long press to remove an item",
+    "update": "Update"
 
   },
 
 
   "auth": {
     "login": {
-      "title"        : "Sign In to your account",
-
+      "title"               : "Cheer with us!",
+      "subtitle"            : "Log in and discover your benefits",
       "signIn"              : "Sign In",
       "facebookSignIn"      : "Sign In with Facebook",
       "passwordForgot"      : "Forgot your password?",
@@ -173,6 +179,11 @@
       "fullname"            : "Full name",
       "button"              : "Sign Up"
 
+    },
+    "terms": {
+      "policyFirstPart"     : "By signing up you accept the Spot In",
+      "termsAndCond"        : " Terms and Conditions",
+      "policySecondPart"    : ""
     },
     "passwordForgot": {
       "title"               : "Forgot your password?",
@@ -189,6 +200,10 @@
         }
       }
 
+    },
+    "notLogged": {
+      "title"               : "You are not logged in",
+      "addFavorite"         : "You must be logged in to add an event to your favorites"
     }
 
   },
@@ -221,7 +236,11 @@
       "title": "will start in 6 hours!",
       "message": "Find the right place for you to watch the event!"
     }
-  }
+  },
 
+  "noLocation": {
+    "needPosition": "Spot In needs your position to find the nearest businesses...",
+    "enablePosition": "Enable access to your location in Settings."
+  }
 
 }

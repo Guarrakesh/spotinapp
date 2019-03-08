@@ -2,7 +2,8 @@ import {
   GET_PROFILE, UPDATE
 } from './types';
 import i18n from "../i18n/i18n";
-import {CRUD_UPDATE} from "./dataActions";
+import {CRUD_DELETE_OPTIMISTIC, CRUD_UPDATE, CRUD_UPDATE_OPTIMISTIC} from "./dataActions";
+import {DELETE} from "./types";
 
 
 export const PROFILE_GET_INFO = 'PROFILE_GET_INFO';
@@ -82,6 +83,22 @@ export const updateSettings = ({ userId: id, notificationsEnabled }, callback ) 
   }
 });
 
+export const UPLOAD_IMAGE_LOADING = "UPLOAD_IMAGE_LOADING";
+export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
+export const UPLOAD_IMAGE_FAILURE = "UPLOAD_IMAGE_FAILURE";
+export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
+export var IMAGE_VERSION = 0;
+
+
+export const uploadImage = (userId, photo) => ({
+  type: UPLOAD_IMAGE,
+  payload: {
+    userId,
+    photo
+  }
+});
+
+
 
 export const SET_FAVORITES = "SET_FAVORITES";
 
@@ -91,5 +108,19 @@ export const setFavorites = ({ userId, favorite_sports, favorite_competitors }) 
     userId,
     favorite_sports,
     favorite_competitors
+  }
+});
+
+export const deleteFavoriteEvent = (userId, id) => ({
+  type: CRUD_DELETE_OPTIMISTIC,
+  payload: {id},
+  meta: {
+    basePath: "/users/"+userId,
+    resource: "events",
+    fetch: DELETE,
+    listId: 'profile_savedEvents_list',
+    linkedResources: {
+      "events": {type: CRUD_UPDATE_OPTIMISTIC, payload: { id: id, data: { isUserFavorite: false }}}
+    }
   }
 });

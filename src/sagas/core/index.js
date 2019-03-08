@@ -13,6 +13,7 @@ import sideActions from "./sideActions";
 import firebaseSaga from '../../firebase/saga';
 import setFavorites from "./favorite";
 import dataProvider from '../../api/dataProvider';
+import uploadImage from "./upload";
 
 export default function* root() {
   yield all([
@@ -26,6 +27,7 @@ export default function* root() {
     fork(setFavorites),
       //Firebase
     fork(firebaseSaga),
+    fork(uploadImage)
   ]);
 
 }

@@ -39,7 +39,7 @@ const sagaMiddleware = createSagaMiddleware();
 //Array dei middleware da usare
 
 
-//onst persistedReducer = persistReducer(persistConfig, rootReducer);
+//const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export default function configureStore(initialState) {

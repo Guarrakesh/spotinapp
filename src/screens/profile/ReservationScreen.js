@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {ScrollView, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+import {ScrollView} from 'react-native';
 
 import { cancelReservation } from '../../actions/reservation';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, TouchableHighlight } from 'react-native';
 
 import { FluidNavigator } from 'react-navigation-fluid-transitions';
 
@@ -9,8 +9,7 @@ import { createStackNavigator }  from 'react-navigation';
 import LoginScreen from '../screens/spot/LoginScreen';
 import SignupScreen from '../screens/spot/SignupScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
-
-import { TouchableHighlight } from 'react-native';
+import DismissButton from "../components/common/DismissButton";
 
 import themes from '../styleTheme';
 import i18n from '../i18n/i18n';
@@ -19,7 +18,7 @@ const BackButton = ({onPress}) => (
     <TouchableHighlight onPress={onPress}>
         <Icon name="keyboard-backspace"/>
     </TouchableHighlight>
-)
+);
 
 
 const AuthNavigator = createStackNavigator(
@@ -33,6 +32,9 @@ const AuthNavigator = createStackNavigator(
               shadowColor: 'transparent',
               borderBottomWidth: 0,
             },
+            headerRight: (
+              <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+            ),
 
           }
         }

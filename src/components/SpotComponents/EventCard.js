@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 
-const colors = themes.base.colors
+const colors = themes.base.colors;
 
 
 const EventCard = (props) => {

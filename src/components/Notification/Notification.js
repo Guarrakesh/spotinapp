@@ -97,7 +97,7 @@ class Notification extends React.Component {
             {...this._panResponder.panHandlers}
             style={{
               position: 'absolute',
-              bottom: 0,
+              top: 0,
               right: 0, left: 0,
               flexDirection: 'row',
               justifyContent: 'center',
@@ -117,7 +117,7 @@ class Notification extends React.Component {
                 {
                   translateY: this.state.animated.interpolate({
                     inputRange: [0,1],
-                    outputRange: [100,1]
+                    outputRange: [-100,1]
                   })
                 }
               ]

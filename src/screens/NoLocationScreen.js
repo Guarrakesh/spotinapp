@@ -7,6 +7,7 @@ import {Button} from "react-native-elements";
 import { Button as MyButton } from '../components/common'
 import Icon from "react-native-vector-icons/MaterialIcons";
 import themes from "../styleTheme";
+import i18n from "../i18n/i18n";
 
 
 import { REFRESH_SCREEN } from '../actions/integrity';
@@ -26,18 +27,18 @@ class NoLocationScreen extends React.Component{
           source={BackgroundPattern} style={{height: '100%', width: '100%', marginTop: -20}}
         >
           <View style={styles.middleContainerStyle}>
-            <Text style={styles.text1}>Spot In ha bisogno della tua posizione per trovare i locali più vicini...</Text>
-            <Text style={styles.text2}> {"Abilita l'accesso alla tua posizione nelle Impostazioni."} </Text>
+            <Text style={styles.text1}>{i18n.t("noLocation.needPosition")}</Text>
+            <Text style={styles.text2}>{i18n.t("noLocation.enablePosition")}</Text>
 
-              {this.props.fetching && <ActivityIndicator size="small"/>}
+              {this.props.fetching && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
 
               <Button
-              title={"Impostazioni"}
+              title={i18n.t("profile.settings.title")}
               titleStyle={styles.sendButtonText}
               buttonStyle={[styles.sendButton, {borderColor: themes.base.colors.accent.default}]}
               onPress={() => {Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()}}
             />
-              <MyButton disabled={this.props.fetching} clear variant="primary" onPress={this.handleRefresh.bind(this)} >Aggiorna</MyButton>
+              <MyButton disabled={this.props.fetching} clear variant="primary" onPress={this.handleRefresh.bind(this)}>{i18n.t("common.update")}</MyButton>
           </View>
         </ImageBackground>
       </View>
