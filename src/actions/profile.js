@@ -83,12 +83,11 @@ export const updateSettings = ({ userId: id, notificationsEnabled }, callback ) 
   }
 });
 
+
+export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const UPLOAD_IMAGE_LOADING = "UPLOAD_IMAGE_LOADING";
 export const UPLOAD_IMAGE_SUCCESS = "UPLOAD_IMAGE_SUCCESS";
 export const UPLOAD_IMAGE_FAILURE = "UPLOAD_IMAGE_FAILURE";
-export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
-export var IMAGE_VERSION = 0;
-
 
 export const uploadImage = (userId, photo) => ({
   type: UPLOAD_IMAGE,
@@ -97,7 +96,6 @@ export const uploadImage = (userId, photo) => ({
     photo
   }
 });
-
 
 
 export const SET_FAVORITES = "SET_FAVORITES";
@@ -109,6 +107,12 @@ export const setFavorites = ({ userId, favorite_sports, favorite_competitors }) 
     favorite_sports,
     favorite_competitors
   }
+});
+
+export const SKIP_FAVORITES = "SKIP_FAVORITES";
+
+export const skipFavorites = () => ({
+  type: SKIP_FAVORITES
 });
 
 export const deleteFavoriteEvent = (userId, id) => ({

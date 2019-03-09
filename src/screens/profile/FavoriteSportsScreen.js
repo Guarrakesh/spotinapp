@@ -38,7 +38,7 @@ class FavoriteSportsScreen extends React.Component {
           style={{backgroundColor: 'transparent', marginLeft: Platform.OS === "android" ? null : 16, borderRadius: 50}}
           onPress={() => navigation.getParam("handleCancelPress")()}
         >
-          <Text style={styles.cancelButton}>{i18n.t("common.cancel")}</Text>
+          <Text style={styles.cancelButton}>{i18n.t("common.skip")}</Text>
         </Touchable>
       )
     }
@@ -68,7 +68,7 @@ class FavoriteSportsScreen extends React.Component {
 
   handleDonePress = () => {
     const { favSports, favCompetitors } = this.state;
-    this.props.dispatch(setFavorites({userId: this.props.userId, favorite_sports: favSports, favorite_competitors: favCompetitors }));
+    this.props.setFavorites({userId: this.props.userId, favorite_sports: favSports, favorite_competitors: favCompetitors });
     const { state } = this.props.navigation;
     if (state && state.params && typeof state.params.onDone === "function") {
       state.params.onDone();
@@ -172,4 +172,4 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(FavoriteSportsScreen);
+export default connect(mapStateToProps, {setFavorites})(FavoriteSportsScreen);

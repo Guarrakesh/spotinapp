@@ -9,7 +9,6 @@ import {
   UPLOAD_IMAGE_LOADING,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
-  IMAGE_VERSION
 } from "../../actions/profile";
 import { FETCH_ERROR } from "../../actions/fetchActions";
 import uploadPhoto from "../../api/upload";

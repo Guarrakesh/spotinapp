@@ -6,10 +6,11 @@ import { LOCATION_SET_POSITION } from "../actions/location";
 import {
   RESERVE_BROADCAST_SUCCESS,
   RESERVE_BROADCAST_START,
-  RESERVE_BROADCAST_UNDO
+  RESERVE_BROADCAST_UNDO,
+  RESERVE_BROADCAST_DELETE
 } from "../actions/reservation";
 import { CRUD_DELETE_OPTIMISTIC } from "../actions/dataActions";
-import { SET_FAVORITES } from "../actions/profile";
+import { SET_FAVORITES, SKIP_FAVORITES } from "../actions/profile";
 
 /**
  * Creo una EventsMap da dare poi come argomento al middleware creator di @redux-beacon.
@@ -26,6 +27,7 @@ export const RESERVATION_START = "RESERVATION_START";
 export const RESERVATION_UNDO = "RESERVATION_UNDO";
 export const RESERVATION_DELETE = "RESERVATION_DELETE";
 export const FAVORITE_SETTED = "FAVORITE_SETTED";
+export const FAVORITE_SKIPPED = "FAVORITE_SKIPPED";
 
 // SportEvents 
 export const EVENT_FAVORITE = "EVENT_FAVORITE";
@@ -48,7 +50,7 @@ const eventsMap = {
   }),
   [RESERVE_BROADCAST_SUCCESS]: ({ payload }) => ({ //PRENOTAZIONE COMPLETATA
     type: RESERVATION_COMPLETED,
-    broadcast: get(payload, "data.broadcast")
+    broadcastId: get(payload, "data.broadcast")
   }),
   [RESERVE_BROADCAST_START]: ({ payload }) => ({ //INIZIO PRENOTAZIONE (Apertura modal)
     type: RESERVATION_START,
@@ -60,15 +62,20 @@ const eventsMap = {
     broadcastId: get(payload, "data.broadcastId"),
     userId: get(payload, "data.userId")
   }),
-  [CRUD_DELETE_OPTIMISTIC]: ({ payload }) => ({ //PRENOTAZIONE ELIMINATA
+  [RESERVE_BROADCAST_DELETE]: ({ payload }) => ({ //PRENOTAZIONE ELIMINATA
     type: RESERVATION_DELETE,
-    reservationId: get(payload, "id.reservationId") //non funziona :(
+    userId: get(payload, "userId"),
+    reservationId: get(payload, "reservationId"),
+    broadcastId: get(payload, "broadcastId")
   }),
   [SET_FAVORITES]: ({ payload }) => ({  //SELEZIONE SPORT E COMPETITORS PREFERITI
     type: FAVORITE_SETTED,
     userId: get(payload, "userId"),
     favorite_sports: get(payload, "favorite_sports"),
     favorite_competitors: get(payload, "favorite_competitors")
+  }),
+  [SKIP_FAVORITES]: () => ({
+    type: FAVORITE_SKIPPED,
   })
 };
 

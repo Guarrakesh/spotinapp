@@ -1,6 +1,5 @@
 import vars from "../vars";
 import auth from "./auth";
-import { Platform } from "react-native";
 import ImageResizer from 'react-native-image-resizer';
 
 const uploadPhoto = (userId, photo) => {

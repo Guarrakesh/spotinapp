@@ -54,7 +54,7 @@ export default function configureStore(initialState) {
   if (Config.ENV === "development" || Config.LOGGER)
     middleware = [...middleware, logger];
   else
-    middleware = [...middleware, logger];
+    middleware = [...middleware];
 
 
 

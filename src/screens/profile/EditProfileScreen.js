@@ -46,7 +46,7 @@ class EditProfileScreen extends React.Component{
 
     const profilePic = () => {
 
-      if(photo.versions && photo.versions[0]){
+      if(photo && photo.versions && photo.versions[0]){
         return photo.versions[0].url + `?${Date.now()}`;
       }
       else if (picture){

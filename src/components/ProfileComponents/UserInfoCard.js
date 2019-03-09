@@ -11,12 +11,12 @@ const userIcon = Images.icons.barIcons.profileSelected;
 
 const UserInfoCard = (props) =>{
 
-  const { user, onEditProfilePress, onLogoutPress } = props;
+  const { user, onEditProfilePress } = props;
   const { picture, photo } = user;
 
   const profilePic = () => {
 
-    if(photo.versions && photo.versions[0]){
+    if(photo && photo.versions && photo.versions[0]){
       return photo.versions[0].url;
     }
     else if (picture){

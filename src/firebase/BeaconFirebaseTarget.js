@@ -10,7 +10,8 @@ import {
   RESERVATION_START,
   RESERVATION_UNDO,
   RESERVATION_DELETE,
-  FAVORITE_SETTED
+  FAVORITE_SETTED,
+  FAVORITE_SKIPPED
 } from "../store/eventsMap";
 
 const Analytics = firebase.analytics();
@@ -50,13 +51,17 @@ const target = () => (events) => {
         break;
       }
       case RESERVATION_DELETE: {
-        Analytics.logEvent("reservation_delete");
+        Analytics.logEvent("reservation_delete", { userId: action.userId, reservationId: action.reservationId, broadcastId: action.broadcastId });
         break;
       }
       case FAVORITE_SETTED: {
         AppEventsLogger.logEvent("favorite_setted");
         Analytics.logEvent("favorite_setted", { favoriteSports: action.favorite_sports, favoriteCompetitors: action.favorite_competitors });
-        //console.log("PREFERITI SETTATI", action.userId, action.favorite_sports, action.favorite_competitors);
+        break;
+      }
+      case FAVORITE_SKIPPED: {
+        AppEventsLogger.logEvent("favorite_skipped");
+        Analytics.logEvent("favorite_skipped");
         break;
       }
     }

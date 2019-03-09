@@ -4,6 +4,7 @@ import { View, Image, ActivityIndicator, AsyncStorage} from 'react-native';
 
 import NavigationService from "../navigators/NavigationService";
 import { userCheck } from '../actions/authActions';
+import { skipFavorites } from "../actions/profile";
 import { ALREADY_STARTED_UP } from "../helpers/asyncStorageKeys";
 import { ALREADY_SET_FAVORITE, FAVORITE_SPORTS, FAVORITE_COMPETITORS } from "../sagas/core/favorite";
 import themes from "../styleTheme";
@@ -38,6 +39,7 @@ class Launcher extends React.Component {
               },
               onCancel: () => {
                 AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
+                this.props.skipFavorites(); //action per analytics
                 self.props.navigate("Main", {}, true);
               }
             })
@@ -56,7 +58,9 @@ class Launcher extends React.Component {
               },
               onCancel: () => {
                 AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
+                this.props.skipFavorites(); //action per analytics
                 self.props.navigate("Main", {}, true);
+
               }
             })
 
@@ -102,6 +106,6 @@ export default connect(state => ({
   })
   , {
     userCheck,
+    skipFavorites,
     navigate: NavigationService.navigate,
-
   })(Launcher);

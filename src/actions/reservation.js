@@ -74,6 +74,7 @@ export const cancelReservation = (userId, reservationId, broadcastIdToUpdate) =>
 //Azioni per traking Facebook/Firebase;
 export const RESERVE_BROADCAST_START = "RESERVE_BROADCAST_START"; //Evento dispatchato su APERTURA modal in BusinessProfileScreen
 export const RESERVE_BROADCAST_UNDO = "RESERVE_BROADCAST_UNDO";//Evento dispatchato su CHIUSURA modal in BusinessProfileScreen
+export const RESERVE_BROADCAST_DELETE = "RESERVE_BROADCAST_DELETE"; //Evento dispatchato su ELIMINAZIONE della prenotazione
 
 export const startReservation = (userId, broadcastId) => ({
   type: RESERVE_BROADCAST_START,
@@ -92,5 +93,14 @@ export const undoReservation = (userId, broadcastId) => ({
       userId,
       broadcastId
     }
+  }
+});
+
+export const deleteReservation = (userId, reservationId, broadcastId) => ({
+  type: RESERVE_BROADCAST_DELETE,
+  payload: {
+    userId,
+    reservationId,
+    broadcastId
   }
 });
