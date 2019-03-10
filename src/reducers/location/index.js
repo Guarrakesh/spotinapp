@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-
+import { get } from 'lodash';
 import near from './near';
 import {
     LOCATION_SET_POSITION
@@ -51,8 +51,15 @@ function locationReducer(state = {
 
 
 export const locationSelector = (state) => state.location.device;
-
-
+export const coordsSelector = state => {
+  if (state.location.device) {
+    return {
+      latitude: get(state.location.device, 'position.coords.latitude'),
+      longitude: get(state.location.device, 'position.coords.longitude')
+    };
+  }
+  return undefined;
+};
 export default combineReducers({
     device: locationReducer,
     near,

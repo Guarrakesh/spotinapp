@@ -115,8 +115,8 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "0.4.1"
+        versionCode 9
+        versionName "0.5.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -176,16 +176,32 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-image-resizer')
+    compile project(':react-native-image-picker')
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-svg')
+    compile project(':react-native-push-notification')
+    compile project(':react-native-maps')
+    compile project(':react-native-geolocation-service')
+    compile project(':react-native-firebase')
+    compile project(':react-native-fbsdk')
+    compile project(':react-native-device-info')
+    compile project(':react-native-config')
+    compile project(':react-native-code-push')
+    compile project(':react-native-android-open-settings')
+    compile project(':react-native-android-location-enabler')
+    compile project(':appcenter-push')
+    compile project(':appcenter-crashes')
+    compile project(':appcenter-analytics')
+    compile project(':appcenter')
     implementation project(':react-native-code-push')
     implementation project(':react-native-code-push')
     implementation project(':react-native-image-resizer')
     implementation project(':react-native-image-picker')
-    implementation project(':appcenter')
+
     implementation project(':react-native-firebase')
-    implementation project(':appcenter-push')
+
     implementation project(':react-native-push-notification')
-    implementation project(':appcenter-crashes')
-    implementation project(':appcenter-analytics')
 
     implementation project(':react-native-config')
     implementation project(':react-native-device-info')

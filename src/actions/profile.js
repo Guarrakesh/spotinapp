@@ -16,14 +16,13 @@ export const profileGetInfo = () => ({
   type: PROFILE_GET_INFO,
   meta: {
     resource: 'users',
-    fetch: GET_PROFILE
-  },
-  onFailure: {
-    notification: {
-      body: 'spotinapp.notification.http_error',
-      level: 'warning'
+    fetch: GET_PROFILE,
+    onFailure: {
+      noRedirectToLogin: true,
+
     }
-  }
+  },
+
 });
 
 export const PROFILE_UPDATE = 'PROFILE_UPDATE';

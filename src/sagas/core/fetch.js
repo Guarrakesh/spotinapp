@@ -26,9 +26,9 @@ import auth from '../../api/auth'
 
 export function* handleFetch(dataProvider, action) {
   const {
-      type,
-      payload,
-      meta: { fetch: fetchMeta, onSuccess, onFailure, ...meta }
+    type,
+    payload,
+    meta: { fetch: fetchMeta, onSuccess, onFailure, ...meta }
   } = action;
   const restType = fetchMeta;
 
@@ -48,13 +48,7 @@ export function* handleFetch(dataProvider, action) {
     yield call(delay, 100);
     const checking = yield select(isChecking);
     //Se no è in corso alcun Check, allora lo effettuo
-    const isAuth = yield select(isAuthenticated);
-
-    // if(!isAuth){
-    //  action.meta.unauthorized = true;
-    //  }
-
-    if (action.meta && !action.meta.unauthorized) {
+    try {
       if (!checking) {
         yield put({type: AUTH_CHECKING, payload: {checking: true, type}});
         yield call(auth.check);
@@ -64,6 +58,12 @@ export function* handleFetch(dataProvider, action) {
         //Se è in corso un check, aspetto che finisca mettendomi in ascolto dell'action AUTH_CHECKING -> false
         yield take(action => action.type === AUTH_CHECKING && action.payload.checking === false);
       }
+    } catch (e) {
+      if (e.status === 401 && meta.authorized) {
+          // La richiesta deve essere autorizzata ma non ho token, esco fuori
+        throw Error(e);
+      }
+      yield put({type: AUTH_CHECKING, payload: { checking: false, type}});
     }
 
 
@@ -100,6 +100,7 @@ export function* handleFetch(dataProvider, action) {
     yield put({type: AUTH_CHECKING, payload: { checking: false, type }});
 
 
+
     yield put({
       type: `${type}_FAILURE`,
       error: error.message ? error.message : error,
@@ -112,7 +113,7 @@ export function* handleFetch(dataProvider, action) {
         fetchStatus: FETCH_ERROR
       }
     });
-    yield put({ type: FETCH_ERROR, error});
+    yield put({ type: FETCH_ERROR, error, meta: onFailure || {}});
   } finally {
     if (yield cancelled()) {
       yield put({ type: FETCH_CANCEL });

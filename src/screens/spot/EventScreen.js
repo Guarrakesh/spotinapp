@@ -9,6 +9,8 @@ import type { Notification, NotificationOpen } from 'react-native-firebase';
 import EventList from '../../components/SpotComponents/EventList';
 import ListController from '../../controllers/ListController';
 import { addFavoriteEvent, deleteFavoriteEvent } from '../../actions/events';
+import { entityView } from "../../actions/view";
+
 import themes from "../../styleTheme";
 
 
@@ -23,7 +25,7 @@ class EventScreen extends React.Component {
   }
 
   handleEventPress(eventId, event) {
-
+    this.props.entityView('sportevent', eventId);
     this.props.navigation.navigate('BroadcastsList', {eventId, event, title: event.name});
 
   }
@@ -141,5 +143,8 @@ class EventScreen extends React.Component {
 
 export default connect(state => ({
     userId: state.auth.profile ? state.auth.profile._id : undefined
-  })
-  , {addFavoriteEvent, deleteFavoriteEvent})(EventScreen);
+  }), {
+  addFavoriteEvent,
+  deleteFavoriteEvent,
+  entityView,
+})(EventScreen);

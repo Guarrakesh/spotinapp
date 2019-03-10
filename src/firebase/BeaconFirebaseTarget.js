@@ -11,7 +11,7 @@ import {
   RESERVATION_UNDO,
   RESERVATION_DELETE,
   FAVORITE_SETTED,
-  FAVORITE_SKIPPED
+  FAVORITE_SKIPPED, ENTITY_VIEW
 } from "../store/eventsMap";
 
 const Analytics = firebase.analytics();
