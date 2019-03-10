@@ -32,6 +32,7 @@ const images = {
       saveIcon: require('./img/intro/saveIcon.png')
     },
     common: {
+      connect: require('./img/connect/connect.png'),
       notFound: require('./img/notFound/NotFound.png'),
       megaphone: require('./img/megaphone/megaphone.png'),
     }
