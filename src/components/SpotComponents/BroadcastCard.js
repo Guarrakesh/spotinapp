@@ -38,7 +38,7 @@ const BroadcastCard = ({
   };
   return (
       <TouchableOpacity onPress={onItemPress}>
-        <View elevation={1} style={styles.innerContainer}>
+        <View style={styles.innerContainer}>
           <View style={styles.topContainer}>
             <ReferenceField reference="businesses" source="business" record={broadcast}>
               { ({ record: business }) =>

@@ -9,7 +9,7 @@ import Images from '../../../assets/images';
 import PropTypes from 'prop-types';
 import Helpers from '../../../helpers';
 import themes from '../../../styleTheme';
-
+import * as Animatable from 'react-native-animatable';
 
 const FavSportList = ({
                         ids,
@@ -53,9 +53,11 @@ const FavSportList = ({
   const content = sportRows.map((row, idx) => (
     <Row style={{height:150}} key={idx}>{
 
-      row.map(id => <Col>
+      row.map((id, index) => <Col>
         {data[id].active ?
-          <FavSportCard key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
+          <FavSportCard
+              index={index + idx*index}
+              key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
                         isSelected={isSelected(data[id]._id)}
                         icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
                         {...data[id]}/> : null
@@ -67,8 +69,10 @@ const FavSportList = ({
   return (
     <ScrollView>
       <Typography
-        style={{margin: 8}}
-        variant="heading"  gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
+        style={{margin: 8, color: '000',fontWeight: '900'}}
+        align="center"
+        uppercase
+         gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
       </Typography>
       <Grid>
         {content}

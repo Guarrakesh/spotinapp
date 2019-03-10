@@ -4,30 +4,35 @@ import FloatingCard from "../../common/FloatingCard";
 import themes from "../../../styleTheme";
 import {Fonts} from "../../common/Fonts";
 import View from "../../common/View";
-
+import * as Animatable from 'react-native-animatable';
 const FavSportCard = (props) => {
 
-  const {isSelected, isDisabled} = props;
+  const {isSelected, isDisabled, index} = props;
 
   return (
-    <View style={isSelected ? styles.outerSelected : styles.outer}>
-      <FloatingCard
-        onPress={isDisabled ? null : props.onPress}
-        contentStyle={styles.cardContent}
-        containerStyle={isSelected ? styles.containerSelected :styles.container}
-        footContent={props.name}
-        disabled={isDisabled}
-        footStyle={isSelected ? styles.cardFooterSelected : styles.cardFooter}
-        footTitleStyle={{
-          color: isSelected ? themes.base.colors.accent.default : themes.base.colors.text.default,
-          fontSize: 16,
-          opacity: isDisabled ? 0.5 : 1.0,
-          fontFamily: isSelected ? Fonts.LatoBold : Fonts.Lato,
-        }}
-      >
-        {props.icon}
-      </FloatingCard>
-    </View>
+      <Animatable.View duration={500} delay={300 + 50 * index }
+                       easing={"ease-in-cubic"}
+                       useNativeDriver={true}
+
+                       animation="fadeIn" style={isSelected ? styles.outerSelected : styles.outer}>
+
+        <FloatingCard
+            onPress={isDisabled ? null : props.onPress}
+            contentStyle={styles.cardContent}
+            containerStyle={isSelected ? styles.containerSelected :styles.container}
+            footContent={props.name}
+            disabled={isDisabled}
+            footStyle={isSelected ? styles.cardFooterSelected : styles.cardFooter}
+            footTitleStyle={{
+              color: isSelected ? themes.base.colors.accent.default : themes.base.colors.text.default,
+              fontSize: 16,
+              opacity: isDisabled ? 0.5 : 1.0,
+              fontFamily: isSelected ? Fonts.LatoBold : Fonts.Lato,
+            }}
+        >
+          {props.icon}
+        </FloatingCard>
+      </Animatable.View>
   );
 };
 
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
     borderColor: themes.base.colors.accent.default
   },
   container: {
+    backgroundColor: '#fff',
     //margin: 8,
   },
   containerSelected: {

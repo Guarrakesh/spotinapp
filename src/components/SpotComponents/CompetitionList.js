@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View, StyleSheet, ActivityIndicator} from 'react-native';
-import Icon from "react-native-vector-icons/Entypo";
+import {FlatList, View, StyleSheet, ActivityIndicator, Image} from 'react-native';
 import { withNamespaces } from 'react-i18next';
 import { Typography } from '../common';
 import CompetitionCard from './CompetitionCard';
 import themes from '../../styleTheme';
 import {Fonts} from "../common/Fonts";
 
+import Images from '../../assets/images';
 const CompetitionList = ({
     isLoading,
     data,
@@ -28,11 +28,13 @@ const CompetitionList = ({
 
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     const competition = data[item] || {};
 
     return (<CompetitionCard
         key={item}
+        animate
+        index={index}
         onPress={() => handlePress(item, competition.name)}
         {...competition} />)
   }
@@ -53,8 +55,9 @@ const CompetitionList = ({
   if (noContent) {
     return (
       <View style={styles.noContentView}>
-        <Icon name={"emoji-sad"} size={100} style={{color: themes.base.colors.text.default}}/>
-        <Typography style={styles.noContentText}>
+        <Image source={Images.icons.common.notFound}/>
+        <Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
+                     uppercase >
           {t("browse.noCompetitions")}
         </Typography>
       </View>
@@ -63,8 +66,12 @@ const CompetitionList = ({
   return (
 
       <FlatList
-          ListHeaderComponent={ <Typography variant="heading"  gutterBottom
-          style={themes.base.listTitleStyle}>{t("browse.selectCompetition")}</Typography>}
+          ListHeaderComponent={
+            <Typography
+                style={{margin: 8, color: '000',fontWeight: '900'}}
+                align="center"
+                uppercase gutterBottom
+            >{t("browse.selectCompetition")}</Typography>}
           contentContainerStyle={styles.container}
           data={ids}
           keyExtractor={keyExtractor}

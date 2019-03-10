@@ -23,7 +23,7 @@ export const logActivity = (activityType, entityType, entityId, activityParams, 
     activityParams,
     meta
   };
-  console.log(body);
+
   return fetchJson(`${apiUrl}/activities`, {
     method: 'POST',
     body: JSON.stringify(body)

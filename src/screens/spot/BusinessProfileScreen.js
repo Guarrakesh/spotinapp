@@ -67,10 +67,12 @@ class BusinessProfileScreen extends React.Component {
 
   componentDidMount(){
     const { broadcastId } = this.props.navigation.state.params;
-    setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
+    this.scrollTimeout = setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
   }
 
-
+  componentWillUnmount(): void {
+    clearTimeout(this.scrollTimeout);
+  }
 
   handleReservePress(broadcast) {
     InteractionManager.runAfterInteractions(() => {

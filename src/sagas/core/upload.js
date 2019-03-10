@@ -26,7 +26,6 @@ export function* handleUpload(action){
 
     const response = yield call(uploadPhoto, payload.userId, payload.photo);
 
-    console.log("RISPOSTA FETCH: ", response);
 
     yield put({
       type: UPLOAD_IMAGE_SUCCESS,

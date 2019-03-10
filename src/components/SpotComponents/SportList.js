@@ -43,9 +43,11 @@ const SportList = ({
   const content = sportRows.map((row, idx) => (
     <Row style={{height:150}} key={idx}>{
 
-      row.map(id => <Col>
+      row.map((id, index) => <Col>
         {data[id].active ?
-          <SportCard key={id} onPress={() => onItemPress(id, data[id].name)}
+          <SportCard
+              index={index + index*idx}
+              key={id} onPress={() => onItemPress(id, data[id].name)}
                      icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
                      {...data[id]}/> : null
         }</Col>)
@@ -56,8 +58,9 @@ const SportList = ({
   return (
     <ScrollView>
       <Typography
-        style={{margin: 8}}
-        variant="heading"  gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
+          style={{margin: 8, color: '000',fontWeight: '900'}}
+          align="center"
+          uppercase gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
       </Typography>
       <Grid>
         {content}

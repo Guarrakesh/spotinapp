@@ -52,8 +52,7 @@ export default function configureStore(initialState) {
   const activityBeaconMiddleware = createMiddleware(eventsMap, BeaconActivityTarget());
 
   let middleware = [sagaMiddleware, navMiddleware, firebaseBeaconMiddleware, activityBeaconMiddleware];
-
-  if (Config.ENV === "development" || Config.LOGGER)
+  if (Config.REDUX_LOGGER == "1")
     middleware = [...middleware, logger];
   else
     middleware = [...middleware];

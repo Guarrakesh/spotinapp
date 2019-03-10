@@ -1,53 +1,61 @@
-
-
 import React from 'react';
-import { Text, StyleSheet, Image} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
-import {View, VersionedImageField, Touchable} from '../common';
+import {withNamespaces} from 'react-i18next';
+import {Touchable, VersionedImageField, View} from '../common';
 
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Fonts } from "../common/Fonts";
+import {Fonts} from "../common/Fonts";
+import * as Animatable from 'react-native-animatable';
 
 
 const CompetitionCard = (props) => {
 
   const {
-      sport_id,
-      name,
-      country,
-      weekEvents,
-      image_versions,
-      t
+    sport_id,
+    name,
+    country,
+    weekEvents,
+    image_versions,
+    index,
+    t
 
   } = props;
 
   let imageUrl;
 
 
-
+  console.log(index);
   return (
-      <Touchable onPress={props.onPress} style={[styles.container, {elevation: 1, ...themes.base.elevations.depth1}]}>
-        <View style={{flexDirection: 'row'}}>
 
-          <View style={styles.image}>
-            { image_versions
-                ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
-                : <Icon name="sports-club" size={42}/> }
+      <Animatable.View
+          useNativeDriver={true}
+          animation="fadeInRight"
+          duration={500}
+          delay={300 + index*50}>
+        <Touchable
+            onPress={props.onPress} style={[styles.container, {...themes.base.elevations.depth1, backgroundColor: '#fff'}]}>
+          <View style={{flexDirection: 'row',}}>
+
+            <View style={styles.image}>
+              { image_versions
+                  ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
+                  : <Icon name="sports-club" size={42}/> }
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
+              <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
+              <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
+                {weekEvents > 0 ?  t('browse.weekEvents', { count: weekEvents}) : ""}
+              </Text>
+            </View>
+            <View style={styles.arrowIconView}>
+              <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
+            </View>
           </View>
-          <View style={styles.info}>
-            <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
-            <Text style={styles.country} numberOfLines={1} adjustsFontSizeToFit={true}>{country}</Text>
-            <Text style={styles.extra} numberOfLines={1} adjustsFontSizeToFit={true}>
-              {weekEvents > 0 ?  t('browse.weekEvents', { count: weekEvents}) : ""}
-             </Text>
-          </View>
-          <View style={styles.arrowIconView}>
-            <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
-          </View>
-        </View>
-      </Touchable>
+        </Touchable>
+      </Animatable.View>
 
   );
 };

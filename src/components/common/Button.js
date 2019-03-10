@@ -13,7 +13,7 @@ export default class Button extends React.Component {
 
     const { clear, variant, round, buttonStyle, titleStyle, uppercase, children
         , loadingProps, loadingStyle, block, containerStyle, elevation, titleProps,
-        icon,
+        icon, size,
 
         ...props} = this.props;
 
@@ -40,10 +40,11 @@ export default class Button extends React.Component {
     const _titleBaseStyle = [
       styles.titleBase,
       clear ? styles[`${variant}Simple`] : { color: styles[variant].color },
+        size === "big" ? { fontSize: 17 } : {},
       uppercase && {fontFamily: fonts.LatoBold},
       titleStyle,
-
     ];
+
     const _loadingProps = [{
       size: uppercase ? "large" : "small",
       color: clear ? themes.base.colors[variant] : "#fff",
@@ -77,6 +78,9 @@ Button.defaultProps = {
 
 };
 Button.propTypes = {
+  titleStyle: PropTypes.object,
+  buttonStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
   block: PropTypes.bool,
   elevation: PropTypes.number,
   round: PropTypes.bool,
@@ -84,13 +88,11 @@ Button.propTypes = {
   variant: PropTypes.string,
   clear: PropTypes.bool,
   icon: PropTypes.element,
+  size: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
 
-  container: {
-    marginBottom: 8,
-  },
 
   base: {
     width: '100%',
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
   },
   default: {
     backgroundColor: whiteColor.default,
-    color: textColor.default
+    color: accentColor.default
   },
   defaultSimple: {
     backgroundColor: 'transparent',

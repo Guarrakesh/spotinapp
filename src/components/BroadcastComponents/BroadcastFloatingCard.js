@@ -2,6 +2,7 @@ import React from "react";
 import View from "../common/View";
 import {Text, StyleSheet, TouchableOpacity, ImageBackground} from "react-native";
 import PropTypes from "prop-types";
+import * as Animatable from 'react-native-animatable';
 import themes from "../../styleTheme";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import ReferenceField from "../common/ReferenceField";
@@ -22,6 +23,7 @@ const BroadcastFloatingCard = ({
                                  showEvent,
                                  overlayOpacity = 1,
                                  titleStyle,
+                                 index,
                                  t
                                }) => {
 
@@ -44,73 +46,80 @@ const BroadcastFloatingCard = ({
   };
 
   const businessInfoComponent = (business) => (
-    <View style={styles.businessContainer}>
-      <Text style={styles.businessName} numberOfLines={1} adjustsFontSizeToFit={true}>{business.name}</Text>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Text style={styles.businessType} numberOfLines={1} adjustsFontSizeToFit={true}>{business.type.join(' • ')}</Text>
+      <View style={styles.businessContainer}>
+        <Text style={styles.businessName} numberOfLines={1} adjustsFontSizeToFit={true}>{business.name}</Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
-          <Text style={styles.businessDistance} numberOfLines={1} adjustsFontSizeToFit={true}>{roundedDistance} km</Text>
+          <Text style={styles.businessType} numberOfLines={1} adjustsFontSizeToFit={true}>{business.type.join(' • ')}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon name="map-marker-radius" color={colors.white.light} size={18}/>
+            <Text style={styles.businessDistance} numberOfLines={1} adjustsFontSizeToFit={true}>{roundedDistance} km</Text>
+          </View>
         </View>
-      </View>
-    </View>);
+      </View>);
 
   return (
-    !broadcast ?
-      null :
-      <View style={styles.outerContainer} elevation={2}>
-        <TouchableOpacity onPress={onPress} delayPressIn={50}>
-          <ReferenceField reference="businesses" source="business" record={broadcast}>
-            { ({record: business}) =>
-              <View style={{borderRadius: themes.base.borderRadius, overflow: 'hidden'}}>
-                <View>
-                  { business.cover_versions && business.cover_versions.length > 0 ?
-                    <VersionedImageField
-                      isBackground
-                      minSize={{width: 550, height: 150}}
-                      imgSize={{width: 550, height: 150}}
-                      style={styles.imgBackground}
-                      source={business.cover_versions}>
-                      {businessInfoComponent(business)}
-                    </VersionedImageField>
-                    :<ImageBackground style={{width: 350, height: 150}} source={{uri:  "https://via.placeholder.com/350x150"}}>
-                      {businessInfoComponent(business)}
-                    </ImageBackground>}
-
-                </View>
-                <View>
-                  {showEvent ?
-                    <ReferenceField reference="events" record={broadcast} source="event">
-                      {({record: event}) => (
-                        <View style={styles.eventInfoView}>
-                          <View style={{flex: 1}}>
-                            <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-                            <Text
-                              style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMM • HH:mm")}</Text>
-                          </View>
-
-                          <View>
-                            {<VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
-                                                  imgSize={{width: 48, height: 48}}/>}
-                          </View>
+      !broadcast ?
+          null :
+          <Animatable.View
+              useNativeDriver={true}
+              animation="fadeInUp"
+              duration={500}
+              offset={500 + index*50}
+          >
+            <View style={styles.outerContainer} elevation={2}>
+              <TouchableOpacity onPress={onPress} delayPressIn={50}>
+                <ReferenceField reference="businesses" source="business" record={broadcast}>
+                  { ({record: business}) =>
+                      <View style={{borderRadius: themes.base.borderRadius, overflow: 'hidden'}}>
+                        <View>
+                          { business.cover_versions && business.cover_versions.length > 0 ?
+                              <VersionedImageField
+                                  isBackground
+                                  minSize={{width: 550, height: 150}}
+                                  imgSize={{width: 550, height: 150}}
+                                  style={styles.imgBackground}
+                                  source={business.cover_versions}>
+                                {businessInfoComponent(business)}
+                              </VersionedImageField>
+                              :<ImageBackground style={{width: 350, height: 150}} source={{uri:  "https://via.placeholder.com/350x150"}}>
+                                {businessInfoComponent(business)}
+                              </ImageBackground>}
 
                         </View>
-                      )
-                      }
+                        <View>
+                          {showEvent ?
+                              <ReferenceField reference="events" record={broadcast} source="event">
+                                {({record: event}) => (
+                                    <View style={styles.eventInfoView}>
+                                      <View style={{flex: 1}}>
+                                        <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+                                        <Text
+                                            style={styles.eventDate}>{Helpers.formattedEventDate(event.start_at, "D MMM • HH:mm")}</Text>
+                                      </View>
 
-                    </ReferenceField> : null
+                                      <View>
+                                        {<VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
+                                                              imgSize={{width: 48, height: 48}}/>}
+                                      </View>
+
+                                    </View>
+                                )
+                                }
+
+                              </ReferenceField> : null
+                          }
+                        </View>
+                        <View style={styles.offerView}>
+                          <Text style={styles.offerTitle} numberOfLines={1} adjustsFontSizeToFit={true}>
+                            {(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
+                          <Text style={styles.offerValue}>{discount(offer.type)}</Text>
+                        </View>
+                      </View>
                   }
-                </View>
-                <View style={styles.offerView}>
-                  <Text style={styles.offerTitle} numberOfLines={1} adjustsFontSizeToFit={true}>
-                    {(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
-                  <Text style={styles.offerValue}>{discount(offer.type)}</Text>
-                </View>
-              </View>
-            }
-          </ReferenceField>
-        </TouchableOpacity>
-      </View>
+                </ReferenceField>
+              </TouchableOpacity>
+            </View>
+          </Animatable.View>
   );
 };
 

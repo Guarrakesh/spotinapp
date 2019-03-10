@@ -73,10 +73,8 @@ class EditProfileScreen extends React.Component{
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
       } else if (response.error) {
 
         Alert.alert(
@@ -97,10 +95,10 @@ class EditProfileScreen extends React.Component{
         );
 
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+        //console.log('User tapped custom button: ', response.customButton);
       } else {
         const image = response.uri;
-        console.log(image);
+
 
         this.setState({
           pictureData: response,

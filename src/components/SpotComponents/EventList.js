@@ -1,17 +1,18 @@
 import React from "react";
 import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import {StyleSheet, SectionList, View, ActivityIndicator} from "react-native";
+import {StyleSheet, SectionList, View, ActivityIndicator, Image} from "react-native";
 import { withNamespaces } from 'react-i18next';
 import DeviceInfo from 'react-native-device-info';
 import {groupBy, debounce} from "lodash";
 import moment from "moment";
 import "moment/min/moment-with-locales"
-import Icon from "react-native-vector-icons/Entypo";
+
 
 
 import { Typography } from '../common';
 import themes from "../../styleTheme";
+import Images from "../../assets/images";
 
 moment.locale(DeviceInfo.getDeviceLocale());
 const Fonts = themes.base.fonts;
@@ -86,7 +87,10 @@ class EventList extends React.Component {
     if (noContent){
       return (
         <View style={styles.noContentView}>
-          <Typography style={styles.noContentText}>
+          <Image source={Images.icons.common.notFound}/>
+          <Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
+                       align="center"
+                       uppercase >
             {t("browse.noEvents")}
           </Typography>
         </View>
@@ -95,8 +99,9 @@ class EventList extends React.Component {
 
     return (
       <SectionList
-        renderItem={({item}) => <EventCard
+        renderItem={({item, index}) => <EventCard
           key={data[item]._id}
+          index={index}
           onPress={ ()=> onItemPress(item, data[item])}
           onFavoritePress={ () => onFavoritePress(item, data[item])}
           {...data[item]}/>}
@@ -109,7 +114,9 @@ class EventList extends React.Component {
         onRefresh={refresh}
         refreshing={isRefreshing}
         ListFooterComponent={isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
-        ListHeaderComponent={<Typography gutterBottom variant="heading" style={{padding: 8}}
+        ListHeaderComponent={<Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
+                                          align="center"
+                                          uppercase
         >{t("browse.selectEvent")}</Typography> }
       />
     );

@@ -3,19 +3,20 @@ import { Image, Text, Dimensions, StyleSheet} from 'react-native';
 import { Touchable, View } from '../common';
 import moment from 'moment';
 import 'moment/locale/it';
+import * as Animatable from 'react-native-animatable';
 import themes from '../../styleTheme';
 import ReferenceField from '../common/ReferenceField'
 import VersionedImageField from '../common/VersionedImageField';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
-import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
+
 
 const colors = themes.base.colors;
-
+const AnimatedView = Animatable.createAnimatableComponent(View);
 
 const EventCard = (props) => {
 
-  const { competition, competitors } = props;
+  const { competition, competitors, index = 0 } = props;
   const competitorsComponent = (
       competition.competitorsHaveLogo
           ?
@@ -34,7 +35,13 @@ const EventCard = (props) => {
 
   return (
 
-      <View elevation={1} style={styles.containerStyle}>
+
+      <AnimatedView
+          useNativeDriver={true}
+          animation="fadeInRight"
+          duration={500}
+          delay={500 + index}
+          style={styles.containerStyle}>
 
         <Touchable style={styles.favorite} onPress={props.onFavoritePress}>
 
@@ -58,7 +65,7 @@ const EventCard = (props) => {
             </View>
           </View>
         </Touchable>
-      </View>
+      </AnimatedView>
 
   );
 }
@@ -71,7 +78,7 @@ const styles = {
     height: 130,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: colors.white.light,
+    backgroundColor: '#fff',
   },
   favorite: {
     borderRightColor: colors.white.divisor,

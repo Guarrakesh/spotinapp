@@ -22,7 +22,6 @@ const target = () => (events) => {
   events.forEach(action => {
     if (!action || !action.type) return;
 
-    console.log("aaa", action.userPosition);
     switch (action.type) {
       case ENTITY_VIEW: {
 
