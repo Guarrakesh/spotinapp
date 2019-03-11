@@ -173,7 +173,7 @@ class EditProfileScreen extends React.Component{
           <Touchable style={styles.userImageTouchable} onPress={() => this.handleEditPhotoPress()}>
             <ImageBackground
               source={this.state.picture ? {uri: this.state.picture, cache: "reload" } : userIcon}
-              style={{width: "100%", height: "100%", alignItems: 'center', justifyContent: 'flex-end'}}
+              style={styles.userImage}
             >
               <View style={{padding: 5, backgroundColor: 'rgba(255,255,255,.8)', borderRadius: 20}}>
                 <Icon name={"photo-camera"} size={20} color={colors.text.default}/>
@@ -280,6 +280,13 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     width: themes.base.deviceDimensions.width/3,
     height: themes.base.deviceDimensions.width/3
+  },
+  userImage: {
+    width: "100%",
+    height: "100%",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: themes.base.colors.white.default
   },
   middleContainerStyle: {
     width: '100%',
