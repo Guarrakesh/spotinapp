@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Text, StyleSheet, Platform} from "react-native";
+import {Text, StyleSheet, Platform, View} from "react-native";
 
 import ListController from '../../controllers/ListController';
 import i18n from "../../i18n/i18n";
 import FavSportList from '../../components/ProfileComponents/favorites/FavSportList';
 import PropTypes from 'prop-types';
-import {Touchable} from "../../components/common";
+import {Touchable, Button } from "../../components/common";
 import {setFavorites} from "../../actions/profile";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
+
 
 class FavoriteSportsScreen extends React.Component {
 
@@ -25,22 +26,8 @@ class FavoriteSportsScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     return {
-      headerRight: (
-        <Touchable
-          style={{backgroundColor: 'transparent', marginRight: Platform.OS === "android" ? null : 16, borderRadius: 50}}
-          onPress={() => navigation.getParam('handleDonePress')()}
-        >
-          <Text style={styles.doneButton}>{i18n.t("profile.settings.favorite.done")}</Text>
-        </Touchable>
-      ),
-      headerLeft: (
-        <Touchable
-          style={{backgroundColor: 'transparent', marginLeft: Platform.OS === "android" ? null : 16, borderRadius: 50}}
-          onPress={() => navigation.getParam("handleCancelPress")()}
-        >
-          <Text style={styles.cancelButton}>{i18n.t("common.skip")}</Text>
-        </Touchable>
-      )
+      header: null,
+
     }
   };
 
@@ -56,9 +43,9 @@ class FavoriteSportsScreen extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const newFavCompetitors = this.props.navigation.state.params.favCompetitors;
     if(prevState.favCompetitors &&
-      newFavCompetitors &&
-      prevState.favCompetitors !== newFavCompetitors &&
-      prevState.favSports === this.state.favSports
+        newFavCompetitors &&
+        prevState.favCompetitors !== newFavCompetitors &&
+        prevState.favSports === this.state.favSports
     ){
       this.setState({favCompetitors: newFavCompetitors});
       this.props.navigation.state.params.favCompetitors = null; //resetto la navigazione
@@ -126,20 +113,45 @@ class FavoriteSportsScreen extends React.Component {
 
   render() {
     return (
-      <ListController
-        id="sport_screen_list"
-        resource="sports"
-        perPage={20}
-        sort={{field: '_id', order: 'asc'}}
-      >
-        { controllerProps =>
-          <FavSportList
-            onItemPress={this.handleItemPress}
-            favCompetitors={this.state.favCompetitors}
-            favSports={this.state.favSports}
-            {...controllerProps} />}
+        <React.Fragment>
+          <ListController
+              id="sport_screen_list"
+              resource="sports"
+              perPage={20}
+              sort={{field: '_id', order: 'asc'}}
+          >
+            { controllerProps =>
+                <FavSportList
+                    onItemPress={this.handleItemPress}
+                    favCompetitors={this.state.favCompetitors}
+                    favSports={this.state.favSports}
+                    {...controllerProps} />}
 
-      </ListController>
+          </ListController>
+          <View elevation={1} style={styles.actions}>
+            <Button
+                round
+                uppercase
+                clear
+                titleStyle={{ color: themes.base.colors.white.default}}
+                onPress={this.handleCancelPress}
+                containerStyle={{width: '30%'}}
+
+            >
+            {i18n.t("common.skip")}
+            </Button>
+            <Button
+                size="big"
+                round
+                onPress={this.handleDonePress}
+                containerStyle={{width: '70%'}}
+                uppercase
+            >
+             {i18n.t("profile.settings.favorite.done")}
+            </Button>
+
+          </View>
+        </React.Fragment>
     )
   }
 }
@@ -149,13 +161,28 @@ const styles = StyleSheet.create({
     margin: Platform.OS === "android" ? 16 : null,
     color: themes.base.colors.accent.default,
     fontSize: 16,
-    fontFamily: Fonts.LatoBold
+    fontFamily: Fonts.LatoBold,
+    textTransform: 'uppercase',
+
   },
   cancelButton: {
     margin: Platform.OS === "android" ? 16 : null,
     color: themes.base.colors.text.dark,
     fontSize: 16,
-    fontFamily: Fonts.Lato
+    fontFamily: Fonts.Lato,
+    textTransform: 'uppercase',
+  },
+  actions: {
+    backgroundColor: themes.base.colors.accent.default,
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
   }
 });
 

@@ -30,6 +30,11 @@ const images = {
       sportsIcon: require('./img/intro/sports.png'),
       businessIcon: require('./img/intro/businessIcon.png'),
       saveIcon: require('./img/intro/saveIcon.png')
+    },
+    common: {
+      connect: require('./img/connect/connect.png'),
+      notFound: require('./img/notFound/NotFound.png'),
+      megaphone: require('./img/megaphone/megaphone.png'),
     }
   }
 };

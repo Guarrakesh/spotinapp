@@ -9,6 +9,7 @@ import themes from '../../styleTheme';
 import BusinessCard from '../../components/BusinessComponents/BusinessCard';
 import Carousel from "react-native-snap-carousel";
 import BroadcastFloatingCard from "../../components/BroadcastComponents/BroadcastFloatingCard";
+import { entityView } from "../../actions/view";
 
 class BusinessMapInBusiness extends React.Component {
 
@@ -126,7 +127,7 @@ class BusinessMapInBusiness extends React.Component {
 
 
   handleBusPress(businessId, distance) {
-
+    this.props.entityView('business', businessId);
     this.props.navigation.navigate('BusinessProfileScreen', {businessId: businessId, distance: distance});
 
   }
@@ -166,7 +167,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(BusinessMapInBusiness);
+export default connect(mapStateToProps, {
+  entityView,
+})(BusinessMapInBusiness);
 
 
 

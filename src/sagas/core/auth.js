@@ -171,7 +171,7 @@ function* handleAuth(action) {
         yield put(NavigationService.navigate("Auth", {
           nextPath: meta.pathName
         }, true));
-       // yield handleErrorNotification(error);
+        // yield handleErrorNotification(error);
 
 
       }
@@ -190,11 +190,13 @@ function* handleAuth(action) {
         yield call(auth.error, error);
       } catch (e) {
 
-      //  const nextPathname = yield select(currentPathnameSelector);
+        //  const nextPathname = yield select(currentPathnameSelector);
         yield call(auth.logout);
-        // yield put(NavigationService.navigate("Auth", {
-        //   nextPath: "Home"
-        // }));
+        if (!meta.noRedirectToLogin) {
+          yield put(NavigationService.navigate("Auth", {
+            nextPath: "Home"
+          }));
+        }
 
         yield put(hideNotification());
       }

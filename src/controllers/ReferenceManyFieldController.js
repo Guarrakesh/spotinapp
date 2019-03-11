@@ -82,35 +82,35 @@ export class ReferenceManyFieldController extends Component {
 
   setSort = field => {
     const order =
-      this.state.sort.field === field &&
-      this.state.sort.order === SORT_ASC
-        ? SORT_DESC
-        : SORT_ASC;
+        this.state.sort.field === field &&
+        this.state.sort.order === SORT_ASC
+            ? SORT_DESC
+            : SORT_ASC;
     this.setState({ sort: { field, order } }, this.fetchReferences);
   };
 
   fetchReferences(
-    { reference, record, resource, target, perPage, filter, source, focusedId} = this
-      .props
+      { reference, record, resource, target, perPage, filter, source, focusedId} = this
+          .props
   ) {
     const { crudGetManyReference } = this.props;
     const pagination = { page: 1, perPage };
     const relatedTo = nameRelatedTo(
-      reference,
-      record[source],
-      resource,
-      target,
-      filter
+        reference,
+        record[source],
+        resource,
+        target,
+        filter
     );
     crudGetManyReference(
-      reference,
-      target,
-      record[source],
-      relatedTo,
-      pagination,
-      this.state.sort,
-      filter,
-      focusedId
+        reference,
+        target,
+        record[source],
+        relatedTo,
+        pagination,
+        this.state.sort,
+        filter,
+        focusedId,
 
     );
   }
@@ -159,7 +159,7 @@ ReferenceManyFieldController.propTypes = {
   target: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   focusedId: PropTypes.string,
-  fetchReferences: PropTypes.func
+  fetchReferences: PropTypes.func,
 
 };
 
@@ -172,11 +172,11 @@ ReferenceManyFieldController.defaultProps = {
 
 function mapStateToProps(state, props) {
   const relatedTo = nameRelatedTo(
-    props.reference,
-    props.record[props.source],
-    props.resource,
-    props.target,
-    props.filter
+      props.reference,
+      props.record[props.source],
+      props.resource,
+      props.target,
+      props.filter
   );
   return {
     data: getReferences(state, props.reference, relatedTo),
@@ -185,8 +185,8 @@ function mapStateToProps(state, props) {
 }
 
 export default connect(
-  mapStateToProps,
-  {
-    crudGetManyReference: crudGetManyReferenceAction,
-  }
+    mapStateToProps,
+    {
+      crudGetManyReference: crudGetManyReferenceAction,
+    }
 )(ReferenceManyFieldController);

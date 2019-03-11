@@ -1,4 +1,4 @@
-{
+  {
   "name": "spotinapp",
   "version": "0.0.1",
   "private": true,
@@ -81,6 +81,7 @@
     "react-navigation-fluid-transitions": "^0.2.2",
     "react-navigation-redux-helpers": "^2.0.6",
     "react-redux": "^5.0.7",
+    "react-spring": "^8.0.9",
     "recompose": "^0.30.0",
     "redux": "^4.0.0",
     "redux-beacon": "^2.0.3",

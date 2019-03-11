@@ -11,6 +11,9 @@ import {
 } from "../actions/reservation";
 import { CRUD_DELETE_OPTIMISTIC } from "../actions/dataActions";
 import { SET_FAVORITES, SKIP_FAVORITES } from "../actions/profile";
+import { ENTITY_VIEW as ENTITY_VIEW_ACTION } from "../actions/view";
+import { coordsSelector } from "../reducers/location";
+import { userId } from "../reducers/auth";
 
 /**
  * Creo una EventsMap da dare poi come argomento al middleware creator di @redux-beacon.
@@ -28,12 +31,22 @@ export const RESERVATION_UNDO = "RESERVATION_UNDO";
 export const RESERVATION_DELETE = "RESERVATION_DELETE";
 export const FAVORITE_SETTED = "FAVORITE_SETTED";
 export const FAVORITE_SKIPPED = "FAVORITE_SKIPPED";
+export const ENTITY_VIEW = 'ENTITY_VIEW';
 
 // SportEvents 
 export const EVENT_FAVORITE = "EVENT_FAVORITE";
 export const MORE_EVENTS_SCROLL = "MORE_EVENTS_SCROLL";
 
+
 const eventsMap = {
+  [ENTITY_VIEW_ACTION]: ({ payload  }, state) => ({
+    userId: userId(state),
+    type: ENTITY_VIEW,
+    entityId: payload.entityId,
+    entityType: payload.entityType,
+    params: payload.params,
+    userPosition: coordsSelector(state),
+  }),
   [PROFILE_GET_INFO_SUCCESS]: ({ payload }) => ({
     type: SET_USER_ID,
     userId: get(payload, "data._id"),
@@ -44,38 +57,46 @@ const eventsMap = {
     route: routeName,
     params
   }),
-  [LOCATION_SET_POSITION]: ({ position }) => ({
+  [LOCATION_SET_POSITION]: ({ position }, state) => ({
     type: TRACK_LOCATION,
     position,
   }),
-  [RESERVE_BROADCAST_SUCCESS]: ({ payload }) => ({ //PRENOTAZIONE COMPLETATA
+  [RESERVE_BROADCAST_SUCCESS]: ({ payload }, state) => ({ //PRENOTAZIONE COMPLETATA
     type: RESERVATION_COMPLETED,
-    broadcastId: get(payload, "data.broadcast")
+    broadcastId: get(payload, "data.broadcast._id"),
+    userId: get(payload, "data.user"),
+    userPosition: coordsSelector(state)
+
   }),
-  [RESERVE_BROADCAST_START]: ({ payload }) => ({ //INIZIO PRENOTAZIONE (Apertura modal)
+  [RESERVE_BROADCAST_START]: ({ payload }, state) => ({ //INIZIO PRENOTAZIONE (Apertura modal)
     type: RESERVATION_START,
     broadcastId: get(payload, "data.broadcastId"),
-    userId: get(payload, "data.userId")
+    userId: get(payload, "data.userId"),
+    userPosition: coordsSelector(state)
   }),
-  [RESERVE_BROADCAST_UNDO]: ({ payload }) => ({ //PRENOTAZIONE ANNULLATA (Chiusura modal)
+  [RESERVE_BROADCAST_UNDO]: ({ payload }, state) => ({ //PRENOTAZIONE ANNULLATA (Chiusura modal)
     type: RESERVATION_UNDO,
     broadcastId: get(payload, "data.broadcastId"),
-    userId: get(payload, "data.userId")
+    userId: get(payload, "data.userId"),
+    userPosition: coordsSelector(state)
   }),
-  [RESERVE_BROADCAST_DELETE]: ({ payload }) => ({ //PRENOTAZIONE ELIMINATA
+  [RESERVE_BROADCAST_DELETE]: ({ payload }, state) => ({ //PRENOTAZIONE ELIMINATA
     type: RESERVATION_DELETE,
     userId: get(payload, "userId"),
     reservationId: get(payload, "reservationId"),
-    broadcastId: get(payload, "broadcastId")
+    broadcastId: get(payload, "broadcastId"),
+    userPosition: coordsSelector(state)
   }),
-  [SET_FAVORITES]: ({ payload }) => ({  //SELEZIONE SPORT E COMPETITORS PREFERITI
+  [SET_FAVORITES]: ({ payload }, state) => ({  //SELEZIONE SPORT E COMPETITORS PREFERITI
     type: FAVORITE_SETTED,
     userId: get(payload, "userId"),
     favorite_sports: get(payload, "favorite_sports"),
-    favorite_competitors: get(payload, "favorite_competitors")
+    favorite_competitors: get(payload, "favorite_competitors"),
+    userPosition: coordsSelector(state)
   }),
   [SKIP_FAVORITES]: () => ({
     type: FAVORITE_SKIPPED,
+
   })
 };
 

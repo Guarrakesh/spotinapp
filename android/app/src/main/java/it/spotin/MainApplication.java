@@ -3,6 +3,20 @@ package it.spotin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.microsoft.codepush.react.CodePush;
+import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
+
 import com.microsoft.codepush.react.CodePush;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -13,15 +27,6 @@ import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 //import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.horcrux.svg.SvgPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
@@ -66,26 +71,28 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ImageResizerPackage(),
             new ImagePickerPackage(),
+            new VectorIconsPackage(),
+            new SvgPackage(),
+            new ReactNativePushNotificationPackage(),
+            new MapsPackage(),
+            new RNFusedLocationPackage(),
             new RNFirebasePackage(),
+
+            new RNDeviceInfo(),
+            new ReactNativeConfigPackage(),
+          //  new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
+            new AndroidOpenSettingsPackage(),
+            new RNAndroidLocationEnablerPackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebaseNotificationsPackage(),
             new RNFirebaseAnalyticsPackage(),
             new AppCenterReactNativePushPackage(MainApplication.this),
-            new ReactNativePushNotificationPackage(),
-            new ReactNativeConfigPackage(),
-
             new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
             new AppCenterReactNativePackage(MainApplication.this),
-            new RNDeviceInfo(),
-            new RNAndroidLocationEnablerPackage(),
+
             new CodePush(BuildConfig.CODEPUSH_KEY, getApplicationContext(), BuildConfig.DEBUG),
-            new VectorIconsPackage(),
-            new SvgPackage(),
-            new MapsPackage(),
-            new FBSDKPackage(mCallbackManager),
-            new AndroidOpenSettingsPackage(),
-            new RNFusedLocationPackage()
+            new FBSDKPackage(mCallbackManager)
       );
     }
     @Override

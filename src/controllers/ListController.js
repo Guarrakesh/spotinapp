@@ -152,7 +152,7 @@ class ListController extends Component {
           { ...filter, ...permanentFilter },
           this.props.basePath,
           this.props.infiniteScroll, //accumulateResults: infiniteScroll
-          this.props.unauthorized,
+
       )
     } else {
       this.props.crudGetList(
@@ -163,7 +163,6 @@ class ListController extends Component {
           {...filter, ...permanentFilter},
           this.props.basePath,
           this.props.infiniteScroll, ////accumulateResults: infiniteScroll
-          this.props.unauthorized,
       );
     }
 
@@ -313,7 +312,6 @@ ListController.propTypes = {
 
   id: PropTypes.string.isRequired,
 
-  unauthorized: PropTypes.bool,
   infiniteScroll: PropTypes.bool
 
 };
@@ -331,7 +329,6 @@ ListController.defaultProps = {
   },
   nearPosition: false,
   parentLoading: false,
-  unauthorized: false,
 
 };
 

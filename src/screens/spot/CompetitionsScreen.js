@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ListController from '../../controllers/ListController';
 import CompetitionList from '../../components/SpotComponents/CompetitionList';
+import { entityView } from "../../actions/view";
 
 import { InteractionManager } from 'react-native';
 
@@ -16,7 +17,7 @@ class CompetitionsScreen extends React.Component {
   }
 
   handleItemPress(competitionId, name) {
-
+  this.props.entityView('competition', competitionId);
     this.props.navigation.navigate('Events', {competitionId, title: name});
   }
 
@@ -45,4 +46,7 @@ CompetitionsScreen.propTypes = {
 };
 
 
-export default CompetitionsScreen;
+export default connect(null, {
+  entityView
+})(CompetitionsScreen);
+

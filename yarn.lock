@@ -884,6 +884,12 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.3.1":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-beta.47":
   version "7.0.0-beta.47"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.47.tgz#0473970a7c0bee7a1a18c1ca999d3ba5e5bad83d"
@@ -6099,7 +6105,6 @@ react-native-screens@^1.0.0-alpha.11:
 react-native-shadow@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-native-shadow/-/react-native-shadow-1.2.2.tgz#08991cd14b71e32f2fc6363911c139d231949a66"
-  integrity sha512-kwTmqRKmPEML9KbJi0uvvKd+67rOJQcr3IyNp9bg+qi/H+Wnwev/Mr8sUiUZlYEJ433ii2iNwpjc1ERMjHtMWw==
 
 react-native-snap-carousel@^3.7.4:
   version "3.7.5"
@@ -6277,6 +6282,12 @@ react-redux@^5.0.7:
     lodash-es "^4.17.5"
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
+
+react-spring@^8.0.9:
+  version "8.0.9"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.9.tgz#2cf54fe168802986940c16e42fed277d7a2ff8f6"
+  dependencies:
+    "@babel/runtime" "^7.3.1"
 
 react-test-renderer@^16.0.0-0:
   version "16.7.0"

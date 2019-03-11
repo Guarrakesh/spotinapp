@@ -27,6 +27,7 @@ import { createMiddleware } from "redux-beacon";
 import eventsMap from "./eventsMap";
 
 import BeaconFirebaseTarget from "../firebase/BeaconFirebaseTarget";
+import BeaconActivityTarget from "../activities/BeaconActivityTarget";
 import rootReducer from '../reducers';
 import rootSaga from '../sagas/core';
 
@@ -47,11 +48,11 @@ export default function configureStore(initialState) {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const navMiddleware = createReactNavigationReduxMiddleware("root", state => state.navigation);
 
-  const beaconMiddleware = createMiddleware(eventsMap, BeaconFirebaseTarget());
+  const firebaseBeaconMiddleware = createMiddleware(eventsMap, BeaconFirebaseTarget());
+  const activityBeaconMiddleware = createMiddleware(eventsMap, BeaconActivityTarget());
 
-  let middleware = [sagaMiddleware, navMiddleware, beaconMiddleware];
-
-  if (Config.ENV === "development" || Config.LOGGER)
+  let middleware = [sagaMiddleware, navMiddleware, firebaseBeaconMiddleware, activityBeaconMiddleware];
+  if (Config.REDUX_LOGGER == "1")
     middleware = [...middleware, logger];
   else
     middleware = [...middleware];

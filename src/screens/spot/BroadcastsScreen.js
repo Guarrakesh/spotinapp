@@ -12,6 +12,7 @@ import ListController from '../../controllers/ListController';
 import ReferenceField from "../../components/common/ReferenceField"
 import themes from "../../styleTheme";
 import i18n from '../../i18n/i18n';
+import { entityView } from "../../actions/view";
 
 const Fonts = themes.base.fonts;
 const HEADER_HEIGHT = 100;
@@ -66,6 +67,7 @@ class BroadcastsScreen extends React.Component {
 
   handleBusinessPress(broadcast, distance) {
 
+    this.props.entityView('broadcast', broadcast._id);
     this.props.navigation.navigate('BusinessProfileScreen', {
       broadcastId: broadcast._id,
       businessId: broadcast.business,
@@ -250,4 +252,6 @@ const styles = StyleSheet.create({
 
   }
 });
-export default connect(mapStateToProps)(BroadcastsScreen);
+export default connect(mapStateToProps, {
+  entityView
+})(BroadcastsScreen);

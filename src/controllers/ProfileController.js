@@ -18,7 +18,7 @@ export class ProfileController extends Component {
       nextProps.profile !== this.props.profile ||
       nextProps.loggedIn !== this.props.loggedIn ||
       nextProps.isLoading !== this.props.isLoading ||
-      nextProps.profile.photo.versions[0].fileSize !== this.props.profile.photo.versions[0].fileSize
+      nextProps.profile.photo && nextProps.profile.photo.versions[0].fileSize !== this.props.profile.photo.versions[0].fileSize
     ) {
       return true;
     }

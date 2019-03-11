@@ -6,7 +6,6 @@ const uploadPhoto = (userId, photo) => {
 
   return ImageResizer.createResizedImage(photo.uri, 1200, 1200, 'JPEG', 80)
     .then((response) => {
-      console.log("RISPOSTA COMPRESSIONE: ", response);
       return new Promise((resolve, reject) => {
 
         return auth.getAuthToken().then(token => {
@@ -25,7 +24,6 @@ const uploadPhoto = (userId, photo) => {
             })
           };
 
-          console.log("TOKEN: ", token);
 
           if (token) config.headers.Authorization = `Bearer ${token.accessToken}`;
 
@@ -41,17 +39,14 @@ const uploadPhoto = (userId, photo) => {
                   return resolve(response);
                 }
               }).catch(e => {
-                console.log("ERRORE JSON: ", e);
                 return reject(e)
               })
             }).catch(error => {
-              console.log("ERRORE FETCH: ", error);
               return reject(error)
             });
         });
       })
     }).catch((err) => {
-    console.log("ERRORE COMPRESSIONE", err);
   });
 
 };

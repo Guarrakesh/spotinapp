@@ -18,14 +18,13 @@ export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 export const crudGetList = (resource, listId, pagination,
                             sort, filter, basePath,
                             accumulateResults = false,
-                            unauthorized = false) => ({
+                            ) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
   meta: {
     //selectedId
     resource,
     basePath,
-    unauthorized,
     listId,
     fetch: GET_LIST,
     accumulateResults,
@@ -370,7 +369,7 @@ export const CRUD_GET_NEAR_MANY_SUCCESS = 'CRUD_GET_NEAR_MANY_SUCCESS';
 
 // Get near (by location) entities
 export const crudGetNearMany = (
-    resource, listId, position, pagination, sort, filter, basePath,  accumulateResults = false
+    resource, listId, position, pagination, sort, filter, basePath,  accumulateResults = false,
 ) => ({
   resource,
 

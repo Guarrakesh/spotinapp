@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import ListController from '../../controllers/ListController';
 
 import SportList from '../../components/SpotComponents/SportList';
-import PropTypes from 'prop-types';
+import { entityView } from "../../actions/view";
 
 class SportScreen extends React.Component {
 
@@ -16,6 +17,7 @@ class SportScreen extends React.Component {
 
 
   handleItemPress(sportId, sportName) {
+    this.props.entityView('sport', sportId);
     this.props.navigation.navigate('Competitions', {sportId, title: sportName});
   }
 
@@ -45,4 +47,6 @@ const mapStateToProps = state => {
   })
 };
 
-export default connect(null)(SportScreen);
+export default connect(null, {
+  entityView
+})(SportScreen);

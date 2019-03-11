@@ -9,7 +9,7 @@ const FloatingCard = (props) => {
     <Touchable style={
       [styles.card,
         props.containerStyle && props.containerStyle,
-        {elevation: 2, ...themes.base.elevations.depth2}]}
+        { ...themes.base.elevations.depth2}]}
                onPress={props.onPress}
                disabled={props.disabled}
     >

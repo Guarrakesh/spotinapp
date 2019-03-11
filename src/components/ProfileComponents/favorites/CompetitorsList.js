@@ -20,22 +20,23 @@ const CompetitorsList = ({
                            isLoading,
                            total,
                            version,
-                           t
+                           t,
+                           numBySport
                          }) => {
 
   if (isLoading) {
     return(
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default} />
-      </View>
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default} />
+        </View>
     );
   }
 
   if (ids.length === 0) {
     return(
-      <View style={themes.base.noContentView}>
-        <Text style={themes.base.noContentText}>{t("profile.settings.favorite.noTeamsFound")}</Text>
-      </View>
+        <View style={themes.base.noContentView}>
+          <Text style={themes.base.noContentText}>{t("profile.settings.favorite.noTeamsFound")}</Text>
+        </View>
     )
   }
 
@@ -54,56 +55,41 @@ const CompetitorsList = ({
     return false;
   };
 
-  const numBySport = () => {
-    let num = 0;
-    for(let comp of selectedComp){
-      if(comp.sport === currentSport){
-        num++
-      }
-    }
-    return num;
-  };
-
-  const isDisabled = (id) => numBySport() >= MAX_FAVCOMP_NUM && !isSelected(id);
+  const isDisabled = (id) => numBySport >= MAX_FAVCOMP_NUM && !isSelected(id);
 
   const content = competitorsRows.map((row, idx) => (
-    <Row style={{height:150}} key={idx}>{
-
-      row.map(id => <Col>
-        {data[id] ?
-          <CompetitorCard
-            key={id}
-            onPress={() => onItemPress(id, data[id].name)}
-            icon={<VersionedImageField style={isDisabled(data[id]._id) ? styles.imgDisabled : null} source={data[id].image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 72, height: 72}}/>}
-            isSelected={isSelected(data[id]._id)}
-            isDisabled={isDisabled(data[id]._id)}
-            data={data[id]}
-            {...data[id]}/> : null
-        }</Col>)
-    }</Row>
+      <Row style={{height:150}} key={idx}>{
+        row.map((id, index) => <Col>
+          {data[id] ?
+              <CompetitorCard
+                  key={id}
+                  index={index + idx*index}
+                  onPress={() => onItemPress(id, data[id].name)}
+                  icon={<VersionedImageField style={isDisabled(data[id]._id) ? styles.imgDisabled : null} source={data[id].image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 72, height: 72}}/>}
+                  isSelected={isSelected(data[id]._id)}
+                  isDisabled={isDisabled(data[id]._id)}
+                  data={data[id]}
+                  {...data[id]}
+              /> : null
+          }</Col>)
+      }</Row>
   ));
 
   return(
-    <View style={{flex:1}}>
-      <ScrollView>
-        <Typography
-          style={{margin: 8}}
-          variant="heading"  gutterBottom>
-          {t("profile.settings.favorite.selectFavoriteCompetitors")}
-        </Typography>
-        <Grid>
-          {content}
-        </Grid>
-      </ScrollView>
-      <Button
-        disabled={isLoading}
-        onPress={() => onConfirmPress()}
-        variant="primary"
-        containerStyle={styles.confirmButton}
-        titleStyle={styles.confirmButtonTitle}
-        title={numBySport()>0 ? `${t("common.confirm").toUpperCase()} (${numBySport()})` : t("common.skip").toUpperCase()}
-      />
-    </View>
+      <View style={{flex:1}}>
+        <ScrollView>
+          <Typography
+              style={{margin: 8, marginTop: 16, color: '000',fontWeight: '900'}}
+              align="center"
+              uppercase gutterBottom>
+            {t("profile.settings.favorite.selectFavoriteCompetitors")}
+          </Typography>
+          <Grid>
+            {content}
+          </Grid>
+        </ScrollView>
+
+      </View>
   );
 };
 

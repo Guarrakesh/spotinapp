@@ -198,6 +198,8 @@ class LoginScreen extends React.Component {
                 onPress={this.login}
                 block
                 loading={isLoading}
+                size="big"
+                containerStyle={{marginBottom: 8}}
                 loadingProps={{color: colors.accent.default}}
               >{t("auth.login.signIn")}</Button>
               <Button

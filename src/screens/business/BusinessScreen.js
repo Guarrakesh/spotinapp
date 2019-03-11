@@ -12,7 +12,7 @@ import { View, SearchBar, Button} from '../../components/common';
 import BusinessList from '../../components/BusinessComponents/BusinessList';
 import Icon  from 'react-native-vector-icons/Feather';
 
-
+import { entityView } from "../../actions/view";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import ListController from "../../controllers/ListController";
@@ -63,11 +63,11 @@ class BusinessScreen extends React.Component {
       searchBar: { open: newState }
     });
     Animated.timing(
-      this.state._searchBarY,
-      {
-        toValue: newState ? 1 : 0,
-        duration: 300
-      }
+        this.state._searchBarY,
+        {
+          toValue: newState ? 1 : 0,
+          duration: 300
+        }
     ).start(() => {
       this.setState({searchBar: {open: newState}});
 
@@ -94,11 +94,11 @@ class BusinessScreen extends React.Component {
         backgroundColor: themes.base.colors.primary.default
       },
       headerRight: <AnimatedIcon
-        name={params.searchBar && params.searchBar.open ? "x" : "search"}
-        onPress={params.onSearchPress}
-        style={{marginRight: 21}}
-        color={themes.base.colors.text.default}
-        size={21}/>,
+          name={params.searchBar && params.searchBar.open ? "x" : "search"}
+          onPress={params.onSearchPress}
+          style={{marginRight: 21}}
+          color={themes.base.colors.text.default}
+          size={21}/>,
 
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
@@ -111,6 +111,7 @@ class BusinessScreen extends React.Component {
 
 
   handleBusinessPress(businessId, distance) {
+    this.props.entityView('business', businessId);
     this.props.navigation.navigate('BusinessProfileScreen', {businessId, distance});
 
   }
@@ -138,75 +139,75 @@ class BusinessScreen extends React.Component {
 
 
     return (
-      <ListController
-        id='business_list'
-        resource="businesses"
-        perPage="100"
-        sort={{field: 'dist.calculated', order: 'asc'}}
-        nearPosition={nearPosition}
-        filterDefaultValues={undefined}
-      >
-        {controllerProps => {
-          {this.state.isFirstMount ? this.cleanFilter(controllerProps) : null}
-          return(
-            <View style={styles.container}>
-              <Animated.View
+        <ListController
+            id='business_list'
+            resource="businesses"
+            perPage="100"
+            sort={{field: 'dist.calculated', order: 'asc'}}
+            nearPosition={nearPosition}
+            filterDefaultValues={undefined}
+        >
+          {controllerProps => {
+            {this.state.isFirstMount ? this.cleanFilter(controllerProps) : null}
+            return(
+                <View style={styles.container}>
+                  <Animated.View
 
-                style={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  top: -100,
-                  width: '100%',
-                  zIndex: 90,
-                  transform: [{
-                    translateY: this.state._searchBarY.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, 100]
-                    })
-                  }]
-                }}>
-                <AnimatedSearchBar
-                  showLoading={controllerProps.isLoading}
-                  onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
-                  onClear={() => this.cleanFilter(controllerProps)}
-                  value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
-                  allowFontScaling={false}
-                  placeholder={t("home.searchBusiness")}
-                />
-              </Animated.View>
-              <AnimatedBusinessList
-                searchActive={controllerProps.filterValues.q !== undefined }
-                style={{
-                  marginBottom: this.state.searchBar.open ? 50 : 0, //altrimenti l'ultimo locale della ricerca viene nascosto dalla tab
-                  transform: [{
-                    translateY: this.state._searchBarY.interpolate({
-                      inputRange: [0,1],
-                      outputRange: [0, 50]
-                    })
-                  }]
-                }}
-                onItemPress={this.handleBusinessPress}
-                {...controllerProps}/>
-              {
-                !controllerProps.isLoading ?
-                  <Button
-                    disabled={controllerProps.isLoading}
-                    variant={"primary"}
-                    containerStyle={styles.mapButton}
-                    titleStyle={{fontSize: 24}}
-                    onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
-                      data: controllerProps.data,
-                      ids: controllerProps.ids
-                    })}
+                      style={{
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: -100,
+                        width: '100%',
+                        zIndex: 90,
+                        transform: [{
+                          translateY: this.state._searchBarY.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 100]
+                          })
+                        }]
+                      }}>
+                    <AnimatedSearchBar
+                        showLoading={controllerProps.isLoading}
+                        onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
+                        onClear={() => this.cleanFilter(controllerProps)}
+                        value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
+                        allowFontScaling={false}
+                        placeholder={t("home.searchBusiness")}
+                    />
+                  </Animated.View>
+                  <AnimatedBusinessList
+                      searchActive={controllerProps.filterValues.q !== undefined }
+                      style={{
+                        marginBottom: this.state.searchBar.open ? 50 : 0, //altrimenti l'ultimo locale della ricerca viene nascosto dalla tab
+                        transform: [{
+                          translateY: this.state._searchBarY.interpolate({
+                            inputRange: [0,1],
+                            outputRange: [0, 50]
+                          })
+                        }]
+                      }}
+                      onItemPress={this.handleBusinessPress}
+                      {...controllerProps}/>
+                  {
+                    !controllerProps.isLoading ?
+                        <Button
+                            disabled={controllerProps.isLoading}
+                            variant={"primary"}
+                            containerStyle={styles.mapButton}
+                            titleStyle={{fontSize: 24}}
+                            onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
+                              data: controllerProps.data,
+                              ids: controllerProps.ids
+                            })}
 
-                  >
-                    <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
-                  </Button>
-                  : null
-              }
+                        >
+                          <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+                        </Button>
+                        : null
+                  }
 
-            </View>)}}
-      </ListController>
+                </View>)}}
+        </ListController>
     )
   }
 }
@@ -270,4 +271,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-export default connect(mapStateToProps)(withNamespaces()(BusinessScreen));
+export default connect(mapStateToProps, {
+  entityView
+})(withNamespaces()(BusinessScreen));
