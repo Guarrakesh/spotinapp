@@ -37,7 +37,7 @@ const CompetitionList = ({
         index={index}
         onPress={() => handlePress(item, competition.name)}
         {...competition} />)
-  }
+  };
 
   const keyExtractor = (item) => item._id;
   const itemLayout = (data, index) => (

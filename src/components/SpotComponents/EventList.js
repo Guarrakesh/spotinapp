@@ -1,14 +1,12 @@
 import React from "react";
 import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import {StyleSheet, SectionList, View, ActivityIndicator, Image} from "react-native";
+import { StyleSheet, SectionList, View, ActivityIndicator, Image } from "react-native";
 import { withNamespaces } from 'react-i18next';
 import DeviceInfo from 'react-native-device-info';
 import {groupBy, debounce} from "lodash";
 import moment from "moment";
 import "moment/min/moment-with-locales"
-
-
 
 import { Typography } from '../common';
 import themes from "../../styleTheme";

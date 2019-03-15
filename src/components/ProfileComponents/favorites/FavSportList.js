@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import {View, ScrollView, Image, ActivityIndicator } from 'react-native'
+import {View, ScrollView, Image, ActivityIndicator, Platform } from 'react-native'
 import { withNamespaces } from 'react-i18next';
 
 import { Typography } from '../../common';
@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import Helpers from '../../../helpers';
 import themes from '../../../styleTheme';
 import * as Animatable from 'react-native-animatable';
+
+const marginTop = themes.base.deviceDimensions.height/20;
 
 const FavSportList = ({
                         ids,
@@ -56,23 +58,23 @@ const FavSportList = ({
       row.map((id, index) => <Col>
         {data[id].active ?
           <FavSportCard
-              index={index + idx*index}
-              key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
-                        isSelected={isSelected(data[id]._id)}
-                        icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
-                        {...data[id]}/> : null
+            index={index + idx*index}
+            key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
+            isSelected={isSelected(data[id]._id)}
+            icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
+            {...data[id]}/> : null
         }</Col>)
     }</Row>
   ));
 
 
   return (
-    <ScrollView>
+    <ScrollView style={{marginTop: Platform.OS === "ios" ? marginTop : 0}}>
       <Typography
         style={{margin: 8, color: '000',fontWeight: '900'}}
         align="center"
         uppercase
-         gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
+        gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
       </Typography>
       <Grid>
         {content}

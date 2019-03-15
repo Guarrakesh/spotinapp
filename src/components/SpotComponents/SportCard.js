@@ -10,6 +10,7 @@ const SportCard = (props) => {
   return (
 
     <FloatingCard
+      index={props.index}
       onPress={props.onPress}
       contentStyle={styles.cardContent}
       containerStyle={styles.container}

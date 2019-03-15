@@ -4,35 +4,32 @@ import FloatingCard from "../../common/FloatingCard";
 import themes from "../../../styleTheme";
 import {Fonts} from "../../common/Fonts";
 import View from "../../common/View";
-import * as Animatable from 'react-native-animatable';
+
 const FavSportCard = (props) => {
 
   const {isSelected, isDisabled, index} = props;
 
   return (
-      <Animatable.View duration={500} delay={300 + 50 * index }
-                       easing={"ease-in-cubic"}
-                       useNativeDriver={true}
+    <View style={isSelected ? styles.outerSelected : styles.outer}>
 
-                       animation="fadeIn" style={isSelected ? styles.outerSelected : styles.outer}>
-
-        <FloatingCard
-            onPress={isDisabled ? null : props.onPress}
-            contentStyle={styles.cardContent}
-            containerStyle={isSelected ? styles.containerSelected :styles.container}
-            footContent={props.name}
-            disabled={isDisabled}
-            footStyle={isSelected ? styles.cardFooterSelected : styles.cardFooter}
-            footTitleStyle={{
-              color: isSelected ? themes.base.colors.accent.default : themes.base.colors.text.default,
-              fontSize: 16,
-              opacity: isDisabled ? 0.5 : 1.0,
-              fontFamily: isSelected ? Fonts.LatoBold : Fonts.Lato,
-            }}
-        >
-          {props.icon}
-        </FloatingCard>
-      </Animatable.View>
+      <FloatingCard
+        index={index}
+        onPress={isDisabled ? null : props.onPress}
+        contentStyle={styles.cardContent}
+        containerStyle={isSelected ? styles.containerSelected :styles.container}
+        footContent={props.name}
+        disabled={isDisabled}
+        footStyle={isSelected ? styles.cardFooterSelected : styles.cardFooter}
+        footTitleStyle={{
+          color: isSelected ? themes.base.colors.accent.default : themes.base.colors.text.default,
+          fontSize: 16,
+          opacity: isDisabled ? 0.5 : 1.0,
+          fontFamily: isSelected ? Fonts.LatoBold : Fonts.Lato,
+        }}
+      >
+        {props.icon}
+      </FloatingCard>
+    </View>
   );
 };
 
@@ -41,13 +38,13 @@ const styles = StyleSheet.create({
     flex:1,
     overflow: Platform.OS === "android" ? "hidden" : null,
     margin: 8,
-    backgroundColor: themes.base.colors.white.light,
+    backgroundColor: 'transparent',
     borderRadius: themes.base.borderRadius/2,
   },
   outerSelected: {
     flex:1,
     margin: 8,
-    backgroundColor: themes.base.colors.white.light,
+    backgroundColor: 'transparent',
     borderRadius: themes.base.borderRadius/2,
     shadowColor: themes.base.colors.accent.default,
     shadowOpacity: 1.0,

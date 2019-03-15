@@ -45,7 +45,7 @@ const UserInfoCard = (props) =>{
   );
 
 
-}
+};
 
 const styles = StyleSheet.create({
   container: {

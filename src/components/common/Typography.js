@@ -4,7 +4,7 @@ import { Text, normalize } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 
 
-import themes from '../../styleTheme';
+import themes, {blackColor} from '../../styleTheme';
 //TODO: Da completare
 const colors = themes.base.colors;
 const fonts = themes.base.fonts;
@@ -30,7 +30,7 @@ const Typography = ({
     variant === "display2" && { fontSize: normalize(34) },
     variant === "display1" && { fontSize: normalize(28) },
     variant === "title" && { fontSize: normalize(22) },
-    variant === "heading" && { fontSize: normalize(18)},
+    variant === "heading" && { fontSize: normalize(18), fontWeight: '900', color: blackColor.default},
     variant === "subheading" && { fontSize: normalize(18)},
     variant === "body" && { fontSize: normalize(14)},
     variant === "caption" && { fontSize: normalize(12)},

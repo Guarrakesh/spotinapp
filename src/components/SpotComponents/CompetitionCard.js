@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
 import * as Animatable from 'react-native-animatable';
 
+const AnimatedTouchable = Animatable.createAnimatableComponent(Touchable);
+
 
 const CompetitionCard = (props) => {
 
@@ -23,25 +25,20 @@ const CompetitionCard = (props) => {
 
   } = props;
 
-  let imageUrl;
-
-
-  console.log(index);
   return (
-
-      <Animatable.View
+        <AnimatedTouchable
           useNativeDriver={true}
           animation="fadeInRight"
           duration={500}
-          delay={300 + index*50}>
-        <Touchable
-            onPress={props.onPress} style={[styles.container, {...themes.base.elevations.depth1, backgroundColor: '#fff'}]}>
-          <View style={{flexDirection: 'row',}}>
+          delay={300 + (index*200)}
+          onPress={props.onPress}
+          style={[styles.container, {...themes.base.elevations.depth1}]}>
+          <View style={{flexDirection: 'row'}}>
 
             <View style={styles.image}>
               { image_versions
-                  ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
-                  : <Icon name="sports-club" size={42}/> }
+                ? <VersionedImageField source={image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 64, height: 64}} />
+                : <Icon name="sports-club" size={42}/> }
             </View>
             <View style={styles.info}>
               <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit={true}>{name}</Text>
@@ -54,9 +51,7 @@ const CompetitionCard = (props) => {
               <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
             </View>
           </View>
-        </Touchable>
-      </Animatable.View>
-
+        </AnimatedTouchable>
   );
 };
 
@@ -104,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 8,
     borderRadius: themes.base.borderRadius,
-
+    elevation: 1
 
   },
   arrowIconView: {
@@ -114,7 +109,7 @@ const styles = StyleSheet.create({
   arrowImg: {
     marginRight: 8
   },
-})
+});
 
 export default withNamespaces()(CompetitionCard);
 

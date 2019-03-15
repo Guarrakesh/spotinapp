@@ -49,6 +49,8 @@
       "additionalInfo"    : "The offer doesn't include a booked table in this restaurant",
       "cancel"            : "Cancel",
       "confirm"           : "Confirm",
+      "howManyPeople"     : "How many people will you be?",
+      "dontKnow"          : "Don't know",
       "notification" : {
         "title"           : "Great!",
         "message"         : "You obtained this deal"
@@ -79,6 +81,8 @@
       "noReservations"       : "You have no booked offers yet",
       "browseOffers"         : "Browse offers",
       "listTitle"            : "Your offers",
+      "savedOn"              : "Saved on",
+      "people"               : "people",
       "delete"               : "Delete",
       "alertDelete": {
         "title"              : "Are you sure you want to delete this offer?",
@@ -159,7 +163,8 @@
     "password"            : "Password",
     "passwordConfirm"     : "Confirm password",
     "longPressToRemove": "Long press to remove an item",
-    "update": "Update"
+    "update": "Update",
+    "next": "Next"
 
   },
 

@@ -58,7 +58,7 @@ const SportList = ({
   return (
     <ScrollView>
       <Typography
-          style={{margin: 8, color: '000',fontWeight: '900'}}
+          style={{margin: 8, color: '000', fontWeight: '900'}}
           align="center"
           uppercase gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
       </Typography>

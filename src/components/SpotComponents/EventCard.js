@@ -40,7 +40,8 @@ const EventCard = (props) => {
           useNativeDriver={true}
           animation="fadeInRight"
           duration={500}
-          delay={500 + index}
+          delay={500 + (index*200)}
+          elevation={1}
           style={styles.containerStyle}>
 
         <Touchable style={styles.favorite} onPress={props.onFavoritePress}>

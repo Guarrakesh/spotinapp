@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import {get, isEmpty} from "lodash";
 import {Text, StyleSheet, ImageBackground, Image, Alert} from "react-native";
 import { withNamespaces } from 'react-i18next';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import DeviceInfo from 'react-native-device-info';
-
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import moment from "moment";
 import "moment/min/moment-with-locales";
 
-import { Button, View } from "../common";
+import { Button, View, Typography } from "../common";
 
 import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
@@ -18,18 +17,19 @@ import themes from "../../styleTheme";
 import Helpers from "../../helpers";
 
 
+
 const colors = themes.base.colors;
 const Fonts = themes.base.fonts;
+const coverWidth = themes.base.deviceDimensions.width - 16;
 
 moment.locale(DeviceInfo.getDeviceLocale());
 const ReservationView = ({reservation, onCancel, t}) => {
 
-  const { broadcast, createdAt } = reservation;
+  const { broadcast, created_at, peopleNum } = reservation;
   const { offer, newsfeed } = broadcast;
+  const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
 
 
-  // let roundedDistance = Math.round(dist.calculated*10)/10;
-  // roundedDistance = roundedDistance.toString().replace(".",",");
 
   let date = (startAt) => {
     return(
@@ -42,6 +42,8 @@ const ReservationView = ({reservation, onCancel, t}) => {
       moment(startAt).format('HH:mm')
     )
   };
+
+  const reservationDate = moment(created_at).format('dddd D MMMM').toString();
 
   const discount = (type) => {
     switch (parseInt(type)) {
@@ -73,9 +75,12 @@ const ReservationView = ({reservation, onCancel, t}) => {
       <View style={styles.imgContainer}>
         <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">
           { ({record: business}) =>
-            <ImageBackground
-              source={{uri: business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+            <VersionedImageField
+              isBackground={true}
+              source={business.cover_versions && business.cover_versions.length > 0 ? business.cover_versions : null}
               style={styles.imgBackground}
+              minSize={{width: 1200, height: 1200}}
+              imgSize={{height: null, width: coverWidth}}
             >
               <View style={styles.businessContainer}>
                 <Text style={styles.businessName}>{business.name}</Text>
@@ -85,18 +90,9 @@ const ReservationView = ({reservation, onCancel, t}) => {
                     <Text style={styles.businessAddress}>{business.address.street} {business.address.number}</Text>
                     <Text style={styles.businessAddress}>{business.address.city} ({business.address.province})</Text>
                   </View>
-                  <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    right: 8,
-                    bottom: 8
-                  }}>
-
-                  </View>
                 </View>
               </View>
-            </ImageBackground>
+            </VersionedImageField>
           }
         </ReferenceField>
       </View>
@@ -122,7 +118,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
 
             }
 
-            <View style={{margin: 16, marginTop: 0, justifyContent: 'space-between'}}>
+            <View style={styles.eventNameDateView}>
               <Text style={styles.eventNameText}>{event.name}</Text>
               <Text style={styles.eventDateText}>{date(event.start_at)}</Text>
               <Text style={styles.eventTimeText}>{time(event.start_at)}</Text>
@@ -130,26 +126,33 @@ const ReservationView = ({reservation, onCancel, t}) => {
             <View style={styles.sportIconView}>
               <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
             </View>
-
-
           </View>
         }
       </ReferenceField>
-
-
-      {(offer.description && !offer.description.isEmpty) ?
-        <View style={styles.offerInfoView}>
-          <Text style={styles.offerTitleText}>{offer.title && offer.title !== "" ? offer.title : t("common.discountAtCheckout")}</Text>
-          <Text style={styles.offerDescriptionText}>{offer.description}</Text>
-        </View> : null
+      {
+        (offer.description && !offer.description.isEmpty) ?
+          <View style={styles.offerInfoView}>
+            <Text style={styles.offerTitleText}>{offer.title && offer.title !== "" ? offer.title : t("common.discountAtCheckout")}</Text>
+            <Text style={styles.offerDescriptionText}>{description}</Text>
+          </View> : null
       }
+      <View style={styles.peopleView}>
+        <Typography uppercase gutterBottom variant={"heading"} style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout").toUpperCase()}</Typography>
+        <Typography uppercase gutterBottom>{t("profile.bookedOffer.savedOn").toUpperCase()} {reservationDate.toUpperCase()}</Typography>
+        {(peopleNum && peopleNum !== 0) ?
+          <View style={{flexDirection: "row", alignItems: "flex-end"}}>
+            <MaterialIcons name={"people"} size={20} style={styles.peopleIcon}/>
+            <Text style={styles.peopleText}>{peopleNum} {t("profile.bookedOffer.people")}</Text>
+          </View> : null
+        }
+      </View>
       <View style={styles.offerReservationView}>
-        <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
         <Button
-          clear
+          titleStyle={{color: colors.white.default}}
+          round={true}
           variant="danger"
           uppercase
-          containerStyle={{marginTop: 8, marginLeft: 8}}
+          containerStyle={{marginLeft: 8}}
           onPress={() => deletePress()}
         >{t("profile.bookedOffer.delete")}</Button>
       </View>
@@ -215,14 +218,20 @@ const styles = StyleSheet.create({
   eventInfoView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16
+    margin: 16,
+    borderBottomWidth: 1,
+    borderColor: colors.white.divisor
+  },
+  eventNameDateView: {
+    flex: 1,
+    margin: 16,
+    marginTop: 0,
+    justifyContent: 'space-between'
   },
   competitorsLogoView: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginLeft: 16,
-
+    justifyContent: 'space-between'
   },
   eventNameText: {
     fontSize: 18,
@@ -241,8 +250,7 @@ const styles = StyleSheet.create({
   sportIconView: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    position: 'absolute',
-    right: 16
+
   },
   sportIcon: {
     width: 60,
@@ -251,9 +259,10 @@ const styles = StyleSheet.create({
   offerInfoView: {
     marginLeft: 16,
     marginRight: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: themes.base.colors.white.divisor
+    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: themes.base.colors.white.divisor
   },
   offerTitleText: {
     fontSize: 20,
@@ -278,7 +287,7 @@ const styles = StyleSheet.create({
   },
   offerText: {
     fontSize: 16,
-    fontFamily: Fonts.LatoBold,
+    //fontFamily: Fonts.LatoBold,
     color: themes.base.colors.danger.default,
     alignSelf: 'center'
   },
@@ -289,11 +298,17 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     overflow: 'hidden'
   },
-  /*deleteButton: {
-    backgroundColor: themes.base.colors.danger.light,
-    alignItems: 'center',
-    borderColor: "transparent",
-  },*/
+  reservationDateText: {
+    fontSize: 18,
+    fontFamily: Fonts.LatoMedium,
+    color: colors.text.default
+  },
+  peopleText: {
+    fontSize: 16,
+    fontFamily: Fonts.LatoBold,
+    color: colors.accent.default,
+    marginLeft: 8,
+  },
   deleteText: {
     fontSize: 16,
     fontFamily: Fonts.LatoBold,
@@ -301,6 +316,15 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16
 
+  },
+  peopleView: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  peopleIcon: {
+    // position: 'absolute',
+    // right: 16,
+    color: themes.base.colors.accent.default
   },
 });
 

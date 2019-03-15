@@ -401,6 +401,6 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: colors.primary.default
   }
-})
+});
 
 export default connect(mapStateToProps)(withNamespaces()(ContactUsScreen));

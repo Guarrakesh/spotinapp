@@ -10,7 +10,7 @@ export default class View extends React.Component {
 
     static defaultProps = {
         elevation: 0
-    }
+    };
 
     render() {
 

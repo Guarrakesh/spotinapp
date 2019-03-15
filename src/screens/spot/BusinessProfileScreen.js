@@ -21,13 +21,12 @@ import BusinessInfoCard from '../../components/BusinessProfileComponents/Busines
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
-
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
 import { refreshList as refreshListAction } from '../../actions/listActions';
 
 const HEADER_HEIGHT = 50;
-
 class BusinessProfileScreen extends React.Component {
+
 
   state = {
     modalVisible: false,
@@ -70,6 +69,8 @@ class BusinessProfileScreen extends React.Component {
     this.scrollTimeout = setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
   }
 
+
+
   componentWillUnmount(): void {
     clearTimeout(this.scrollTimeout);
   }
@@ -96,14 +97,15 @@ class BusinessProfileScreen extends React.Component {
     this.props.undoReservation(this.props.userId, this.state.currentBroadcast._id);
   }
 
-  handleConfirm() {
+  handleConfirm(numPeople) {
+    console.log("NUMERO DI PERSONE: ", numPeople);
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: false,
       });
     });
 
-    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId, ({payload, requestPayload}) => {
+    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId, numPeople, ({payload, requestPayload}) => {
       //A prenotazione effettuata, aggiungo questo broadcast a quelli prenotati nello state, così che possa cambiare comparire
       //il flag PRENOTATO
       this.setState({ reservedBroadcasts: [...this.state.reservedBroadcasts, requestPayload.data.broadcast]})
@@ -121,14 +123,14 @@ class BusinessProfileScreen extends React.Component {
 
   }
 
- /* handleScroll(e) {
-    const scrollY= e.nativeEvent.contentOffset.y;
-    if (scrollY > 250 ) {
-      this.props.navigation.setParams({headerVisible: true});
-    } else {
-      this.props.navigation.setParams({headerVisible: false});
-    }
-  }*/
+  /* handleScroll(e) {
+     const scrollY= e.nativeEvent.contentOffset.y;
+     if (scrollY > 250 ) {
+       this.props.navigation.setParams({headerVisible: true});
+     } else {
+       this.props.navigation.setParams({headerVisible: false});
+     }
+   }*/
 
   /*handleRefresh(){
     console.log(this.amen);
@@ -168,17 +170,19 @@ class BusinessProfileScreen extends React.Component {
 
                 <View style={styles.cardContainer}>
                   { record && <BusinessInfoCard distance={distance} business={record}/>}
+
                   <Modal
                     animationIn={'slideInUp'}
                     animationOut={"slideOutDown"}
                     isVisible={this.state.modalVisible}
 
                   >
-                    <ReservationConfirmView   onConfirmPress={this.handleConfirm.bind(this)}
-                                              onLoginPress={this.handleLogin.bind(this)}
-                                              onCancelPress={this.handleModalDismiss.bind(this)}
-                                              isAuth={this.props.userId}
-                                              data={this.state.modalData}/>
+                    <ReservationConfirmView
+                      onConfirmPress={this.handleConfirm.bind(this)}
+                      onLoginPress={this.handleLogin.bind(this)}
+                      onCancelPress={this.handleModalDismiss.bind(this)}
+                      isAuth={this.props.userId}
+                      data={this.state.modalData}/>
                   </Modal>
                   <ReferenceManyFieldController
                     resource="broadcasts"

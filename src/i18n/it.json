@@ -51,6 +51,8 @@
       "additionalInfo"         : "L'offerta non include la prenotazione del tavolo presso il locale",
       "cancel"                 : "Annulla",
       "confirm"                : "Conferma",
+      "howManyPeople"          : "Quante persone sarete?",
+      "dontKnow"               : "Non so",
       "notification": {
         "title"                : "Ottimo",
         "message"              : "Hai ottenuto l'offerta"
@@ -81,6 +83,8 @@
       "noReservations"       : "Non hai ancora nessuna prenotazione",
       "browseOffers"         : "Esplora offerte",
       "listTitle"            : "Le tue offerte",
+      "savedOn"              : "Effettuata",
+      "people"               : "persone",
       "delete"               : "Elimina",
       "alertDelete": {
         "title": "Eliminare la prenotazione?",
@@ -162,7 +166,8 @@
     "password"            : "Password",
     "passwordConfirm"     : "Conferma la password",
     "longPressToRemove": "Tieni premuto per rimuovere un elemento",
-    "update": "Aggiorna"
+    "update": "Aggiorna",
+    "next": "Avanti"
   },
 
 

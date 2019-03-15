@@ -1,5 +1,5 @@
 import React from "react";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, Platform} from "react-native";
 import CompetitorsList from "../../components/ProfileComponents/favorites/CompetitorsList";
 import connect from "react-redux/es/connect/connect";
 import ListController from "../../controllers/ListController";
@@ -7,6 +7,8 @@ import {Button, SearchBar} from "../../components/common";
 import i18n from "../../i18n/i18n";
 import themes from "../../styleTheme";
 import {withNamespaces} from "react-i18next";
+
+const marginTop = themes.base.deviceDimensions.height/20;
 
 class FavoriteCompetitorsScreen extends React.Component {
 
@@ -116,7 +118,7 @@ class FavoriteCompetitorsScreen extends React.Component {
             {controllerProps => {
               {this.state.isFirstMount ? this.cleanFilter(controllerProps) : null}
               return(
-                  <View style={{flex:1}}>
+                  <View style={{flex:1, marginTop: Platform.OS === "ios" ? marginTop : 0}}>
                     <SearchBar
                         placeholder={i18n.t("profile.settings.favorite.searchTeam")}
                         showLoading={controllerProps.isLoading}

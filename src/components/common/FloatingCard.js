@@ -1,15 +1,26 @@
 import React from "react";
-import {Touchable, View} from "../common";
+import { View} from "../common";
+import Touchable from "../common/Touchable"
 import {Text} from "react-native";
-
+import * as Animatable from 'react-native-animatable';
 import themes from '../../styleTheme';
+
+const AnimatedTouchable = Animatable.createAnimatableComponent(Touchable);
+
 const FloatingCard = (props) => {
+
   return (
 
-    <Touchable style={
+    <AnimatedTouchable
+      useNativeDriver={true}
+      duration={500}
+      delay={ 300 + (100*props.index) }
+      easing={"ease-in-cubic"}
+      animation={"fadeIn"}
+      style={
       [styles.card,
         props.containerStyle && props.containerStyle,
-        { ...themes.base.elevations.depth2}]}
+        { elevation: 1, ...themes.base.elevations.depth2}]}
                onPress={props.onPress}
                disabled={props.disabled}
     >
@@ -36,10 +47,10 @@ const FloatingCard = (props) => {
           </Text>
         </View>
       </View>
-    </Touchable>
+    </AnimatedTouchable>
 
   )
-}
+};
 
 const styles = {
   card: {

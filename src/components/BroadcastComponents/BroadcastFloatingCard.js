@@ -75,7 +75,7 @@ const BroadcastFloatingCard = ({
                           { business.cover_versions && business.cover_versions.length > 0 ?
                               <VersionedImageField
                                   isBackground
-                                  minSize={{width: 550, height: 150}}
+                                  minSize={{width: 700, height: 700}}
                                   imgSize={{width: 550, height: 150}}
                                   style={styles.imgBackground}
                                   source={business.cover_versions}>

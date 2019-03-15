@@ -23,6 +23,7 @@ const BroadcastCardInProfile = (props) => {
   let { broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
   const offerValue = offer.value.toFixed(2);
+  const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
 
   const discount = (type) => {
     switch (parseInt(type)) {
@@ -77,10 +78,11 @@ const BroadcastCardInProfile = (props) => {
                 <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
               </View>
             </View>
-            {(offer && offer.description && offer.description !== "" ) ?
+            {
+              (offer && offer.description && offer.description !== "" ) ?
               <View style={styles.offerInfoView}>
                 <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
-                <Text style={styles.offerDescriptionText}>{offer.description}</Text>
+                <Text style={styles.offerDescriptionText}>{description}</Text>
               </View> : null
             }
             <View style={styles.offerReservationView}>
