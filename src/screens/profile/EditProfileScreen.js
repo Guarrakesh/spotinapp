@@ -65,6 +65,7 @@ class EditProfileScreen extends React.Component{
     //cambio immagine del profilo
     const options = {
       title: 'Seleziona foto',
+      rotation: 360,
       //customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
       storageOptions: {
         skipBackup: true,

@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
 import * as Animatable from 'react-native-animatable';
 
-const AnimatedTouchable = Animatable.createAnimatableComponent(Touchable);
+const AnimatedView = Animatable.createAnimatableComponent(View);
 
 
 const CompetitionCard = (props) => {
@@ -26,14 +26,15 @@ const CompetitionCard = (props) => {
   } = props;
 
   return (
-        <AnimatedTouchable
-          useNativeDriver={true}
-          animation="fadeInRight"
-          duration={500}
-          delay={300 + (index*200)}
+        <Touchable
           onPress={props.onPress}
           style={[styles.container, {...themes.base.elevations.depth1}]}>
-          <View style={{flexDirection: 'row'}}>
+          <AnimatedView
+            useNativeDriver={true}
+            animation="fadeInRight"
+            duration={500}
+            delay={300 + (index*200)}
+            style={{flexDirection: 'row'}}>
 
             <View style={styles.image}>
               { image_versions
@@ -50,8 +51,8 @@ const CompetitionCard = (props) => {
             <View style={styles.arrowIconView}>
               <Icon name="keyboard-arrow-right" color={themes.base.colors.text.default} style={styles.arrowImg} size={25}/>
             </View>
-          </View>
-        </AnimatedTouchable>
+          </AnimatedView>
+        </Touchable>
   );
 };
 

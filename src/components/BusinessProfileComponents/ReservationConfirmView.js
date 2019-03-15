@@ -25,12 +25,21 @@ class ReservationConfirmView extends Component {
 constructor() {
   super();
   this.state = {
-    numPeople: 0
+    numPeople: 0,
+    backOpacity: 0
   };
 }
 
   componentWillMount(){
     this.flip = new Animated.Value(0);
+
+    this.value = 0;
+
+    this.flip.addListener(({ value }) => {
+      if(value > 89){
+        this.setState({backOpacity: 1});
+      }
+    });
 
     this.frontInterpolate = this.flip.interpolate({
       inputRange: [0, 180],
@@ -44,10 +53,10 @@ constructor() {
       extrapolate: 'clamp'
     });
 
-    this.backOpacity = this.flip.interpolate({
-      inputRange: [89, 90],
-      outputRange: [0, 1]
-    });
+    // this.backOpacity = this.flip.interpolate({
+    //   inputRange: [89, 90],
+    //   outputRange: [0, 1]
+    // });
 
   }
 
@@ -90,6 +99,7 @@ constructor() {
     };
 
     const backAnimatedStyle = {
+      opacity: this.state.backOpacity,
       transform: [
         { rotateY: this.backInterpolate }
       ]
@@ -98,7 +108,7 @@ constructor() {
     return (
 
       <View>
-        <Animated.View style={[styles.container, backAnimatedStyle, {opacity: this.backOpacity}]} elevation={3}>
+        <Animated.View style={[styles.container, backAnimatedStyle]} elevation={3}>
           <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>{t("browse.getOffer.title")}</Text>
           <View style={styles.eventInfoView}>
             <View style={styles.competitorsLogoView}>

@@ -35,6 +35,7 @@ const images = {
       connect: require('./img/connect/connect.png'),
       notFound: require('./img/notFound/NotFound.png'),
       megaphone: require('./img/megaphone/megaphone.png'),
+      beer: require('./img/beer/beer.png'),
     }
   }
 };

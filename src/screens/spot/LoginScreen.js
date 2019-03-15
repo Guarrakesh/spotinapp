@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white.default
   },
   logo: {
-    marginTop: 30,
+    marginTop: themes.base.deviceDimensions.height/10,
     height: 80,
 
   },

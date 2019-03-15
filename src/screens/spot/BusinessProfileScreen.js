@@ -98,7 +98,6 @@ class BusinessProfileScreen extends React.Component {
   }
 
   handleConfirm(numPeople) {
-    console.log("NUMERO DI PERSONE: ", numPeople);
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: false,
