@@ -24,22 +24,23 @@ const BackgroundPattern = require('../../assets/img/patterns/liquid-cheese.png')
 const userIcon = Images.icons.barIcons.profileSelected;
 class EditProfileScreen extends React.Component{
 
-  state = {
-    userId: "",
-    name: "",
-    picture: null,
-    pictureData: null,
-    password: "",
-    passwordConfirm: "",
-    errors: {},
-    canSubmit: false,
-    imageIsEdited: false
-  };
+
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      userId: "",
+      name: "",
+      picture: "",
+      pictureData: {},
+      password: "",
+      passwordConfirm: "",
+      errors: {},
+      canSubmit: false,
+      imageIsEdited: false
+    };
   }
+
   componentDidMount(){
     const { userId } = this.props;
     const { name, picture, photo } = this.props.profile;
@@ -47,7 +48,7 @@ class EditProfileScreen extends React.Component{
     const profilePic = () => {
 
       if(photo && photo.versions && photo.versions[0]){
-        return photo.versions[0].url + `?${Date.now()}`;
+        return `${photo.versions[0].url}` + `?${Date.now()}`;
       }
       else if (picture){
         return picture;
@@ -79,8 +80,8 @@ class EditProfileScreen extends React.Component{
       } else if (response.error) {
 
         Alert.alert(
-          'Spot In non ha i permessi per leggere le tue foto',
-          'Abilita i permessi nelle impostazioni',
+          i18n.t("profile.settings.editProfileScreen.imagePermissions.title"),
+          i18n.t("profile.settings.editProfileScreen.imagePermissions.subtitle"),
           [
             {
               text: 'Cancel',
@@ -88,8 +89,8 @@ class EditProfileScreen extends React.Component{
               style: 'cancel',
             },
             {
-              text: 'Impostazioni',
-              onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.memoryCardSettings()
+              text: i18n.t("profile.settings.title"),
+              onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.appDetailsSettings()
             },
           ],
           {cancelable: true},
@@ -158,6 +159,7 @@ class EditProfileScreen extends React.Component{
   render(){
 
     const { profile, loading } = this.props;
+    const { picture, photo } = profile;
     const { name, password, passwordConfirm, errors, canSubmit} = this.state;
 
 
@@ -171,7 +173,7 @@ class EditProfileScreen extends React.Component{
 
           <Touchable style={styles.userImageTouchable} onPress={() => this.handleEditPhotoPress()}>
             <ImageBackground
-              source={this.state.picture ? {uri: this.state.picture, cache: "reload" } : userIcon}
+              source={picture || photo || this.state.imageIsEdited ? {uri: this.state.picture, cache: "reload" } : userIcon}
               style={styles.userImage}
             >
               <View style={{padding: 5, backgroundColor: 'rgba(255,255,255,.8)', borderRadius: 20}}>

@@ -105,7 +105,7 @@ class SignupScreen extends React.Component {
           <Image source={Logo} style={{height: 32, width: '100%', marginBottom: 32,}} resizeMode={"contain"}/>
           <View style={styles.formContainer}>
             <SignupForm
-              isLoading={isLoading}
+              isLoading={this.props.isLoading}
               onChangeTextName={this.onChangeName}
               onChangeTextPassword={this.onChangePass}
               onChangeTextEmail={this.onChangeEmail}
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, props) => {
   const registerError = state.auth.registerError;
   let errorMessage = null;
-  if (registerError && registerError.status == 409) {
+  if (registerError && registerError.status === 409) {
     errorMessage = props.t("auth.login.usedEmail")
   }
   return ({

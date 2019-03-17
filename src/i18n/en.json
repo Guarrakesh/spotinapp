@@ -138,7 +138,11 @@
       "editProfileScreen": {
         "imagePickerTitle": "Select profile image",
         "insertNewPassword": "Enter new password",
-        "repeatPassword": "Confirm password"
+        "repeatPassword": "Confirm password",
+        "imagePermissions": {
+          "title": "Spot In doesn't have permission to read your photos",
+          "subtitle": "Enable permissions in settings"
+        }
       }
     }
 

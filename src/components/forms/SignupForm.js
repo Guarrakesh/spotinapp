@@ -97,6 +97,7 @@ const SignupForm = props => {
             uppercase
             variant={"primary"}
             loading={props.isLoading}
+            disabled={props.isLoading}
             onPress={props.onSubmit}
           >{t("auth.register.button")}</Button>
 

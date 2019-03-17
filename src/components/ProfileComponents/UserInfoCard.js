@@ -17,7 +17,7 @@ const UserInfoCard = (props) =>{
   const profilePic = () => {
 
     if(photo && photo.versions && photo.versions[0]){
-      return photo.versions[0].url;
+      return photo.versions[0].url + `?${Date.now()}`;
     }
     else if (picture){
       return picture;
@@ -32,7 +32,7 @@ const UserInfoCard = (props) =>{
 
     <View style={styles.container} elevation={1}>
       <View style={styles.imageView}>
-        <Image source={picture || photo ? {uri: profilePic() + `?${Date.now()}`, cache: "reload"} : userIcon} style={styles.userImage}/>
+        <Image source={picture || photo ? {uri: profilePic(), cache: "reload"} : userIcon} style={styles.userImage}/>
       </View>
       <View style={styles.infoView}>
         <Text style={styles.userName} numberOfLines={1} adjustsFontSizeToFit={true}>{user.name}</Text>

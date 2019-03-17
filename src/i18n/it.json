@@ -140,7 +140,11 @@
       "editProfileScreen": {
         "imagePickerTitle": "Seleziona immagine del profilo",
         "insertNewPassword": "Inserisci la nuova password",
-        "repeatPassword": "Ripeti la password"
+        "repeatPassword": "Ripeti la password",
+        "imagePermissions": {
+          "title": "Spot In non ha i permessi per leggere le tue foto",
+          "subtitle": "Abilita i permessi nelle impostazioni"
+        }
       }
     }
 
