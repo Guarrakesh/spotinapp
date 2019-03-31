@@ -1,11 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-
 import Icon from 'react-native-vector-icons/Ionicons';
-
-
-
-import {View, Text, Button, Platform} from 'react-native';
+import { Platform } from 'react-native';
 // Screens
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
@@ -13,10 +9,14 @@ import EditProfileScreen from '../screens/profile/EditProfileScreen';
 import ReservationScreen from "../screens/profile/ReservationScreen";
 import SettingsScreen from "../screens/profile/SettingsScreen";
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
-import i18n from '../i18n/i18n';
-import themes from "../styleTheme";
 import FavoriteCompetitorsScreen from "../screens/profile/FavoriteCompetitorsScreen";
 import FavoriteSportsScreen from "../screens/profile/FavoriteSportsScreen";
+import ReviewsQuestionScreen from "../screens/business/ReviewsQuestionScreen";
+
+import i18n from '../i18n/i18n';
+import themes from "../styleTheme";
+import DismissButton from "../components/common/DismissButton";
+
 
 
 
@@ -176,3 +176,15 @@ export const FavoriteNavigator = createStackNavigator({
     }
   }
 );
+
+export const ReviewsNavigator = createStackNavigator({
+  screen: ReviewsQuestionScreen,
+  navigationOptions: ({navigation}) => ({
+    headerTransparent: true,
+    mode: "modal",
+    headerRight: (
+      <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+    ),
+  })
+
+});

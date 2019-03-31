@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
 import {
   crudGetList as crudGetListAction,
@@ -41,7 +40,8 @@ class InlineListController extends Component {
         nextProps.initialised !== this.props.initialised ||
         nextProps.resource !== this.props.resource ||
         nextProps.isLoading !== this.props.isLoading ||
-        nextProps.ids !== this.props.ids ) {
+        nextProps.ids !== this.props.ids ||
+        this.props.awareData && (nextProps.data !== this.props.data)) {
       return true;
     }
 

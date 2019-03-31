@@ -95,6 +95,6 @@ VersionedImageField.propTypes = {
   isBackground: PropTypes.bool
 };
 
-export default (VersionedImageField);
+;export default (VersionedImageField);
 
 

@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {  Text, StyleSheet, Alert } from 'react-native';
-import Icon from "react-native-vector-icons/MaterialIcons";
+import {Alert, StyleSheet, Text} from 'react-native';
 import moment from "moment";
 import DeviceInfo from 'react-native-device-info';
 
 import 'moment/min/moment-with-locales';
 
-import { Touchable, View } from '../../components/common';
+import {Touchable, View} from '../../components/common';
 
 import themes from "../../styleTheme";
 import {Fonts} from "../common/Fonts";
-import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
 
 moment.locale(DeviceInfo.getDeviceLocale());
@@ -25,31 +23,31 @@ const SavedEventListItem = (props) => {
   const onLongPress = (event) => {
 
     Alert.alert(
-        `${event.name}`,
-        t('profile.favoriteEvent.alertDelete'),
-        [
-          {text: t('common.cancel'), onPress: () => {}, style: 'cancel'},
-          {text: t('profile.favoriteEvent.removeButton'), onPress: () => props.onRemovePress()},
-        ],
-        { cancelable: true }
+      `${event.name}`,
+      t('profile.favoriteEvent.alertDelete'),
+      [
+        {text: t('common.cancel'), onPress: () => {}, style: 'cancel'},
+        {text: t('profile.favoriteEvent.removeButton'), onPress: () => onRemovePress()},
+      ],
+      { cancelable: true }
     )
   };
 
   return(
-      <Touchable
-          onPress={onPress}
-          style={styles.eventContainer}
-          onLongPress={() => onLongPress(event)}>
-        <View style={{flexDirection: 'row', flex: 1}}>
-          <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
-                               imgSize={{width: 32, height: 32}}/>
-          <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
-          <View style={styles.dateContainer}>
-            <Text style={styles.eventTime}>{time}</Text>
-            <Text style={styles.eventDate}>{date}</Text>
-          </View>
+    <Touchable
+      onPress={onPress}
+      style={styles.eventContainer}
+      onLongPress={() => onLongPress(event)}>
+      <View style={{flexDirection: 'row', flex: 1}}>
+        <VersionedImageField source={event.competition.image_versions} minSize={{width: 128, height: 128}}
+                             imgSize={{width: 32, height: 32}}/>
+        <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name}</Text>
+        <View style={styles.dateContainer}>
+          <Text style={styles.eventTime}>{time}</Text>
+          <Text style={styles.eventDate}>{date}</Text>
         </View>
-      </Touchable>
+      </View>
+    </Touchable>
 
   )
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import {ScrollView} from 'react-native';
 
-import { cancelReservation, deleteReservation } from '../../actions/reservation';
+import {cancelReservation, deleteReservation} from '../../actions/reservation';
 
 import ReservationView from '../../components/ProfileComponents/ReservationView';
 

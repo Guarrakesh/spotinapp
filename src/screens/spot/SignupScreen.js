@@ -1,32 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Animated } from 'react-native';
-import { withNamespaces } from 'react-i18next';
+import {connect} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Image, ImageBackground, StatusBar, StyleSheet, View} from 'react-native';
+import {withNamespaces} from 'react-i18next';
 import validate from 'validate.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import SignupForm from '../../components/forms/SignupForm';
 import signup from '../../validations/signup';
 
-
-const SignupBackground = require('../../assets/img/signup_background.png');
-const Logo = require('../../assets/img/logo-text/logo-text.png');
-import {
-  View,
-  Image,
-  StyleSheet,
-  ImageBackground,
-  StatusBar
-} from 'react-native';
-
-import { userRegister } from '../../actions/authActions';
-
-
-
+import {userRegister} from '../../actions/authActions';
 
 
 import themes from '../../styleTheme';
+
+const SignupBackground = require('../../assets/img/signup_background.png');
+const Logo = require('../../assets/img/logo-text/logo-text.png');
 const colors = themes.base.colors;
 
 
@@ -135,7 +123,6 @@ class SignupScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-
     paddingTop: 64,
     backgroundColor: themes.base.backgroundColor,
     flexDirection: 'column',

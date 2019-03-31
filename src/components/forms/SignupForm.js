@@ -53,8 +53,6 @@ const SignupForm = props => {
             rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
             rightIcon={props.emailError ? <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="envelope" size={18}/>}
 
-
-
             autoCapitalize="none"
             shake={props.emailError}
 

@@ -8,7 +8,7 @@ import AuthNavigator from './AuthNavigator';
 import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotStack';
-import {FavoriteNavigator, ProfileStack} from './ProfileStack';
+import {FavoriteNavigator, ProfileStack, ReviewsNavigator} from './ProfileStack';
 import HomeStack from './HomeStack';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
@@ -97,6 +97,7 @@ const RootNavigator = createStackNavigator(
     BusinessMapInBusiness: BusinessMapNavigatorInBusiness,
     ContactUs: ContactUsNavigator,
     FavoriteNavigator: FavoriteNavigator,
+    ReviewsNavigator: ReviewsNavigator,
 
     //For push notifications
     BroadcastList: BroadcastsScreen,

@@ -144,6 +144,66 @@
           "subtitle": "Enable permissions in settings"
         }
       }
+    },
+    "reservations": {
+      "tellUs": "Tell us your experience",
+      "thanks": "Thank you for your contribution!",
+      "exitReview": "Exit the review",
+      "typeComment": "Type a comment...",
+      "questions": {
+        "foodQuest": "How was the food?",
+        "avQuest": "How was the audio/video quality?",
+        "peopleQuest": "How crowded was it?",
+        "priceQuest": "Price range?",
+        "subQuest": "How do you rate your experience?",
+        "commentQuest": "Would you like to leave a comment?"
+      },
+      "answers": {
+        "food": {
+          "veryBad": "Very Bad",
+          "bad": "Bad",
+          "good": "Good",
+          "veryGood": "Very Good",
+          "excellent": "Excellent"
+        },
+        "av": {
+          "avBad": "Bad audio and video",
+          "aGoodVBad": "Good audio and bad video",
+          "aBadVGood": "Bad audio and good video",
+          "avGood": "Good audio and video"
+        },
+        "people": {
+          "empty": "Empty",
+          "notCrowded": "Not Crowded",
+          "normal": "Normal",
+          "crowded": "Crowded",
+          "veryCrowded": "Very Crowded"
+        },
+        "price": {
+          "veryExpensive": "Very expensive",
+          "quiteExpensive": "Quite expensive",
+          "normal": "Normal",
+          "cheap": "Cheap",
+          "veryCheap": "Very cheap"
+        },
+        "sub": {
+          "veryBad": "Very Bad",
+          "bad": "Bad",
+          "good": "Good",
+          "veryGood": "Very Good",
+          "excellent": "Excellent"
+        }
+      },
+      "notifications": {
+        "success": {
+          "title": "Review sent successfully!",
+          "message": "Thank you for sharing your experience with us."
+        },
+        "failure": {
+          "title": "Something went wrong...",
+          "message": "Your review could not be submitted, please try again later."
+        }
+      }
     }
 
   },

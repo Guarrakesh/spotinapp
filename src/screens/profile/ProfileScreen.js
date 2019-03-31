@@ -1,21 +1,19 @@
 import React from 'react';
-import PushNotification from 'react-native-push-notification';
 import ProfileController from '../../controllers/ProfileController';
 import InlineListController from '../../controllers/InlineListController';
 import View from '../../components/common/View';
-import {ScrollView, Text, StyleSheet, ActivityIndicator, Button, Platform} from 'react-native';
+import {ActivityIndicator, Platform, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import { userLogout, userCheck } from '../../actions/authActions';
-import { deleteFavoriteEvent } from '../../actions/events';
-import {Touchable, Typography} from '../../components/common';
+import {userCheck, userLogout} from '../../actions/authActions';
+import {deleteFavoriteEvent} from '../../actions/events';
+import {Touchable} from '../../components/common';
 import NotLoggedView from "../../components/BusinessProfileComponents/NotLoggedView";
 import UserInfoCard from '../../components/ProfileComponents/UserInfoCard';
 import ReservationsCarousel from '../../components/ProfileComponents/ReservationsCarousel';
+import PendingReviewsList from "../../components/ProfileComponents/reviews/PendingReviewsList";
 import SavedEventsList from '../../components/ProfileComponents/SavedEventsList';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import themes from "../../styleTheme";
-import i18n from "../../i18n/i18n";
 
 class ProfileScreen extends React.Component {
 
@@ -30,6 +28,7 @@ class ProfileScreen extends React.Component {
     this.handleReservationPress = this.handleReservationPress.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
     this.handleLoginPress = this.handleLoginPress.bind(this);
+    this.handleReviewPress = this.handleReviewPress.bind(this);
 
   }
 
@@ -87,6 +86,10 @@ class ProfileScreen extends React.Component {
     this.props.navigation.navigate("Auth")
   }
 
+  handleReviewPress(reservation) {
+    this.props.navigation.navigate("ReviewsNavigator", {reservation});
+  }
+
   render() {
 
     return (
@@ -101,14 +104,31 @@ class ProfileScreen extends React.Component {
 
                 <View>
                   <UserInfoCard user={profile} onLogoutPress={this.handleLogout} onEditProfilePress={this.handleEditProfile}/>
-                  <InlineListController basePath={`/users/${profile._id}`}
-                                        id="profile_reservations_list" resource="reservations">
+                  <InlineListController
+                    basePath={`/users/${profile._id}`}
+                    id="profile_reservations_list"
+                    resource="reservations"
+                  >
                     {controllerProps =>
                       controllerProps.isLoading ? null :
                         <ReservationsCarousel
                           {...controllerProps}
                           onItemPress={this.handleReservationPress}
                           onBrowsePress={this.handleBrowse}
+                        />
+                    }
+                  </InlineListController>
+                  <InlineListController
+                    basePath={`/users/${profile._id}`}
+                    id="profile_reviews_list"
+                    resource="reservations"
+                    awareData
+                  >
+                    {controllerProps =>
+                      controllerProps.isLoading ? null :
+                        <PendingReviewsList
+                          {...controllerProps}
+                          onItemPress={this.handleReviewPress}
                         />
                     }
                   </InlineListController>

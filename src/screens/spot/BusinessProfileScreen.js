@@ -1,16 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  StyleSheet,
-  InteractionManager,
-  ScrollView,
-  Animated,
-  //RefreshControl,
-  Button
-} from 'react-native';
+import {Animated, InteractionManager, ScrollView, StyleSheet, View} from 'react-native';
 import Modal from "react-native-modal";
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
@@ -22,7 +14,6 @@ import BroadcastInProfileList from '../../components/BusinessProfileComponents/B
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
-import { refreshList as refreshListAction } from '../../actions/listActions';
 
 const HEADER_HEIGHT = 50;
 class BusinessProfileScreen extends React.Component {

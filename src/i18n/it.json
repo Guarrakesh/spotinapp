@@ -146,6 +146,66 @@
           "subtitle": "Abilita i permessi nelle impostazioni"
         }
       }
+    },
+    "reservations": {
+      "tellUs": "Raccontaci la tua esperienza",
+      "thanks": "Grazie per il tuo contributo!",
+      "exitReview": "Esci dalla recensione",
+      "typeComment": "Scrivi un commento...",
+      "questions": {
+        "foodQuest": "Com'era il cibo?",
+        "avQuest": "Com'era la qualità audio/video?",
+        "peopleQuest": "Quanto era affollato?",
+        "priceQuest": "Fascia di prezzo?",
+        "subQuest": "Come valuti la tua esperienza?",
+        "commentQuest": "Vuoi lasciare un commento?"
+      },
+      "answers": {
+        "food": {
+          "veryBad": "Pessimo",
+          "bad": "Poco buono",
+          "good": "Nella norma",
+          "veryGood": "Buono",
+          "excellent": "Eccellente"
+        },
+        "av": {
+          "avBad": "Audio e video pessimi",
+          "aGoodVBad": "Audio buono e video pessimo",
+          "aBadVGood": "Audio pessimo e video buono",
+          "avGood": "Audio e video buoni"
+        },
+        "people": {
+          "empty": "Vuoto",
+          "notCrowded": "Poco affollato",
+          "normal": "Nella norma",
+          "crowded": "Molto affollato",
+          "veryCrowded": "Affollatissimo"
+        },
+        "price": {
+          "veryExpensive": "Molto caro",
+          "quiteExpensive": "Abbastanza caro",
+          "normal": "Nella norma",
+          "cheap": "Economico",
+          "veryCheap": "Molto economico"
+        },
+        "sub": {
+          "veryBad": "Pessima",
+          "bad": "Poco buona",
+          "good": "Nella norma",
+          "veryGood": "Buona",
+          "excellent": "Eccellente"
+        }
+      },
+      "notifications": {
+        "success": {
+          "title": "Recensione inviata con successo!",
+          "message": "Grazie per aver condiviso con noi la tua esperienza."
+        },
+        "failure": {
+          "title": "Qualcosa è andato storto...",
+          "message": "Non è stato possibile inviare la tua recensione, riprova più tardi."
+        }
+      }
     }
 
   },

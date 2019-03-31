@@ -112,8 +112,20 @@ constructor() {
           <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18}}>{t("browse.getOffer.title")}</Text>
           <View style={styles.eventInfoView}>
             <View style={styles.competitorsLogoView}>
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[1]._links.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null }
+              {
+                event.competition.competitorsHaveLogo ?
+                  event.competitors[0]._links.image_versions ?
+                    <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : null
+                  :
+                  event.competition.image_versions ?
+                    <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : null
+              }
+              {
+                event.competition.competitorsHaveLogo ?
+                  event.competitors[1]._links.image_versions ?
+                    <Image source={{uri: event.competitors[1]._links.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null
+                  : null
+              }
             </View>
             <View style={{marginLeft: 16, justifyContent: 'space-between', flex: 1}}>
               <Text style={styles.eventNameText}>{event.name}</Text>
@@ -140,51 +152,67 @@ constructor() {
             </Button>
           </View>
         </Animated.View>
-        <Animated.View style={[frontAnimatedStyle, styles.container, styles.backView]}>
-          <View style={styles.eventInfoView}>
-            <View style={styles.competitorsLogoView}>
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> }
-              { event.competition.competitorsHaveLogo ? <Image source={{uri: event.competitors[1]._links.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null }
+        {
+          this.state.backOpacity === 0 ?
+          <Animated.View style={[frontAnimatedStyle, styles.container, styles.backView]}>
+            <View style={styles.eventInfoView}>
+              <View style={styles.competitorsLogoView}>
+                {
+                  event.competition.competitorsHaveLogo ?
+                    event.competitors[0]._links.image_versions ?
+                  <Image source={{uri: event.competitors[0]._links.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : null
+                  :
+                    event.competition.image_versions ?
+                  <Image source={{uri: event.competition.image_versions[0].url}} style={{width: 37, height: 37}} resizeMode={'contain'}/> : null
+                }
+                {
+                  event.competition.competitorsHaveLogo ?
+                    event.competitors[1]._links.image_versions ?
+                    <Image source={{uri: event.competitors[1]._links.image_versions[0].url}} style={{width: 37, height: 37, marginTop: 8}} resizeMode={'contain'}/> : null
+                    : null
+                }
+              </View>
+              <View style={{marginLeft: 16, justifyContent: 'space-between', flex: 1}}>
+                <Text style={styles.eventNameText}>{event.name}</Text>
+                <Text style={styles.eventDateText}>{date}</Text>
+                <Text style={styles.eventTimeText}>{time}</Text>
+              </View>
+              <View style={styles.sportIconView}>
+                <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+              </View>
             </View>
-            <View style={{marginLeft: 16, justifyContent: 'space-between', flex: 1}}>
-              <Text style={styles.eventNameText}>{event.name}</Text>
-              <Text style={styles.eventDateText}>{date}</Text>
-              <Text style={styles.eventTimeText}>{time}</Text>
+            <View style={styles.offerView}>
+              <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18, marginBottom: 16, alignSelf: "center"}}>{t("browse.getOffer.howManyPeople")}</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.peopleText}>{this.state.numPeople === 0 ? t("browse.getOffer.dontKnow") : this.state.numPeople}</Text>
+                <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
+              </View>
+              <Slider
+                value={this.state.numPeople}
+                minimumValue={0}
+                maximumValue={20}
+                step={1}
+                style={{justifyContent: 'center', marginLeft: 16, marginRight: 16}}
+                //trackStyle={{height: 1}}
+                thumbStyle={{borderWidth: 2, borderColor: themes.base.colors.accent.default}}
+                thumbTintColor={themes.base.colors.white.light}
+                onValueChange={(numPeople) => this.setState({numPeople})} />
             </View>
-            <View style={styles.sportIconView}>
-              <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
+              <Button clear uppercase onPress={onCancelPress}>
+                {t("browse.getOffer.cancel")}
+              </Button>
+              <Button elevation={1} onPress={isAuth ? () => this.nextPress() : onLoginPress}
+                      uppercase clear variant="primary">
+                {isAuth ?
+                  this.state.numPeople === 0 ? t("common.skip") : t("common.next")
+                  :
+                  t("auth.login.signIn")}
+              </Button>
             </View>
-          </View>
-          <View style={styles.offerView}>
-            <Text style={{fontFamily: Fonts.LatoSemibold, fontSize: 18, marginBottom: 16, alignSelf: "center"}}>{t("browse.getOffer.howManyPeople")}</Text>
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.peopleText}>{this.state.numPeople === 0 ? t("browse.getOffer.dontKnow") : this.state.numPeople}</Text>
-              <MaterialIcons name={"people"} size={25} style={styles.peopleIcon}/>
-            </View>
-            <Slider
-              value={this.state.numPeople}
-              minimumValue={0}
-              maximumValue={20}
-              step={1}
-              style={{justifyContent: 'center', marginLeft: 16, marginRight: 16}}
-              //trackStyle={{height: 1}}
-              thumbStyle={{borderWidth: 2, borderColor: themes.base.colors.accent.default}}
-              thumbTintColor={themes.base.colors.white.light}
-              onValueChange={(numPeople) => this.setState({numPeople})} />
-          </View>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
-            <Button clear uppercase onPress={onCancelPress}>
-              {t("browse.getOffer.cancel")}
-            </Button>
-            <Button elevation={1} onPress={isAuth ? () => this.nextPress() : onLoginPress}
-                    uppercase clear variant="primary">
-              {isAuth ?
-                this.state.numPeople === 0 ? t("common.skip") : t("common.next")
-                :
-                t("auth.login.signIn")}
-            </Button>
-          </View>
-        </Animated.View>
+          </Animated.View> : null
+        }
+
       </View>
     );
   }

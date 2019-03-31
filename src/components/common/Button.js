@@ -130,6 +130,9 @@ const styles = StyleSheet.create({
     color: dangerColor.light,
 
   },
+  grey: {
+    backgroundColor: "#D8D8D8"
+  },
   round: {
     borderRadius: 50
   }

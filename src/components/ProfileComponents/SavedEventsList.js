@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Text, Image, FlatList, StyleSheet} from "react-native";
-import { withNamespaces } from 'react-i18next';
+import {FlatList, StyleSheet, Text} from "react-native";
+import {withNamespaces} from 'react-i18next';
 
-import { View, Typography } from "../../components/common";
+import {View} from "../../components/common";
 import themes from "../../styleTheme";
 import SavedEventListItem from "./SavedEventListItem";
-import Button from '../common/Button';
-
 
 
 const SavedEventsList = ({
@@ -44,7 +42,7 @@ const SavedEventsList = ({
             </View>
           </View>
   )
-}
+};
 
 
 const styles = StyleSheet.create({
