@@ -67,6 +67,9 @@ class ContactUsScreen extends React.Component{
 
     const { userId, event, userPosition, location, maxDistance, numOfPeople, notes, email } = this.state;
     const self = this;
+    const { t } = self.props;
+    const isAuth = this.props.userId;
+    const fetchUrl = isAuth ? `${vars.apiUrl}/users/${userId}/requests` : `${vars.apiUrl}/broadcast-requests`;
 
     this.setState({errors: {}});
 
@@ -78,69 +81,131 @@ class ContactUsScreen extends React.Component{
       this.setState({errors: validationErrors});
     }
     else{
-      auth.check().then(() => {
-        auth.getAuthToken().then(token => {
-
-          self.props.dispatch(fetchStart());
-          const { t } = self.props;
-          fetch(`${vars.apiUrl}/users/${userId}/requests`,
-            {
-              headers: {
-                'Authorization':`Bearer ${token.accessToken}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              method: "POST",
-              body: JSON.stringify({
-                event,
-                location,
-                maxDistance,
-                numOfPeople,
-                userPosition,
-                note: notes
+      if(isAuth) {
+        auth.check().then(() => {
+          auth.getAuthToken().then(token => {
+            self.props.dispatch(fetchStart());
+            fetch(fetchUrl,
+              {
+                headers: {
+                  'Authorization':`Bearer ${token.accessToken}`,
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({
+                  email,
+                  event,
+                  location,
+                  maxDistance,
+                  numOfPeople,
+                  userPosition,
+                  note: notes
+                })
               })
-            })
-            .then(function(res){
-              if(res.status === 204){
-                self.props.dispatch(fetchEnd());
-                //mostra notifica
-                self.props.dispatch(showNotification(
-                  t("browse.noBroadcasts.notification.success.message"),
-                  "success",
-                  {
-                    title: t("browse.noBroadcasts.notification.success.title"),
-                  }
-                ));
-                self.props.navigation.navigate('BroadcastsList');
-              }
-              else{
-                //mostra notifica
-                self.props.dispatch(showNotification(
-                  t("browse.noBroadcasts.notification.failure.message"),
-                  "warning",
-                  {
-                    title: t("browse.noBroadcasts.notification.success.title"),
-                  }
-                ));
+              .then(function(res){
+                if(res.status === 204){
+                  self.props.dispatch(fetchEnd());
+                  //mostra notifica
+                  self.props.dispatch(showNotification(
+                    t("browse.noBroadcasts.notification.success.message"),
+                    "success",
+                    {
+                      title: t("browse.noBroadcasts.notification.success.title"),
+                    }
+                  ));
+                  self.props.navigation.navigate('BroadcastsList');
+                }
+                else{
+                  //mostra notifica
+                  self.props.dispatch(showNotification(
+                    t("browse.noBroadcasts.notification.failure.message"),
+                    "warning",
+                    {
+                      title: t("browse.noBroadcasts.notification.success.title"),
+                    }
+                  ));
 
+                  self.props.dispatch(fetchEnd());
+                  console.log(res);
+                }
+              })
+              .catch(function(res){
+                self.props.dispatch(showNotification(
+                  t("common.notificationFailure.message"),
+                  "error",
+                  {
+                    title: t("common.notificationFailure.title")
+                  }
+                ));
                 self.props.dispatch(fetchEnd());
-              }
+                console.log(res);
+              })
+          })
+        }).catch(function(e){
+          self.props.navigation.navigate("Auth", {}, true);
+          self.props.dispatch(fetchEnd());
+          console.log(e);
+        })
+      }
+      else {
+        fetch(fetchUrl,
+          {
+            headers: {
+              //'Authorization':`Bearer ${token.accessToken}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              event,
+              location,
+              maxDistance,
+              numOfPeople,
+              userPosition,
+              note: notes
             })
-            .catch(function(res){
+          })
+          .then(function(res){
+            if(res.status === 204){
+              self.props.dispatch(fetchEnd());
+              //mostra notifica
               self.props.dispatch(showNotification(
-                t("common.notificationFailure.message"),
-                "error",
+                t("browse.noBroadcasts.notification.success.message"),
+                "success",
                 {
-                  title: t("common.notificationFailure.title")
+                  title: t("browse.noBroadcasts.notification.success.title"),
                 }
               ));
+              self.props.navigation.navigate('BroadcastsList');
+            }
+            else{
+              //mostra notifica
+              self.props.dispatch(showNotification(
+                t("browse.noBroadcasts.notification.failure.message"),
+                "warning",
+                {
+                  title: t("browse.noBroadcasts.notification.success.title"),
+                }
+              ));
+
               self.props.dispatch(fetchEnd());
-            })
-        })
-      }).catch(function(e){
-        self.props.navigation.navigate("Auth", {}, true);
-        self.props.dispatch(fetchEnd());
-      })
+              console.log(res);
+            }
+          })
+          .catch(function(res){
+            self.props.dispatch(showNotification(
+              t("common.notificationFailure.message"),
+              "error",
+              {
+                title: t("common.notificationFailure.title")
+              }
+            ));
+            self.props.dispatch(fetchEnd());
+            console.log(res);
+          })
+      }
     }
 
   }

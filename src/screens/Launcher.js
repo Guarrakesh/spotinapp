@@ -1,18 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { View, Image, ActivityIndicator, AsyncStorage} from 'react-native';
-
+import {connect} from 'react-redux';
+import {ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
+import type {Notification, NotificationOpen} from 'react-native-firebase';
+import firebase from "react-native-firebase";
 import NavigationService from "../navigators/NavigationService";
-import { userCheck } from '../actions/authActions';
-import { skipFavorites } from "../actions/profile";
-import { ALREADY_STARTED_UP } from "../helpers/asyncStorageKeys";
-import { ALREADY_SET_FAVORITE, FAVORITE_SPORTS, FAVORITE_COMPETITORS } from "../sagas/core/favorite";
+import {userCheck} from '../actions/authActions';
+import {skipFavorites} from "../actions/profile";
+import {ALREADY_STARTED_UP} from "../helpers/asyncStorageKeys";
+import {ALREADY_SET_FAVORITE} from "../sagas/core/favorite";
 import themes from "../styleTheme";
 
 const Logo = require('../assets/img/logo/logo.png');
 const Together = require('../assets/img/together/together.png');
 
 class Launcher extends React.Component {
+
+
   componentDidMount() {
 
     // AsyncStorage.removeItem(FAVORITE_COMPETITORS);
@@ -22,8 +25,42 @@ class Launcher extends React.Component {
 
     const self = this;
 
-    AsyncStorage.getItem(ALREADY_STARTED_UP).then(item => {
+    firebase.notifications().getInitialNotification()
+      .then((notificationOpen: NotificationOpen) => {
+        if (notificationOpen) {
+          // App was opened by a notification
 
+          // Get information about the notification that was opened
+          const notification: Notification = notificationOpen.notification;
+          self.notificationLaunch(notification);
+
+        }
+        else{
+          self.normalLaunch();
+        }
+      });
+
+
+  }
+
+  //Da qui possiamo gestire tutte le aperture da notifica,
+  //l'if sara' sostituito da uno switch per tutti i tipi di notifica
+  notificationLaunch(notification){
+    const self = this;
+
+    if(notification._data.type === "review"){
+      const reservation = notification._data.reservation;
+      self.props.navigate("ReviewsNavigator.ReviewsQuestionScreen", {reservation}, true);
+    }
+    else{
+      self.normalLaunch();
+    }
+  }
+
+  normalLaunch() {
+    const self = this;
+
+    AsyncStorage.getItem(ALREADY_STARTED_UP).then(item => {
       if (item) {
         //l'utente ha gia l'app e ha fatto l'intro
         //controllo nello storage se ha selezionato i preferiti
@@ -63,7 +100,6 @@ class Launcher extends React.Component {
 
               }
             })
-
           }
         }, true);
       }

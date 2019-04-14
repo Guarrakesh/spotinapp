@@ -33,7 +33,7 @@ const EventCard = ({
         ))}
       </View>
       :
-      <View style={{marginTop: 16}}>
+      <View>
         { <VersionedImageField source={competition.image_versions} minSize={{width: 128, height: 128}} imgSize={{width: 48, height: 48}} />}
       </View>
   );
@@ -96,10 +96,9 @@ const styles = {
   },
   competitorsLogosContainer: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexDirection: 'column',
-    marginRight: 16,
-    height: '100%'
+    marginRight: 16
   },
   competitors: {
     flexDirection: 'column',

@@ -11,8 +11,6 @@ const PendingReviewsListItem = (props) => {
   const { onReservePress, reservation, t } = props;
   const { broadcast } = reservation;
 
-  console.log("RESERVATION: ", reservation);
-
   return (
 
     <ReferenceField source="business" record={broadcast} resource="businesses" reference="businesses">

@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import firebase from "react-native-firebase";
 import {StyleSheet, Animated, Text} from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,6 +14,8 @@ import themes from "../../styleTheme";
 import Typography from "../../components/common/Typography";
 import {Fonts} from "../../components/common/Fonts";
 import ReviewFloatingCard from "../../components/ProfileComponents/reviews/ReviewFloatingCard";
+import { profileGetInfo } from "../../actions/profile";
+import NavigationService from "../../navigators/NavigationService";
 
 /*
 const response = {
@@ -72,7 +75,7 @@ const questions = [
     type: "price"
   },
   {
-    quest: `${i18n.t("profile.reservations.questions.subQuest")} 🍻`,
+    quest: `${i18n.t("profile.reservations.questions.subQuest")}`,
     answers: [
       `${i18n.t("profile.reservations.answers.sub.veryBad")}`,
       `${i18n.t("profile.reservations.answers.sub.bad")}️`,
@@ -89,11 +92,6 @@ const questions = [
 
 ];
 
-const question = {
-  quest: "Com'era il cibo?",
-  answers: ["Pessimo 🤮", "Poco buono ☹️", "Nella norma 👍", "Molto buono 😋", "Eccellente ⭐️"],
-  type: "food"
-};
 
 class ReviewsQuestionScreen extends React.Component {
 
@@ -113,6 +111,7 @@ class ReviewsQuestionScreen extends React.Component {
     this.handleAnswerPress = this.handleAnswerPress.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleConfirmPress = this.handleConfirmPress.bind(this);
+    this.handleExitPress = this.handleExitPress.bind(this);
   }
 
   static navigationOptions = ({navigation}) => {
@@ -124,6 +123,9 @@ class ReviewsQuestionScreen extends React.Component {
 
   componentDidMount() {
     const { reservation } = this.props.navigation.state.params;
+    if(!this.props.position){
+      this.props.profileGetInfo();
+    }
   }
 
   componentWillMount() {
@@ -166,6 +168,8 @@ class ReviewsQuestionScreen extends React.Component {
     const comment = this.state.comment === "" ? undefined : this.state.comment;
 
     this.props.sendReview(reservationId, userId, comment, this.state.rating);
+    //Elimino la notifica programmata 12 ore dopo
+    firebase.notifications().cancelNotification(`rev_notification_${reservationId}`);
 
     Animated.timing(this.disappear, {
       toValue: 1,
@@ -177,8 +181,22 @@ class ReviewsQuestionScreen extends React.Component {
       }).start();
     });
 
+    if(this.props.position){
+      setTimeout(() => this.props.navigate("Main", {}, false), 1500);
+    }
+    else{
+      setTimeout(() => this.props.navigate("Main", {}, true), 1500);
+    }
 
-    setTimeout(() => this.props.navigation.navigate("Main"), 1500);
+  }
+
+  handleExitPress() {
+    if(this.props.position){
+      this.props.navigate("Main", {}, false);
+    }
+    else{
+      this.props.navigate("Main", {}, true);
+    }
   }
 
   render() {
@@ -240,7 +258,6 @@ class ReviewsQuestionScreen extends React.Component {
                       swipeThreshold={0}
                       renderItem={({item}) =>
                         <ReviewFloatingCard
-                          indice={questions.indexOf(item)}
                           onPress={this.handleAnswerPress}
                           question={item} rating={ this.state.rating }
                           comment={ this.state.comment }
@@ -280,7 +297,7 @@ class ReviewsQuestionScreen extends React.Component {
               inactiveDotOpacity={1}
               inactiveDotScale={0.6}
             />
-            <Typography style={styles.exitText} onPress={() => this.props.navigation.navigate("Main")}>{i18n.t("profile.reservations.exitReview")}</Typography>
+            <Typography style={styles.exitText} onPress={this.handleExitPress}>{i18n.t("profile.reservations.exitReview")}</Typography>
             {/*<Typography style={[styles.exitText, {bottom: 50}]} onPress={() => this.carousel.snapToPrev()}>Indietro</Typography>*/}
           </Animated.View>
         </KeyboardAwareScrollView>
@@ -371,7 +388,10 @@ const styles = StyleSheet.create({
 });
 
 export default connect((state) => ({
-  userId: state.auth.profile._id
+  userId: state.auth.profile._id,
+  position: state.location.device.position ? state.location.device.position.coords : null
 }), {
-  sendReview
+  sendReview,
+  profileGetInfo,
+  navigate: NavigationService.navigate,
 })(ReviewsQuestionScreen);

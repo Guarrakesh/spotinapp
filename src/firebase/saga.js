@@ -1,25 +1,22 @@
 // Optional: Flow type
-import { take, fork, spawn, call, put, select } from "redux-saga/effects";
-import { channel } from 'redux-saga';
-import { AsyncStorage, Platform } from 'react-native';
+import {call, fork, put, select, spawn, take} from "redux-saga/effects";
+import {channel} from 'redux-saga';
+import {AsyncStorage, Platform} from 'react-native';
 import DeviceInfo from "react-native-device-info"
-import NavigationService from "../navigators/NavigationService";
-import { sendFcmToken } from "./actions";
-import { PROFILE_GET_INFO_SUCCESS } from "../actions/profile";
-import { USER_REGISTER_SUCCESS } from "../actions/authActions";
 import {
+  FCM_DESTROY,
   FCM_INIT,
-  FCM_NOTIFICATION_DISPLAYED,
   FCM_INITIAL_NOTIFICATION,
+  FCM_NOTIFICATION_DISPLAYED,
   FCM_NOTIFICATION_OPENED,
   FCM_TOKEN_REFRESHED,
-  FCM_DESTROY,
-
+  sendFcmToken
 } from "./actions";
-import { RESERVE_BROADCAST_SUCCESS } from "../actions/reservation";
-import firebase, { Notification, NotificatonOpen } from 'react-native-firebase';
+import {PROFILE_GET_INFO_SUCCESS} from "../actions/profile";
+import {USER_REGISTER_SUCCESS} from "../actions/authActions";
+import firebase, {Notification, NotificatonOpen} from 'react-native-firebase';
 
-import { getToken, requestPermissions, hasPermission, getInitialNotification } from './helpers';
+import {getInitialNotification, getToken, hasPermission, requestPermissions} from './helpers';
 import themes from "../styleTheme";
 
 const ANDROID_MAIN_CHANNEL_ID = "news";

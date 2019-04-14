@@ -69,7 +69,8 @@ const EventCard = (props) => {
       </AnimatedView>
 
   );
-}
+};
+
 const styles = {
   containerStyle: {
     borderRadius: themes.base.borderRadius,

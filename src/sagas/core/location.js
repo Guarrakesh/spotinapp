@@ -1,26 +1,19 @@
 import React from 'react';
-import { take, call, put, spawn, fork, select, takeEvery, cancel} from 'redux-saga/effects';
-import { channel } from 'redux-saga';
+import {call, cancel, fork, put, select, spawn, take, takeEvery} from 'redux-saga/effects';
+import {channel} from 'redux-saga';
 import Geolocation from 'react-native-geolocation-service';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import Permissions from 'react-native-permissions';
 
 import NavigationService from '../../navigators/NavigationService'
 
+import {LOCATION_REQUEST, LOCATION_SET_ERROR, LOCATION_SET_POSITION} from "../../actions/location";
+
+import {FOREGROUND} from '../../actions/appstate';
+import {REFRESH_SCREEN} from '../../actions/integrity';
+
 const navigationSelector = state => state.navigation;
 const locationSelector = state => state.location.device;
-
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-
-import {
-  LOCATION_REQUEST,
-  LOCATION_SET_ERROR,
-  LOCATION_SET_POSITION
-} from "../../actions/location";
-
-import { FOREGROUND } from '../../actions/appstate';
-import { REFRESH_SCREEN } from '../../actions/integrity';
-
 
 
 const geolocationSettings = { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 };

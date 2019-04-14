@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 
 
-import InlineListController from './InlineListController';
-
-
-
 /**
 * Componente che fornisce le prop necessarie al rendering della
 * home (es eventuali notifiche per l'utente)
@@ -24,7 +20,6 @@ export class HomeController extends Component {
     return false;
   }
   render() {
-
 
     const {
       children,

@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   answerButton: {
-
-    marginTop: 16,
+    marginTop: deviceHeight/60,
     width: deviceWidth/1.5
   },
 

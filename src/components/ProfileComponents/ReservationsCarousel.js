@@ -12,13 +12,42 @@ import Button from '../common/Button';
 
 class ReservationsCarousel extends React.Component{
 
+  constructor() {
+    super();
+    this.state = {
+      futureReservations: []
+    }
+
+  }
+
+  reservationUpdate() {
+    const {ids, data} = this.props;
+    const futureReservations = ids.filter(function(item) {
+      //Ritorna le prenotazioni precedenti all'inizio dell'evento + 3 ore
+      const expiredDate = new Date(data[item].end_at).getTime();
+      const expiredDateTimestamp = new Date(expiredDate + (3 * 3600000));
+      const broadcastExpiredDate = new Date(data[item].broadcast.end_at).getTime();
+      const broadcastExpiredDateTimestamp = new Date(broadcastExpiredDate + (3 * 3600000));
+      return (expiredDateTimestamp > Date.now() || broadcastExpiredDateTimestamp > Date.now());
+    });
+
+    this.setState({futureReservations: futureReservations});
+  }
+
+  componentDidMount() {
+    this.reservationUpdate();
+
+  }
+
+
   handleReservationPress(reservation){
     this.props.onItemPress(reservation);
   }
 
+
   render() {
 
-    const { ids, data, isLoading,  onBrowsePress, t} = this.props;
+    const { data, isLoading,  onBrowsePress, t} = this.props;
     if (isLoading) return null;
     const emptyComponent = (
         <View style={styles.emptyComponentView} elevation={2}>
@@ -30,11 +59,6 @@ class ReservationsCarousel extends React.Component{
         </View>
     );
 
-    const futureReservations = ids.filter(function (item) {
-      //Ritorna le prenotazioni precedenti all'inizio dell'evento + 3 ore
-      const expiredDate = new Date(data[item].start_at).getTime() + (3*3600000);
-      return (expiredDate > Date.now());
-    });
 
     return(
 
@@ -42,14 +66,14 @@ class ReservationsCarousel extends React.Component{
           <Text style={themes.base.inlineListTitleStyle}>{t("profile.bookedOffer.listTitle")}</Text>
 
           {
-            futureReservations.length === 0 ? emptyComponent :
+            this.state.futureReservations.length === 0 ? emptyComponent :
                 <View style={{
                   right: 0,
                   bottom: 0,
                   paddingBottom: 5}}>
 
                   <Carousel
-                      data={futureReservations}
+                      data={this.state.futureReservations}
                       itemWidth={themes.base.deviceDimensions.width - 80}
                       sliderWidth={themes.base.deviceDimensions.width}
                       activeAnimationType={'spring'}

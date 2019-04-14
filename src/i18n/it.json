@@ -62,7 +62,8 @@
     },
     "businessProfile": {
       "plannedEvents"   : "Eventi in programma",
-      "noEvents"         : "Nessun evento al momento"
+      "noEvents"         : "Nessun evento al momento",
+      "browseMenu" : "Sfoglia il menu con"
 
     }
 
@@ -309,6 +310,10 @@
     "favorite": {
       "title": "inizierà tra 6 ore!",
       "message": "Trova il locale più adatto a te dove seguire l'evento!"
+    },
+    "review": {
+      "title": "Come è andata da",
+      "message": "Raccontaci la tua esperienza!"
     }
   },
 

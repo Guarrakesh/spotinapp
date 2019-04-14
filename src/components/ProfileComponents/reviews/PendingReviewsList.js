@@ -18,8 +18,9 @@ const PendingReviewsList = ({
 
   const passedReservations = ids.filter(function(item) {
     //Ritorna le prenotazioni il cui evento è finito da 3 ore
-    const expiredDate = new Date(data[item].start_at).getTime() + (3*3600000);
-    return ((expiredDate < Date.now()) && !data[item].review);
+    const expiredDate = new Date(data[item].end_at).getTime();
+    const expiredDateTimestamp = new Date(expiredDate + (3 * 3600000));
+    return ((expiredDateTimestamp < Date.now()) && !data[item].review);
   });
 
 

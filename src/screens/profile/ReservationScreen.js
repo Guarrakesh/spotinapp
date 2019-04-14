@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import firebase from "react-native-firebase";
 import {ScrollView} from 'react-native';
 
 import {cancelReservation, deleteReservation} from '../../actions/reservation';
@@ -17,6 +17,8 @@ class ReservationScreen extends React.Component {
     const { reservation } = this.props.navigation.state.params;
     this.props.cancelReservation(reservation.user, reservation._id, reservation.broadcast._id);
     this.props.deleteReservation(reservation.user, reservation._id, reservation.broadcast._id);
+    //Elimino la notifica programmata 12 ore dopo
+    firebase.notifications().cancelNotification(`rev_notification_${reservation._id}`)
     this.props.navigation.goBack();
   }
 

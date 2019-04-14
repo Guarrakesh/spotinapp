@@ -81,8 +81,8 @@ class ResourceInitializer extends Component {
     const { dispatch } = store;
     //Get current route as url and check if it's one of the routes that should close the app
     switch (this.getCurrentRoute(navigation)) {
-      case 'Home/Home':
-      case 'Auth/SignIn':
+      case 'Main/Home':
+      case 'Auth/Auth':
       case "AppIntro/AppIntro":
         return false;
     }

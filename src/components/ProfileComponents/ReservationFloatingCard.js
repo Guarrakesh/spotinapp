@@ -21,7 +21,7 @@ const ReservationFloatingCard = ({
                                    t
                                  }) => {
 
-  const { broadcast, created_at, used } = reservation;
+  const { broadcast } = reservation;
   const { offer } = broadcast;
 
   const discount = (type) => {
@@ -75,11 +75,8 @@ const ReservationFloatingCard = ({
               </View>
             </VersionedImageField>
 
-
           }
         </ReferenceField>
-
-
       </Touchable>
     </View>
   )

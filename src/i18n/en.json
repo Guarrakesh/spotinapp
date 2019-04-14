@@ -61,7 +61,8 @@
     },
     "businessProfile": {
       "plannedEvents"   : "Planned events",
-      "noEvents"         : "No events for now"
+      "noEvents"         : "No events for now",
+      "browseMenu" : "Browse the menu"
 
     }
 
@@ -304,6 +305,10 @@
     "favorite": {
       "title": "will start in 6 hours!",
       "message": "Find the right place for you to watch the event!"
+    },
+    "review": {
+      "title": "How was",
+      "message": "Tell us your experience!"
     }
   },
 

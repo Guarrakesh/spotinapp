@@ -1,26 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Animated, InteractionManager, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Animated,
+  InteractionManager,
+  ScrollView,
+  StyleSheet,
+  Text,
+  WebView,
+  Platform
+} from 'react-native';
 import Modal from "react-native-modal";
 import {connect} from 'react-redux';
-
+import i18n from "../../i18n/i18n";
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 
 import ShowController from '../../controllers/ShowController';
-import { reserveBroadcast, startReservation, undoReservation } from '../../actions/reservation';
+import {reserveBroadcast, startReservation, undoReservation} from '../../actions/reservation';
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
 import ReservationConfirmView from "../../components/BusinessProfileComponents/ReservationConfirmView";
 import ReferenceManyFieldController from '../../controllers/ReferenceManyFieldController';
+import {Touchable, View} from "../../components/common";
 
-const HEADER_HEIGHT = 50;
+/*Firebase*/
+import firebase from 'react-native-firebase';
+import type { Notification, NotificationOpen } from 'react-native-firebase';
+
 class BusinessProfileScreen extends React.Component {
 
 
   state = {
     modalVisible: false,
+    quickerModalVisible: false,
+    loadingSpinner: true,
     modalData: {},
     broadcasts: [],
     eventLoaded: false,
@@ -57,16 +72,17 @@ class BusinessProfileScreen extends React.Component {
 
   componentDidMount(){
     const { broadcastId } = this.props.navigation.state.params;
-    this.scrollTimeout = setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
+    this.scrollTimeout = setTimeout(() => {this.scroller.scrollTo({x: 0, y: broadcastId ? themes.base.deviceDimensions.height/3.5 : 0, animated: true})}, 1000); //dopo 1 secondo fa lo scroll centrando il broadcast selezionato, se c'è
   }
 
 
 
-  componentWillUnmount(): void {
+  componentWillUnmount() {
     clearTimeout(this.scrollTimeout);
   }
 
   handleReservePress(broadcast) {
+
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: true,
@@ -88,7 +104,7 @@ class BusinessProfileScreen extends React.Component {
     this.props.undoReservation(this.props.userId, this.state.currentBroadcast._id);
   }
 
-  handleConfirm(numPeople) {
+  handleConfirm(numPeople, event, business) {
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: false,
@@ -100,8 +116,11 @@ class BusinessProfileScreen extends React.Component {
       //il flag PRENOTATO
       this.setState({ reservedBroadcasts: [...this.state.reservedBroadcasts, requestPayload.data.broadcast]})
     });
+
+
     this.forceUpdate();
   }
+
 
   handleLogin() {
     InteractionManager.runAfterInteractions(() => {
@@ -113,19 +132,9 @@ class BusinessProfileScreen extends React.Component {
 
   }
 
-  /* handleScroll(e) {
-     const scrollY= e.nativeEvent.contentOffset.y;
-     if (scrollY > 250 ) {
-       this.props.navigation.setParams({headerVisible: true});
-     } else {
-       this.props.navigation.setParams({headerVisible: false});
-     }
-   }*/
-
-  /*handleRefresh(){
-    console.log(this.amen);
-    this.amen.fetchReferences();
-  }*/
+  hideSpinner() {
+    this.setState({ loadingSpinner: false });
+  }
 
   render(){
 
@@ -159,7 +168,7 @@ class BusinessProfileScreen extends React.Component {
                 <ImagesScrollView business={record}/>
 
                 <View style={styles.cardContainer}>
-                  { record && <BusinessInfoCard distance={distance} business={record}/>}
+                  { record && <BusinessInfoCard hasQuicker={!!record.quickerMenuURL} onQuickerPress={() => this.setState({quickerModalVisible: true})} distance={distance} business={record}/>}
 
                   <Modal
                     animationIn={'slideInUp'}
@@ -173,6 +182,27 @@ class BusinessProfileScreen extends React.Component {
                       onCancelPress={this.handleModalDismiss.bind(this)}
                       isAuth={this.props.userId}
                       data={this.state.modalData}/>
+                  </Modal>
+                  <Modal
+                    animationIn={"slideInUp"}
+                    animationOut={"slideOutDown"}
+                    isVisible={this.state.quickerModalVisible}
+                    style={styles.modalView}
+                  >
+                    <WebView
+                      source={{uri: record.quickerMenuURL}}
+                      onLoad={() => this.hideSpinner()}
+                    />
+                    {this.state.loadingSpinner && (
+                      <ActivityIndicator
+                        style={{ position: "absolute", alignSelf: "center"}}
+                        color={themes.base.colors.accent.default}
+                        size="large"
+                      />
+                    )}
+                    <Touchable style={styles.privacyButton} onPress={() => this.setState({quickerModalVisible: false, loadingSpinner: true})}>
+                      <Text style={styles.privacyButtonText}>OK</Text>
+                    </Touchable>
                   </Modal>
                   <ReferenceManyFieldController
                     resource="broadcasts"
@@ -203,11 +233,12 @@ class BusinessProfileScreen extends React.Component {
     );
   }
 
-};
+}
 
 BusinessProfileScreen.propTypes = {
   reserveBroadcast: PropTypes.func,
 };
+
 const styles = StyleSheet.create({
 
   scrollView: {
@@ -221,6 +252,23 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginTop: -20 //TODO: da valutare (si sovrappone alle foto)
   },
+  modalView: {
+    borderTopRightRadius: themes.base.borderRadius,
+    borderTopLeftRadius: themes.base.borderRadius,
+    overflow: "hidden"
+  },
+  privacyButton: {
+    backgroundColor: themes.base.colors.accent.default,
+    padding: 16,
+    alignItems: "center",
+    borderBottomRightRadius: themes.base.borderRadius,
+    borderBottomLeftRadius: themes.base.borderRadius
+  },
+  privacyButtonText: {
+    fontSize: 16,
+    fontFamily: themes.base.fonts.LatoBold,
+    color: themes.base.colors.white.default
+  }
 });
 
 

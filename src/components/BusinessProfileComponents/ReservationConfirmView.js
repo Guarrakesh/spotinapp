@@ -53,11 +53,6 @@ constructor() {
       extrapolate: 'clamp'
     });
 
-    // this.backOpacity = this.flip.interpolate({
-    //   inputRange: [89, 90],
-    //   outputRange: [0, 1]
-    // });
-
   }
 
   nextPress() {
@@ -69,7 +64,7 @@ constructor() {
 
   render() {
 
-    const { onCancelPress, onConfirmPress, onLoginPress, event, t, isAuth } = this.props;
+    const { onCancelPress, onConfirmPress, onLoginPress, event, business, t, isAuth } = this.props;
     if (!this.props.data || !event) return null;
 
     const { broadcast } = this.props.data;
@@ -146,7 +141,7 @@ constructor() {
               {t("browse.getOffer.cancel")}
             </Button>
 
-            <Button elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople) : onLoginPress}
+            <Button elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, event, business) : onLoginPress}
                     uppercase clear variant="primary">
               {isAuth ? t("browse.getOffer.confirm") : t("auth.login.signIn")}
             </Button>
@@ -333,9 +328,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, props) => {
   const { broadcast } = props.data;
   const event = get(state, `entities.events.data[${broadcast.event}]`);
+  const business = get(state, `entities.businesses.data[${broadcast.business}]`);
+
   if (!event) return {};
   return {
-    event
+    event,
+    business
   }
 };
 

@@ -14,6 +14,7 @@ import firebaseSaga from '../../firebase/saga';
 import setFavorites from "./favorite";
 import dataProvider from '../../api/dataProvider';
 import uploadImage from "./upload";
+import reviewNotification from "./review";
 
 export default function* root() {
   yield all([
@@ -25,7 +26,8 @@ export default function* root() {
     fork(callback),
     fork(sideActions),
     fork(setFavorites),
-      //Firebase
+    fork(reviewNotification),
+    //Firebase
     fork(firebaseSaga),
     fork(uploadImage)
   ]);

@@ -1,16 +1,19 @@
 import React from 'react';
 import View from '../common/View';
-import {Text, StyleSheet, TouchableOpacity, Linking, Platform, Alert} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity, Linking, Platform, Alert, Image} from 'react-native';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Fonts} from "../common/Fonts";
 import call from 'react-native-phone-call'
 import i18n from '../../i18n/i18n';
+import {Typography} from "../common";
+
+const deviceHeight = themes.base.deviceDimensions.height;
 
 const BusinessInfoCard = (props) => {
 
-  let { business, distance } = props;
+  let { business, distance, onQuickerPress, hasQuicker } = props;
 
   let roundedDistance = Math.round(distance.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
@@ -18,6 +21,7 @@ const BusinessInfoCard = (props) => {
   // Apre navigazione nella mappe
   //const mapURL = Platform.OS === 'android' ? "google.navigation:q=" : "maps://app?daddr=";
 
+  const quickerLogo = require("../../assets/img/quicker.png");
   const mapURL = Platform.OS === 'android' ? "https://www.google.com/maps/search/?api=1&query=" : "http://maps.apple.com/maps?ll=";
   const businessLatLng = `${distance.location.coordinates[1]},${distance.location.coordinates[0]}&q=${business.name}`;
 
@@ -69,6 +73,15 @@ const BusinessInfoCard = (props) => {
           <MaterialIcon name="keyboard-arrow-right" color={themes.base.colors.text.default}  size={25}/>
         </TouchableOpacity>
       </View>
+      {
+        hasQuicker ?
+      <TouchableOpacity style={styles.quickerButton} onPress={onQuickerPress}>
+        <Typography variant={"body"} style={styles.browseMenuText}>{i18n.t("browse.businessProfile.browseMenu")}</Typography>
+        <Image style={styles.quickerLogo} resizeMode={"contain"} source={quickerLogo} />
+      </TouchableOpacity>
+          :
+          null
+      }
     </View>
   );
 };
@@ -165,7 +178,26 @@ const styles = StyleSheet.create({
     borderColor: themes.base.colors.accent.default,
     borderWidth: 1,
     borderRadius: 25
-  }
+  },
+  quickerButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: themes.base.colors.white.light,
+    marginLeft: 16,
+    marginRight: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    borderTopColor: themes.base.colors.white.divisor,
+    borderTopWidth: 1
+  },
+  quickerLogo: {
+    flex: 1,
+    height: deviceHeight/30,
+  },
+  browseMenuText: {
+    flex: 1,
+    fontWeight: "700",
+  },
 });
 
 export default BusinessInfoCard;
