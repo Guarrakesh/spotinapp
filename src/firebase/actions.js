@@ -12,6 +12,8 @@ export const FCM_TOKEN_REFRESHED = "FCM_TOKEN_REFRESHED";
 
 // Init & attach listeners
 export const FCM_INIT = "FCM_INIT";
+export const FCM_PERMISSION_RESOLVED = "FCM_PERMISSION_RESOLVED";
+export const FCM_IOS_PERMISSION_INIT = "FCM_IOS_PERMISSION_INIT";
 // Detach listeners
 export const FCM_DESTROY = "FCM_DESTROY";
 

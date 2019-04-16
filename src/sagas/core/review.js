@@ -1,9 +1,12 @@
-import { all, call, put, takeEvery, select } from "redux-saga/effects";
+import {all, call, put, select, take, takeEvery} from "redux-saga/effects";
+import {Platform, AsyncStorage} from "react-native";
+import { delay } from 'redux-saga';
 import {RESERVE_BROADCAST_SUCCESS} from "../../actions/reservation";
-import firebase, {Notification, NotificationOpen} from "react-native-firebase";
+import firebase, { Notification, NotificationOpen } from "react-native-firebase";
 import i18n from "../../i18n/i18n";
 import themes from "../../styleTheme";
-import { Platform } from "react-native";
+import {FCM_IOS_PERMISSION_INIT, FCM_PERMISSION_RESOLVED} from "../../firebase/actions";
+import { getToken } from "../../firebase/helpers";
 
 export function* reviewNotification(action) {
 
@@ -14,31 +17,31 @@ export function* reviewNotification(action) {
   const businessId = broadcast.business;
   const eventId = broadcast.event;
 
-  const businessSelector = state => state.entities.businesses.data[businessId];
-  const eventSelector = state => state.entities.events.data[eventId];
+  const businessSelector = state => ({...state.entities.businesses.data[businessId]});
+  const eventSelector = state => ({...state.entities.events.data[eventId]});
 
   const business = yield select(businessSelector);
   const event = yield select(eventSelector);
 
   if(Platform.OS === "ios"){
-    setTimeout(() => iosPermissionCheck(reservation, event, business), 3000)
+    yield call(delay, 3000);
+    yield put({type: FCM_IOS_PERMISSION_INIT});
+    yield take(FCM_PERMISSION_RESOLVED);
   }
-  else{
-    createReviewNotification(reservation, event, business);
-  }
+
+  createReviewNotification(reservation, event, business);
 
 }
 
 //Crea la notifica
-
 function createReviewNotification(reservation, event, business) {
 
   const eventDate = new Date(event.start_at);
   const eventTimestamp = eventDate.getTime();
-  const businessName = business["name"];
+  const businessName = business.name;
   const reservationId = reservation._id;
   const reviewNotification = new Date(eventTimestamp + (12 * 3600000));
-
+  
   //Setto il canale
   const channel = new firebase.notifications.Android.Channel(
     `review_notification_${reservationId}`,
@@ -80,7 +83,6 @@ function createReviewNotification(reservation, event, business) {
     .android.setColor(themes.base.colors.accent.default) // you can set a color here
     .android.setPriority(firebase.notifications.Android.Priority.High);
 
-
   firebase.notifications()
     .scheduleNotification(localNotification, {
       fireDate: reviewNotification.getTime(),
@@ -88,29 +90,6 @@ function createReviewNotification(reservation, event, business) {
     .catch(err => console.error(err));
 }
 
-//Su iOS controllo prima la concessione dei permessi per le notifiche
-
-function iosPermissionCheck(reservation, event, business) {
-
-  firebase.messaging().hasPermission()
-    .then(enabled => {
-      if (enabled) {
-        // user has permissions
-        createReviewNotification(reservation, event, business);
-      } else {
-        // user doesn't have permission
-        firebase.messaging().requestPermission()
-          .then(() => {
-            // User has authorised
-            createReviewNotification(reservation, event, business);
-          })
-          .catch(error => {
-            // User has rejected permissions
-            console.log(error);
-          });
-      }
-    });
-}
 
 export default function* root() {
   yield all([
