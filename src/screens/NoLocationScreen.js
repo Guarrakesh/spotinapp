@@ -19,6 +19,7 @@ class NoLocationScreen extends React.Component{
   handleRefresh() {
     this.props.dispatch({type: REFRESH_SCREEN });
   }
+
   render(){
     return(
       <View style={styles.container}>

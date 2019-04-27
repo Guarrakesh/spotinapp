@@ -1,5 +1,5 @@
 import React from 'react';
-import {call, cancel, fork, put, select, spawn, take, takeEvery} from 'redux-saga/effects';
+import {call, cancel, fork, put, select, spawn, take, race} from 'redux-saga/effects';
 import {channel} from 'redux-saga';
 import Geolocation from 'react-native-geolocation-service';
 import {Platform} from 'react-native';
@@ -12,15 +12,19 @@ import {LOCATION_REQUEST, LOCATION_SET_ERROR, LOCATION_SET_POSITION} from "../..
 import {FOREGROUND} from '../../actions/appstate';
 import {REFRESH_SCREEN} from '../../actions/integrity';
 
-const navigationSelector = state => state.navigation;
-const locationSelector = state => state.location.device;
+const navigationSelector = state => ({...state.navigation});
+const locationSelector = state => ({...state.location.device});
 
 
-const geolocationSettings = { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 };
+const geolocationSettings = {
+  enableHighAccuracy: true,
+  timeout: 30000,
+  maximumAge: 10000
+};
+
 export const locationChannel = channel();
 let watchTask;
 let watcher;
-
 
 /*
  * Channel che si occupa di controllare quando la LOCATION non è più disponibile ( e quindi rimanda alla schermata NoLocationScreen)
@@ -34,11 +38,15 @@ function* watchLocationChannel() {
     const action = yield take(locationChannel);
     const navigation = yield select(navigationSelector);
     const location = yield select(locationSelector);
+
+    yield take(action => action.type === LOCATION_SET_POSITION);
+    //yield put(NavigationService.navigate('Main', {}, true));
+
     if (action.type === LOCATION_SET_ERROR && !location.position) {
 
-      yield put(NavigationService.navigate('NoLocationScreen', {}, true));
+      yield put(NavigationService.navigate('LocationScreen', {}, true));
 
-    } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "NoLocationScreen"){
+    } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
       yield put(NavigationService.navigate('Main', {}, true));
 
     }
@@ -46,7 +54,28 @@ function* watchLocationChannel() {
   }
 }
 
+function* resolvePosition() {
+
+  while(true){
+    const { takeLocationCh, takeSetPosition } = yield race({
+      takeLocationCh: take(locationChannel),
+      takeSetPosition: take(LOCATION_SET_POSITION)
+    });
+
+    if (takeLocationCh && takeLocationCh.type === LOCATION_SET_POSITION){
+      yield put(NavigationService.navigate("Main", {}, true));
+      yield put(takeLocationCh);
+    }
+    else if (takeSetPosition) {
+      yield put(NavigationService.navigate("Main", {}, true));
+      yield put(takeSetPosition);
+    }
+  }
+}
+
+
 function* watchPosition() {
+
   if (Platform.OS === "android") {
 
     try {
@@ -56,7 +85,7 @@ function* watchPosition() {
         message: "Spot In richiede l'accesso alla tua posizione per individuare i locali più vicini a te."
       });
       if (granted !== "authorized") {
-        locationChannel.put({type: LOCATION_SET_ERROR });
+        yield put({type: LOCATION_SET_ERROR });
         while (granted !== "authorized") {
 
           yield take(FOREGROUND); // Aspetto che l'app ritorni dal background (cioè presumo che l'utente sia andato in impostazioni ad attivare i permessi)
@@ -74,7 +103,7 @@ function* watchPosition() {
     watcher = locationChannel.put({type: LOCATION_REQUEST});
       Geolocation.watchPosition(
         (position) => {
-          locationChannel.put({type: LOCATION_SET_POSITION, position})
+          locationChannel.put({type: LOCATION_SET_POSITION, position});
         },
         (error) => {
           locationChannel.put({type: LOCATION_SET_ERROR, error})
@@ -83,10 +112,11 @@ function* watchPosition() {
       );
 
   } else {
+
     watcher = locationChannel.put({type: LOCATION_REQUEST});
     navigator.geolocation.watchPosition(
-      position => {
-
+      (position) => {
+        console.log("POSITION", position);
         locationChannel.put({type: LOCATION_SET_POSITION, position})
       },
       (error) => locationChannel.put({type: LOCATION_SET_ERROR, error}),
@@ -94,7 +124,6 @@ function* watchPosition() {
 
     );
   }
-
 
 }
 
@@ -110,19 +139,22 @@ function* resetWatcher() {
   watchTask = yield fork(watchPosition);
 
 }
+
 export default function* root() {
   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
 
 
   //Aspetto che il Check è stato effettuato (o il Login) e che si stia aprendo la Home
-  yield take(action => action.type === "Navigation/RESET" && action.actions && action.actions[0].routeName === "Main");
+  //yield take(action => action.type === "Navigation/RESET" && action.actions && action.actions[0].routeName === "Main")
+  //yield take(action => action.type === LOCATION_REQUEST);
+  // yield spawn(watchLocationChannel);
+  //
+  // yield watchTask = yield fork(watchPosition);
+  //
+  // yield takeEvery(REFRESH_SCREEN, resetWatcher);
 
-  yield spawn(watchLocationChannel);
+  yield spawn(resolvePosition);
+  yield take(action => action.type === LOCATION_REQUEST);
   yield watchTask = yield fork(watchPosition);
-
-  yield takeEvery(REFRESH_SCREEN, resetWatcher);
-
-
-
 
 }

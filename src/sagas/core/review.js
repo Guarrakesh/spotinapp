@@ -41,7 +41,7 @@ function createReviewNotification(reservation, event, business) {
   const businessName = business.name;
   const reservationId = reservation._id;
   const reviewNotification = new Date(eventTimestamp + (12 * 3600000));
-  
+
   //Setto il canale
   const channel = new firebase.notifications.Android.Channel(
     `review_notification_${reservationId}`,

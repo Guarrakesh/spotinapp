@@ -300,6 +300,15 @@
     }
   },
 
+  "location": {
+    "discoverWhere": "Discover where to see your event!",
+    "InsertLocation": "Insert an address or a city",
+    "search": "Search",
+    "locationPermissions": {
+      "title": "Spot In doesn't have permission to access your location",
+      "subtitle": "Enable permissions in settings"
+    }
+  },
 
   "pushNotification": {
     "favorite": {

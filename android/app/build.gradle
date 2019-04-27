@@ -115,7 +115,7 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
+        versionCode 12
         versionName "0.6.2"
         multiDexEnabled true
         ndk {

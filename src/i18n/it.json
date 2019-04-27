@@ -305,6 +305,16 @@
     }
   },
 
+  "location": {
+    "discoverWhere": "Scopri dove guardare il tuo evento!",
+    "InsertLocation": "Inserisci un indirizzo o una città",
+    "search": "Cerca",
+    "locationPermissions": {
+      "title": "Spot In non ha i permessi per accedere alla tua posizione",
+      "subtitle": "Abilita i permessi nelle impostazioni"
+    }
+  },
+
 
   "pushNotification": {
     "favorite": {

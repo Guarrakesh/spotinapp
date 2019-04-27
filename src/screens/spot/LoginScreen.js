@@ -17,8 +17,6 @@ import { userLogin, oAuthFacebookLogin } from "../../actions/authActions";
 import i18n from "../../i18n/i18n";
 import Modal from "react-native-modal";
 
-
-
 const colors = themes.base.colors;
 
 const Logo = require('../../assets/img/logo-full.png');

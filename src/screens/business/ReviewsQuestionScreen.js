@@ -181,21 +181,21 @@ class ReviewsQuestionScreen extends React.Component {
       }).start();
     });
 
-    if(this.props.position){
+    if(this.props.position) {
       setTimeout(() => this.props.navigate("Main", {}, false), 1500);
     }
-    else{
-      setTimeout(() => this.props.navigate("Main", {}, true), 1500);
+    else {
+      setTimeout(() => this.props.navigate("LocationScreen", {}, true), 1500);
     }
 
   }
 
   handleExitPress() {
-    if(this.props.position){
+    if(this.props.position) {
       this.props.navigate("Main", {}, false);
     }
-    else{
-      this.props.navigate("Main", {}, true);
+    else {
+      this.props.navigate("LocationScreen", {}, true);
     }
   }
 

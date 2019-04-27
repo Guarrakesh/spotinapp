@@ -67,17 +67,17 @@ class Launcher extends React.Component {
         //se l'ha gia' fatto in precedenza, allora:
         AsyncStorage.getItem(ALREADY_SET_FAVORITE).then(setted => {
           if(setted){
-            self.props.navigate("Main", {}, true);
+            self.props.navigate("LocationScreen", {}, true);
           }
           else {
             self.props.navigate("FavoriteNavigator", {
               onDone: () => {
-                self.props.navigate("Main", {}, true);
+                self.props.navigate("LocationScreen", {}, true);
               },
               onCancel: () => {
                 AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
                 this.props.skipFavorites(); //action per analytics
-                self.props.navigate("Main", {}, true);
+                self.props.navigate("LocationScreen", {}, true);
               }
             })
           }
@@ -91,12 +91,12 @@ class Launcher extends React.Component {
             //naviga a setfavorite
             self.props.navigate("FavoriteNavigator", {
               onDone: () => {
-                self.props.navigate("Main", {}, true);
+                self.props.navigate("LocationScreen", {}, true);
               },
               onCancel: () => {
                 AsyncStorage.setItem(ALREADY_SET_FAVORITE, "1");
                 this.props.skipFavorites(); //action per analytics
-                self.props.navigate("Main", {}, true);
+                self.props.navigate("LocationScreen", {}, true);
 
               }
             })

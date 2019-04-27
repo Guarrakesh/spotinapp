@@ -13,7 +13,7 @@ import HomeStack from './HomeStack';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import Launcher from '../screens/Launcher';
-import NoLocationScreen from '../screens/NoLocationScreen';
+import LocationScreen from '../screens/LocationScreen';
 import AppIntro from "../screens/intro/AppIntro"
 
 import i18n from '../i18n/i18n';
@@ -73,7 +73,7 @@ const RootNavigator = createStackNavigator(
   {
     Launcher: Launcher,
 
-    NoLocationScreen: NoLocationScreen,
+    LocationScreen: LocationScreen,
 
     Main: {
       screen: MainNavigation,

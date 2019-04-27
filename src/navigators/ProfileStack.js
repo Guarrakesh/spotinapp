@@ -181,10 +181,7 @@ export const ReviewsNavigator = createStackNavigator({
   screen: ReviewsQuestionScreen,
   navigationOptions: ({navigation}) => ({
     headerTransparent: true,
-    mode: "modal",
-    headerRight: (
-      <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
-    ),
+    mode: "modal"
   })
 
 });

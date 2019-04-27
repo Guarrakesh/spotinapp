@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import {View, Text, StyleSheet, ScrollView, Image, ActivityIndicator} from 'react-native';
-import { Button } from 'react-native-elements';
-import { withNamespaces } from 'react-i18next';
+import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Button} from 'react-native-elements';
+import {withNamespaces} from 'react-i18next';
 
 import HomeController from '../../controllers/HomeController';
 import InlineListController from '../../controllers/InlineListController';
@@ -12,15 +12,14 @@ import MaterialCommunity from "react-native-vector-icons/MaterialCommunityIcons"
 import BusinessCarousel from '../../components/BusinessComponents/BusinessCarousel';
 import BroadcastCarousel from '../../components/BroadcastComponents/BroadcastCarousel';
 import EventCarousel from '../../components/EventComponents/EventCarousel';
-import { entityView } from "../../actions/view";
+import {entityView} from "../../actions/view";
 
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
+import {refreshList as refreshListAction} from '../../actions/listActions';
+
 const logoImg = require('../../assets/img/logo-text/logo-text.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
-
-import { refreshList as refreshListAction } from '../../actions/listActions';
-
 
 
 class HomeScreen extends React.Component {
@@ -58,13 +57,14 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log("params", this.props.navigation.state);
+
     if (this.props.navigation.state.params) {
       const {goTo, screen} = this.props.navigation.state.params;
       if (goTo) {
         this.props.navigation.navigate(screen);
       }
     }
+
   }
 
   handleBroadcastPress(broadcast, distance) {
