@@ -72,7 +72,7 @@ class BroadcastInProfileList extends React.Component {
 
     if (isLoading) {
       return (
-        <View style={{height: themes.base.deviceDimensions.height/2}}>
+        <View style={{height: themes.base.deviceDimensions.height/2, marginTop: 16}}>
           <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
         </View>
       )

@@ -85,8 +85,6 @@ class BusinessScreen extends React.Component {
 
     return {
 
-      title: "Locali vicini",
-
       headerStyle: {
         shadowOffset: {width: 0, height: 0},
         shadowColor: 'transparent',
@@ -107,7 +105,7 @@ class BusinessScreen extends React.Component {
       headerBackTitle: null
 
     }
-  }
+  };
 
 
   handleBusinessPress(businessId, distance) {

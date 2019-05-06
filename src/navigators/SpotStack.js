@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, Button, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createStackNavigator} from "react-navigation";
-
 //Translation
 import i18n from '../i18n/i18n';
 //Screens

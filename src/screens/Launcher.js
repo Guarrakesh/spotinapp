@@ -3,15 +3,18 @@ import {connect} from 'react-redux';
 import {ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
 import type {Notification, NotificationOpen} from 'react-native-firebase';
 import firebase from "react-native-firebase";
+import Permissions from 'react-native-permissions';
 import NavigationService from "../navigators/NavigationService";
-import {userCheck} from '../actions/authActions';
-import {skipFavorites} from "../actions/profile";
+import { userCheck } from '../actions/authActions';
+import { skipFavorites } from "../actions/profile";
+import { locationPermission } from "../actions/location";
 import {ALREADY_STARTED_UP} from "../helpers/asyncStorageKeys";
 import {ALREADY_SET_FAVORITE} from "../sagas/core/favorite";
 import themes from "../styleTheme";
 
 const Logo = require('../assets/img/logo/logo.png');
 const Together = require('../assets/img/together/together.png');
+const Mascotte = require("../assets/img/mascotte.png");
 
 class Launcher extends React.Component {
 
@@ -32,11 +35,11 @@ class Launcher extends React.Component {
 
           // Get information about the notification that was opened
           const notification: Notification = notificationOpen.notification;
-          self.notificationLaunch(notification);
+          setTimeout(() => self.notificationLaunch(notification), 1000);
 
         }
         else{
-          self.normalLaunch();
+          setTimeout(() => self.normalLaunch(), 1000);
         }
       });
 
@@ -67,7 +70,17 @@ class Launcher extends React.Component {
         //se l'ha gia' fatto in precedenza, allora:
         AsyncStorage.getItem(ALREADY_SET_FAVORITE).then(setted => {
           if(setted){
-            self.props.navigate("LocationScreen", {}, true);
+            //Controlla se l'utente ha dato il permesso per la localizzazione:
+            Permissions.check('location').then(granted => {
+              //se l'ha dato rimanda alla home con la posizione corrente
+              if(granted !== "authorized") {
+                self.props.navigate("LocationScreen", {}, true);
+              }
+              //altrimenti rimanda alla schermata di localizzazione
+              else{
+                this.props.locationPermission();
+              }
+            });
           }
           else {
             self.props.navigate("FavoriteNavigator", {
@@ -111,7 +124,7 @@ class Launcher extends React.Component {
     const { isLoading } = this.props;
     return (
       <View style={styles.container}>
-        <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Logo}/>
+        <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Mascotte}/>
         <Image source={Together} resizeMethod={"scale"} resizeMode="contain" style={{marginTop: 12, width: 240, height: 128}}/>
         {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
       </View>
@@ -143,5 +156,6 @@ export default connect(state => ({
   , {
     userCheck,
     skipFavorites,
+    locationPermission,
     navigate: NavigationService.navigate,
   })(Launcher);

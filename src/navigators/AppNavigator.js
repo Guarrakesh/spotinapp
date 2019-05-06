@@ -9,6 +9,7 @@ import Images from '../assets/images';
 import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotStack';
 import {FavoriteNavigator, ProfileStack, ReviewsNavigator} from './ProfileStack';
+import { LocationNavigator } from "./LocationStack";
 import HomeStack from './HomeStack';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
@@ -39,7 +40,6 @@ export const MainNavigation = createBottomTabNavigator(
         let image = '';
 
         switch (routeName){
-
           case 'Home':
             image = focused ? Images.icons.barIcons.spotSelected : Images.icons.barIcons.spot;
             break;
@@ -59,7 +59,7 @@ export const MainNavigation = createBottomTabNavigator(
     //tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      activeTintColor: themes.base.colors.text.default,
+      activeTintColor: themes.base.colors.accent.default,
       inactiveTintColor: 'grey',  //da definire colore nei themes
     },
     animationEnabled: false,
@@ -73,7 +73,7 @@ const RootNavigator = createStackNavigator(
   {
     Launcher: Launcher,
 
-    LocationScreen: LocationScreen,
+    LocationScreen: LocationNavigator,
 
     Main: {
       screen: MainNavigation,

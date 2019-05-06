@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {Button} from 'react-native-elements';
+import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, View, Platform} from 'react-native';
+import {Button, Icon} from 'react-native-elements';
 import {withNamespaces} from 'react-i18next';
 
 import HomeController from '../../controllers/HomeController';
@@ -13,6 +13,7 @@ import BusinessCarousel from '../../components/BusinessComponents/BusinessCarous
 import BroadcastCarousel from '../../components/BroadcastComponents/BroadcastCarousel';
 import EventCarousel from '../../components/EventComponents/EventCarousel';
 import {entityView} from "../../actions/view";
+import NavigationService from "../../navigators/NavigationService";
 
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
@@ -29,18 +30,26 @@ class HomeScreen extends React.Component {
   HOME_BUSINESSES_LIST_ID = "home_businesses_list";
   static navigationOptions = ({ navigation }) => {
 
+    const { state } = navigation;
+    const params = state.params || {};
 
     return {
       headerTitle: (<Image
         source={logoImg}
-        style={{height: 25, alignSelf: 'center', width: '100%'}}
+        style={styles.headerTitleStyle}
         resizeMode={'contain'}/>),
-      headerTitleStyle: {
-        textAlign: 'center',
-        alignSelf: 'center',
-        flex: 1,
-        //marginLeft: Platform.OS === 'android' ? 75 : null,
-      },
+      headerRight:
+        <View style={{borderRadius: 20, borderColor: themes.base.colors.accent.default, borderWidth: 1, marginRight: 21}}>
+          <Icon
+            name={"edit-location"}
+            underlayColor={'transparent'}
+            //iconStyle={{marginRight: 21}}
+            onPress={params.onLocationPress}
+            color={themes.base.colors.accent.default}
+            size={25}
+          />
+        </View>
+      ,
       headerStyle: {
         backgroundColor: themes.base.colors.primary.default,
       },
@@ -54,6 +63,7 @@ class HomeScreen extends React.Component {
     this.handleEventPress = this.handleEventPress.bind(this);
     this.handleBusinessPress = this.handleBusinessPress.bind(this);
     this.handleBroadcastPress = this.handleBroadcastPress.bind(this);
+    this.handleLocationPress = this.handleLocationPress.bind(this);
   }
 
   componentDidMount() {
@@ -65,6 +75,16 @@ class HomeScreen extends React.Component {
       }
     }
 
+  }
+
+  componentWillMount(){
+    this.props.navigation.setParams({
+      onLocationPress: this.handleLocationPress
+    })
+  }
+
+  handleLocationPress() {
+    this.props.navigate("LocationScreen", {}, false);
   }
 
   handleBroadcastPress(broadcast, distance) {
@@ -123,15 +143,19 @@ class HomeScreen extends React.Component {
                     <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
                   </View> :
                   <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                        <Text style={styles.inlineListHeader}>{t('home.nearOffers')}</Text>
-                      </View>
-
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginRight: 8}}>
+                      <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                      <Text
+                        adjustsFontSizeToFit={true}
+                        allowFontScaling={true}
+                        numberOfLines={1}
+                        style={styles.inlineListHeader}>{
+                        this.props.cityName ?
+                          `${t("home.nearOffersCity")} ${this.props.cityName}` :
+                          t('home.nearOffers')
+                      }</Text>
                     </View>
                     <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
-
                   </View>
                 }
               </InlineListController>
@@ -146,18 +170,14 @@ class HomeScreen extends React.Component {
                   null :
                   <View>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                        <Text style={styles.inlineListHeader}>{t('home.nextEvents')}</Text>
-                      </View>
-                      <View>
-                        <Button
-                          title={t('home.seeAll').toUpperCase()}
-                          titleStyle={styles.seeAllTitle}
-                          buttonStyle={styles.seeAllButton}
-                          onPress={() => this.props.navigation.navigate('SportList')}
-                        />
-                      </View>
+                      <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                      <Text style={styles.inlineListHeader}>{t('home.nextEvents')}</Text>
+                      <Button
+                        title={t('home.seeAll').toUpperCase()}
+                        titleStyle={styles.seeAllTitle}
+                        buttonStyle={styles.seeAllButton}
+                        onPress={() => this.props.navigation.navigate('SportList')}
+                      />
                     </View>
                     <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
                   </View>
@@ -171,18 +191,22 @@ class HomeScreen extends React.Component {
                   null :
                   <View style={{marginBottom: 16}}>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
-                        <Text style={styles.inlineListHeader}>{t("home.nearBusinesses")}</Text>
-                      </View>
-                      <View>
-                        <Button
-                          title={t('home.seeAll').toUpperCase()}
-                          titleStyle={styles.seeAllTitle}
-                          buttonStyle={styles.seeAllButton}
-                          onPress={() => this.props.navigation.navigate('BusinessScreen')}
-                        />
-                      </View>
+                      <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
+                      <Text
+                        adjustsFontSizeToFit={true}
+                        allowFontScaling={true}
+                        numberOfLines={1}
+                        style={styles.inlineListHeader}>{
+                        this.props.cityName ?
+                          `${t("home.nearBusinessesCity")} ${this.props.cityName}` :
+                          t("home.nearBusinesses")
+                      }</Text>
+                      <Button
+                        title={t('home.seeAll').toUpperCase()}
+                        titleStyle={styles.seeAllTitle}
+                        buttonStyle={styles.seeAllButton}
+                        onPress={() => this.props.navigation.navigate('BusinessScreen')}
+                      />
 
                     </View>
                     <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
@@ -209,12 +233,14 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   inlineListHeader: {
+    flex: 1,
     fontFamily: themes.base.fonts.LatoBold,
     textAlign: 'left',
     fontSize: 21,
     color: themes.base.colors.text.default,
   },
   seeAllButton: {
+    flex: 1,
     backgroundColor: 'transparent',
     elevation: 0
   },
@@ -224,6 +250,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingBottom: 0,
 
+  },
+  headerTitleStyle: {
+    height: 25,
+    alignSelf: 'center',
+    width: '100%',
+    marginLeft: Platform.OS === 'android' ? 28 : null,
   }
 
 });
@@ -231,6 +263,11 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = {
   refreshList: refreshListAction,
   entityView,
+  navigate: NavigationService.navigate
 };
 
-export default withNamespaces()(connect(null, mapDispatchToProps)(HomeScreen));
+const mapStateToProps = (state) => ({
+  cityName: state.location.device.position.cityName
+});
+
+export default withNamespaces()(connect(mapStateToProps, mapDispatchToProps)(HomeScreen));

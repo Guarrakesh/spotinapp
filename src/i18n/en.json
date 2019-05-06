@@ -1,9 +1,11 @@
 {
   "home": {
     "nearOffers"          : "Offers near you",
+    "nearOffersCity"      : "Offers near",
     "nextEvents"          : "Upcoming events",
     "seeAll"              :  "See all",
     "nearBusinesses"      : "Restaurants near you",
+    "nearBusinessesCity"  : "Restaurants near",
     "closestBusinesses"   : "Closest restaurants",
     "searchBusiness"      : "Look for a restaurant..."
 
@@ -62,7 +64,10 @@
     "businessProfile": {
       "plannedEvents"   : "Planned events",
       "noEvents"         : "No events for now",
-      "browseMenu" : "Browse the menu"
+      "browseMenu" : "Browse the menu",
+      "open": "Open",
+      "closed": "Closed",
+      "now": "Now"
 
     }
 

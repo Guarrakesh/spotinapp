@@ -1,13 +1,16 @@
 {
   "home": {
     "nearOffers"          : "Offerte intorno a te",
+    "nearOffersCity"      : "Offerte intorno a",
     "nextEvents"          : "Prossimi eventi",
     "seeAll"              :  "Vedi tutti",
     "nearBusinesses"      : "Locali intorno a te",
+    "nearBusinessesCity"  : "Locali vicino a",
     "closestBusinesses"   : "Locali vicini",
     "searchBusiness"      : "Cerca locale..."
 
   },
+
   "browse": {
     "selectSport"         : "Seleziona lo sport che vuoi seguire",
     "selectCompetition"   : "Seleziona la competizione",
@@ -63,7 +66,10 @@
     "businessProfile": {
       "plannedEvents"   : "Eventi in programma",
       "noEvents"         : "Nessun evento al momento",
-      "browseMenu" : "Sfoglia il menu con"
+      "browseMenu" : "Sfoglia il menu con",
+      "open": "Aperto",
+      "closed": "Chiuso",
+      "now": "Ora"
 
     }
 

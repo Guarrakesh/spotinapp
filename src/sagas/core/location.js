@@ -11,6 +11,7 @@ import {LOCATION_REQUEST, LOCATION_SET_ERROR, LOCATION_SET_POSITION} from "../..
 
 import {FOREGROUND} from '../../actions/appstate';
 import {REFRESH_SCREEN} from '../../actions/integrity';
+import {FETCH_END, FETCH_START} from "../../actions/fetchActions";
 
 const navigationSelector = state => ({...state.navigation});
 const locationSelector = state => ({...state.location.device});
@@ -32,44 +33,48 @@ let watcher;
  *
  * Per realizzare la funzionalità, c'è bisogno di usare Redux per React Navigation, per tenere d'occhio le route correnti nel reducer
  */
-function* watchLocationChannel() {
-  while (true) {
-
-    const action = yield take(locationChannel);
-    const navigation = yield select(navigationSelector);
-    const location = yield select(locationSelector);
-
-    yield take(action => action.type === LOCATION_SET_POSITION);
-    //yield put(NavigationService.navigate('Main', {}, true));
-
-    if (action.type === LOCATION_SET_ERROR && !location.position) {
-
-      yield put(NavigationService.navigate('LocationScreen', {}, true));
-
-    } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
-      yield put(NavigationService.navigate('Main', {}, true));
-
-    }
-    yield put(action);
-  }
-}
+// function* watchLocationChannel() {
+//   while (true) {
+//
+//     const action = yield take(locationChannel);
+//     const navigation = yield select(navigationSelector);
+//     const location = yield select(locationSelector);
+//
+//     yield take(action => action.type === LOCATION_SET_POSITION);
+//     //yield put(NavigationService.navigate('Main', {}, true));
+//
+//     if (action.type === LOCATION_SET_ERROR && !location.position) {
+//
+//       yield put(NavigationService.navigate('LocationScreen', {}, true));
+//
+//     } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
+//       yield put(NavigationService.navigate('Main', {}, true));
+//
+//     }
+//     yield put(action);
+//   }
+// }
 
 function* resolvePosition() {
 
   while(true){
+
     const { takeLocationCh, takeSetPosition } = yield race({
       takeLocationCh: take(locationChannel),
       takeSetPosition: take(LOCATION_SET_POSITION)
     });
+    yield put({type: FETCH_START});
 
     if (takeLocationCh && takeLocationCh.type === LOCATION_SET_POSITION){
-      yield put(NavigationService.navigate("Main", {}, true));
       yield put(takeLocationCh);
+      yield put(NavigationService.navigate("Main", {}, true));
     }
     else if (takeSetPosition) {
-      yield put(NavigationService.navigate("Main", {}, true));
       yield put(takeSetPosition);
+      yield put(NavigationService.navigate("Main", {}, true));
     }
+
+    yield put({type: FETCH_END});
   }
 }
 
@@ -100,23 +105,29 @@ function* watchPosition() {
   }
 
   if (Platform.OS === "android"){
-    watcher = locationChannel.put({type: LOCATION_REQUEST});
-      Geolocation.watchPosition(
-        (position) => {
-          locationChannel.put({type: LOCATION_SET_POSITION, position});
-        },
-        (error) => {
-          locationChannel.put({type: LOCATION_SET_ERROR, error})
-        },
-         geolocationSettings
-      );
+
+    Geolocation.stopObserving();
+    Geolocation.clearWatch(watcher);
+    //watcher = locationChannel.put({type: LOCATION_REQUEST});
+    Geolocation.watchPosition(
+      (position) => {
+        locationChannel.put({type: LOCATION_SET_POSITION, position});
+      },
+      (error) => {
+        locationChannel.put({type: LOCATION_SET_ERROR, error})
+      },
+      geolocationSettings
+    );
 
   } else {
 
-    watcher = locationChannel.put({type: LOCATION_REQUEST});
+    navigator.geolocation.stopObserving();
+    navigator.geolocation.clearWatch(watcher);
+
+    //watcher = locationChannel.put({type: LOCATION_REQUEST});
+
     navigator.geolocation.watchPosition(
       (position) => {
-        console.log("POSITION", position);
         locationChannel.put({type: LOCATION_SET_POSITION, position})
       },
       (error) => locationChannel.put({type: LOCATION_SET_ERROR, error}),
@@ -127,18 +138,18 @@ function* watchPosition() {
 
 }
 
-function* resetWatcher() {
-  yield cancel(watchTask);
-  if (Platform.OS === "android") {
-    Geolocation.clearWatch(watcher);
-    Geolocation.stopObserving();
-  } else {
-    navigator.geolocation.stopObserving();
-    navigator.geolocation.clearWatch(watcher);
-  }
-  watchTask = yield fork(watchPosition);
-
-}
+// function* resetWatcher() {
+//   yield cancel(watchTask);
+//   if (Platform.OS === "android") {
+//     Geolocation.clearWatch(watcher);
+//     Geolocation.stopObserving();
+//   } else {
+//     navigator.geolocation.stopObserving();
+//     navigator.geolocation.clearWatch(watcher);
+//   }
+//   watchTask = yield fork(watchPosition);
+//
+// }
 
 export default function* root() {
   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
@@ -154,7 +165,10 @@ export default function* root() {
   // yield takeEvery(REFRESH_SCREEN, resetWatcher);
 
   yield spawn(resolvePosition);
-  yield take(action => action.type === LOCATION_REQUEST);
-  yield watchTask = yield fork(watchPosition);
+  while(true){
+    yield take(action => action.type === LOCATION_REQUEST);
+    yield call(watchPosition);
+  }
+
 
 }

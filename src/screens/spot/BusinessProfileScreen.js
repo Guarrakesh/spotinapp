@@ -18,6 +18,7 @@ import {Fonts} from "../../components/common/Fonts";
 
 import ShowController from '../../controllers/ShowController';
 import {reserveBroadcast, startReservation, undoReservation} from '../../actions/reservation';
+import BusinessIsOpenView from "../../components/BusinessProfileComponents/BusinessIsOpenView";
 import BusinessInfoCard from '../../components/BusinessProfileComponents/BusinessInfoCard';
 import BroadcastInProfileList from '../../components/BusinessProfileComponents/BroadcastInProfileList';
 import ImagesScrollView from '../../components/BusinessProfileComponents/ImagesScrollView';
@@ -135,6 +136,20 @@ class BusinessProfileScreen extends React.Component {
     this.setState({ loadingSpinner: false });
   }
 
+  isOpen(business) {
+    const today = new Date();
+    let day = today.getDay();
+    if (business.business_hours && business.business_hours[day]) {
+
+      const currentDay = business.business_hours[day];
+      const minutes = today.getHours() * 60 + today.getMinutes();
+      return !!currentDay.openings.find(o =>
+        (minutes > o.open && minutes < o.close) ||
+        (currentDay.crossing_day_close && minutes > o.open && minutes < 1440 + currentDay.crossing_day_close))
+    }
+    return false;
+  };
+
   render(){
 
     const {businessId, distance, broadcastId} = this.props.navigation.state.params;
@@ -155,20 +170,25 @@ class BusinessProfileScreen extends React.Component {
                   contentContainerStyle={{alignItems: 'center', justifyContent: 'flex-start', flex:1}}>
 
               <ScrollView
-                //  onScroll={this.handleScroll.bind(this)}
                 scrollEventThrottle={16}
                 bounces={false}
                 style={styles.generalContainer}
                 ref={(ref) => {
                   this.scroller = ref
                 }}
-                //contentOffset={{x: 0, y: broadcastId ? themes.base.deviceDimensions.height/4 : 0}}
               >
                 <ImagesScrollView business={record}/>
 
                 <View style={styles.cardContainer}>
-                  { record && <BusinessInfoCard hasQuicker={!!record.quickerMenuURL} onQuickerPress={() => this.setState({quickerModalVisible: true})} distance={distance} business={record}/>}
-
+                  {record &&
+                  <BusinessInfoCard hasQuicker={!!record.quickerMenuURL}
+                                    onQuickerPress={() => this.setState({quickerModalVisible: true})}
+                                    distance={distance} business={record}/>
+                  }
+                  {
+                    record.business_hours &&
+                    <BusinessIsOpenView business={record} isOpen={this.isOpen(record)}/>
+                  }
                   <Modal
                     animationIn={'slideInUp'}
                     animationOut={"slideOutDown"}

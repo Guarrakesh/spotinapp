@@ -2,18 +2,24 @@ import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
-  Text, Image, StyleSheet, ImageBackground,
-  Platform, StatusBar, KeyboardAvoidingView, TouchableNativeFeedback, Linking, WebView
+  Image,
+  ImageBackground,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  WebView
 } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { withNamespaces } from 'react-i18next';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {withNamespaces} from 'react-i18next';
 
 import {Input} from "react-native-elements";
 import {Button, Touchable, View} from '../../components/common';
 import login from '../../validations/login';
 import validate from 'validate.js';
 import themes from "../../styleTheme";
-import { userLogin, oAuthFacebookLogin } from "../../actions/authActions";
+import {oAuthFacebookLogin, userLogin} from "../../actions/authActions";
 import i18n from "../../i18n/i18n";
 import Modal from "react-native-modal";
 
@@ -21,8 +27,6 @@ const colors = themes.base.colors;
 
 const Logo = require('../../assets/img/logo-full.png');
 const BackgroundPattern = require('../../assets/img/wave_pattern.png');
-
-
 
 /**
  * @see https://github.com/react-native-training/react-native-elements/issues/1102
@@ -43,8 +47,6 @@ class LoginScreen extends React.Component {
 
 
   constructor() {
-
-
     super();
     this.state = {
       email: "",
@@ -59,8 +61,6 @@ class LoginScreen extends React.Component {
   }
 
   login() {
-
-
     this.setState({formErrors: {}});
     const { password } = this.state;
     const email = this.state.email.replace(" ", "");
@@ -80,7 +80,7 @@ class LoginScreen extends React.Component {
   }
 
   forgotPassword() {
-    this.props.navigation.navigate('ForgotPassword')
+    this.props.navigation.navigate('ForgotPassword');
   }
 
   facebookLogin() {
@@ -97,12 +97,6 @@ class LoginScreen extends React.Component {
     const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
 
     const { email: emailError, password: passwordError } = this.state.formErrors;
-
-    // if (loggedIn) {
-    //   return () => this.props.navigation.navigate('ProfileScreen')
-    //
-    // }
-    //else {
 
     const termsModal = (
       <Modal
@@ -205,7 +199,7 @@ class LoginScreen extends React.Component {
                 round
                 block
                 uppercase
-                containerStyle={[{backgroundColor: themes.commonColors.facebook,}, {borderRadius: 100}]}
+                containerStyle={[{backgroundColor: themes.commonColors.facebook}, {borderRadius: 100}]}
                 titleStyle={{color: '#fff'}}
                 onPress={this.facebookLogin}
                 icon={<Icon

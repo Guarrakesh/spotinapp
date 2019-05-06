@@ -1,23 +1,29 @@
 import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Modal from "react-native-modal";
 import Permissions from 'react-native-permissions';
+import AndroidOpenSettings from "react-native-android-open-settings";
 import {
-  Text, Image, StyleSheet, Alert,
-  Platform, StatusBar, KeyboardAvoidingView, TouchableNativeFeedback, Linking, WebView,
-  TouchableHighlight, ImageBackground
+  Alert,
+  Image,
+  ImageBackground,
+  InteractionManager,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  WebView
 } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { withNamespaces } from 'react-i18next';
-import { locationPermission, setPosition } from "../actions/location";
-import {Input} from "react-native-elements";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {withNamespaces} from 'react-i18next';
+import {locationPermission, setPosition} from "../actions/location";
 import {Button, Touchable, View} from '../components/common';
-
 import themes from "../styleTheme";
 import i18n from "../i18n/i18n";
-import { GOOGLE_API_KEY } from "../vars";
+import {GOOGLE_API_KEY} from "../vars";
+import DismissButton from "../components/common/DismissButton";
 
 const colors = themes.base.colors;
 
@@ -27,31 +33,18 @@ const BackgroundPattern = require('../assets/img/no_location_gradient.png');
 
 const deviceHeight = themes.base.deviceDimensions.height;
 const deviceWidth = themes.base.deviceDimensions.width;
-/**
- * @see https://github.com/react-native-training/react-native-elements/issues/1102
- */
-let background;
-if (Platform.Version >= 21) {
-  background = TouchableNativeFeedback.Ripple(
-    'ThemeAttrAndroid',
-    true
-  );
-
-} else {
-  background = TouchableNativeFeedback.SelectableBackground();
-}
 
 
 class LocationScreen extends React.Component {
 
 
   constructor() {
-
-
     super();
     this.state = {
       position: {},
-      isSubmitable: false
+      isSubmittable: false,
+      cityName: "",
+      loading: false
     };
 
     this.goPress = this.goPress.bind(this);
@@ -59,21 +52,51 @@ class LocationScreen extends React.Component {
 
   }
 
+  componentWillMount() {
+    if(this.props.position) {
+      this.props.navigation.setParams({
+        position: this.props.position
+      });
+    }
+  }
+
+  static navigationOptions = ({navigation}) => {
+    const {state} = navigation;
+    const params = state.params || {};
+
+    return {
+      gesturesEnabled: false,
+      headerRight: params.position ?
+        <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+        : null
+    }
+  };
+
   goPress() {
 
-    console.log(this.state.position);
-    const position = {
-      coords: {
-        latitude: this.state.position.lat,
-        longitude: this.state.position.lng
-      }
-    };
-    this.props.setPosition(position);
+    this.setState({loading: true});
+    setTimeout(() => {
+      InteractionManager.runAfterInteractions(() => {
+
+        const position = {
+          coords: {
+            latitude: this.state.position.lat,
+            longitude: this.state.position.lng
+          },
+          cityName: this.state.cityName
+        };
+        this.props.setPosition(position);
+
+        this.setState({loading: false});
+      });
+    }, 0)
+
+
 
   }
 
   currentLocationPress() {
-    Permissions.check('location').then(granted =>{
+    Permissions.check('location').then(granted => {
       if(granted === "denied") {
         Alert.alert(
           i18n.t("location.locationPermissions.title"),
@@ -102,14 +125,7 @@ class LocationScreen extends React.Component {
 
   render() {
 
-    const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
-
-
-    // if (loggedIn) {
-    //   return () => this.props.navigation.navigate('ProfileScreen')
-    //
-    // }
-    //else {
+    const {isLoggedIn, t, isLoading }  = this.props;
 
     const termsModal = (
       <Modal
@@ -128,37 +144,33 @@ class LocationScreen extends React.Component {
     );
 
     return (
-
       <ImageBackground source={BackgroundPattern} style={styles.outer}>
         <KeyboardAwareScrollView
           contentContainerStyle={styles.container}
-          enabledOnAndroid={true}
+          enableOnAndroid={true}
           bounces={false}
-          //keyboardShouldPersistTaps={"handled"}
+          keyboardShouldPersistTaps={"handled"}
           scrollEnabled={true}
-          //enableAutomaticScroll={true}
-          extraHeight={deviceHeight/5}
-          extraScrollHeight={deviceHeight/5}
+          enableAutomaticScroll={true}
+          extraScrollHeight={deviceHeight/10}
         >
           {/*{termsModal}*/}
           {/*<StatusBar*/}
-            {/*backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}*/}
-            {/*barStyle="dark-content"*/}
+          {/*backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}*/}
+          {/*barStyle="dark-content"*/}
           {/*/>*/}
           <Image source={Mascotte} style={styles.mascotte} resizeMode={"contain"} />
           <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
           <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
           <Text style={styles.subtitle} allowFontScaling={false}>{t("location.discoverWhere")}</Text>
 
-
           <View style={styles.middleContainerStyle}>
-
 
             <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
 
               <GooglePlacesAutocomplete
                 placeholder={t("location.InsertLocation")}
-                minLength={5} // minimum length of text to search
+                minLength={3} // minimum length of text to search
                 autoFocus={false}
                 returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
                 keyboardAppearance={'light'} // Can be left out for default keyboardAppearance https://facebook.github.io/react-native/docs/textinput.html#keyboardappearance
@@ -166,17 +178,17 @@ class LocationScreen extends React.Component {
                 fetchDetails={true}
                 renderDescription={row => row.description} // custom description render
                 onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  this.setState({position: details.geometry.location, isSubmitable: true});
+                  this.setState({position: details.geometry.location, isSubmittable: true, cityName: details.name});
                 }}
                 textInputProps={{
-                  onChangeText: () => this.state.isSubmitable === false ? null : this.setState({isSubmitable: false})
+                  onChangeText: () => this.state.isSubmittable === false ? null : this.setState({isSubmittable: false})
                 }}
                 getDefaultValue={() => ''}
                 enablePoweredByContainer={false}
                 query={{
                   // available options: https://developers.google.com/places/web-service/autocomplete
                   key: GOOGLE_API_KEY,
-                  language: 'it', // language of the results
+                  language: i18n.language === "it-IT" ? 'it' : 'en', // language of the results
                   //types: '(geocode)' // default: 'geocode'
                 }}
                 styles={{
@@ -201,36 +213,36 @@ class LocationScreen extends React.Component {
                   },
 
                   listView: {
-
+                    borderRadius: themes.base.borderRadius,
                     backgroundColor: themes.base.colors.white.light
                   }
                 }}
               />
               <View style={{borderTopWidth: 1, borderColor: themes.base.colors.accent.default}}>
-              <View style={styles.triangleCornerLayer} />
+                <View style={styles.triangleCornerLayer} />
               </View>
-                <TouchableHighlight
-                  style={styles.geocodeButton}
-                  underlayColor={themes.base.colors.accent.default}
-                  activeOpacity={0.5}
-                  onPress={this.currentLocationPress}
-                >
-                  <Icon name={"crosshairs-gps"}
-                        color={colors.white.light} size={21}
-                  />
-                </TouchableHighlight>
+              <TouchableHighlight
+                style={styles.geocodeButton}
+                underlayColor={themes.base.colors.accent.default}
+                activeOpacity={0.5}
+                onPress={this.currentLocationPress}
+              >
+                <Icon name={"crosshairs-gps"}
+                      color={colors.white.light} size={21}
+                />
+              </TouchableHighlight>
             </View>
             <Button
-              disabled={!this.state.isSubmitable}
+              loading={this.state.loading || isLoading}
+              disabled={!this.state.isSubmittable || this.state.loading}
               round
               variant="primary"
               uppercase
               onPress={this.goPress}
               block
-              loading={isLoading}
-              size="big"
+              //size="big"
               containerStyle={styles.submitButton}
-              loadingProps={{color: colors.accent.default}}
+              //loadingProps={{color: colors.accent.default}}
             >{t("location.search")}</Button>
           </View>
         </KeyboardAwareScrollView>
@@ -249,6 +261,7 @@ const styles = StyleSheet.create({
   },
   container: {
     //flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: 'transparent',
@@ -338,17 +351,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const loginError = state.auth.loginError;
-  let errorMessage = null;
-  if (loginError && [401,400].includes(loginError.status)) {
-    errorMessage = "Credenziali errate";
-  }
   return ({
-    errorMessage,
     isLoggedIn: state.auth.isLoggedin,
-    isLoading: state.loading > 0
-  });
+    isLoading: state.loading > 0,
+    position: state.location.device.position
+  })
 };
 export default connect(mapStateToProps, {
-  locationPermission, setPosition
+  locationPermission,
+  setPosition
 })(withNamespaces()(LocationScreen));
