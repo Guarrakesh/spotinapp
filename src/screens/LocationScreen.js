@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import Modal from "react-native-modal";
 import Permissions from 'react-native-permissions';
 import AndroidOpenSettings from "react-native-android-open-settings";
 import {
@@ -13,13 +12,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  WebView
+  TouchableHighlight
 } from "react-native";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {withNamespaces} from 'react-i18next';
 import {locationPermission, setPosition} from "../actions/location";
-import {Button, Touchable, View} from '../components/common';
+import {Button, View} from '../components/common';
 import themes from "../styleTheme";
 import i18n from "../i18n/i18n";
 import {GOOGLE_API_KEY} from "../vars";
@@ -47,7 +45,7 @@ class LocationScreen extends React.Component {
       loading: false
     };
 
-    this.goPress = this.goPress.bind(this);
+    this.searchPress = this.searchPress.bind(this);
     this.currentLocationPress = this.currentLocationPress.bind(this);
 
   }
@@ -72,10 +70,10 @@ class LocationScreen extends React.Component {
     }
   };
 
-  goPress() {
+  searchPress() {
 
     this.setState({loading: true});
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       InteractionManager.runAfterInteractions(() => {
 
         const position = {
@@ -89,59 +87,55 @@ class LocationScreen extends React.Component {
 
         this.setState({loading: false});
       });
-    }, 0)
+    })
 
 
 
   }
 
   currentLocationPress() {
-    Permissions.check('location').then(granted => {
-      if(granted === "denied") {
-        Alert.alert(
-          i18n.t("location.locationPermissions.title"),
-          i18n.t("location.locationPermissions.subtitle"),
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            {
-              text: i18n.t("profile.settings.title"),
-              onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
-            },
-          ],
-          {cancelable: true},
-        );
-      }
-      else {
-        this.props.locationPermission();
-      }
+
+    this.setState({loading: true});
+
+    requestAnimationFrame(() => {
+
+      InteractionManager.runAfterInteractions(() => {
+
+        Permissions.check('location').then(granted => {
+          if (granted === "denied") {
+            this.setState({loading: false});
+            Alert.alert(
+              i18n.t("location.locationPermissions.title"),
+              i18n.t("location.locationPermissions.subtitle"),
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: i18n.t("profile.settings.title"),
+                  onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
+                },
+              ],
+              {cancelable: true},
+            );
+          }
+          else {
+            this.props.locationPermission();
+            this.setState({loading: false});
+          }
+        });
+      });
     });
+
 
   }
 
 
   render() {
 
-    const {isLoggedIn, t, isLoading }  = this.props;
-
-    const termsModal = (
-      <Modal
-        animationIn={"slideInUp"}
-        animationOut={"slideOutDown"}
-        isVisible={this.state.termsModalVisible}
-        style={styles.modalView}
-      >
-        <WebView
-          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
-        />
-        <Touchable style={styles.privacyButton} onPress={() => this.setState({termsModalVisible: false})}>
-          <Text style={styles.privacyButtonText}>OK</Text>
-        </Touchable>
-      </Modal>
-    );
+    const { t, isLoading }  = this.props;
 
     return (
       <ImageBackground source={BackgroundPattern} style={styles.outer}>
@@ -154,11 +148,6 @@ class LocationScreen extends React.Component {
           enableAutomaticScroll={true}
           extraScrollHeight={deviceHeight/10}
         >
-          {/*{termsModal}*/}
-          {/*<StatusBar*/}
-          {/*backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}*/}
-          {/*barStyle="dark-content"*/}
-          {/*/>*/}
           <Image source={Mascotte} style={styles.mascotte} resizeMode={"contain"} />
           <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
           <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
@@ -235,14 +224,14 @@ class LocationScreen extends React.Component {
             <Button
               loading={this.state.loading || isLoading}
               disabled={!this.state.isSubmittable || this.state.loading}
+              color={themes.base.colors.accent.default}
               round
               variant="primary"
               uppercase
-              onPress={this.goPress}
+              onPress={this.searchPress}
               block
-              //size="big"
               containerStyle={styles.submitButton}
-              //loadingProps={{color: colors.accent.default}}
+              loadingProps={{color: colors.accent.default}}
             >{t("location.search")}</Button>
           </View>
         </KeyboardAwareScrollView>

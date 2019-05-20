@@ -6,17 +6,17 @@ import themes from "../../styleTheme";
 
 const BusinessIsOpenView = (props) => {
 
-  const { business, isOpen } = props;
+  const { isOpen } = props;
 
   return (
+    isOpen ?
     <View style={styles.container} elevation={2}>
       <Typography variant={"body"} uppercase={true} color={themes.base.colors.accent.default} style={styles.isOpenText}>
         {isOpen ? i18n.t("browse.businessProfile.open").toUpperCase() : i18n.t("browse.businessProfile.closed").toUpperCase()}
-        <Typography variant={"body"} uppercase={true}>
-          {` ${i18n.t("browse.businessProfile.now")}`}
-        </Typography>
+        {` ${i18n.t("browse.businessProfile.now").toUpperCase()}`}
       </Typography>
     </View>
+      : null
   )
 };
 
