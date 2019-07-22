@@ -1,5 +1,5 @@
 import React from 'react';
-import {call, cancel, fork, put, select, spawn, take, race} from 'redux-saga/effects';
+import {call, takeEvery, fork, put, select, spawn, take, race} from 'redux-saga/effects';
 import {channel} from 'redux-saga';
 import Geolocation from 'react-native-geolocation-service';
 import {Platform} from 'react-native';
@@ -24,36 +24,36 @@ const geolocationSettings = {
 };
 
 export const locationChannel = channel();
-let watchTask;
 let watcher;
 
 /*
- * Channel che si occupa di controllare quando la LOCATION non è più disponibile ( e quindi rimanda alla schermata NoLocationScreen)
- * Quando la location è disponibile e ci si trova in NoLocationScreen, allora rimanda alla Home
+ * Channel che si occupa di controllare quando la LOCATION non è più disponibile ( e quindi rimanda alla schermata LocationScreen)
+ * Quando la location è disponibile e ci si trova in LocationScreen, allora rimanda alla Home
  *
  * Per realizzare la funzionalità, c'è bisogno di usare Redux per React Navigation, per tenere d'occhio le route correnti nel reducer
  */
-// function* watchLocationChannel() {
-//   while (true) {
-//
-//     const action = yield take(locationChannel);
-//     const navigation = yield select(navigationSelector);
-//     const location = yield select(locationSelector);
-//
-//     yield take(action => action.type === LOCATION_SET_POSITION);
-//     //yield put(NavigationService.navigate('Main', {}, true));
-//
-//     if (action.type === LOCATION_SET_ERROR && !location.position) {
-//
-//       yield put(NavigationService.navigate('LocationScreen', {}, true));
-//
-//     } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
-//       yield put(NavigationService.navigate('Main', {}, true));
-//
-//     }
-//     yield put(action);
-//   }
-// }
+function* watchLocationChannel() {
+  while (true) {
+
+    const action = yield take(locationChannel);
+    const navigation = yield select(navigationSelector);
+    const location = yield select(locationSelector);
+
+    //yield put(NavigationService.navigate('Main', {}, true));
+
+    //
+    // if (action.type === LOCATION_SET_ERROR && !location.position) {
+    //   yield put(action);
+    //   yield put(NavigationService.navigate('LocationScreen', {}, true));
+    //
+    // } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
+    //   yield put(action);
+    //   // yield put(NavigationService.navigate('Main', {}, true));
+    //
+    // }
+    yield put(action);
+  }
+}
 
 function* resolvePosition() {
 
@@ -90,7 +90,7 @@ function* watchPosition() {
         message: "Spot In richiede l'accesso alla tua posizione per individuare i locali più vicini a te."
       });
       if (granted !== "authorized") {
-        yield put({type: LOCATION_SET_ERROR });
+        locationChannel.put({type: LOCATION_SET_ERROR });
         while (granted !== "authorized") {
 
           yield take(FOREGROUND); // Aspetto che l'app ritorni dal background (cioè presumo che l'utente sia andato in impostazioni ad attivare i permessi)
@@ -107,7 +107,6 @@ function* watchPosition() {
   if (Platform.OS === "android"){
 
     Geolocation.stopObserving();
-    Geolocation.clearWatch(watcher);
     //watcher = locationChannel.put({type: LOCATION_REQUEST});
     Geolocation.watchPosition(
       (position) => {
@@ -157,18 +156,15 @@ export default function* root() {
 
   //Aspetto che il Check è stato effettuato (o il Login) e che si stia aprendo la Home
   //yield take(action => action.type === "Navigation/RESET" && action.actions && action.actions[0].routeName === "Main")
-  //yield take(action => action.type === LOCATION_REQUEST);
-  // yield spawn(watchLocationChannel);
-  //
-  // yield watchTask = yield fork(watchPosition);
-  //
-  // yield takeEvery(REFRESH_SCREEN, resetWatcher);
+  yield spawn(watchLocationChannel);
+  yield takeEvery(LOCATION_REQUEST, watchPosition);
 
-  yield spawn(resolvePosition);
-  while(true){
-    yield take(action => action.type === LOCATION_REQUEST);
-    yield call(watchPosition);
-  }
+ // yield takeEvery(REFRESH_SCREEN, resetWatcher);
+
+  // while(true){
+  //   yield take(action => action.type === LOCATION_REQUEST);
+  //   yield call(watchPosition);
+  // }
 
 
 }

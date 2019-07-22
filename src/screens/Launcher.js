@@ -35,14 +35,22 @@ class Launcher extends React.Component {
 
           // Get information about the notification that was opened
           const notification: Notification = notificationOpen.notification;
-          setTimeout(() => self.notificationLaunch(notification), 1000);
+          self.notificationLaunch(notification);
 
-        }
-        else{
-          setTimeout(() => self.normalLaunch(), 1000);
+        } else {
+          self.normalLaunch();
         }
       });
 
+
+  }
+  componentWillReceiveProps(nextProps): void {
+    if (nextProps.deviceLocation.position !== this.props.deviceLocation.position && !nextProps.deviceLocation.isFetching) {
+      this.props.navigate("Main", {}, true);
+    } else if (nextProps.deviceLocation.error) {
+      // Nessun permesso, vado schermata LocationScreen
+      this.props.navigate("LocationScreen", {}, true)
+    }
 
   }
 
@@ -54,8 +62,7 @@ class Launcher extends React.Component {
     if(notification._data.type === "review"){
       const reservation = notification._data.reservation;
       self.props.navigate("ReviewsNavigator.ReviewsQuestionScreen", {reservation}, true);
-    }
-    else{
+    } else {
       self.normalLaunch();
     }
   }
@@ -71,18 +78,18 @@ class Launcher extends React.Component {
         AsyncStorage.getItem(ALREADY_SET_FAVORITE).then(setted => {
           if(setted){
             //Controlla se l'utente ha dato il permesso per la localizzazione:
-            Permissions.check('location').then(granted => {
-              //se l'ha dato rimanda alla home con la posizione corrente
-              if(granted !== "authorized") {
-                self.props.navigate("LocationScreen", {}, true);
-              }
-              //altrimenti rimanda alla schermata di localizzazione
-              else{
-                this.props.locationPermission();
-              }
-            });
-          }
-          else {
+            this.props.locationPermission();
+            // Permissions.check('location').then(granted => {
+            //   //se l'ha dato rimanda alla home con la posizione corrente
+            //   if(granted !== "authorized") {
+            //     self.props.navigate("LocationScreen", {}, true);
+            //   }
+            //   //altrimenti rimanda alla schermata di localizzazione
+            //   else {
+            //     this.props.locationPermission();
+            //   }
+
+          } else {
             self.props.navigate("FavoriteNavigator", {
               onDone: () => {
                 self.props.navigate("LocationScreen", {}, true);
@@ -151,7 +158,8 @@ const styles = {
 export default connect(state => ({
     isLoading: state.loading > 0,
     favoriteSports: state.auth.profile.favorite_sports ? state.auth.profile.favorite_sports : [],
-    favoriteCompetitors: state.auth.profile.favorite_competitors ? state.auth.profile.favorite_competitors : []
+    favoriteCompetitors: state.auth.profile.favorite_competitors ? state.auth.profile.favorite_competitors : [],
+    deviceLocation: state.location.device,
   })
   , {
     userCheck,

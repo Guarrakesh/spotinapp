@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
+import {coordsSelector} from "../reducers/location";
 
 
 /**
@@ -14,7 +15,7 @@ export class HomeController extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (nextProps.isLoggedIn !== this.props.isLoggedIn ||
-        !isEqual(nextProps.position, this.props.position)) {
+        !isEqual(nextProps.coords, this.props.coords)) {
       return true;
     }
     return false;
@@ -24,12 +25,12 @@ export class HomeController extends Component {
     const {
       children,
       isLoading,
-      position,
+      coords,
     } = this.props;
 
     return children({
       isLoading,
-      position,
+      coords,
     });
   }
 }
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.auth.isLoggedIn,
     isLoading: state.loading > 0,
-    position: state.location.device.position ? state.location.device.position.coords : null
+    coords: coordsSelector(state),
   };
 };
 
@@ -50,6 +51,6 @@ HomeController.propTypes = {
 export default connect(
   mapStateToProps,
   {
-    getNearBroadcasts: (position) => crudGetNearMany()
+    getNearBroadcasts: (coords) => crudGetNearMany()
 
   })(HomeController);

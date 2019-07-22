@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -13,7 +14,6 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* spotinappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* spotinappTests.m */; };
 		0466B4965F3F4BDFB792E721 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA7759F0E411496AAF1A1416 /* Lato-Black.ttf */; };
-		1084B5B8861C2532F1B7E0CD /* libPods-spotinapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D05356DD25B9D6E51123234 /* libPods-spotinapp.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -50,6 +50,7 @@
 		6D86022AF1F94C3BA27F7BD4 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41A062B539054070857540F3 /* Ionicons.ttf */; };
 		7DF496E1D5654D3F8E385227 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A1D08CB8CD748289F171C49 /* Lato-LightItalic.ttf */; };
 		810631B621A4D0C8004B355B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8106318721A4D0C8004B355B /* GoogleService-Info.plist */; };
+		812CE6F5223D7F870023B0A0 /* libPods-spotinapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 812CE6F4223D7F870023B0A0 /* libPods-spotinapp.a */; };
 		81759F9421807804002650B7 /* spotinappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759F9321807804002650B7 /* spotinappUITests.swift */; };
 		81759FC22180784D002650B7 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759FC12180784D002650B7 /* SnapshotHelper.swift */; };
 		818D20F4218D1EDD009D2B70 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 818D20F3218D1EC5009D2B70 /* libReactNativeConfig.a */; };
@@ -79,8 +80,6 @@
 		B008E7D97DD2411CA3F7E4E0 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4971F59F611F43A5BCA2ADBC /* Lato-Thin.ttf */; };
 		B205B31C17574F1F8E346A5C /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC0EC9D668B34709AF81A225 /* Lato-ThinItalic.ttf */; };
 		BEF5C31FFB5340869598E8D5 /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC1DE8993C144FC088100073 /* Lato-HeavyItalic.ttf */; };
-		C4C77C53223AEFD100944306 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C77C51223AEFB600944306 /* libRNImagePicker.a */; };
-		C4C77C5A223AF74600944306 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C77C59223AF73D00944306 /* libRCTImageResizer.a */; };
 		C4E3FD24219604E30076C942 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4E3FD212196046D0076C942 /* libRCTPushNotification.a */; };
 		C83FB50239664434AC1DBCD2 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 771B69A9E3CF4A3181612257 /* Lato-SemiboldItalic.ttf */; };
 		C9AB8C2A229C427BA9BA3009 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65620899A51A438C9C2828C1 /* libAppCenterReactNativeCrashes.a */; };
@@ -423,20 +422,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
-		C4C77C50223AEFB600944306 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4C77C1F223AEFB600944306 /* RNImagePicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
-			remoteInfo = RNImagePicker;
-		};
-		C4C77C58223AF73D00944306 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4C77C54223AF73C00944306 /* RCTImageResizer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D72D2E81C16249000E22EC1;
-			remoteInfo = RCTImageResizer;
-		};
 		C4E3FD202196046D0076C942 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4E3FD1B2196046D0076C942 /* RCTPushNotification.xcodeproj */;
@@ -505,6 +490,9 @@
 		7CF843824AA14934B49415A7 /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNativeAnalytics.xcodeproj; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; };
 		80AC4209A7C2456E807E84A3 /* Lato-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Italic.ttf"; path = "../src/assets/fonts/Lato-Italic.ttf"; sourceTree = "<group>"; };
 		8106318721A4D0C8004B355B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		812CE6DA223D7F150023B0A0 /* libBase64.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBase64.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		812CE6DC223D7F380023B0A0 /* libBolts.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBolts.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		812CE6F4223D7F870023B0A0 /* libPods-spotinapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-spotinapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81759F9121807804002650B7 /* spotinappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spotinappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81759F9321807804002650B7 /* spotinappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spotinappUITests.swift; sourceTree = "<group>"; };
 		81759F9521807804002650B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -533,8 +521,6 @@
 		A98AF76EA55C40B19183AFE7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B4501641154243228880F3A7 /* Lato-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Semibold.ttf"; path = "../src/assets/fonts/Lato-Semibold.ttf"; sourceTree = "<group>"; };
-		C4C77C1F223AEFB600944306 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
-		C4C77C54223AF73C00944306 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
 		C4E3FD1B2196046D0076C942 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		C4FDE5FA21A329D9005A3D04 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5ADDBB079244BB3923C89F1 /* Lato-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
@@ -565,13 +551,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4C77C5A223AF74600944306 /* libRCTImageResizer.a in Frameworks */,
-				C4C77C53223AEFD100944306 /* libRNImagePicker.a in Frameworks */,
+				812CE6F5223D7F870023B0A0 /* libPods-spotinapp.a in Frameworks */,
+				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				C4E3FD24219604E30076C942 /* libRCTPushNotification.a in Frameworks */,
 				818D20F4218D1EDD009D2B70 /* libReactNativeConfig.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -582,7 +567,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				1084B5B8861C2532F1B7E0CD /* libPods-spotinapp.a in Frameworks */,
 				67B1E7C107404C75BCF3962F /* libAppCenterReactNative.a in Frameworks */,
 				613F44C102A04A0C91A70DBF /* libAppCenterReactNativeAnalytics.a in Frameworks */,
 				C9AB8C2A229C427BA9BA3009 /* libAppCenterReactNativeCrashes.a in Frameworks */,
@@ -745,6 +729,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				812CE6F4223D7F870023B0A0 /* libPods-spotinapp.a */,
+				812CE6DC223D7F380023B0A0 /* libBolts.a */,
+				812CE6DA223D7F150023B0A0 /* libBase64.a */,
 				818D20EC218CE5CF009D2B70 /* libreact-native-config.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				2D05356DD25B9D6E51123234 /* libPods-spotinapp.a */,
@@ -854,8 +841,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				C4C77C54223AF73C00944306 /* RCTImageResizer.xcodeproj */,
-				C4C77C1F223AEFB600944306 /* RNImagePicker.xcodeproj */,
 				C4E3FD1B2196046D0076C942 /* RCTPushNotification.xcodeproj */,
 				818D20EE218D1EC5009D2B70 /* ReactNativeConfig.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -892,6 +877,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				591BFBC6F43F4696B94F5C2D /* AppCenter-Config.plist */,
 				8106318721A4D0C8004B355B /* GoogleService-Info.plist */,
 				81A11DB321502C4B006E574D /* Lato-Bold.ttf */,
 				81C46960210F31C6007DD095 /* Fonts */,
@@ -904,7 +890,6 @@
 				E43792964B62A6C17D34B76A /* Pods */,
 				C47C25F521371B6200230ADD /* Recovered References */,
 				3F93FF3A894943DD9BEACEE4 /* Resources */,
-				591BFBC6F43F4696B94F5C2D /* AppCenter-Config.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -981,22 +966,6 @@
 			isa = PBXGroup;
 			children = (
 				C4B9696F21A047C1000C03C9 /* libRNFirebase.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C4C77C20223AEFB600944306 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C4C77C51223AEFB600944306 /* libRNImagePicker.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C4C77C55223AF73C00944306 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C4C77C59223AF73D00944306 /* libRCTImageResizer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1165,6 +1134,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1209,10 +1179,6 @@
 					ProjectRef = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
 				},
 				{
-					ProductGroup = C4C77C55223AF73C00944306 /* Products */;
-					ProjectRef = C4C77C54223AF73C00944306 /* RCTImageResizer.xcodeproj */;
-				},
-				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
 				},
@@ -1251,10 +1217,6 @@
 				{
 					ProductGroup = C4B9696B21A047C1000C03C9 /* Products */;
 					ProjectRef = A26C995643C74835B2614A5D /* RNFirebase.xcodeproj */;
-				},
-				{
-					ProductGroup = C4C77C20223AEFB600944306 /* Products */;
-					ProjectRef = C4C77C1F223AEFB600944306 /* RNImagePicker.xcodeproj */;
 				},
 				{
 					ProductGroup = 81A11DAE2150293C006E574D /* Products */;
@@ -1579,20 +1541,6 @@
 			fileType = archive.ar;
 			path = libRNFirebase.a;
 			remoteRef = C4B9696E21A047C1000C03C9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4C77C51223AEFB600944306 /* libRNImagePicker.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNImagePicker.a;
-			remoteRef = C4C77C50223AEFB600944306 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4C77C59223AF73D00944306 /* libRCTImageResizer.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTImageResizer.a;
-			remoteRef = C4C77C58223AF73D00944306 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C4E3FD212196046D0076C942 /* libRCTPushNotification.a */ = {
@@ -1953,7 +1901,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = spotinapp;
@@ -1993,7 +1940,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = spotinapp;
@@ -2290,7 +2236,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_NAME = spotinapp;

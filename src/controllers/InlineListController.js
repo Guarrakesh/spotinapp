@@ -22,10 +22,10 @@ class InlineListController extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.initialised !== this.props.initialised) {
-      this.updateData()
+      this.updateData(nextProps)
     }
     if (nextProps.version !== this.props.version) {
-      this.updateData();
+      this.updateData(nextProps);
     }
   }
   shouldComponentUpdate(nextProps) {
@@ -35,7 +35,6 @@ class InlineListController extends Component {
         (nextProps.nearPosition.latitude !== this.props.nearPosition.latitude ||
         nextProps.nearPosition.longitude !== this.props.nearPosition.longitude ||
         nextProps.nearPosition.radius !== this.props.nearPosition.radius);
-
     if (changesPositionCond ||
         nextProps.initialised !== this.props.initialised ||
         nextProps.resource !== this.props.resource ||
@@ -49,32 +48,32 @@ class InlineListController extends Component {
 
   }
 
-  updateData() {
+  updateData(props) {
 
-    const { sort, order, numElems = 20, filter } = this.props;
+    const { sort, order, numElems = 20, filter } = props;
     const pagination = {
       page: 1,
       perPage: parseInt(numElems, 20)
     };
-    if (this.props.nearPosition && this.props.nearPosition.latitude
-        && this.props.nearPosition.longitude && this.props.nearPosition.radius) {
+    if (props.nearPosition && props.nearPosition.latitude
+        && props.nearPosition.longitude && props.nearPosition.radius) {
       this.props.crudGetManyNear(
-          this.props.resource,
-          this.props.id,
-          this.props.nearPosition,
+          props.resource,
+          props.id,
+          props.nearPosition,
           pagination,
           { field: sort, order},
           { ...filter},
-          this.props.basePath,
+          props.basePath,
       )
     } else {
       this.props.crudGetList(
-          this.props.resource,
-          this.props.id,
+          props.resource,
+          props.id,
           pagination,
           {field: sort, order},
           { ...filter },
-          this.props.basePath,
+          props.basePath,
       );
     }
 
