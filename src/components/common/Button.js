@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import { Button as BaseButton } from 'react-native-elements'
-
+import Touchable from '../common/Touchable';
 import themes, { accentColor, dangerColor, infoColor, primaryColor, textColor, whiteColor, warningColor } from '../../styleTheme';
 const fonts = themes.base.fonts;
 
@@ -35,7 +35,7 @@ export default class Button extends React.Component {
       !clear && { elevation, ...themes.base.elevations[`depth${elevation}`] },
       size === "big"
           ? { paddingTop: 10, paddingBottom: 10  }
-          : { paddingTop: 4, paddingBottom: 4},
+          : { paddingTop: 8, paddingBottom: 8},
       styles.container,
       containerStyle
     ]);
@@ -47,6 +47,8 @@ export default class Button extends React.Component {
             : { paddingTop: 8, paddingBottom: 8},
       uppercase && {fontFamily: fonts.LatoBold},
       titleStyle,
+        icon ? { marginLeft: 8 } : {},
+
 
     ];
 
@@ -55,21 +57,26 @@ export default class Button extends React.Component {
       color: clear ? themes.base.colors[variant] : "#fff",
     }, loadingProps];
     return (
-        <BaseButton
+        <Touchable
+
+            style={_style}
             containerStyle={_containerStyle}
             activeOpacity={0.2}
-            buttonStyle={_style}
             titleProps={{
               numberOfLines: 1,
               ...titleProps
             }}
-            titleStyle={_titleBaseStyle}
-            icon={icon}
-            title={typeof children === "string"  && uppercase ? children.toUpperCase() : children}
+            useForeground
+
             loadingStyle={[{fontSize: styles.titleBase.fontSize, padding: 8}, loadingStyle]}
             loadingProps={_loadingProps}
             {...props}
-        />
+        >
+          <View style={styles.titleView}>
+          {icon}
+          <Text style={_titleBaseStyle}>{typeof children === "string"  && uppercase ? children.toUpperCase() : children}</Text>
+          </View>
+        </Touchable>
     )
 
   }
@@ -98,7 +105,11 @@ Button.propTypes = {
 
 const styles = StyleSheet.create({
 
-
+  titleView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   base: {
     width: '100%',
     fontFamily: fonts.LatoMedium,

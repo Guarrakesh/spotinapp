@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {withNamespaces} from "react-i18next";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {G, Path, Svg} from "react-native-svg";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useSpring, animated, useTransition } from "react-spring/native";
-import {Dimensions, Image, StyleSheet, Text, Animated} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler,} from 'react-native';
 
 import {View} from "../../components/common";
 import Button from "../../components/common/Button";
@@ -12,10 +10,10 @@ import themes from "../../styleTheme";
 import LoginTab from "./LoginTab";
 const Logo = require('../../assets/img/logo/logo.png');
 
-const AnimatedImage = animated(Image);
-const AnimatedView = animated(View);
-const AnimatedSvg = animated(Svg);
-const AnimatedText = animated(Text);
+const AnimatedImage = Animated.createAnimatedComponent(Image);
+const AnimatedView = Animated.createAnimatedComponent(View);
+const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+const AnimatedText = Animated.createAnimatedComponent(Text);
 const SvgPath = ({pathProps}) => (
     <Path
 
@@ -36,18 +34,49 @@ const { width, height} = Dimensions.get('screen');
 const Login = ({t}) => {
 
   const [onBottom, setOnBottom] = useState(false);
+  const [signType, setSignType] = useState('signin');
+  const [y] = useState(new Animated.Value(0));
+  const [opacity] = useState(new Animated.Value(1));
+  const [logoScale] = useState(new Animated.Value(1));
+  const [logoY] = useState(new Animated.Value(0));
+  const [tabBarY] = useState(new Animated.Value(-100));
 
-  const { y, opacity, logoScale, logoY  }  = useSpring({
-    y: onBottom ? height / 3 + 50 : 0,
-    opacity: onBottom ? 0 : 1,
-    logoScale: onBottom ? 0.7 : 1,
-    logoY: onBottom ? -50 : 0,
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (onBottom) {
+        setOnBottom(false);
+        return true;
+      } else {
+        return false;
+      }
+    })
+    return () => {
+      backHandler.remove();
+    }
   });
-  const tabTransition = useTransition(onBottom, null, {
-    from: { position: 'absolute', opacity: 0, top: height / 5 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
+
+  const Tabbar = React.memo(() => <LoginTab activeTab={signType}/>);
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(y, {toValue: onBottom ? height / 3  : 0, useNativeDriver: true}),
+      Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
+      Animated.spring(logoScale, { toValue: onBottom ? 0.7 : 1, useNativeDriver: true}),
+      Animated.spring(logoY, { toValue: onBottom ? -50 : 0, useNativeDriver: true }),
+      Animated.spring(tabBarY, { mass:1, damping: 20, toValue: onBottom ? 0 : -100, useNativeDriver: true})
+    ]).start();
+  },[onBottom]);
+
+// const { y, opacity, logoScale, logoY  }  = useSpring({
+//   y: onBottom ? height / 3 + 50 : 0,
+//   opacity: onBottom ? 0 : 1,
+//   logoScale: onBottom ? 0.7 : 1,
+//   logoY: onBottom ? -50 : 0,
+// });
+// const tabTransition = useTransition(onBottom, null, {
+//   from: { position: 'absolute', opacity: 0, top: height / 5 },
+//   enter: { opacity: 1 },
+//   leave: { opacity: 0 },
+// });
   return (
       <View style={styles.container}>
         <AnimatedImage
@@ -64,14 +93,20 @@ const Login = ({t}) => {
             allowFontScaling={false}>
           {t("auth.login.subtitle")}
         </AnimatedText>
-        <Button onPress={() => setOnBottom(!onBottom)} title="ciao"/>
 
-        {tabTransition.map(({ item, key, props}) => (
-            item &&
-            <AnimatedView key={key} style={props}>
-              <LoginTab/>
-            </AnimatedView>
-        ))}
+
+        <Animated.View style={{
+          position: 'absolute',
+          top: height/5,
+          height: height - height/5,
+          width: '100%',
+          opacity: Animated.subtract(1, opacity),
+          transform: [ { translateY: tabBarY }]
+        }}>
+          <Tabbar/>
+        </Animated.View>
+
+
         <AnimatedSvg
             style={{ transform: [ { translateY: y }] }}
 
@@ -88,52 +123,54 @@ const Login = ({t}) => {
           opacity,
           transform: [ { translateY: y }]
         }]}>
-            <Button
-                block
-                uppercase
-                containerStyle={[{backgroundColor: themes.commonColors.facebook},
-                  {borderRadius: 12, paddingTop: 8, paddingBottom: 8, marginBottom: 24}]}
-                titleStyle={{color: '#fff'}}
+          <Button
+              elevation={0}
 
-                icon={<Icon
-                    name='facebook'
-                    size={18}
-                    color='white'
-                />
+              block
+              uppercase
+              containerStyle={[{backgroundColor: themes.commonColors.facebook},
+                {borderRadius: 12, paddingTop: 8, paddingBottom: 8, marginBottom: 24}]}
+              titleStyle={{color: '#fff'}}
+
+              icon={<Icon
+                  name='facebook'
+                  size={18}
+                  color='white'
+              />
+              }
+              iconContainerStyle={{alignSelf: 'flex-start'}}
+          >{t("auth.login.facebookSignIn")}</Button>
+          <Button
+              block
+              uppercase
+              round
+              containerStyle={{ marginBottom: 14 }}
+              buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
+              onPress={() => { setOnBottom(!onBottom); setSignType('signin') }}
+              iconContainerStyle={{alignSelf: 'flex-start'}}
+          >{t("auth.login.signIn")}</Button>
+          <Button
+              block
+              uppercase
+              round
+              titleStyle={{color: '#fff'}}
+              onPress={() => { setOnBottom(!onBottom); setSignType('signup') }}
+              containerStyle={[
+                { backgroundColor: 'transparent' ,
+                  borderWidth: 2,
+                  borderColor: '#fff',
                 }
-                iconContainerStyle={{alignSelf: 'flex-start'}}
-            >{t("auth.login.facebookSignIn")}</Button>
-            <Button
-                block
-                uppercase
-                round
-                containerStyle={{ marginBottom: 14 }}
+              ]}
 
-
-                iconContainerStyle={{alignSelf: 'flex-start'}}
-            >{t("auth.login.signIn")}</Button>
-            <Button
-                block
-                uppercase
-                round
-                titleStyle={{color: '#fff'}}
-
-                containerStyle={[
-                  { backgroundColor: 'transparent' ,
-                    borderWidth: 2,
-                    borderColor: '#fff',
-                  }
-                ]}
-
-                iconContainerStyle={{alignSelf: 'flex-start'}}
-            >{t("auth.login.register")}</Button>
-            <Button
-                block
-                clear
-                containerStyle={{position: 'absolute',bottom: 12}}
-                titleStyle={{ color: '#fff'}}
-            > {t("auth.login.later").toString().toUpperCase()}
-            </Button>
+              iconContainerStyle={{alignSelf: 'flex-start'}}
+          >{t("auth.login.register")}</Button>
+          <Button
+              block
+              clear
+              containerStyle={{position: 'absolute',bottom: -4, left: 24,}}
+              titleStyle={{ color: '#fff'}}
+          > {t("auth.login.later").toString().toUpperCase()}
+          </Button>
         </AnimatedView>
       </View>
   )
@@ -143,7 +180,7 @@ const colors = themes.base.colors;
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
+    flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: "#ffffff"
@@ -170,14 +207,19 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   mainContentViewWrapper: {
-    top: height / 2 + 40,
+    top: height / 2,
     position: 'absolute',
     height: height / 3,
+    width: '100%',
+    paddingLeft: 24,
+    paddingRight: 24,
 
   },
   mainContentFlex: {
     position: 'relative',
     flexDirection: 'column',
+    width: '100%',
+
 
   }
 

@@ -37,6 +37,7 @@ export default class PlatformTouchable extends React.Component {
         foreground,
         background,
         useForeground,
+        containerStyle,
         ...props
     } = this.props;
 
@@ -48,7 +49,7 @@ export default class PlatformTouchable extends React.Component {
 
     if (TouchableComponent === TouchableNativeFeedback) {
       useForeground =
-          foreground && TouchableNativeFeedback.canUseNativeForeground();
+          foreground && TouchableNativeFeedback.Ripple();
 
       if (foreground && background) {
         console.warn(
@@ -57,14 +58,18 @@ export default class PlatformTouchable extends React.Component {
       }
 
       return (
+
           <TouchableComponent
               {...props}
+              style={style}
+
               useForeground={useForeground}
               background={(useForeground && foreground) || background}>
-            <View style={style}>
-              {children}
+            <View style={containerStyle}>
+            {children}
             </View>
-          </TouchableComponent>
+            </TouchableComponent>
+
       );
     } else if (TouchableComponent === TouchableWithoutFeedback) {
       return (
