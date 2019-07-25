@@ -7,9 +7,9 @@ import {
   Switch,
   Linking,
   Platform,
-  WebView,
   Button,
   Alert,
+    WebView,
 
 } from 'react-native';
 import Modal from "react-native-modal";

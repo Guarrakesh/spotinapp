@@ -99,7 +99,7 @@ const auth = {
         case "facebook": {
 
 
-          LoginManager.logInWithReadPermissions(['public_profile','email'])
+          LoginManager.logInWithPermissions(['public_profile','email'])
               .then(result => {
                 if (result.isCancelled) {
                   return reject({message: "Login annullato dall'utente", hidden: true});

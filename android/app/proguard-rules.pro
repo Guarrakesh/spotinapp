@@ -16,4 +16,5 @@
 #   public *;
 #}
 
--keep class it.spotin.BuildConfig { *; }
+
+

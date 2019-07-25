@@ -31,7 +31,6 @@
   [FIRApp configure];
   [RNFirebaseNotifications configure];
   
-  NSURL *jsCodeLocation;
 
   [AppCenterReactNativePush register];  // Initialize AppCenter push
 
@@ -42,17 +41,11 @@
   [AppCenterReactNative register];  // Initialize AppCenter 
     
   [GMSServices provideAPIKey:@"AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI"];
-    
-  
-    #ifdef DEBUG
-        jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-    #else
-        jsCodeLocation = [CodePush bundleURL];
-    #endif
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"spotinapp"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+
+    RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                     moduleName:@"spotinapp"
+                                              initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -63,9 +56,18 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+ 
   return YES;
 }
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+    #if DEBUG
+      return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+    #else
+      return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    #endif
+}
+
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

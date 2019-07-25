@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 import { get } from 'lodash';
 import near from './near';
 import {
-    LOCATION_SET_POSITION
+  LOCATION_SET_POSITION
   , LOCATION_REQUEST
-  , LOCATION_SET_ERROR
+  , LOCATION_SET_ERROR, LOCATION_SET_USER_ADDRESS, LOCATION_USE_DEVICE_LOCATION
 } from '../../actions/location';
 
-function locationReducer(state = {
+function geoLocationReducer(state = {
   position: null,
   error: null,
   fetching: false
@@ -20,10 +20,8 @@ function locationReducer(state = {
         fetching: true
       }
     }
-
     case LOCATION_SET_POSITION: {
       const {position} = action;
-
       return {
         ...state,
         position,
@@ -31,7 +29,6 @@ function locationReducer(state = {
         fetching: false
       }
     }
-
     case LOCATION_SET_ERROR : {
       const {error} = action;
 
@@ -49,20 +46,52 @@ function locationReducer(state = {
 }
 
 
-
-export const locationSelector = (state) => state.location.device;
-export const coordsSelector = state => {
-  if (state.location.device) {
+function userAddressReducer(state = {position: null}, action) {
+  if (action.type === LOCATION_SET_USER_ADDRESS) {
+    const { position } = action;
     return {
-      latitude: get(state.location.device, 'position.coords.latitude'),
-      longitude: get(state.location.device, 'position.coords.longitude')
-    };
+      position
+    }
+  }
+  return state;
+}
+
+// Se l'utente si geolocalizza o aggiorna la posizione, utilizza "device", altriment
+// se inserisce un indirizzo, utilizza "address"
+function currentLocationReducer(state = 'device', action) {
+  if (action.type === LOCATION_SET_USER_ADDRESS) {
+    return 'address'
+  } else if (action.type === LOCATION_USE_DEVICE_LOCATION) {
+    return 'device';
+  }
+  return state;
+}
+/**
+ * Questi due selettori danno priorità alla geoposizione del device
+ * Se invece l'utente
+ */
+export const positionSelector = (state) => {
+  // Seleziona le coordinate in base al currentLccation
+  const currentLocation = state.location.currentLocation;
+  if (state.location[currentLocation].position) {
+    return state.location[currentLocation].position;
   }
   return undefined;
+}
+export const coordsSelector = state => {
+  const subState = state.location.currentLocation;
+  return {
+    latitude: get(state.location[subState], 'position.coords.latitude'),
+    longitude: get(state.location[subState], 'position.coords.longitude')
+  };
+
 };
 export default combineReducers({
-    device: locationReducer,
-    near,
+  device: geoLocationReducer,
+  near,
+  address: userAddressReducer,
+  currentLocation: currentLocationReducer, // tipo di indirizzo in uso attualmente
 });
 
-exports.locationReducer = locationReducer; //export x test
+exports.geoLocationReducer = geoLocationReducer; //export x test
+

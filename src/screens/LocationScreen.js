@@ -16,8 +16,9 @@ import {
 } from "react-native";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {withNamespaces} from 'react-i18next';
-import {locationPermission, setPosition} from "../actions/location";
+import {locationPermission, useAddress, useDeviceLocation} from "../actions/location";
 import {Button, View} from '../components/common';
+import {positionSelector} from "../reducers/location";
 import themes from "../styleTheme";
 import i18n from "../i18n/i18n";
 import {GOOGLE_API_KEY} from "../vars";
@@ -51,9 +52,9 @@ class LocationScreen extends React.Component {
   }
 
   componentWillMount() {
-    if(this.props.position) {
+    if(this.props.deviceLocation.position) {
       this.props.navigation.setParams({
-        position: this.props.position
+        position: this.props.deviceLocation.position
       });
     }
   }
@@ -65,8 +66,8 @@ class LocationScreen extends React.Component {
     return {
       gesturesEnabled: false,
       headerRight: params.position ?
-        <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
-        : null
+          <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
+          : null
     }
   };
 
@@ -83,159 +84,166 @@ class LocationScreen extends React.Component {
           },
           cityName: this.state.cityName
         };
-        this.props.setPosition(position);
-
+        this.props.useAddress(position);
+        this.props.navigation.navigate('Main');
         this.setState({loading: false});
       });
     })
 
-
-
   }
 
-  currentLocationPress() {
+  componentWillReceiveProps(nextProps): void {
+    if (nextProps.deviceLocation.position === this.props.deviceLocation.position &&
+        nextProps.deviceLocation.error === this.props.deviceLocation.error &&
+        nextProps.deviceLocation.fetching === this.props.deviceLocation.fetching) {
+      return;
+    }
+    if (!nextProps.deviceLocation.fetching && nextProps.deviceLocation.error) {
+      this.setState({ loading: false });
 
-    this.setState({loading: true});
+    } else if (!nextProps.deviceLocation.fetching && nextProps.deviceLocation.position) {
+      this.props.navigation.navigate('Main');
+      this.setState({loading: false})
+    }
+  }
 
-    requestAnimationFrame(() => {
+  async currentLocationPress() {
 
-      InteractionManager.runAfterInteractions(() => {
 
-        Permissions.check('location').then(granted => {
-          if (granted === "denied") {
-            this.setState({loading: false});
-            Alert.alert(
-              i18n.t("location.locationPermissions.title"),
-              i18n.t("location.locationPermissions.subtitle"),
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {
-                  text: i18n.t("profile.settings.title"),
-                  onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
-                },
-              ],
-              {cancelable: true},
-            );
-          }
-          else {
-            this.props.locationPermission();
-            this.setState({loading: false});
-          }
-        });
+    let permissionState = await Permissions.check('location');
+    if (permissionState == "undetermined") {
+      permissionState = await Permissions.request('location');
+    }
+    if (permissionState !== "authorized") {
+      requestAnimationFrame(() => {
+
+        Alert.alert(
+            i18n.t("location.locationPermissions.title"),
+            i18n.t("location.locationPermissions.subtitle"),
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {
+                text: i18n.t("profile.settings.title"),
+                onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
+              },
+            ],
+            {cancelable: true},
+        );
       });
-    });
-
-
+    } else {
+      this.setState({loading: true});
+      this.props.locationPermission();
+      this.props.useDeviceLocation();
+    }
   }
-
 
   render() {
 
     const { t, isLoading }  = this.props;
 
     return (
-      <ImageBackground source={BackgroundPattern} style={styles.outer}>
-        <KeyboardAwareScrollView
-          contentContainerStyle={styles.container}
-          enableOnAndroid={true}
-          bounces={false}
-          keyboardShouldPersistTaps={"handled"}
-          scrollEnabled={true}
-          enableAutomaticScroll={true}
-          extraScrollHeight={deviceHeight/10}
-        >
-          <Image source={Mascotte} style={styles.mascotte} resizeMode={"contain"} />
-          <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
-          <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
-          <Text style={styles.subtitle} allowFontScaling={false}>{t("location.discoverWhere")}</Text>
+        <ImageBackground source={BackgroundPattern} style={styles.outer}>
+          <KeyboardAwareScrollView
+              contentContainerStyle={styles.container}
+              enableOnAndroid={true}
+              bounces={false}
+              keyboardShouldPersistTaps={"handled"}
+              scrollEnabled={true}
+              enableAutomaticScroll={true}
+              extraScrollHeight={deviceHeight/10}
+          >
+            <Image source={Mascotte} style={styles.mascotte} resizeMode={"contain"} />
+            <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
+            <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
+            <Text style={styles.subtitle} allowFontScaling={false}>{t("location.discoverWhere")}</Text>
 
-          <View style={styles.middleContainerStyle}>
+            <View style={styles.middleContainerStyle}>
 
-            <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
+              <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
 
-              <GooglePlacesAutocomplete
-                placeholder={t("location.InsertLocation")}
-                minLength={3} // minimum length of text to search
-                autoFocus={false}
-                returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
-                keyboardAppearance={'light'} // Can be left out for default keyboardAppearance https://facebook.github.io/react-native/docs/textinput.html#keyboardappearance
-                listViewDisplayed={false}   // true/false/undefined
-                fetchDetails={true}
-                renderDescription={row => row.description} // custom description render
-                onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  this.setState({position: details.geometry.location, isSubmittable: true, cityName: details.name});
-                }}
-                textInputProps={{
-                  onChangeText: () => this.state.isSubmittable === false ? null : this.setState({isSubmittable: false})
-                }}
-                getDefaultValue={() => ''}
-                enablePoweredByContainer={false}
-                query={{
-                  // available options: https://developers.google.com/places/web-service/autocomplete
-                  key: GOOGLE_API_KEY,
-                  language: i18n.language === "it-IT" ? 'it' : 'en', // language of the results
-                  //types: '(geocode)' // default: 'geocode'
-                }}
-                styles={{
-                  textInputContainer: {
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    borderTopWidth: 0,
-                    borderBottomWidth:0,
-                  },
-                  textInput: {
-                    marginLeft: 0,
-                    marginRight: 0,
-                    marginTop: 0,
-                    height: 40,
-                    color: '#5d5d5d',
-                    fontSize: 14,
-                    borderRadius: 0,
-                    borderTopLeftRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    borderWidth: 1,
-                    borderRightWidth: 0,
-                    borderColor: themes.base.colors.accent.default
-                  },
+                <GooglePlacesAutocomplete
+                    placeholder={t("location.InsertLocation")}
+                    minLength={3} // minimum length of text to search
+                    autoFocus={false}
+                    returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+                    keyboardAppearance={'light'} // Can be left out for default keyboardAppearance https://facebook.github.io/react-native/docs/textinput.html#keyboardappearance
+                    listViewDisplayed={false}   // true/false/undefined
+                    fetchDetails={true}
+                    renderDescription={row => row.description} // custom description render
+                    onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                      this.setState({position: details.geometry.location, isSubmittable: true, cityName: details.name});
+                    }}
+                    textInputProps={{
+                      onChangeText: () => this.state.isSubmittable === false ? null : this.setState({isSubmittable: false})
+                    }}
+                    getDefaultValue={() => ''}
+                    enablePoweredByContainer={false}
+                    query={{
+                      // available options: https://developers.google.com/places/web-service/autocomplete
+                      key: GOOGLE_API_KEY,
+                      language: i18n.language === "it-IT" ? 'it' : 'en', // language of the results
+                      //types: '(geocode)' // default: 'geocode'
+                    }}
+                    styles={{
+                      textInputContainer: {
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        borderTopWidth: 0,
+                        borderBottomWidth:0,
+                      },
+                      textInput: {
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginTop: 0,
+                        height: 40,
+                        color: '#5d5d5d',
+                        fontSize: 14,
+                        borderRadius: 0,
+                        borderTopLeftRadius: 20,
+                        borderBottomLeftRadius: 20,
+                        borderWidth: 1,
+                        borderRightWidth: 0,
+                        borderColor: themes.base.colors.accent.default
+                      },
 
-                  listView: {
-                    borderRadius: themes.base.borderRadius,
-                    backgroundColor: themes.base.colors.white.light
-                  }
-                }}
-              />
-              <View style={{borderTopWidth: 1, borderColor: themes.base.colors.accent.default}}>
-                <View style={styles.triangleCornerLayer} />
-              </View>
-              <TouchableHighlight
-                style={styles.geocodeButton}
-                underlayColor={themes.base.colors.accent.default}
-                activeOpacity={0.5}
-                onPress={this.currentLocationPress}
-              >
-                <Icon name={"crosshairs-gps"}
-                      color={colors.white.light} size={21}
+                      listView: {
+                        borderRadius: themes.base.borderRadius,
+                        backgroundColor: themes.base.colors.white.light
+                      }
+                    }}
                 />
-              </TouchableHighlight>
+                <View style={{borderTopWidth: 1, borderColor: themes.base.colors.accent.default}}>
+                  <View style={styles.triangleCornerLayer} />
+                </View>
+                <TouchableHighlight
+                    style={styles.geocodeButton}
+                    underlayColor={themes.base.colors.accent.default}
+                    activeOpacity={0.5}
+                    onPress={this.currentLocationPress}
+                >
+                  <Icon name={"crosshairs-gps"}
+                        color={colors.white.light} size={21}
+                  />
+                </TouchableHighlight>
+              </View>
+              <Button
+                  loading={this.state.loading || isLoading}
+                  disabled={!this.state.isSubmittable || this.state.loading}
+                  color={themes.base.colors.accent.default}
+                  round
+                  variant="primary"
+                  uppercase
+                  onPress={this.searchPress}
+                  block
+                  containerStyle={styles.submitButton}
+                  loadingProps={{color: colors.accent.default}}
+              >{t("location.search")}</Button>
             </View>
-            <Button
-              loading={this.state.loading || isLoading}
-              disabled={!this.state.isSubmittable || this.state.loading}
-              color={themes.base.colors.accent.default}
-              round
-              variant="primary"
-              uppercase
-              onPress={this.searchPress}
-              block
-              containerStyle={styles.submitButton}
-              loadingProps={{color: colors.accent.default}}
-            >{t("location.search")}</Button>
-          </View>
-        </KeyboardAwareScrollView>
-      </ImageBackground>
+          </KeyboardAwareScrollView>
+        </ImageBackground>
     )
   }
 }
@@ -343,10 +351,11 @@ const mapStateToProps = (state) => {
   return ({
     isLoggedIn: state.auth.isLoggedin,
     isLoading: state.loading > 0,
-    position: state.location.device.position
+    deviceLocation: state.location.device,
   })
 };
 export default connect(mapStateToProps, {
   locationPermission,
-  setPosition
+  useAddress,
+  useDeviceLocation,
 })(withNamespaces()(LocationScreen));
