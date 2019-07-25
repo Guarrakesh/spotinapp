@@ -252,7 +252,8 @@
       "passwordForgot"      : "Password dimenticata?",
       "noAccount"           : "Non hai un account?",
       "register"            : "Registrati",
-      "usedEmail"           : "Questa email è già stata usata"
+      "usedEmail"           : "Questa email è già stata usata",
+      "later"               : "Più tardi",
     },
     "register": {
       "title"               : "Registrazione",

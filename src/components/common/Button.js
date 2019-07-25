@@ -33,16 +33,21 @@ export default class Button extends React.Component {
       block ? { width: '100%' } : { width: 150 },
 
       !clear && { elevation, ...themes.base.elevations[`depth${elevation}`] },
-
+      size === "big"
+          ? { paddingTop: 10, paddingBottom: 10  }
+          : { paddingTop: 4, paddingBottom: 4},
       styles.container,
       containerStyle
     ]);
     const _titleBaseStyle = [
       styles.titleBase,
       clear ? styles[`${variant}Simple`] : { color: styles[variant].color },
-        size === "big" ? { fontSize: 17 } : {},
+        size === "big"
+            ? { fontSize: 17, paddingTop: 10, paddingBottom: 10  }
+            : { paddingTop: 8, paddingBottom: 8},
       uppercase && {fontFamily: fonts.LatoBold},
       titleStyle,
+
     ];
 
     const _loadingProps = [{
@@ -98,13 +103,15 @@ const styles = StyleSheet.create({
     width: '100%',
     fontFamily: fonts.LatoMedium,
     color: '#555',
-    overflow: "hidden"
+    overflow: "hidden",
+
 
   },
   titleBase: {
     fontSize: 14,
     fontFamily: fonts.LatoMedium,
-    color: '#fff'
+    color: '#fff',
+
   },
   default: {
     backgroundColor: whiteColor.default,

@@ -6,7 +6,7 @@ import { FluidNavigator } from 'react-navigation-fluid-transitions';
 import { Icon } from 'react-native-vector-icons/MaterialIcons'
 import { createStackNavigator }  from 'react-navigation';
 
-import LoginScreen from '../screens/spot/LoginScreen';
+import LoginScreen from '../screens/login/LoginScreen';
 import SignupScreen from '../screens/spot/SignupScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
 import DismissButton from "../components/common/DismissButton";

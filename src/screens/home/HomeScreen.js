@@ -20,7 +20,7 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 import {refreshList as refreshListAction} from '../../actions/listActions';
 
-const logoImg = require('../../assets/img/logo-text/logo-text.png');
+const logoImg = require('../../assets/img/logo/logo.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
 
 

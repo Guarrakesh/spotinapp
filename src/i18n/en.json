@@ -247,7 +247,8 @@
       "facebookSignIn"      : "Sign In with Facebook",
       "passwordForgot"      : "Forgot your password?",
       "noAccount"           : "No account yet?",
-      "register"            : "Sign Up"
+      "register"            : "Sign Up",
+      "later"               : "Maybe later"
     },
     "register": {
       "title"               : "Registration",

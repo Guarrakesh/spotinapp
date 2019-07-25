@@ -39,19 +39,27 @@ function* watchLocationChannel() {
     const navigation = yield select(navigationSelector);
     const location = yield select(locationSelector);
 
-    //yield put(NavigationService.navigate('Main', {}, true));
+    if (action.type === LOCATION_SET_POSITION) {
+      const lastTimestamp = location.position ? location.position.timestamp : null;
+      if (!lastTimestamp || action.position.timestamo - lastTimestamp < 300000) {// posizione la aggiorno ogni max 5 minuti
+        yield put(action);
+      }
+    } else {
 
-    //
-    // if (action.type === LOCATION_SET_ERROR && !location.position) {
-    //   yield put(action);
-    //   yield put(NavigationService.navigate('LocationScreen', {}, true));
-    //
-    // } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
-    //   yield put(action);
-    //   // yield put(NavigationService.navigate('Main', {}, true));
-    //
-    // }
-    yield put(action);
+      //yield put(NavigationService.navigate('Main', {}, true));
+
+      //
+      // if (action.type === LOCATION_SET_ERROR && !location.position) {
+      //   yield put(action);
+      //   yield put(NavigationService.navigate('LocationScreen', {}, true));
+      //
+      // } else if (action.type === LOCATION_SET_POSITION && navigation.routes && navigation.routes[0].routeName === "LocationScreen"){
+      //   yield put(action);
+      //   // yield put(NavigationService.navigate('Main', {}, true));
+      //
+      // }
+      yield put(action);
+    }
   }
 }
 
@@ -80,36 +88,21 @@ function* watchPosition() {
     }
   }
 
-  if (Platform.OS === "android"){
 
-    Geolocation.stopObserving();
-    //watcher = locationChannel.put({type: LOCATION_REQUEST});
-    Geolocation.watchPosition(
+  Geolocation.stopObserving();
+  //watcher = locationChannel.put({type: LOCATION_REQUEST});
+  Geolocation.watchPosition(
       (position) => {
+        // Check last timestamp
+
+
         locationChannel.put({type: LOCATION_SET_POSITION, position});
       },
       (error) => {
         locationChannel.put({type: LOCATION_SET_ERROR, error})
       },
       geolocationSettings
-    );
-
-  } else {
-
-    navigator.geolocation.stopObserving();
-    navigator.geolocation.clearWatch(watcher);
-
-    //watcher = locationChannel.put({type: LOCATION_REQUEST});
-
-    navigator.geolocation.watchPosition(
-      (position) => {
-        locationChannel.put({type: LOCATION_SET_POSITION, position})
-      },
-      (error) => locationChannel.put({type: LOCATION_SET_ERROR, error}),
-      geolocationSettings
-
-    );
-  }
+  );
 
 }
 

@@ -14,7 +14,7 @@ import {userRegister} from '../../actions/authActions';
 import themes from '../../styleTheme';
 
 const SignupBackground = require('../../assets/img/signup_background.png');
-const Logo = require('../../assets/img/logo-text/logo-text.png');
+const Logo = require('../../assets/img/logo/logo.png');
 const colors = themes.base.colors;
 
 
