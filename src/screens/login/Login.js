@@ -63,7 +63,7 @@ const Login = ({
   const Tabbar = React.memo(() => <LoginTab activeTab={signType}/>);
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 3  : 0, useNativeDriver: true}),
+      Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 2.55  : 0, useNativeDriver: true}),
       Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
       Animated.spring(logoScale, { toValue: onBottom ? 0.7 : 1, useNativeDriver: true}),
       Animated.spring(logoY, { toValue: onBottom ? -50 : 0, useNativeDriver: true }),
@@ -130,7 +130,7 @@ const Login = ({
             style={[styles.backButton, { opacity: Animated.subtract(1,opacity) }]}
             onPress={() => setOnBottom(false)}
         ><Icon
-            color={colors.text.light}
+            color={colors.text.dark}
             name='arrow-left'
             size={32}/></AnimatedTouchable>
         }
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: height - 150,
+    top: height - 130,
     left: 'auto',
     zIndex: 100,
 

@@ -140,7 +140,15 @@ export const SpotStack = createStackNavigator({
             name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
 
         headerStyle: {
-          backgroundColor: themes.base.colors.primary.default
+          backgroundColor: themes.base.colors.white.default,
+          shadowOpacity: 0,
+          borderBottomWidth: 0,
+          headerTitleStyle: Platform.select({
+            ios: () => ({
+              alignSelf: 'start',
+              textAlign: 'left',
+            })
+          })
 
         },
         headerTintColor: themes.base.colors.text.default,

@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {withNamespaces} from "react-i18next";
-import {StyleSheet, View, Text, TextInput, Animated, Dimensions} from 'react-native';
-import {Input} from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
+import validate from 'validate.js';
 import {Button} from "../../components/common";
 import themes from "../../styleTheme";
-import validate from 'validate.js';
 import loginValidation from '../../validations/login';
 
 const colors = themes.base.colors;
@@ -18,24 +16,33 @@ const SignInForm = ({ t, onSignIn }) => {
   const passRef = useRef(null);
 
   const [errorBoxOpacity] = React.useState(new Animated.Value(0));
+  const [errorBoxShakeX] = React.useState(new Animated.Value(30));
 
   const [focusedInput, setFocusedInput] = React.useState();
   const handleSignIn = () => {
-    setFormErrors({});
-    errorBoxOpacity.stopAnimation();
+
+
     const validationErrors = validate({ email, password: pass }, loginValidation);
     if (validationErrors) {
       setFormErrors(validationErrors);
+      Animated.parallel([
+        Animated.spring(errorBoxOpacity, {
+          toValue: Object.keys(validationErrors).length > 0 ? 1 : 0,
+        }),
+        Animated.sequence([
+          Animated.timing(errorBoxShakeX, { toValue: -30, duration: 150, }),
+          Animated.timing(errorBoxShakeX, { toValue: 30, duration: 150,  }),
+          Animated.timing(errorBoxShakeX, { toValue: 0, duration: 150, })
+        ])
+
+
+      ]).start()
+
     } else {
       onSignIn(email, pass)
     }
   };
-  useEffect(() => {
-    Animated.spring(errorBoxOpacity, {
-      toValue: Object.keys(formErrors).length > 0 ? 1 : 0,
-    }).start();
 
-  })
   return (
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -43,7 +50,7 @@ const SignInForm = ({ t, onSignIn }) => {
         </Text>
         <TextInput
             onSubmitEditing={() => passRef.current.focus()}
-            onChangeText={email =>  setFormErrors({pass, email: email.trim()})}
+            onChangeText={email =>  setFormValues({pass, email: email.trim()})}
             numberOfLines={1}
             allowFontScaling
             onFocus={() => setFocusedInput('email')}
@@ -59,7 +66,7 @@ const SignInForm = ({ t, onSignIn }) => {
         <TextInput
             ref={passRef}
             onSubmitEditing={() => passRef.current.focus()}
-            onChangeText={pass =>  setFormErrors({pass, email})}
+            onChangeText={pass =>  setFormValues({pass, email})}
             numberOfLines={1}
             allowFontScaling
             onFocus={() => setFocusedInput('pass')}
@@ -83,13 +90,21 @@ const SignInForm = ({ t, onSignIn }) => {
             onPress={handleSignIn}
             iconContainerStyle={{alignSelf: 'flex-start'}}
         >{t("auth.login.signIn")}</Button>
-        <Animated.View style={[styles.errorBox, {opacity: errorBoxOpacity}]}>
+        <Animated.View style={[
+          styles.errorBox, {
+            opacity: errorBoxOpacity,
+            transform: [ { translateX: errorBoxShakeX}]
+          }
+        ]}>
+          <Text style={{
+            fontWeight: '700',
+            fontSize: 17,
+            color: '#fff',
+          }}>Aspetta! Abbiamo un problema:</Text>
           {Object.keys(formErrors).map(field => (
-            <Text style={{
-              fontWeight: '700',
-              fontSize: 17,
-              color: '#fff',
-            }}>{formErrors[field]}</Text>
+              <Text
+                style={{ fontWeight: '500', fontSize: 14, color: '#fff'}}
+              >{formErrors[field]}</Text>
           ))}
         </Animated.View>
         {/*  <Input*/}
@@ -187,7 +202,8 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     backgroundColor: themes.base.colors.danger.light,
     minHeight: 40,
-    bottom: -60,
+    top: 250,
+    zIndex: 999,
     borderRadius: 6,
 
   },
@@ -203,7 +219,7 @@ const styles = StyleSheet.create({
     color: colors.text.default,
     fontWeight: '500',
     backgroundColor: '#fff',
-    height: 50,
+    height: 40,
     justifyContent: 'center',
     paddingTop: 8,
     paddingBottom: 8,
