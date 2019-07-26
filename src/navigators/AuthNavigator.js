@@ -32,9 +32,7 @@ const AuthNavigator = createStackNavigator(
               shadowColor: 'transparent',
               borderBottomWidth: 0,
             },
-            headerRight: (
-              <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
-            ),
+
 
           }
         }

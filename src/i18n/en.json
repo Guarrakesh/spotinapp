@@ -248,7 +248,8 @@
       "passwordForgot"      : "Forgot your password?",
       "noAccount"           : "No account yet?",
       "register"            : "Sign Up",
-      "later"               : "Maybe later"
+      "later"               : "Maybe later",
+      "helpText"            : "Insert your login credentials"
     },
     "register": {
       "title"               : "Registration",

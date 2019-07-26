@@ -254,6 +254,7 @@
       "register"            : "Registrati",
       "usedEmail"           : "Questa email è già stata usata",
       "later"               : "Più tardi",
+      "helpText"            : "Inserisci le tue credenziali d'accesso"
     },
     "register": {
       "title"               : "Registrazione",

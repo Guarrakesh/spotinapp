@@ -43,6 +43,22 @@ if (Platform.Version >= 21) {
 
 const { width, height} = Dimensions.get('screen');
 
+
+const TermsModal = ({ isVisible, onDone}) => (
+    <Modal
+        animationIn={"slideInUp"}
+        animationOut={"slideOutDown"}
+        isVisible={isVisible}
+        style={styles.modalView}
+    >
+      <WebView
+          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
+      />
+      <Touchable style={styles.privacyButton} onPress={onDone}>
+        <Text style={styles.privacyButtonText}>OK</Text>
+      </Touchable>
+    </Modal>
+)
 class LoginScreen extends React.Component {
 
 
@@ -55,34 +71,18 @@ class LoginScreen extends React.Component {
       termsModalVisible: false
     };
 
-    this.login = this.login.bind(this);
-    this.facebookLogin = this.facebookLogin.bind(this);
-    this.forgotPassword = this.forgotPassword.bind(this);
+
   }
 
-  login() {
-    this.setState({formErrors: {}});
-    const { password } = this.state;
-    const email = this.state.email.replace(" ", "");
 
-    const validationErrors = validate({
-      email,
-      password
-    }, login);
-    if (validationErrors) {
-      this.setState({formErrors: validationErrors});
-    } else {
-      this.props.userLogin({
-        email,
-        password
-      }, "Main");
-    }
-  }
 
   forgotPassword() {
     this.props.navigation.navigate('ForgotPassword');
   }
 
+  userLogin(email, pass) {
+    this.props.userLogin(email, pass);
+  }
   facebookLogin() {
     this.props.facebookLogin();
   }
@@ -92,33 +92,23 @@ class LoginScreen extends React.Component {
   }
 
 
+  _handleGoBack() {
+    this.props.navigation.goBack(null)
+  }
   render() {
 
     const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
 
     const { email: emailError, password: passwordError } = this.state.formErrors;
 
-    const termsModal = (
-        <Modal
-            animationIn={"slideInUp"}
-            animationOut={"slideOutDown"}
-            isVisible={this.state.termsModalVisible}
-            style={styles.modalView}
-        >
-          <WebView
-              source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
-          />
-          <Touchable style={styles.privacyButton} onPress={() => this.setState({termsModalVisible: false})}>
-            <Text style={styles.privacyButtonText}>OK</Text>
-          </Touchable>
-        </Modal>
-    );
-
 
 
     return (
 
-        <Login/>
+        <Login
+            facebookLogin={this.facebookLogin.bind(this)}
+            onSignIn={this.userLogin.bind(this)}
+            goBack={this._handleGoBack.bind(this)}/>
     )
   }
 }

@@ -4,7 +4,7 @@ import {G, Path, Svg} from "react-native-svg";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler,} from 'react-native';
 
-import {View} from "../../components/common";
+import {View, Touchable} from "../../components/common";
 import Button from "../../components/common/Button";
 import themes from "../../styleTheme";
 import LoginTab from "./LoginTab";
@@ -14,6 +14,7 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 const AnimatedText = Animated.createAnimatedComponent(Text);
+const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
 const SvgPath = ({pathProps}) => (
     <Path
 
@@ -31,7 +32,11 @@ const SvgPath = ({pathProps}) => (
 
 );
 const { width, height} = Dimensions.get('screen');
-const Login = ({t}) => {
+const Login = ({
+                 t,
+                 goBack,
+                 facebookLogin,
+               }) => {
 
   const [onBottom, setOnBottom] = useState(false);
   const [signType, setSignType] = useState('signin');
@@ -58,11 +63,11 @@ const Login = ({t}) => {
   const Tabbar = React.memo(() => <LoginTab activeTab={signType}/>);
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(y, {toValue: onBottom ? height / 3  : 0, useNativeDriver: true}),
+      Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 3  : 0, useNativeDriver: true}),
       Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
       Animated.spring(logoScale, { toValue: onBottom ? 0.7 : 1, useNativeDriver: true}),
       Animated.spring(logoY, { toValue: onBottom ? -50 : 0, useNativeDriver: true }),
-      Animated.spring(tabBarY, { mass:1, damping: 20, toValue: onBottom ? 0 : -100, useNativeDriver: true})
+      Animated.spring(tabBarY, {  toValue: onBottom ? 0 : -100, useNativeDriver: true})
     ]).start();
   },[onBottom]);
 
@@ -79,6 +84,7 @@ const Login = ({t}) => {
 // });
   return (
       <View style={styles.container}>
+
         <AnimatedImage
             source={Logo}
             style={[styles.logo, { transform: [ { scale: logoScale }, { translateY: logoY }]}]}
@@ -119,19 +125,29 @@ const Login = ({t}) => {
 
           </G>
         </AnimatedSvg>
+        {onBottom && <AnimatedTouchable
+            clear
+            style={[styles.backButton, { opacity: Animated.subtract(1,opacity) }]}
+            onPress={() => setOnBottom(false)}
+        ><Icon
+            color={colors.text.light}
+            name='arrow-left'
+            size={32}/></AnimatedTouchable>
+        }
         <AnimatedView style={[styles.mainContentViewWrapper, {
           opacity,
           transform: [ { translateY: y }]
         }]}>
+
           <Button
               elevation={0}
-
+              disabled={onBottom}
               block
               uppercase
               containerStyle={[{backgroundColor: themes.commonColors.facebook},
                 {borderRadius: 12, paddingTop: 8, paddingBottom: 8, marginBottom: 24}]}
               titleStyle={{color: '#fff'}}
-
+              onPress={facebookLogin}
               icon={<Icon
                   name='facebook'
                   size={18}
@@ -141,6 +157,7 @@ const Login = ({t}) => {
               iconContainerStyle={{alignSelf: 'flex-start'}}
           >{t("auth.login.facebookSignIn")}</Button>
           <Button
+              disabled={onBottom}
               block
               uppercase
               round
@@ -150,6 +167,7 @@ const Login = ({t}) => {
               iconContainerStyle={{alignSelf: 'flex-start'}}
           >{t("auth.login.signIn")}</Button>
           <Button
+              disabled={onBottom}
               block
               uppercase
               round
@@ -167,7 +185,8 @@ const Login = ({t}) => {
           <Button
               block
               clear
-              containerStyle={{position: 'absolute',bottom: -4, left: 24,}}
+              containerStyle={{marginTop: 24}}
+              onPress={() => goBack()}
               titleStyle={{ color: '#fff'}}
           > {t("auth.login.later").toString().toUpperCase()}
           </Button>
@@ -220,6 +239,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
 
+  },
+  backButton: {
+    position: 'absolute',
+    top: height - 150,
+    left: 'auto',
+    zIndex: 100,
 
   }
 
