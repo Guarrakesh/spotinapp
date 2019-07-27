@@ -29,7 +29,7 @@ const TermsModal = ({ isVisible, onDone}) => (
     </Modal>
 )
 
-const SignInForm = ({ t, onSubmit }) => {
+const SignInForm = ({ t, onSubmit, onPasswordForgot }) => {
 
   const [ formErrors, setFormErrors ] = React.useState({});
   const [{email, pass}, setFormValues] = React.useState({});

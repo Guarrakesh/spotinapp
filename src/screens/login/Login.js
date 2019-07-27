@@ -38,6 +38,7 @@ const Login = ({
                  t,
                  goBack,
                  onSignIn,
+                 onPasswordForgot,
                  facebookLogin,
                }) => {
 
@@ -66,6 +67,7 @@ const Login = ({
   const Tabbar = React.memo(() =>
       <LoginTab
           onSignIn={onSignIn}
+          onPasswordForgor={onPasswordForgot}
       activeTab={signType}
     />);
   useEffect(() => {

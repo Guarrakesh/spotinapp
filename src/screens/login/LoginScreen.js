@@ -94,6 +94,7 @@ class LoginScreen extends React.Component {
         <Login
             facebookLogin={this.facebookLogin.bind(this)}
             onSignIn={this.userLogin.bind(this)}
+            onPasswordForgot={this.forgotPassword.bind(this)}
             goBack={this._handleGoBack.bind(this)}/>
     )
   }
@@ -110,92 +111,7 @@ const styles = StyleSheet.create({
   },
 
 
-  inputOuterContainer: {
-    width:'100%',
 
-    backgroundColor: 'transparent',
-
-    maxHeight: 60,
-    justifyContent: 'center',
-    paddingBottom: 24,
-    paddingTop: 8,
-    marginBottom: 8,
-    ...themes.base.elevations.depth1,
-    position: 'relative',
-  },
-
-  textInputStyle: {
-    fontFamily: themes.base.fonts.LatoMedium,
-    backgroundColor: '#fff',
-    elevation: 2,
-    borderRadius: 100,
-    paddingLeft: 16,
-    paddingRight: 16,
-    margin: 12,
-    fontSize: 16,
-  },
-  middleContainerStyle: {
-    position: "absolute",
-    top: height / 3,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    ...themes.base.elevations.depth2
-  },
-  errorMessage: {
-    position: 'absolute',
-    bottom: -8,
-    fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.danger.default,
-    flex: 1,
-    backgroundColor: 'transparent',
-    marginLeft: 8,
-    zIndex: 100,
-    marginBottom: 8,
-  },
-  remoteErrorMessage: {
-
-    fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.danger.default,
-    textAlign: 'center',
-
-
-  },
-  policy: {
-    fontSize: 12,
-    fontFamily: themes.base.fonts.LatoBold,
-    color: colors.text.default,
-    marginBottom: 8
-  },
-  policyAccent: {
-    color: colors.accent.default
-  },
-
-  bottomView: {
-    width:'100%',
-    height: 200,
-    backgroundColor: colors.primary.default
-  },
-  modalView: {
-    borderTopRightRadius: themes.base.borderRadius,
-    borderTopLeftRadius: themes.base.borderRadius,
-    overflow: "hidden"
-  },
-  privacyButton: {
-    backgroundColor: themes.base.colors.accent.default,
-    padding: 16,
-    alignItems: "center",
-    borderBottomRightRadius: themes.base.borderRadius,
-    borderBottomLeftRadius: themes.base.borderRadius
-  },
-  privacyButtonText: {
-    fontSize: 16,
-    fontFamily: themes.base.fonts.LatoBold,
-    color: themes.base.colors.white.default
-  }
 
 });
 
