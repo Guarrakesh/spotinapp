@@ -3,6 +3,7 @@ package it.spotin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,7 +28,6 @@ import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 //import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.reactnative.push.AppCenterReactNativePushPackage;
-import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
@@ -69,6 +69,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNAndroidLocationEnablerPackage(),
             new ImageResizerPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
@@ -82,7 +83,6 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeConfigPackage(),
           //  new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
             new AndroidOpenSettingsPackage(),
-            new RNAndroidLocationEnablerPackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebaseNotificationsPackage(),
             new RNFirebaseAnalyticsPackage(),

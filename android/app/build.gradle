@@ -3,75 +3,7 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 import com.google.gms.googleservices.GoogleServicesPlugin
 
-/**
- * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
- * and bundleReleaseJsAndAssets).
- * These basically call `react-native bundle` with the correct arguments during the Android build
- * cycle. By default, bundleDebugJsAndAssets is skipped, as in debug/dev mode we prefer to load the
- * bundle directly from the development server. Below you can see all the possible configurations
- * and their defaults. If you decide to add a configuration block, make sure to add it before the
- * `apply from: "../../node_modules/react-native/react.gradle"` line.
- *
- * project.ext.react = [
- *   // the name of the generated asset file containing your JS bundle
- *   bundleAssetName: "index.android.bundle",
- *
- *   // the entry file for bundle generation
- *   entryFile: "index.android.js",
- *
- *   // whether to bundle JS and assets in debug mode
- *   bundleInDebug: false,
- *
- *   // whether to bundle JS and assets in release mode
- *   bundleInRelease: true,
- *
- *   // whether to bundle JS and assets in another build variant (if configured).
- *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
- *   // The configuration property can be in the following formats
- *   //         'bundleIn${productFlavor}${buildType}'
- *   //         'bundleIn${buildType}'
- *   // bundleInFreeDebug: true,
- *   // bundleInPaidRelease: true,
- *   // bundleInBeta: true,
- *
- *   // whether to disable dev mode in custom build variants (by default only disabled in release)
- *   // for example: to disable dev mode in the staging build type (if configured)
- *   devDisabledInStaging: true,
- *   // The configuration property can be in the following formats
- *   //         'devDisabledIn${productFlavor}${buildType}'
- *   //         'devDisabledIn${buildType}'
- *
- *   // the root of your project, i.e. where "package.json" lives
- *   root: "../../",
- *
- *   // where to put the JS bundle asset in debug mode
- *   jsBundleDirDebug: "$buildDir/intermediates/assets/debug",
- *
- *   // where to put the JS bundle asset in release mode
- *   jsBundleDirRelease: "$buildDir/intermediates/assets/release",
- *
- *   // where to put drawable resources / React Native assets, e.g. the ones you use via
- *   // require('./image.png')), in debug mode
- *   resourcesDirDebug: "$buildDir/intermediates/res/merged/debug",
- *
- *   // where to put drawable resources / React Native assets, e.g. the ones you use via
- *   // require('./image.png')), in release mode
- *   resourcesDirRelease: "$buildDir/intermediates/res/merged/release",
- *
- *   // by default the gradle tasks are skipped if none of the JS files or assets change; this means
- *   // that we don't look at files in android/ or ios/ to determine whether the tasks are up to
- *   // date; if you have any other folders that you want to ignore for performance reasons (gradle
- *   // indexes the entire tree), add them here. Alternatively, if you have JS files in android/
- *   // for example, you might want to remove it from here.
- *   inputExcludes: ["android/**", "ios/**"],
- *
- *   // override which node gets called and with what additional arguments
- *   nodeExecutableAndArgs: ["node"],
- *
- *   // supply additional arguments to the packager
- *   extraPackagerArgs: []
- * ]
- */
+
 
 project.ext.react = [
     entryFile: "index.js"
@@ -107,9 +39,22 @@ def enableProguardInReleaseBuilds = false
 
 android {
     configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:+'
+
+        resolutionStrategy {
+                force 'com.google.code.findbugs:jsr305:+'
+                force 'com.google.android.gms:play-services-gcm:16.1.0'
+                force 'com.google.android.gms:play-services-base:16.1.0'
+
+                force 'com.google.firebase:firebase-core:16.0.6'
+                force 'com.google.firebase:firebase-messaging:17.6.0'
+            }
     }
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "it.spotin"
@@ -118,9 +63,7 @@ android {
         versionCode 13
         versionName "0.6.3"
         multiDexEnabled true
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
+
         resValue "string", "build_config_package", "it.spotin"
     }
     signingConfigs {
@@ -138,7 +81,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86"
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86-64"
         }
     }
     buildTypes {
@@ -165,7 +108,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86-64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -176,6 +119,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-android-location-enabler')
     compile project(':react-native-image-resizer')
     compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
@@ -189,11 +133,16 @@ dependencies {
     compile project(':react-native-config')
     compile project(':react-native-code-push')
     compile project(':react-native-android-open-settings')
-    compile project(':react-native-android-location-enabler')
     compile project(':appcenter-push')
     compile project(':appcenter-crashes')
     compile project(':appcenter-analytics')
     compile project(':appcenter')
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+
     implementation project(':react-native-code-push')
     implementation project(':react-native-code-push')
     implementation project(':react-native-image-resizer')
@@ -212,14 +161,10 @@ dependencies {
     implementation project(':react-native-maps')
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-geolocation-service')
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation "com.google.android.gms:play-services-base:+"
-    implementation project(':react-native-android-location-enabler')
+    implementation  "com.google.android.gms:play-services-base:16.1.0"
     implementation 'com.facebook.android:facebook-login:+'
-    implementation 'com.google.firebase:firebase-core:+'
-    implementation "com.google.firebase:firebase-messaging:+"
+    implementation 'com.google.firebase:firebase-core:17.6'
+    implementation "com.google.firebase:firebase-messaging:16.0"
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
 
 }

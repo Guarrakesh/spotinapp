@@ -14,6 +14,7 @@ import BroadcastCarousel from '../../components/BroadcastComponents/BroadcastCar
 import EventCarousel from '../../components/EventComponents/EventCarousel';
 import {entityView} from "../../actions/view";
 import NavigationService from "../../navigators/NavigationService";
+import {positionSelector} from "../../reducers/location";
 
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
@@ -87,6 +88,13 @@ class HomeScreen extends React.Component {
     this.props.navigate("LocationScreen", {}, false);
   }
 
+  componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+    if (nextProps.position !== this.props.position) {
+
+      this.handleRefresh();
+    }
+  }
+
   handleBroadcastPress(broadcast, distance) {
     this.props.entityView('broadcast', broadcast._id);
     this.props.navigation.navigate('BusinessProfileScreen', {
@@ -126,8 +134,8 @@ class HomeScreen extends React.Component {
     const { t } = this.props;
     return (
       <HomeController>
-        {({isLoading, position,...rest}) =>
-          !position ?
+        {({isLoading, coords,...rest}) =>
+          !coords ?
             <View style={{flex: 1, justifyContent: 'center'}}>
               <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
             </View> :
@@ -137,7 +145,7 @@ class HomeScreen extends React.Component {
               <InlineListController
                 id={this.HOME_BROADCASTS_LIST_ID}
                 resource="broadcasts"
-                nearPosition={{...position, radius: 99999}}>
+                nearPosition={{...coords, radius: 99999}}>
                 {controllerProps => controllerProps.isLoading ?
                   <View style={{height: 325, justifyContent: 'center'}}>
                     <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
@@ -186,7 +194,7 @@ class HomeScreen extends React.Component {
               <InlineListController
                 id={this.HOME_BUSINESSES_LIST_ID}
                 resource="businesses"
-                nearPosition={{...position, radius: 99999}}>
+                nearPosition={{...coords, radius: 99999}}>
                 {controllerProps => controllerProps.isLoading ?
                   null :
                   <View style={{marginBottom: 16}}>
@@ -263,11 +271,13 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = {
   refreshList: refreshListAction,
   entityView,
+
   navigate: NavigationService.navigate
 };
 
 const mapStateToProps = (state) => ({
-  cityName: state.location.device.position.cityName
+  cityName: state.location.address.position ? state.location.address.position.cityName : undefined,
+  position: positionSelector(state),
 });
 
 export default withNamespaces()(connect(mapStateToProps, mapDispatchToProps)(HomeScreen));
