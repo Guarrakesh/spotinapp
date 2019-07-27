@@ -1,24 +1,50 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useRef} from 'react';
 import {withNamespaces} from "react-i18next";
-import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Animated, StyleSheet, Text, TextInput, View, WebView} from 'react-native';
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/FontAwesome";
 import validate from 'validate.js';
-import {Button} from "../../components/common";
+import {Button, Touchable} from "../../components/common";
+import i18n from "../../i18n/i18n";
 import themes from "../../styleTheme";
 import loginValidation from '../../validations/login';
+import styles from './singInFormStyles';
 
-const colors = themes.base.colors;
 
-const SignInForm = ({ t, onSignIn }) => {
+
+const TermsModal = ({ isVisible, onDone}) => (
+    <Modal
+        animationIn={"slideInUp"}
+        animationOut={"slideOutDown"}
+        isVisible={isVisible}
+        style={styles.modalView}
+    >
+      <WebView
+          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
+      />
+      <Touchable style={styles.privacyButton} onPress={onDone}>
+        <Text style={styles.privacyButtonText}>OK</Text>
+      </Touchable>
+    </Modal>
+)
+
+const SignInForm = ({ t, onSubmit }) => {
 
   const [ formErrors, setFormErrors ] = React.useState({});
   const [{email, pass}, setFormValues] = React.useState({});
   const [termsVisible, setTermsVisible] = React.useState(false);
+
   const passRef = useRef(null);
 
   const [errorBoxOpacity] = React.useState(new Animated.Value(0));
   const [errorBoxShakeX] = React.useState(new Animated.Value(30));
 
+  const [passwordShowIcon, setPasswordShowIcon] = React.useState('eye-slash');
   const [focusedInput, setFocusedInput] = React.useState();
+  const handlePasswordShowChange = () => {
+    setPasswordShowIcon(passwordShowIcon === "eye-slash" ? "eye" : "eye-slash");
+  };
   const handleSignIn = () => {
 
 
@@ -39,47 +65,75 @@ const SignInForm = ({ t, onSignIn }) => {
       ]).start()
 
     } else {
-      onSignIn(email, pass)
+      onSubmit(email, pass)
     }
   };
 
+
+
   return (
       <View style={styles.container}>
+        <TermsModal isVisible={termsVisible}
+                    onDone={() => setTermsVisible(false)}
+        />
         <Text style={styles.title}>
           {t('auth.login.helpText')}
         </Text>
-        <TextInput
-            onSubmitEditing={() => passRef.current.focus()}
-            onChangeText={email =>  setFormValues({pass, email: email.trim()})}
-            numberOfLines={1}
-            allowFontScaling
-            onFocus={() => setFocusedInput('email')}
-            autoCapitalize
-            style={[
-              styles.inputOuterContainer,
-              focusedInput === "email" ? styles.focused : {},
-            ]}
-            placeholder={t("common.email")}
-            placeholderTextColor={themes.base.inputPlaceholderColor}
 
-        />
-        <TextInput
-            ref={passRef}
-            onSubmitEditing={() => passRef.current.focus()}
-            onChangeText={pass =>  setFormValues({pass, email})}
-            numberOfLines={1}
-            allowFontScaling
-            onFocus={() => setFocusedInput('pass')}
-            autoCapitalize
-            style={[
-              styles.inputOuterContainer,
-              focusedInput === "pass" ? styles.focused : {},
-            ]}
-            placeholder={t("common.password")}
-            secureTextEntry={true}
-            placeholderTextColor={themes.base.inputPlaceholderColor}
+        <View style={styles.inputOuterContainer}>
+          <Icon size={18} name="envelope" style={styles.inputIcon}/>
+          <TextInput
+              onSubmitEditing={() => passRef.current.focus()}
+              onChangeText={email =>  setFormValues({pass, email: email.trim()})}
+              numberOfLines={1}
+              allowFontScaling
+              onFocus={() => setFocusedInput('email')}
+              autoCapitalize='none'
+              value={email}
+              textContentType='emailAddress'
+              keyboardType='email-address'
+              style={[
+                styles.input,
+                focusedInput === "email" ? styles.focused : {},
+              ]}
+              placeholder={t("common.email")}
+              placeholderTextColor={themes.base.inputPlaceholderColor}
 
-        />
+          />
+        </View>
+        <View style={styles.inputOuterContainer}>
+          <Icon size={18} name="lock" style={styles.inputIcon}/>
+          <TextInput
+              ref={passRef}
+              onSubmitEditing={() => handleSignIn()}
+              onChangeText={pass =>  setFormValues({pass, email})}
+              numberOfLines={1}
+              value={pass}
+              allowFontScaling
+              onFocus={() => setFocusedInput('pass')}
+              autoCapitalize='none'
+              style={[
+                styles.input,
+                focusedInput === "pass" ? styles.focused : {},
+              ]}
+              textContentType='password'
+              placeholder={t("common.password")}
+              secureTextEntry={passwordShowIcon === "eye-slash"}
+              placeholderTextColor={themes.base.inputPlaceholderColor}
+
+          />
+          {pass && pass.length > 0 && <Icon style={styles.passwordEyeIcon}
+                                            size={18}
+                                            name={passwordShowIcon}
+                                            onPress={() => handlePasswordShowChange()}/>}
+        </View>
+
+        <Button
+            block
+            clear
+            onPress={this.forgotPassword}
+        > {t("auth.login.passwordForgot")}
+        </Button>
         <Button
             block
             variant='primary'
@@ -103,10 +157,15 @@ const SignInForm = ({ t, onSignIn }) => {
           }}>Aspetta! Abbiamo un problema:</Text>
           {Object.keys(formErrors).map(field => (
               <Text
-                style={{ fontWeight: '500', fontSize: 14, color: '#fff'}}
+                  style={{ fontWeight: '500', fontSize: 14, color: '#fff'}}
               >{formErrors[field]}</Text>
           ))}
         </Animated.View>
+        <Text style={styles.policy}>
+          {i18n.t("auth.terms.policyFirstPart")}
+          <Text style={styles.policyAccent} onPress={() => setTermsVisible(true)}>{i18n.t("auth.terms.termsAndCond")}</Text>
+          {i18n.t("auth.terms.policySecondPart")}
+        </Text>
         {/*  <Input*/}
         {/*      placeholder={t("common.email")}*/}
         {/*      placeholderTextColor={themes.base.inputPlaceholderColor}*/}
@@ -173,62 +232,9 @@ const SignInForm = ({ t, onSignIn }) => {
         {/*  >{t("auth.login.signIn")}</Button>*/}
       </View>
   )
-}
+};
 
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
 
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    ...themes.base.elevations.depth2
-  },
-  title: {
-    marginBottom: 24,
-    fontWeight: '800',
-    fontSize: 18,
-    color: colors.text.default,
-  },
-  errorBox: {
-    position: 'absolute',
-    width: '100%',
-    padding: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: themes.base.colors.danger.light,
-    minHeight: 40,
-    top: 250,
-    zIndex: 999,
-    borderRadius: 6,
-
-  },
-  inputOuterContainer: {
-    alignSelf: 'stretch',
-    textAlign: 'center',
-    borderRadius: 100,
-    shadowColor: '#000000',
-    shadowOpacity: 0.13,
-    shadowRadius: 30,
-    shadowOffset: { width: 3, height: 10 },
-    fontSize: 18,
-    color: colors.text.default,
-    fontWeight: '500',
-    backgroundColor: '#fff',
-    height: 40,
-    justifyContent: 'center',
-    paddingTop: 8,
-    paddingBottom: 8,
-    marginBottom: 16,
-  },
-  focused: {
-    shadowColor: themes.base.colors.accent.dark,
-    shadowRadius: 15,
-  }
-});
 
 export default withNamespaces()(SignInForm);

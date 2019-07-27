@@ -15,6 +15,8 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 const AnimatedText = Animated.createAnimatedComponent(Text);
 const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
+
+
 const SvgPath = ({pathProps}) => (
     <Path
 
@@ -35,6 +37,7 @@ const { width, height} = Dimensions.get('screen');
 const Login = ({
                  t,
                  goBack,
+                 onSignIn,
                  facebookLogin,
                }) => {
 
@@ -60,14 +63,18 @@ const Login = ({
     }
   });
 
-  const Tabbar = React.memo(() => <LoginTab activeTab={signType}/>);
+  const Tabbar = React.memo(() =>
+      <LoginTab
+          onSignIn={onSignIn}
+      activeTab={signType}
+    />);
   useEffect(() => {
     Animated.parallel([
       Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 2.55  : 0, useNativeDriver: true}),
       Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
-      Animated.spring(logoScale, { toValue: onBottom ? 0.7 : 1, useNativeDriver: true}),
-      Animated.spring(logoY, { toValue: onBottom ? -50 : 0, useNativeDriver: true }),
-      Animated.spring(tabBarY, {  toValue: onBottom ? 0 : -100, useNativeDriver: true})
+      Animated.spring(logoScale, { toValue: onBottom ? 0.5 : 1, useNativeDriver: true}),
+      Animated.spring(logoY, { toValue: onBottom ? -150 : 0, useNativeDriver: true }),
+      Animated.spring(tabBarY, {  toValue: onBottom ? 0 : -50, useNativeDriver: true})
     ]).start();
   },[onBottom]);
 
@@ -103,7 +110,7 @@ const Login = ({
 
         <Animated.View style={{
           position: 'absolute',
-          top: height/5,
+          top: 60,
           height: height - height/5,
           width: '100%',
           opacity: Animated.subtract(1, opacity),

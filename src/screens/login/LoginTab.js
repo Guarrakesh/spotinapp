@@ -18,7 +18,7 @@ const CustomTabBar = React.memo((props) => (
 ));
 const { width, height} = Dimensions.get('screen');
 
-const LoginTab = ({ t, activeTab}) => {
+const LoginTab = ({ t, activeTab, onSignIn }) => {
 
   const [navState, setNavState] = React.useState({
     index: activeTab === "signin" ? 0 : 1,
@@ -33,7 +33,7 @@ const LoginTab = ({ t, activeTab}) => {
     setNavState({ ...navState, index });
   };
   const _renderScene = useCallback(SceneMap({
-    signin: ()  => <SignInForm/>,
+    signin: ()  => <SignInForm onSubmit={onSignIn}/>,
     signup: () => <Text>Ciao</Text>,
   }), []);
   return (

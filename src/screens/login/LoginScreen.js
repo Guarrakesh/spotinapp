@@ -44,21 +44,6 @@ if (Platform.Version >= 21) {
 const { width, height} = Dimensions.get('screen');
 
 
-const TermsModal = ({ isVisible, onDone}) => (
-    <Modal
-        animationIn={"slideInUp"}
-        animationOut={"slideOutDown"}
-        isVisible={isVisible}
-        style={styles.modalView}
-    >
-      <WebView
-          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
-      />
-      <Touchable style={styles.privacyButton} onPress={onDone}>
-        <Text style={styles.privacyButtonText}>OK</Text>
-      </Touchable>
-    </Modal>
-)
 class LoginScreen extends React.Component {
 
 
@@ -80,8 +65,9 @@ class LoginScreen extends React.Component {
     this.props.navigation.navigate('ForgotPassword');
   }
 
-  userLogin(email, pass) {
-    this.props.userLogin(email, pass);
+  userLogin(email, password) {
+
+    this.props.userLogin({email, password});
   }
   facebookLogin() {
     this.props.facebookLogin();
