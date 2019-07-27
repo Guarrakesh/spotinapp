@@ -97,39 +97,34 @@ class LocationScreen extends React.Component {
 
     this.setState({loading: true});
 
-    requestAnimationFrame(() => {
+    InteractionManager.runAfterInteractions(() => {
 
-      InteractionManager.runAfterInteractions(() => {
-
-        Permissions.check('location').then(granted => {
-          if (granted === "denied") {
-            this.setState({loading: false});
-            Alert.alert(
-              i18n.t("location.locationPermissions.title"),
-              i18n.t("location.locationPermissions.subtitle"),
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {
-                  text: i18n.t("profile.settings.title"),
-                  onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
-                },
-              ],
-              {cancelable: true},
-            );
-          }
-          else {
-            this.props.locationPermission();
-            this.setState({loading: false});
-          }
-        });
+      Permissions.check('location').then(granted => {
+        if (granted === "denied") {
+          this.setState({loading: false});
+          Alert.alert(
+            i18n.t("location.locationPermissions.title"),
+            i18n.t("location.locationPermissions.subtitle"),
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {
+                text: i18n.t("profile.settings.title"),
+                onPress: () => Platform.OS === 'ios' ? Permissions.openSettings() : AndroidOpenSettings.locationSourceSettings()
+              },
+            ],
+            {cancelable: true},
+          );
+        }
+        else {
+          this.props.locationPermission();
+          this.setState({loading: false});
+        }
       });
     });
-
-
   }
 
 

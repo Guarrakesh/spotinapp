@@ -10,7 +10,7 @@ import BusinessScreen from '../screens/business/BusinessScreen';
 
 import i18n from '../i18n/i18n';
 import Icon from 'react-native-vector-icons/Ionicons';
-//import DismissButton from '../components/common/DismissButton';
+
 
 const HomeStack = createStackNavigator({
     Home: {

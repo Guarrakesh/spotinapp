@@ -1,27 +1,21 @@
 import React from 'react';
 import {Image} from 'react-native';
-import PropTypes from 'prop-types';
 
-import { createStackNavigator, createBottomTabNavigator, TabBarBottom, addNavigationHelpers}  from 'react-navigation';
+import {addNavigationHelpers, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 
 import AuthNavigator from './AuthNavigator';
 import Images from '../assets/images';
-import {BusinessStack, BusinessMapNavigatorInBusiness} from "./BusinessStack";
-import {SpotStack, BusinessMapNavigatorInSpot, ContactUsNavigator} from './SpotStack';
+import {BusinessMapNavigatorInBusiness} from "./BusinessStack";
+import {BusinessMapNavigatorInSpot, ContactUsNavigator, SpotStack} from './SpotStack';
 import {FavoriteNavigator, ProfileStack, ReviewsNavigator} from './ProfileStack';
-import { LocationNavigator } from "./LocationStack";
+import {LocationNavigator} from "./LocationStack";
 import HomeStack from './HomeStack';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import Launcher from '../screens/Launcher';
-import LocationScreen from '../screens/LocationScreen';
 import AppIntro from "../screens/intro/AppIntro"
 
 import i18n from '../i18n/i18n';
-
-
-
-
 import themes from '../styleTheme';
 
 export const MainNavigation = createBottomTabNavigator(
