@@ -8,7 +8,7 @@ import { createStackNavigator }  from 'react-navigation';
 
 import LoginScreen from '../screens/login/LoginScreen';
 import SignupScreen from '../screens/spot/SignupScreen';
-import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
+import ForgotPasswordScreen from '../screens/login/ForgotPasswordScreen';
 import DismissButton from "../components/common/DismissButton";
 
 import themes from '../styleTheme';
@@ -65,7 +65,7 @@ const AuthNavigator = createStackNavigator(
         screen: ForgotPasswordScreen,
         navigationOptions: ({navigation}) => ({
           headerTransparent: true,
-          headerTintColor: themes.base.colors.text.default,
+          headerTintColor: themes.base.colors.white.default,
 
           headerStyle: {
             shadowColor: 'transparent',
@@ -79,7 +79,7 @@ const AuthNavigator = createStackNavigator(
       mode: 'modal',
       headerMode: 'screen',
       cardStyle: {
-        backgroundColor: themes.base.colors.primary.default
+        backgroundColor: themes.base.colors.accent.dark
       }
 
 

@@ -9,7 +9,7 @@ import {Button, Touchable} from "../../components/common";
 import i18n from "../../i18n/i18n";
 import themes from "../../styleTheme";
 import loginValidation from '../../validations/login';
-import styles from './singInFormStyles';
+import styles from './signInFormStyles';
 
 
 
@@ -131,7 +131,7 @@ const SignInForm = ({ t, onSubmit, onPasswordForgot }) => {
         <Button
             block
             clear
-            onPress={this.forgotPassword}
+            onPress={onPasswordForgot}
         > {t("auth.login.passwordForgot")}
         </Button>
         <Button
@@ -154,7 +154,7 @@ const SignInForm = ({ t, onSubmit, onPasswordForgot }) => {
             fontWeight: '700',
             fontSize: 17,
             color: '#fff',
-          }}>Aspetta! Abbiamo un problema:</Text>
+          }}>{t('auth.login.formError.title')}</Text>
           {Object.keys(formErrors).map(field => (
               <Text
                   style={{ fontWeight: '500', fontSize: 14, color: '#fff'}}

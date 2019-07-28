@@ -8,6 +8,7 @@ import {View, Touchable} from "../../components/common";
 import Button from "../../components/common/Button";
 import themes from "../../styleTheme";
 import LoginTab from "./LoginTab";
+import SvgWave from "./SvgWave";
 const Logo = require('../../assets/img/logo/logo.png');
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -17,22 +18,6 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
 
 
-const SvgPath = ({pathProps}) => (
-    <Path
-
-        d={`
-              M0 1
-              C0 1, 32 92.5771, 182.5 34.0386
-              C333 -24.5, 388 11.5386, 388 11.5386
-              V${height - 200}
-              H0
-              L0 1
-              Z`}
-        fill={themes.base.colors.accent.default}
-        {...pathProps}
-    />
-
-);
 const { width, height} = Dimensions.get('screen');
 const Login = ({
                  t,
@@ -67,7 +52,7 @@ const Login = ({
   const Tabbar = React.memo(() =>
       <LoginTab
           onSignIn={onSignIn}
-          onPasswordForgor={onPasswordForgot}
+          onPasswordForgot={onPasswordForgot}
       activeTab={signType}
     />);
   useEffect(() => {
@@ -129,8 +114,8 @@ const Login = ({
             width={Dimensions.get('window').width}
         >
           <G>
-            <SvgPath pathProps={{fill: themes.base.colors.accent.default}}/>
-            <SvgPath pathProps={{scale: 1.5, fill: themes.base.colors.accent.dark}}/>
+            <SvgWave pathProps={{fill: themes.base.colors.accent.default}}/>
+            <SvgWave pathProps={{scale: 1.5, fill: themes.base.colors.accent.dark}}/>
 
           </G>
         </AnimatedSvg>

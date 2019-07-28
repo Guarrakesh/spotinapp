@@ -18,7 +18,7 @@ const CustomTabBar = React.memo((props) => (
 ));
 const { width, height} = Dimensions.get('screen');
 
-const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot}) => {
+const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot }) => {
 
   const [navState, setNavState] = React.useState({
     index: activeTab === "signin" ? 0 : 1,

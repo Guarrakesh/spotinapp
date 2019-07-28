@@ -254,7 +254,13 @@
       "register"            : "Registrati",
       "usedEmail"           : "Questa email è già stata usata",
       "later"               : "Più tardi",
-      "helpText"            : "Inserisci le tue credenziali d'accesso"
+      "helpText"            : "Inserisci le tue credenziali d'accesso",
+      "formError": {
+        "title"             : "Aspetta, abbiamo un problema:",
+        "emailRequired"     : "^Inserisci la tua email",
+        "passwordRequired"  : "^Inseriaci la tua password"
+
+      }
     },
     "register": {
       "title"               : "Registrazione",
@@ -271,6 +277,10 @@
       "title"               : "Password dimenticata?",
       "subtitle"            : "Inserisci la tua email e ti invieremo le istruzioni per reimpostare la tua password",
       "button"              : "Reimposta password",
+      "formError": {
+        "emailRequired"     : "^L'email è obbligatoria",
+        "Email not valid"   : "^L'email che hai inserito non è valida"
+      },
       "notification"  : {
         "success": {
           "title"           : "Controlla la tua email",

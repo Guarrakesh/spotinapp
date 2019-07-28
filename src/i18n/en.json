@@ -249,7 +249,13 @@
       "noAccount"           : "No account yet?",
       "register"            : "Sign Up",
       "later"               : "Maybe later",
-      "helpText"            : "Insert your login credentials"
+      "helpText"            : "Insert your login credentials",
+      "formError": {
+        "title"             : "Wait, we have a problem:",
+        "emailRequired"     : "^Email is required",
+        "passwordRequired"  : "^Password is required",
+
+      }
     },
     "register": {
       "title"               : "Registration",
@@ -266,6 +272,10 @@
       "title"               : "Forgot your password?",
       "subtitle"            : "Enter your email and we will send you all the instructions to reset your password",
       "button"              : "Reset password",
+      "formError": {
+        "emailRequired"     : "^Email is required",
+        "emailNotValid"   :   "^Email is not valid"
+      },
       "notification"  : {
         "success": {
           "title"           : "Check your email",
