@@ -266,7 +266,7 @@
         "emailRequired"     : "^Email is required",
         "emailNotValid"     : "^Email is not valid",
         "passwordRequired"  : "^Password is required",
-        "passwordLength"    : "^Password must contain at least 6 characters",
+        "passwordLengthMin"    : "^Password must contain at least 6 characters",
         "passwordLengthMax" : "^Password must not be longer than 128 characters",
         "nameRequired"      : "^Your name is required",
         "nameLengthMin"        : "^Name field must contain at least 2 characters",

@@ -271,7 +271,7 @@
         "emailRequired"     : "^Inserisci la tua email",
         "emailNotValid"     : "^L'email che hai inserito non è valida",
         "passwordRequired"  : "^Inserisci la tua password",
-        "passwordLength"    : "^La password deve contenere almeno 6 caratteri",
+        "passwordLengthMin"    : "^La password deve contenere almeno 6 caratteri",
         "passwordLengthMax" : "^La password non può superare i 128 caratteri",
 
         "nameRequired"      : "^Inserisci il tuo nome",
