@@ -1,42 +1,38 @@
+import i18n from '../i18n/i18n';
+
 const signup = {
     email: {
         presence: {
-            message: "^L'email è obbligatoria"
+            message: i18n.t('auth.register.formError.emailRequired')
         },
         email: {
-            message: "^Inserisci una email valida"
+            message:i18n.t('auth.register.formError.emailNotValid')
         },
     },
 
     password: {
         presence: {
-            message: '^Inserisci una password'
+            message: i18n.t('auth.register.formError.passwordRequired')
         },
         length: {
             minimum: 6,
             maximum: 128,
-            tooShort: '^La password deve essere di almeno 6 caratteri',
-            tooLong: '^La password non può superare i 128 caratteri'
+            tooShort: i18n.t('auth.register.formError.passwordLengthMin'),
+            tooLong: i18n.t('auth.register.formError.passwordLengthMax')
         }
     },
     name: {
         presence: {
-            message: "^Inserisci il tuo nome"
+            message:i18n.t('auth.register.formError.nameRequired')
         },
         length: {
             minimum: 2,
             max: 128,
-            tooShort: '^Il nome deve essere di almeno 2 caratteri',
-            tooLong: '^Il nome non può superare i 128 caratteri'
+            tooShort: i18n.t('auth.register.formError.nameLengthMin'),
+            tooLong: i18n.t('auth.register.formError.nameLengthMax')
         }
     },
-    passwordConfirm: {
-        equality: {
-            attribute: 'password',
-            message: '^Le password non coincidono'
-        },
 
-    }
 
 };
 

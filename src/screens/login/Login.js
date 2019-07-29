@@ -23,6 +23,7 @@ const Login = ({
                  t,
                  goBack,
                  onSignIn,
+                 onSignUp,
                  onPasswordForgot,
                  facebookLogin,
                }) => {
@@ -52,16 +53,17 @@ const Login = ({
   const Tabbar = React.memo(() =>
       <LoginTab
           onSignIn={onSignIn}
+          onSignUp={onSignUp}
           onPasswordForgot={onPasswordForgot}
-      activeTab={signType}
-    />);
+          activeTab={signType}
+      />);
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 2.55  : 0, useNativeDriver: true}),
+      Animated.spring(y, {damping: 15, mass: 1,toValue: onBottom ? height/2.15   : 0, useNativeDriver: true}),
       Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
-      Animated.spring(logoScale, { toValue: onBottom ? 0.5 : 1, useNativeDriver: true}),
-      Animated.spring(logoY, { toValue: onBottom ? -150 : 0, useNativeDriver: true }),
-      Animated.spring(tabBarY, {  toValue: onBottom ? 0 : -50, useNativeDriver: true})
+      Animated.spring(logoScale, { damping: 15, mass: 1,toValue: onBottom ? 0.5 : 1, useNativeDriver: true}),
+      Animated.spring(logoY, { damping: 15, mass: 1,toValue: onBottom ? -150 : 0, useNativeDriver: true }),
+      Animated.spring(tabBarY, { toValue: onBottom ? 0 : -50, useNativeDriver: true})
     ]).start();
   },[onBottom]);
 

@@ -258,14 +258,26 @@
       "formError": {
         "title"             : "Aspetta, abbiamo un problema:",
         "emailRequired"     : "^Inserisci la tua email",
-        "passwordRequired"  : "^Inseriaci la tua password"
+        "passwordRequired"  : "^Inserisci la tua password"
 
       }
     },
     "register": {
       "title"               : "Registrazione",
       "fullname"            : "Nome completo",
-      "button"              : "Registrati"
+      "button"              : "Registrati",
+      "formError"           : {
+        "title"              :"Aspetta, abbiamo un problema:",
+        "emailRequired"     : "^Inserisci la tua email",
+        "emailNotValid"     : "^L'email che hai inserito non è valida",
+        "passwordRequired"  : "^Inserisci la tua password",
+        "passwordLength"    : "^La password deve contenere almeno 6 caratteri",
+        "passwordLengthMax" : "^La password non può superare i 128 caratteri",
+
+        "nameRequired"      : "^Inserisci il tuo nome",
+        "nameLengthMin"        : "^Il nome deve contenere almeno 2 caratteri",
+        "nameLengthMax"     : "^Il nome non può supererare 128 caratteri"
+      }
 
     },
     "terms": {

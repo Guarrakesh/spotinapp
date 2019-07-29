@@ -1,27 +1,9 @@
 import React from "react";
-import {connect} from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { Spring } from "react-spring/renderprops-universal";
-import {
-  Image,
-  ImageBackground,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  WebView,
-  Dimensions,
-} from "react-native";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {withNamespaces} from 'react-i18next';
-import {Button, Touchable, View} from '../../components/common';
-import login from '../../validations/login';
-import validate from 'validate.js';
+import {Dimensions, Platform, StyleSheet, TouchableNativeFeedback,} from "react-native";
+import {connect} from "react-redux";
+import {oAuthFacebookLogin, userLogin, userRegister} from "../../actions/authActions";
 import themes from "../../styleTheme";
-import {oAuthFacebookLogin, userLogin} from "../../actions/authActions";
-import i18n from "../../i18n/i18n";
-import Modal from "react-native-modal";
 import Login from "./Login";
 
 const colors = themes.base.colors;
@@ -73,11 +55,11 @@ class LoginScreen extends React.Component {
     this.props.facebookLogin();
   }
 
-  handleTermsPress() {
-    this.setState({termsModalVisible: true});
+
+
+  register(formValues) {
+    this.props.userRegister(formValues);
   }
-
-
   _handleGoBack() {
     this.props.navigation.goBack(null)
   }
@@ -92,9 +74,11 @@ class LoginScreen extends React.Component {
     return (
 
         <Login
+
             facebookLogin={this.facebookLogin.bind(this)}
             onSignIn={this.userLogin.bind(this)}
             onPasswordForgot={this.forgotPassword.bind(this)}
+            onSignUp={this.register.bind(this)}
             goBack={this._handleGoBack.bind(this)}/>
     )
   }
@@ -129,5 +113,6 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   userLogin,
+  userRegister,
   facebookLogin: oAuthFacebookLogin,
 })(withNamespaces()(LoginScreen));

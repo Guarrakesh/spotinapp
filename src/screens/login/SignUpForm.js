@@ -1,16 +1,20 @@
-
-
-import React from 'react';
-import { Text, Platform, TouchableNativeFeedback } from 'react-native';
-import { View, Input , Button }   from '../common';
-import { withNamespaces } from 'react-i18next';
-import Icon from "react-native-vector-icons/FontAwesome";
-
-
 import PropTypes from 'prop-types';
+import React, {useRef} from 'react';
+import {withNamespaces} from 'react-i18next';
+import {Platform, StyleSheet, Text, TextInput, TouchableNativeFeedback, View, WebView} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/FontAwesome";
+import {connect} from "react-redux";
+import validate from 'validate.js';
+import {Touchable} from "../../components/common";
+import Button from "../../components/common/Button";
+import PasswordInput from "../../components/common/PasswordInput";
+import i18n from "../../i18n/i18n";
 import themes from '../../styleTheme';
-
-
+import loginValidation from "../../validations/signup";
+import signInStyles from './signInFormStyles';
+import compose from 'recompose/compose';
 /**
  * @see https://github.com/react-native-training/react-native-elements/issues/1102
  */
@@ -27,84 +31,129 @@ if (Platform.Version >= 21) {
 
 const colors = themes.base.colors;
 
-const SignupForm = props => {
 
+const TermsModal = ({ isVisible, onDone }) => (
+    <Modal
+        animationIn={"slideInUp"}
+        animationOut={"slideOutDown"}
+        isVisible={isVisible}
+        style={styles.modalView}
+    >
+      <WebView
+          source={{uri: i18n.language === "it-IT" ? "https://www.iubenda.com/privacy-policy/62969082" : "https://www.iubenda.com/privacy-policy/55322937"}}
+      />
+      <Touchable style={styles.privacyButton} onPress={onDone}>
+        <Text style={styles.privacyButtonText}>OK</Text>
+      </Touchable>
+    </Modal>
+)
+
+
+const SignUpForm = ({ isLoading, onSubmit, ...props }) => {
+  const [ formErrors, setFormErrors ] = React.useState({});
+  const [formValues, setFormValues] = React.useState({});
+  const [termsVisible, setTermsVisible] = React.useState(false);
+  const passwordRef = useRef(null);
+  const errorBoxRef = useRef(null);
+  const emailRef = useRef(null);
+  const handleSubmit = () => {
+    const validationErrors = validate(formValues, loginValidation);
+    if (validationErrors) {
+
+      setFormErrors(validationErrors);
+      errorBoxRef.current.bounceIn(800);
+
+    } else {
+      onSubmit(formValues)
+    }
+  };
   const { t } = props;
+  const { email, password } = formValues;
   return (
       <View style={styles.container}>
-        <Input
-            placeholder={t("auth.register.fullname")}
-            id="name"
-
-            rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-            rightIcon={props.nameError ?  <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="user" size={18}/>}
-            shake={props.nameError}
-            onChangeText={props.onChangeTextName}
-            displayError={true}
-            errorMessage={<Text>{props.nameError || ""}</Text>}
-            blurOnSubmit={true}
+        <TermsModal isVisible={termsVisible}
+                    onDone={() => setTermsVisible(false)}
         />
-        <Input
-            placeholder={t("common.email")}
+        <View style={styles.inputOuterContainer}>
+          <Icon size={18} name="user" style={styles.inputIcon}/>
+          <TextInput
+              onSubmitEditing={() => emailRef.current.focus()}
+              placeholder={t("auth.register.fullname")}
+              id="name"
+              autoCapitalize
+              allowFontScaling
+              textContentType='name'
+              onChangeText={text => setFormValues({...formValues, name: text.trim() })}
+              style={styles.input}
+              blurOnSubmit={true}
+          />
+        </View>
+        <View style={styles.inputOuterContainer}>
+          <Icon size={18} name="envelope" style={styles.inputIcon}/>
+          <TextInput
+              ref={emailRef}
+              onSubmitEditing={() => passwordRef.current.focus()}
+              onChangeText={email =>  setFormValues({...formValues, email: email.trim()})}
+              numberOfLines={1}
+              allowFontScaling
+              autoCapitalize='none'
+              value={email}
+              textContentType='emailAddress'
+              keyboardType='email-address'
+              style={[
+                styles.input,
+              ]}
+              placeholder={t("common.email")}
+              placeholderTextColor={themes.base.inputPlaceholderColor}
 
-            id="email"
-
-            containerStyle={styles.inputOuterContainer}
-            rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-            rightIcon={props.emailError ? <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="envelope" size={18}/>}
-
-            autoCapitalize="none"
-            shake={props.emailError}
-
-            onChangeText={props.onChangeTextEmail}
-            displayError={true}
-            errorMessage={<Text>{props.emailError || ""}</Text>}
-            blurOnSubmit={true}
-        />
-        <Input
+          />
+        </View>
+        <PasswordInput
+            ref={passwordRef}
             placeholder={t("common.password")}
-
-            id="password"
-            rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-            rightIcon={props.passwordError ? <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="key" size={18}/> }
-            displayError={true}
-            errorMessage={<Text numberOfLines={1} ellipsizeMode="tail">{props.passwordError || ""}</Text>}
-
-            onChangeText={props.onChangeTextPassword}
-            secureTextEntry={true}
-            shake={props.passwordError}
-            blurOnSubmit={true}
+            onSubmitEditing={() => handleSubmit()}
+            onChangeText={password =>  setFormValues({...formValues, password})}
+            numberOfLines={1}
+            value={password}
+            placeholderTextColor={themes.base.inputPlaceholderColor}
         />
-        <Input
-            placeholder={t("common.passwordConfirm")}
-            id="passwordConfirm"
-            rightIconContainerStyle={{width: 21, height: 21, marginLeft: 0}}
-            rightIcon={props.passConfirmError ? <Icon name="times" color={colors.danger.default} size={18}/> : <Icon name="key" size={18}/>}
-
-            errorMessage={<Text>{props.passConfirmError || "" }</Text>}
-            shake={props.passConfirmError}
-            displayError={true}
-            onChangeText={props.onChangeTextPasswordConfirm}
-            secureTextEntry={true}
-
-            blurOnSubmit={true}
-        />
-
+        <Text style={styles.policy}>
+          {i18n.t("auth.terms.policyFirstPart")}
+          <Text style={styles.policyAccent} onPress={() => setTermsVisible(true)}>{i18n.t("auth.terms.termsAndCond")}</Text>
+          {i18n.t("auth.terms.policySecondPart")}
+        </Text>
         <Button
-            round
+            disabled={isLoading}
+            loading={isLoading}
+            block
+            variant='primary'
             uppercase
-            variant={"primary"}
-            loading={props.isLoading}
-            disabled={props.isLoading}
-            onPress={props.onSubmit}
-          >{t("auth.register.button")}</Button>
+            round
+            containerStyle={{ marginBottom: 14, marginTop: 32 }}
+            buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
+            onPress={handleSubmit}
+            iconContainerStyle={{alignSelf: 'flex-start'}}
+        >{t("auth.register.button")}</Button>
 
+        <Animatable.View style={[styles.errorBox, { opacity: 0}]}
+                         ref={errorBoxRef}>
+          <Text style={{
+            fontWeight: '700',
+            fontSize: 17,
+            color: '#fff',
+          }}>{t('auth.register.formError.title')}</Text>
+          {Object.keys(formErrors).map(field => (
+              <Text
+                  style={{ fontWeight: '500', fontSize: 14, color: '#fff'}}
+              >{formErrors[field]}</Text>
+          ))}
+        </Animatable.View>
 
       </View>
   )
 };
 
-SignupForm.propTypes = {
+SignUpForm.propTypes = {
 
   emailError: PropTypes.string,
   passwordError: PropTypes.string,
@@ -118,14 +167,8 @@ SignupForm.propTypes = {
 };
 
 
-const styles = {
-  container: {
-    flexGrow: 1,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center'
+const styles = StyleSheet.create({
 
-  },
   signUpButton: {
     zIndex: 999,
     //marginTop: 20,
@@ -140,6 +183,12 @@ const styles = {
 
     alignSelf: 'flex-end',
     ...themes.base.elevations.depth1,
-  }
-};
-export default withNamespaces()(SignupForm);
+  },
+  ...signInStyles,
+});
+export default compose(
+    connect(state => ({
+      isLoading: state.ui.loading > 0,
+    })),
+    withNamespaces()
+)(SignUpForm)

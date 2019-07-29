@@ -4,6 +4,7 @@ import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import { Keyboard, Text, Dimensions } from 'react-native';
 import SignInForm from "./SignInForm";
 import themes from "../../styleTheme";
+import SignUpForm from "./SignUpForm";
 
 
 const CustomTabBar = React.memo((props) => (
@@ -18,7 +19,7 @@ const CustomTabBar = React.memo((props) => (
 ));
 const { width, height} = Dimensions.get('screen');
 
-const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot }) => {
+const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot, onSignUp }) => {
 
   const [navState, setNavState] = React.useState({
     index: activeTab === "signin" ? 0 : 1,
@@ -36,7 +37,7 @@ const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot }) => {
     signin: ()  => <SignInForm
         onSubmit={onSignIn}
         onPasswordForgot={onPasswordForgot}/>,
-    signup: () => <Text>Ciao</Text>,
+    signup: () =>   <SignUpForm onSubmit={onSignUp}/>
   }), []);
   return (
       <TabView
