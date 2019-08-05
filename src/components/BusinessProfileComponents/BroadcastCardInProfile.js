@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Text, StyleSheet, Image, Alert} from 'react-native';
-import { withNamespaces } from 'react-i18next';
+import {Image, StyleSheet, Text} from 'react-native';
+import {withNamespaces} from 'react-i18next';
 import DeviceInfo from 'react-native-device-info';
 import moment from "moment";
 import 'moment/min/moment-with-locales';
 
-import { Button, Touchable, View } from '../common';
+import {Button, View} from '../common';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from '../../helpers';
@@ -22,8 +22,9 @@ const BroadcastCardInProfile = (props) => {
 
   let { broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
-  const offerValue = offer.value.toFixed(2);
-  const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
+  const hasOffer = offer && offer !== {} && offer.value;
+  const offerValue = hasOffer && offer.value.toFixed(2);
+  const description = hasOffer && offer.description ? offer.description.replace(/\\n/g, '\n') : null;
 
   const discount = (type) => {
     switch (parseInt(type)) {
@@ -37,7 +38,6 @@ const BroadcastCardInProfile = (props) => {
         return null;
     }
   };
-
 
   return (
     <ReferenceField reference="events" record={broadcast} source="event">
@@ -80,17 +80,20 @@ const BroadcastCardInProfile = (props) => {
             </View>
             {
               (offer && offer.description && offer.description !== "" ) ?
-              <View style={styles.offerInfoView}>
-                <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
-                <Text style={styles.offerDescriptionText}>{description}</Text>
-              </View> : null
+                <View style={styles.offerInfoView}>
+                  <Text style={styles.offerTitleText}>{(!offer.title || offer.title === "") ? t("common.discountAtCheckout") : offer.title}</Text>
+                  <Text style={styles.offerDescriptionText}>{description}</Text>
+                </View> : null
             }
             <View style={styles.offerReservationView}>
-              <View style={styles.offerContainer}>
-                <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
-              </View>
+              {
+                (hasOffer) ?
+                  <View style={styles.offerContainer}>
+                    <Text style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout")}</Text>
+                  </View> : <View/>
+              }
               {!reserved  ?
-                <Button round uppercase variant="primary" onPress={onReservePress}>{t('browse.getOffer.buttonTitle')}</Button>
+                <Button round uppercase variant="primary" onPress={onReservePress}>{hasOffer ? t('browse.getOffer.buttonTitle') : "Partecipa"}</Button>
 
                 :
                 <View style={styles.reservedView}>

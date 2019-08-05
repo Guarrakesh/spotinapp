@@ -35,6 +35,7 @@ class BusinessScreen extends React.Component {
       currentSearchValue: "",
       isFirstMount: true,
       _searchBarY: new Animated.Value(0),
+      _listMarginTop: new Animated.Value(0),
       searchBar:{ open: false }
 
     };
@@ -59,20 +60,32 @@ class BusinessScreen extends React.Component {
   handleSearchPress() {
 
     const newState = !this.state.searchBar.open;
-    this.props.navigation.setParams({
-      searchBar: { open: newState }
-    });
-    Animated.timing(
-        this.state._searchBarY,
-        {
-          toValue: newState ? 1 : 0,
-          duration: 300
-        }
-    ).start(() => {
-      this.setState({searchBar: {open: newState}});
+    requestAnimationFrame(() => {
+      Animated.parallel([
+        Animated.timing(
+          this.state._searchBarY,
+          {
+            toValue: newState ? 100 : 0,
+            duration: 300
+          }
+        ),
+        Animated.timing(
+          this.state._listMarginTop,
+          {
+            toValue: newState ? 50 : 0,
+            duration: 300
+          }
+        )
+      ]).start(() => {
 
+        InteractionManager.runAfterInteractions(() => {
+          this.props.navigation.setParams({
+            searchBar: { open: newState }
+          });
+          this.setState({searchBar: {open: newState}});
+        });
+      });
     });
-
   }
 
 
@@ -92,11 +105,11 @@ class BusinessScreen extends React.Component {
         backgroundColor: themes.base.colors.primary.default
       },
       headerRight: <AnimatedIcon
-          name={params.searchBar && params.searchBar.open ? "x" : "search"}
-          onPress={params.onSearchPress}
-          style={{marginRight: 21}}
-          color={themes.base.colors.text.default}
-          size={21}/>,
+        name={params.searchBar && params.searchBar.open ? "x" : "search"}
+        onPress={params.onSearchPress}
+        style={{marginRight: 21}}
+        color={themes.base.colors.text.default}
+        size={21}/>,
 
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
@@ -137,75 +150,70 @@ class BusinessScreen extends React.Component {
 
 
     return (
-        <ListController
-            id='business_list'
-            resource="businesses"
-            perPage="100"
-            sort={{field: 'dist.calculated', order: 'asc'}}
-            nearPosition={nearPosition}
-            filterDefaultValues={undefined}
-        >
-          {controllerProps => {
-            {this.state.isFirstMount ? this.cleanFilter(controllerProps) : null}
-            return(
-                <View style={styles.container}>
-                  <Animated.View
+      <ListController
+        id='business_list'
+        resource="businesses"
+        perPage="100"
+        sort={{field: 'dist.calculated', order: 'asc'}}
+        nearPosition={nearPosition}
+        filterDefaultValues={undefined}
+      >
+        {controllerProps => {
+          {this.state.isFirstMount ? this.cleanFilter(controllerProps) : null}
+          return(
+            <View style={styles.container}>
+              <Animated.View
 
-                      style={{
-                        backgroundColor: 'white',
-                        position: 'absolute',
-                        top: -100,
-                        width: '100%',
-                        zIndex: 90,
-                        transform: [{
-                          translateY: this.state._searchBarY.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [0, 100]
-                          })
-                        }]
-                      }}>
-                    <AnimatedSearchBar
-                        showLoading={controllerProps.isLoading}
-                        onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
-                        onClear={() => this.cleanFilter(controllerProps)}
-                        value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
-                        allowFontScaling={false}
-                        placeholder={t("home.searchBusiness")}
-                    />
-                  </Animated.View>
-                  <AnimatedBusinessList
-                      searchActive={controllerProps.filterValues.q !== undefined }
-                      style={{
-                        marginBottom: this.state.searchBar.open ? 50 : 0, //altrimenti l'ultimo locale della ricerca viene nascosto dalla tab
-                        transform: [{
-                          translateY: this.state._searchBarY.interpolate({
-                            inputRange: [0,1],
-                            outputRange: [0, 50]
-                          })
-                        }]
-                      }}
-                      onItemPress={this.handleBusinessPress}
-                      {...controllerProps}/>
-                  {
-                    !controllerProps.isLoading ?
-                        <Button
-                            disabled={controllerProps.isLoading}
-                            variant={"primary"}
-                            containerStyle={styles.mapButton}
-                            titleStyle={{fontSize: 24}}
-                            onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
-                              data: controllerProps.data,
-                              ids: controllerProps.ids
-                            })}
+                style={{
+                  backgroundColor: 'red',
+                  position: 'absolute',
+                  top: -100,
+                  width: '100%',
+                  zIndex: 90,
+                  transform: [{
+                    translateY: this.state._searchBarY
+                  }]
+                }}>
+                <SearchBar
+                  showLoading={controllerProps.isLoading}
+                  onChangeText={(text) => { this.setState({currentSearchValue: text}); controllerProps.setFilters({q: text})}}
+                  onClear={() => this.cleanFilter(controllerProps)}
+                  value={this.state.currentSearchValue} // non uso controllerProps.currentFilter.q perché su Android da problemi col debounce
+                  allowFontScaling={false}
+                  placeholder={t("home.searchBusiness")}
+                />
+              </Animated.View>
+              <AnimatedBusinessList
+                searchActive={controllerProps.filterValues.q !== undefined }
+                style={{
+                  marginTop: this.state._listMarginTop, //altrimenti l'ultimo locale della ricerca viene nascosto dalla tab
 
-                        >
-                          <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
-                        </Button>
-                        : null
-                  }
+                  // transform: [{
+                  //   translateY: this.state._searchBarY
+                  // }]
+                }}
+                onItemPress={this.handleBusinessPress}
+                {...controllerProps}/>
+              {
+                !controllerProps.isLoading ?
+                  <Button
+                    disabled={controllerProps.isLoading}
+                    variant={"primary"}
+                    containerStyle={styles.mapButton}
+                    titleStyle={{fontSize: 24}}
+                    onPress={() => this.props.navigation.navigate('BusinessMapInBusiness', {
+                      data: controllerProps.data,
+                      ids: controllerProps.ids
+                    })}
 
-                </View>)}}
-        </ListController>
+                  >
+                    <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+                  </Button>
+                  : null
+              }
+
+            </View>)}}
+      </ListController>
     )
   }
 }
@@ -230,17 +238,6 @@ const styles = StyleSheet.create({
     // bottom: 0,
     // right: 0,
     // left: 0,
-  },
-
-  subHeader: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    backgroundColor: themes.base.colors.primary.default,
-    paddingBottom: 48,
-    paddingTop: 16,
-    marginBottom: -32,
-    zIndex: 0,
   },
   eventName: {
     fontSize: 18,

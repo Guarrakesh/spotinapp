@@ -238,7 +238,8 @@
     "passwordConfirm"     : "Conferma la password",
     "longPressToRemove": "Tieni premuto per rimuovere un elemento",
     "update": "Aggiorna",
-    "next": "Avanti"
+    "next": "Avanti",
+    "noBusinesses" : "Nessun locale trovato"
   },
 
 

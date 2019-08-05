@@ -86,6 +86,41 @@ class BroadcastInProfileList extends React.Component {
 
     }
 
+    //TODO: DA CANCELLARE (prova broadcast senza offerta)
+    // const noOfferBroadcast = {
+    //   bundle: "5d404a98361f2400204ccf89",
+    //   business: "5bbd0a0006bc6d001f2b4f3b",
+    //   created_at: "2019-07-30T13:48:15.703Z",
+    //   end_at: "2019-08-04T15:00:00.000Z",
+    //   event: "5d27485dceef480020fdf5b8",
+    //   id: "5d404a9f361f2400204ccfa7",
+    //   image_url: [],
+    //   newsfeed: 0,
+    //   offer: {
+    //     // description: "",
+    //     // isDefault: false,
+    //     // title: "Menù completo",
+    //     // type: 0,
+    //     // value: 12,
+    //     // _id: "5c6aef6d4938dd0021b068fc"
+    //   },
+    //   reservations: [],
+    //   reserved: false,
+    //   start_at: "2019-07-25T00:00:00.000Z",
+    //   updated_at: "2019-07-30T13:48:15.703Z",
+    //   __v: 0,
+    //   _id: "5d404a9f361f2400204ccfa7"
+    //
+    // };
+    //
+    // ids.push("5d404a9f361f2400204ccfa7");
+    // //data.push(noOfferBroadcast);
+    //
+    // //console.log("IDS:", ids);
+    // data["5d404a9f361f2400204ccfa7"] = noOfferBroadcast;
+
+    //TODO: FINO A QUI
+
     return (
 
 

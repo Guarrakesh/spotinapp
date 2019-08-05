@@ -53,10 +53,10 @@ export default function configureStore(initialState) {
 
   let middleware = [sagaMiddleware, navMiddleware, firebaseBeaconMiddleware, activityBeaconMiddleware];
 
-   if (Config.REDUX_LOGGER === "1" || true === true)
+   if (Config.REDUX_LOGGER === "1")
     middleware = [...middleware, logger]; //Dev Mode
   else
-    middleware = [...middleware];
+    middleware = [...middleware, logger];
 
 
 

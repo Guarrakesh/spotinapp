@@ -1,12 +1,14 @@
 import React from 'react';
 import View from '../common/View';
 import {Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import { VersionedImageField } from "../common";
 import PropTypes from 'prop-types';
 import themes from '../../styleTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Fonts} from "../common/Fonts";
 
 const colors = themes.base.colors;
+const deviceWidth = themes.base.deviceDimensions.width;
 
 const BusinessCard = (props) => {
 
@@ -14,14 +16,18 @@ const BusinessCard = (props) => {
 
   let roundedDistance = Math.round(business.dist.calculated*10)/10;
   roundedDistance = roundedDistance.toString().replace(".",",");
+  const images = business.cover_versions[0] ? business.cover_versions : [];
 
+  //console.log(business);
 
   return (
     <View style={styles.container} elevation={4}>
       <TouchableOpacity onPress={onPress} delayPressIn={100}>
-        <ImageBackground
-          //imageStyle={{borderRadius: themes.base.borderRadius}}
-          source={{uri: business.cover_versions[0] ? business.cover_versions[0].url : "https://www.hotelristorantemiranda.com/wp-content/uploads/2014/09/ristorante-slide-01.jpg"}}
+        <VersionedImageField
+          isBackground
+          minSize={{width: 500, height: 500}}
+          imgSize={{height: 230, width: deviceWidth/5}}
+          source={images}
           style={styles.imgBackground}
         >
           <View style={styles.businessContainer}>
@@ -36,7 +42,7 @@ const BusinessCard = (props) => {
               <Text style={styles.businessDistance}>{roundedDistance} km</Text>
             </View>
           </View>
-        </ImageBackground>
+        </VersionedImageField>
       </TouchableOpacity>
     </View>
 
@@ -46,7 +52,7 @@ const BusinessCard = (props) => {
 BusinessCard.propTypes = {
   onPress: PropTypes.func,
   business: PropTypes.object
-}
+};
 
 const styles = StyleSheet.create({
   container: {

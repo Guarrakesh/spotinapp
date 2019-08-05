@@ -2,6 +2,7 @@ import React from 'react';
 
 import BusinessCard from './BusinessCard';
 import {ActivityIndicator, FlatList, View, Text} from 'react-native';
+import i18n from "../../i18n/i18n";
 import PropTypes from 'prop-types';
 import themes from "../../styleTheme";
 //import broadcasts from "../../api/broadcasts";
@@ -42,7 +43,7 @@ class BusinessList extends React.Component {
     if (searchActive && ids.length === 0) {
       return (
           <View style={themes.base.noContentView}>
-            <Text style={themes.base.noContentText}>{'Nessun locale trovato'}</Text>
+            <Text style={themes.base.noContentText}>{i18n.t("common.noBusinesses")}</Text>
           </View>
       )
     }
@@ -54,6 +55,7 @@ class BusinessList extends React.Component {
             style={[style]}
             contentContainerStyle={{paddingBottom: 85}}
             data={ids}
+            initialNumToRender={20}
             renderItem={({item}) => <BusinessCard
                 business={data[item]}
                 onPress={() => this._onItemPress(item, data[item].dist)}

@@ -1,4 +1,4 @@
-x\import React from "react";
+import React from "react";
 import {connect} from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
