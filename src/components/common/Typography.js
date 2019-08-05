@@ -24,7 +24,7 @@ const Typography = ({
   const fontFamily = ["display3","display2","display1","title"].includes(variant) ? fonts.LatoBlack : fonts.LatoMedium;
   const styles = StyleSheet.flatten([
     {textAlign: align},
-    color === "default" ? { color: colors.text.default } : {color: colors[variant] ? colors[variant].default : colors.text.default },
+    color === "default" ? { color: colors.text.default } : {color: colors[color] ? colors[color].default : colors.text.default },
     gutterBottom && { marginBottom: 12 },
     variant === "display3" && { fontSize: normalize(40) },
     variant === "display2" && { fontSize: normalize(34) },

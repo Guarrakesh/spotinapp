@@ -8,6 +8,7 @@ import {View, Touchable} from "../../components/common";
 import Button from "../../components/common/Button";
 import themes from "../../styleTheme";
 import LoginTab from "./LoginTab";
+import SvgWave from "./SvgWave";
 const Logo = require('../../assets/img/logo/logo.png');
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -17,27 +18,13 @@ const AnimatedText = Animated.createAnimatedComponent(Text);
 const AnimatedTouchable = Animated.createAnimatedComponent(Touchable);
 
 
-const SvgPath = ({pathProps}) => (
-    <Path
-
-        d={`
-              M0 1
-              C0 1, 32 92.5771, 182.5 34.0386
-              C333 -24.5, 388 11.5386, 388 11.5386
-              V${height - 200}
-              H0
-              L0 1
-              Z`}
-        fill={themes.base.colors.accent.default}
-        {...pathProps}
-    />
-
-);
 const { width, height} = Dimensions.get('screen');
 const Login = ({
                  t,
                  goBack,
                  onSignIn,
+                 onSignUp,
+                 onPasswordForgot,
                  facebookLogin,
                }) => {
 
@@ -66,15 +53,17 @@ const Login = ({
   const Tabbar = React.memo(() =>
       <LoginTab
           onSignIn={onSignIn}
-      activeTab={signType}
-    />);
+          onSignUp={onSignUp}
+          onPasswordForgot={onPasswordForgot}
+          activeTab={signType}
+      />);
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(y, {damping: 13, mass: 1,toValue: onBottom ? height / 2.55  : 0, useNativeDriver: true}),
+      Animated.spring(y, {damping: 15, mass: 1,toValue: onBottom ? height/2.15   : 0, useNativeDriver: true}),
       Animated.spring(opacity, { toValue: onBottom ? 0 : 1, useNativeDriver: true }),
-      Animated.spring(logoScale, { toValue: onBottom ? 0.5 : 1, useNativeDriver: true}),
-      Animated.spring(logoY, { toValue: onBottom ? -150 : 0, useNativeDriver: true }),
-      Animated.spring(tabBarY, {  toValue: onBottom ? 0 : -50, useNativeDriver: true})
+      Animated.spring(logoScale, { damping: 15, mass: 1,toValue: onBottom ? 0.5 : 1, useNativeDriver: true}),
+      Animated.spring(logoY, { damping: 15, mass: 1,toValue: onBottom ? -150 : 0, useNativeDriver: true }),
+      Animated.spring(tabBarY, { toValue: onBottom ? 0 : -50, useNativeDriver: true})
     ]).start();
   },[onBottom]);
 
@@ -127,8 +116,8 @@ const Login = ({
             width={Dimensions.get('window').width}
         >
           <G>
-            <SvgPath pathProps={{fill: themes.base.colors.accent.default}}/>
-            <SvgPath pathProps={{scale: 1.5, fill: themes.base.colors.accent.dark}}/>
+            <SvgWave pathProps={{fill: themes.base.colors.accent.default}}/>
+            <SvgWave pathProps={{scale: 1.5, fill: themes.base.colors.accent.dark}}/>
 
           </G>
         </AnimatedSvg>

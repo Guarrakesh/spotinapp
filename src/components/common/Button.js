@@ -155,6 +155,7 @@ Button.propTypes = {
   clear: PropTypes.bool,
   icon: PropTypes.element,
   size: PropTypes.string,
+  loading: PropTypes.bool,
   loadingProps: PropTypes.shape({
     color: PropTypes.string,
     size: PropTypes.oneOf(['small','large'])

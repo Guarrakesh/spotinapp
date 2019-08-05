@@ -4,21 +4,22 @@ import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import { Keyboard, Text, Dimensions } from 'react-native';
 import SignInForm from "./SignInForm";
 import themes from "../../styleTheme";
+import SignUpForm from "./SignUpForm";
 
 
 const CustomTabBar = React.memo((props) => (
-  <TabBar
+    <TabBar
 
-      indicatorStyle={{backgroundColor: themes.base.colors.accent.default}}
-      style={{ backgroundColor: 'transparent', color: 'red'}}
-      width={"100%"}
-      labelStyle={{color: themes.base.colors.accent.default}}
-      { ...props}
+        indicatorStyle={{backgroundColor: themes.base.colors.accent.default}}
+        style={{ backgroundColor: 'transparent', color: 'red'}}
+        width={"100%"}
+        labelStyle={{color: themes.base.colors.accent.default}}
+        { ...props}
     />
 ));
 const { width, height} = Dimensions.get('screen');
 
-const LoginTab = ({ t, activeTab, onSignIn }) => {
+const LoginTab = ({ t, activeTab, onSignIn, onPasswordForgot, onSignUp }) => {
 
   const [navState, setNavState] = React.useState({
     index: activeTab === "signin" ? 0 : 1,
@@ -33,8 +34,10 @@ const LoginTab = ({ t, activeTab, onSignIn }) => {
     setNavState({ ...navState, index });
   };
   const _renderScene = useCallback(SceneMap({
-    signin: ()  => <SignInForm onSubmit={onSignIn}/>,
-    signup: () => <Text>Ciao</Text>,
+    signin: ()  => <SignInForm
+        onSubmit={onSignIn}
+        onPasswordForgot={onPasswordForgot}/>,
+    signup: () =>   <SignUpForm onSubmit={onSignUp}/>
   }), []);
   return (
       <TabView

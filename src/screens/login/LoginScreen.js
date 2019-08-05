@@ -1,27 +1,9 @@
 import React from "react";
-import {connect} from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { Spring } from "react-spring/renderprops-universal";
-import {
-  Image,
-  ImageBackground,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  WebView,
-  Dimensions,
-} from "react-native";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {withNamespaces} from 'react-i18next';
-import {Button, Touchable, View} from '../../components/common';
-import login from '../../validations/login';
-import validate from 'validate.js';
+import {Dimensions, Platform, StyleSheet, TouchableNativeFeedback,} from "react-native";
+import {connect} from "react-redux";
+import {oAuthFacebookLogin, userLogin, userRegister} from "../../actions/authActions";
 import themes from "../../styleTheme";
-import {oAuthFacebookLogin, userLogin} from "../../actions/authActions";
-import i18n from "../../i18n/i18n";
-import Modal from "react-native-modal";
 import Login from "./Login";
 
 const colors = themes.base.colors;
@@ -73,11 +55,11 @@ class LoginScreen extends React.Component {
     this.props.facebookLogin();
   }
 
-  handleTermsPress() {
-    this.setState({termsModalVisible: true});
+
+
+  register(formValues) {
+    this.props.userRegister(formValues);
   }
-
-
   _handleGoBack() {
     this.props.navigation.goBack(null)
   }
@@ -92,8 +74,11 @@ class LoginScreen extends React.Component {
     return (
 
         <Login
+
             facebookLogin={this.facebookLogin.bind(this)}
             onSignIn={this.userLogin.bind(this)}
+            onPasswordForgot={this.forgotPassword.bind(this)}
+            onSignUp={this.register.bind(this)}
             goBack={this._handleGoBack.bind(this)}/>
     )
   }
@@ -110,92 +95,7 @@ const styles = StyleSheet.create({
   },
 
 
-  inputOuterContainer: {
-    width:'100%',
 
-    backgroundColor: 'transparent',
-
-    maxHeight: 60,
-    justifyContent: 'center',
-    paddingBottom: 24,
-    paddingTop: 8,
-    marginBottom: 8,
-    ...themes.base.elevations.depth1,
-    position: 'relative',
-  },
-
-  textInputStyle: {
-    fontFamily: themes.base.fonts.LatoMedium,
-    backgroundColor: '#fff',
-    elevation: 2,
-    borderRadius: 100,
-    paddingLeft: 16,
-    paddingRight: 16,
-    margin: 12,
-    fontSize: 16,
-  },
-  middleContainerStyle: {
-    position: "absolute",
-    top: height / 3,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    ...themes.base.elevations.depth2
-  },
-  errorMessage: {
-    position: 'absolute',
-    bottom: -8,
-    fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.danger.default,
-    flex: 1,
-    backgroundColor: 'transparent',
-    marginLeft: 8,
-    zIndex: 100,
-    marginBottom: 8,
-  },
-  remoteErrorMessage: {
-
-    fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.danger.default,
-    textAlign: 'center',
-
-
-  },
-  policy: {
-    fontSize: 12,
-    fontFamily: themes.base.fonts.LatoBold,
-    color: colors.text.default,
-    marginBottom: 8
-  },
-  policyAccent: {
-    color: colors.accent.default
-  },
-
-  bottomView: {
-    width:'100%',
-    height: 200,
-    backgroundColor: colors.primary.default
-  },
-  modalView: {
-    borderTopRightRadius: themes.base.borderRadius,
-    borderTopLeftRadius: themes.base.borderRadius,
-    overflow: "hidden"
-  },
-  privacyButton: {
-    backgroundColor: themes.base.colors.accent.default,
-    padding: 16,
-    alignItems: "center",
-    borderBottomRightRadius: themes.base.borderRadius,
-    borderBottomLeftRadius: themes.base.borderRadius
-  },
-  privacyButtonText: {
-    fontSize: 16,
-    fontFamily: themes.base.fonts.LatoBold,
-    color: themes.base.colors.white.default
-  }
 
 });
 
@@ -213,5 +113,6 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   userLogin,
+  userRegister,
   facebookLogin: oAuthFacebookLogin,
 })(withNamespaces()(LoginScreen));
