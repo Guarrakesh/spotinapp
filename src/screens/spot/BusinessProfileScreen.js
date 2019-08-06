@@ -105,14 +105,18 @@ class BusinessProfileScreen extends React.Component {
     this.props.undoReservation(this.props.userId, this.state.currentBroadcast._id);
   }
 
-  handleConfirm(numPeople, event, business) {
+  handleConfirm(numPeople, cheerFor) {
     InteractionManager.runAfterInteractions(() => {
       this.setState({
         modalVisible: false,
       });
     });
 
-    this.props.reserveBroadcast(this.state.currentBroadcast._id, this.props.userId, numPeople, ({payload, requestPayload}) => {
+    this.props.reserveBroadcast(
+      this.state.currentBroadcast._id,
+      this.props.userId, numPeople,
+      cheerFor,
+      ({payload, requestPayload}) => {
       //A prenotazione effettuata, aggiungo questo broadcast a quelli prenotati nello state, così che possa cambiare comparire
       //il flag PRENOTATO
       this.setState({ reservedBroadcasts: [...this.state.reservedBroadcasts, requestPayload.data.broadcast]});

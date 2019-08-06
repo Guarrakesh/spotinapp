@@ -53,6 +53,10 @@
       "confirm"           : "Confirm",
       "howManyPeople"     : "How many people will you be?",
       "dontKnow"          : "Don't know",
+      "whomSupport"       : "Whom are you going to support?",
+      "typeWhom"          : "Type for whom you will support",
+      "supportersEstimation" : "Supporters estimation at",
+      "cheerWithUs"       : "Cheer with us at",
       "notification" : {
         "title"           : "Great!",
         "message"         : "You obtained this deal"
@@ -253,7 +257,7 @@
       "formError": {
         "title"             : "Wait, we have a problem:",
         "emailRequired"     : "^Email is required",
-        "passwordRequired"  : "^Password is required",
+        "passwordRequired"  : "^Password is required"
 
       }
     },

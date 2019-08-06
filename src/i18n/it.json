@@ -56,6 +56,10 @@
       "confirm"                : "Conferma",
       "howManyPeople"          : "Quante persone sarete?",
       "dontKnow"               : "Non so",
+      "whomSupport"            : "Per chi tiferai?",
+      "typeWhom"               : "Scrivi per chi tiferai",
+      "supportersEstimation"   : "Stima dei tifosi da",
+      "cheerWithUs"            : "Tifa con noi da",
       "notification": {
         "title"                : "Ottimo",
         "message"              : "Hai ottenuto l'offerta"

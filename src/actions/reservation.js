@@ -9,9 +9,9 @@ export const RESERVE_BROADCAST_FAILURE = "RESERVE_BROADCAST_FAILURE";
 export const RESERVE_BROADCAST_SUCCESS = "RESERVE_BROADCAST_SUCCESS";
 export const RESERVE_BROADCAST_LOADING = "RESERVE_BROADCAST_LOADING";
 
-export const reserveBroadcast = (broadcast, userId, peopleNum, callback) => ({
+export const reserveBroadcast = (broadcast, userId, peopleNum, cheerFor, callback) => ({
   type: RESERVE_BROADCAST,
-  payload: { data: { broadcast, peopleNum } },
+  payload: { data: { broadcast, peopleNum, cheerFor } },
   meta: {
     basePath: "/users/"+userId,
     resource: "reservations",

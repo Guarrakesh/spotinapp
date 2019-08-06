@@ -12,7 +12,7 @@ import 'moment/min/locales';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
-import { Button, VersionedImageField, Touchable } from '../common';
+import { Button, VersionedImageField, Touchable, Input } from '../common';
 import themes from '../../styleTheme';
 import Images from "../../assets/images";
 import Helpers from "../../helpers";
@@ -22,12 +22,12 @@ import {Fonts} from "../common/Fonts";
 moment.locale(DeviceInfo.getDeviceLocale());
 const CHEER_BAR_WIDTH = themes.base.deviceDimensions.width-64;
 
-//TODO: Da sostituire con i voti del database
+//Inizializzo i voti a zero se non sono presenti nel broadcast
 const votes = {
-  cheer: {
-    homeCompetitorCheers: 10,
-    guestCompetitorCheers: 2,
-    totalCheers: 12,
+  cheers: {
+    home: 0,
+    guest: 0,
+    total: 0,
   }
 };
 
@@ -40,16 +40,18 @@ class ReservationConfirmView extends Component {
       backOpacity: 0,
       firstCompViewWidth: new Animated.Value(0),
       firstCompCheersPercentage: 0,
-      secondCompCheersPercentage: 0
+      secondCompCheersPercentage: 0,
+      cheerFor: ""
     };
   }
 
   componentDidMount(): void {
-    const { totalCheers, homeCompetitorCheers } = votes.cheer;
-    const firstCompPercentage = (homeCompetitorCheers*100)/totalCheers;
+    const { cheers } = this.props.data.broadcast;
+    const { total, home } = cheers ? cheers : votes.cheers;
+    const firstCompPercentage = total === 0 ? 50 : (home*100)/total;
     const secondCompPercentage = 100 - firstCompPercentage;
 
-    const initialBarWidth = (CHEER_BAR_WIDTH * homeCompetitorCheers)/totalCheers;
+    const initialBarWidth = total === 0 ? CHEER_BAR_WIDTH/2 : (CHEER_BAR_WIDTH * home)/total;
 
     this.setState({
       firstCompCheersPercentage: firstCompPercentage.toFixed(0),
@@ -65,7 +67,7 @@ class ReservationConfirmView extends Component {
     this.value = 0;
 
     this.flip.addListener(({ value }) => {
-      if(value > 89){
+      if(value > 89 && this.state.backOpacity === 0){
         this.setState({backOpacity: 1});
       }
     });
@@ -93,9 +95,10 @@ class ReservationConfirmView extends Component {
 
   firstCompetitorVoting() {
 
-    const { totalCheers, homeCompetitorCheers } = votes.cheer;
-    const newTotalCheers = totalCheers + 1;
-    const newHomeCompCheers = homeCompetitorCheers + 1;
+    const { cheers } = this.props.data.broadcast;
+    const { total, home } = cheers ? cheers : votes.cheers;
+    const newTotalCheers = total + 1;
+    const newHomeCompCheers = home + 1;
     const newBarWidth = (CHEER_BAR_WIDTH * newHomeCompCheers)/newTotalCheers;
 
     const firstCompPercentage = (newHomeCompCheers*100)/newTotalCheers;
@@ -104,6 +107,7 @@ class ReservationConfirmView extends Component {
     this.setState({
       firstCompCheersPercentage: firstCompPercentage,
       secondCompCheersPercentage: secondCompPercentage,
+      cheerFor: "__home__"
     });
 
     Animated.timing(this.state.firstCompViewWidth, {
@@ -116,16 +120,18 @@ class ReservationConfirmView extends Component {
 
   secondCompetitorVoting() {
 
-    const { totalCheers, homeCompetitorCheers } = votes.cheer;
-    const newTotalCheers = totalCheers + 1;
-    const newBarWidth = (CHEER_BAR_WIDTH * homeCompetitorCheers)/newTotalCheers;
+    const { cheers } = this.props.data.broadcast;
+    const { total, home } = cheers ? cheers : votes.cheers;
+    const newTotalCheers = total + 1;
+    const newBarWidth = (CHEER_BAR_WIDTH * home)/newTotalCheers;
 
-    const firstCompPercentage = (homeCompetitorCheers*100)/newTotalCheers;
+    const firstCompPercentage = (home*100)/newTotalCheers;
     const secondCompPercentage = 100 - firstCompPercentage;
 
     this.setState({
       firstCompCheersPercentage: firstCompPercentage,
       secondCompCheersPercentage: secondCompPercentage,
+      cheerFor: "__guest__"
     });
 
     Animated.timing(this.state.firstCompViewWidth, {
@@ -235,7 +241,7 @@ class ReservationConfirmView extends Component {
 
     const cheerView = () => (
       <View style={styles.offerView}>
-        <Text style={styles.whomSupport}>Per chi tiferai?</Text>
+        <Text style={styles.whomSupport}>{t("browse.getOffer.whomSupport")}</Text>
         <View style={styles.competitorsVotingView}>
           <Touchable style={[styles.competitorButton, {backgroundColor: firstCompetitorColor}]} onPress={() => this.firstCompetitorVoting()}>
             <Text style={styles.competitorNameInButton}>{competitors[0].name}</Text>
@@ -267,7 +273,24 @@ class ReservationConfirmView extends Component {
             %
           </Text>
         </View>
-        <Text style={styles.estimationText}>Stima tifosi da {business.name}</Text>
+        <Text style={styles.estimationText}>{t("browse.getOffer.supportersEstimation")} {business.name}</Text>
+      </View>
+    );
+
+    const playerCheerView = () => (
+      <View style={styles.offerView}>
+        <Text style={styles.whomSupport}>{t("browse.getOffer.whomSupport")}</Text>
+        <Input
+          placeholder={t("browse.getOffer.typeWhom")}
+          placeholderTextColor={themes.base.inputPlaceholderColor}
+          numberOfLines={1}
+          shake={true}
+          containerStyle={styles.inputOuterContainer}
+          inputContainerStyle={{borderBottomWidth: 0}}
+          inputStyle={styles.textInputStyle}
+          onChangeText={(text) => this.setState({cheerFor: text})}
+        />
+        <Text style={styles.estimationText}>{t("browse.getOffer.cheerWithUs")} {business.name}</Text>
       </View>
     );
 
@@ -289,15 +312,13 @@ class ReservationConfirmView extends Component {
           </View>
           {
             hasCompetitors ?
-              cheerView() :
-              hasOffer ?
-                offerRecapView() : null
+              cheerView() : playerCheerView()
           }
           <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
             <Button clear uppercase onPress={onCancelPress}>
               {t("browse.getOffer.cancel")}
             </Button>
-            <Button elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, event, business) : onLoginPress}
+            <Button elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, this.state.cheerFor) : onLoginPress}
                     uppercase clear variant="primary">
               {isAuth ? t("browse.getOffer.confirm") : t("auth.login.signIn")}
             </Button>
@@ -512,6 +533,26 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     color: themes.base.colors.accent.default
+  },
+  inputOuterContainer: {
+    width:'100%',
+    backgroundColor: 'transparent',
+    maxHeight: 60,
+    justifyContent: 'center',
+    ...themes.base.elevations.depth1,
+    position: 'relative',
+  },
+  textInputStyle: {
+    fontFamily: themes.base.fonts.LatoMedium,
+    backgroundColor: '#fff',
+    elevation: 2,
+    borderRadius: 100,
+    paddingLeft: 16,
+    paddingRight: 16,
+    margin: 12,
+    fontSize: 16,
+    borderColor: themes.base.colors.accent.default,
+    borderWidth: 1
   },
 });
 

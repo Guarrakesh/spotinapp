@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler,} from 'react-native';
 
 import {View, Touchable} from "../../components/common";
-import Button from "../../components/common/Button";
+import Button from "../../components/common/NewButton";
 import themes from "../../styleTheme";
 import LoginTab from "./LoginTab";
 import SvgWave from "./SvgWave";
@@ -44,7 +44,7 @@ const Login = ({
       } else {
         return false;
       }
-    })
+    });
     return () => {
       backHandler.remove();
     }
