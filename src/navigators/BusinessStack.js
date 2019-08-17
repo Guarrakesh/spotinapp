@@ -3,7 +3,7 @@ import {createStackNavigator} from 'react-navigation';
 import BusinessScreen from '../screens/business/BusinessScreen';
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
 import BusinessMapInBusiness from '../screens/business/BusinessMapInBusiness';
-
+import { Platform } from "react-native";
 import themes from '../styleTheme';
 import {Fonts} from "../components/common/Fonts";
 import DismissButton from "../components/common/DismissButton";
@@ -38,7 +38,7 @@ export const BusinessStack = createStackNavigator({
   },{
     navigationOption: {
       headerStyle: {
-        backgroundColor: themes.base.colors.primary.default
+        borderBottomWidth: Platform.OS === "ios" ? 0 : 1,
 
       },
       headerTintColor: themes.base.colors.text.default,

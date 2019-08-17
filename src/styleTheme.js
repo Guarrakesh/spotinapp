@@ -9,7 +9,7 @@ export const primaryColor = {
 export const accentColor = {
   default: '#7C4DFF',
   light: '#B47CFF',
-  dark: '#3F1DCB'
+  dark: '#3F18AF'
 };
 export const textColor = {
   default: '#555555',
@@ -48,7 +48,7 @@ const themes = {
         dark: '#51BD60'
       },
       accent: {
-        default: '#B47CFF',
+        default: '#CB35F0',
         light: '#B47CFF',
         dark: '#3F1DCB'
       },
@@ -94,7 +94,7 @@ const themes = {
     }
   },
   base: {
-    borderRadius: 8,
+    borderRadius: 4,
     colors: {
 
       primary: primaryColor,
@@ -136,7 +136,7 @@ const themes = {
 
     },
     inputPlaceholderColor: 'rgba(66,66,66,.26)',
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#fff',
     inlineListTitleStyle: {
       fontFamily: Fonts.LatoBold,
       textAlign: 'left',

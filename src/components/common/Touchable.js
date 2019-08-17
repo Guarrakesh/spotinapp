@@ -57,8 +57,11 @@ export default class PlatformTouchable extends React.Component {
       }
 
       return (
+
           <TouchableComponent
               {...props}
+              style={style}
+
               useForeground={useForeground}
               background={(useForeground && foreground) || background}>
             <View style={style}>

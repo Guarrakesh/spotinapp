@@ -3,11 +3,12 @@ package it.spotin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.horcrux.svg.SvgPackage;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.horcrux.svg.SvgPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
@@ -69,11 +70,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReanimatedPackage(),
+            new SvgPackage(),
             new RNAndroidLocationEnablerPackage(),
             new ImageResizerPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
-            new SvgPackage(),
             new ReactNativePushNotificationPackage(),
             new MapsPackage(),
             new RNFusedLocationPackage(),

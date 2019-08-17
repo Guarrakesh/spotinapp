@@ -252,12 +252,32 @@
       "passwordForgot"      : "Password dimenticata?",
       "noAccount"           : "Non hai un account?",
       "register"            : "Registrati",
-      "usedEmail"           : "Questa email è già stata usata"
+      "usedEmail"           : "Questa email è già stata usata",
+      "later"               : "Più tardi",
+      "helpText"            : "Inserisci le tue credenziali d'accesso",
+      "formError": {
+        "title"             : "Aspetta, abbiamo un problema:",
+        "emailRequired"     : "^Inserisci la tua email",
+        "passwordRequired"  : "^Inserisci la tua password"
+
+      }
     },
     "register": {
       "title"               : "Registrazione",
       "fullname"            : "Nome completo",
-      "button"              : "Registrati"
+      "button"              : "Registrati",
+      "formError"           : {
+        "title"              :"Aspetta, abbiamo un problema:",
+        "emailRequired"     : "^Inserisci la tua email",
+        "emailNotValid"     : "^L'email che hai inserito non è valida",
+        "passwordRequired"  : "^Inserisci la tua password",
+        "passwordLength"    : "^La password deve contenere almeno 6 caratteri",
+        "passwordLengthMax" : "^La password non può superare i 128 caratteri",
+
+        "nameRequired"      : "^Inserisci il tuo nome",
+        "nameLengthMin"        : "^Il nome deve contenere almeno 2 caratteri",
+        "nameLengthMax"     : "^Il nome non può supererare 128 caratteri"
+      }
 
     },
     "terms": {
@@ -269,6 +289,10 @@
       "title"               : "Password dimenticata?",
       "subtitle"            : "Inserisci la tua email e ti invieremo le istruzioni per reimpostare la tua password",
       "button"              : "Reimposta password",
+      "formError": {
+        "emailRequired"     : "^L'email è obbligatoria",
+        "Email not valid"   : "^L'email che hai inserito non è valida"
+      },
       "notification"  : {
         "success": {
           "title"           : "Controlla la tua email",

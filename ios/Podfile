@@ -30,7 +30,6 @@ target 'spotinapp' do
     pod 'react-native-google-maps', path: '../node_modules/react-native-maps/'  # <~~ if you need GoogleMaps support on iOS
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'RNSVG', :path => '../node_modules/react-native-svg'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
@@ -45,6 +44,11 @@ target 'spotinapp' do
   pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer'
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
 end
 post_install do |installer|

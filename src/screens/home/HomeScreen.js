@@ -20,7 +20,7 @@ import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 import {refreshList as refreshListAction} from '../../actions/listActions';
 
-const logoImg = require('../../assets/img/logo-text/logo-text.png');
+const logoImg = require('../../assets/img/logo/logo.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
 
 
@@ -51,10 +51,11 @@ class HomeScreen extends React.Component {
           />
         </View>
       ,
+      headerBackTitle: null,
       headerStyle: {
-        backgroundColor: themes.base.colors.primary.default,
-      },
-      headerBackTitle: null
+        borderBottomWidth: 0,
+
+      }
     }
   };
 
@@ -235,7 +236,7 @@ class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   homeContainer: {
-    backgroundColor: themes.base.colors.white.default,
+    backgroundColor: themes.base.colors.white.light,
     flex: 1,
     padding: 0,
     paddingTop: 16,
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
 
   },
   headerTitleStyle: {
-    height: 25,
+    height: 32,
     alignSelf: 'center',
     width: '100%',
     marginLeft: Platform.OS === 'android' ? 28 : null,

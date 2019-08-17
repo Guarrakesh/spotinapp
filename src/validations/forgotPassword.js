@@ -1,10 +1,11 @@
+import i18n from '../i18n/i18n';;
 export default {
   email: {
     presence: {
-      message: "^L'email è obbligatoria"
+      message: i18n.t("auth.passwordForgot.formError.emailRequired"),
     },
     email: {
-      message: "^Inserisci una email valida"
+      message: i18n.t("auth.passwordForgot.formError.emailNotValid")
     },
   },
 };

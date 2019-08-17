@@ -6,10 +6,8 @@ import { FluidNavigator } from 'react-navigation-fluid-transitions';
 import { Icon } from 'react-native-vector-icons/MaterialIcons'
 import { createStackNavigator }  from 'react-navigation';
 
-import LoginScreen from '../screens/spot/LoginScreen';
-import SignupScreen from '../screens/spot/SignupScreen';
-import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
-import DismissButton from "../components/common/DismissButton";
+import LoginScreen from '../screens/login/LoginScreen';
+import ForgotPasswordScreen from '../screens/login/ForgotPasswordScreen';
 
 import themes from '../styleTheme';
 import i18n from '../i18n/i18n';
@@ -32,42 +30,40 @@ const AuthNavigator = createStackNavigator(
               shadowColor: 'transparent',
               borderBottomWidth: 0,
             },
-            headerRight: (
-              <DismissButton onPress={() => {navigation.navigate('Main')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
-            ),
+
 
           }
         }
 
       },
-      SignUp: {
-        screen: SignupScreen,
-
-        navigationOptions: ({navigation}) => ({
-          title: i18n.t("auth.register.title").toUpperCase(),
-          headerTitleStyle: {
-            fontFamily: themes.base.fonts.LatoMedium,
-            textAlign: 'center',
-            alignSelf: 'center',
-            flex: 1,
-            marginRight: Platform.OS === 'android' ? 75 : null,
-          },
-          headerMode: 'screen',
-          headerTransparent: true,
-          headerTintColor: themes.base.colors.text.default,
-          headerStyle: {
-            shadowColor: 'transparent',
-            borderBottomWidth: 0,
-          }
-
-
-        })
-      },
+      // SignUp: {
+      //   screen: SignupScreen,
+      //
+      //   navigationOptions: ({navigation}) => ({
+      //     title: i18n.t("auth.register.title").toUpperCase(),
+      //     headerTitleStyle: {
+      //       fontFamily: themes.base.fonts.LatoMedium,
+      //       textAlign: 'center',
+      //       alignSelf: 'center',
+      //       flex: 1,
+      //       marginRight: Platform.OS === 'android' ? 75 : null,
+      //     },
+      //     headerMode: 'screen',
+      //     headerTransparent: true,
+      //     headerTintColor: themes.base.colors.text.default,
+      //     headerStyle: {
+      //       shadowColor: 'transparent',
+      //       borderBottomWidth: 0,
+      //     }
+      //
+      //
+      //   })
+      // },
       ForgotPassword: {
         screen: ForgotPasswordScreen,
         navigationOptions: ({navigation}) => ({
           headerTransparent: true,
-          headerTintColor: themes.base.colors.text.default,
+          headerTintColor: themes.base.colors.white.default,
 
           headerStyle: {
             shadowColor: 'transparent',
@@ -81,7 +77,7 @@ const AuthNavigator = createStackNavigator(
       mode: 'modal',
       headerMode: 'screen',
       cardStyle: {
-        backgroundColor: themes.base.colors.primary.default
+        backgroundColor: themes.base.colors.accent.dark
       }
 
 

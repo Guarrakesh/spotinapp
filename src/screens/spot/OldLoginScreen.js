@@ -25,7 +25,7 @@ import Modal from "react-native-modal";
 
 const colors = themes.base.colors;
 
-const Logo = require('../../assets/img/logo-full.png');
+const Logo = require('../../assets/img/logo/logo.png');
 const BackgroundPattern = require('../../assets/img/wave_pattern.png');
 
 /**
@@ -124,18 +124,14 @@ class LoginScreen extends React.Component {
         >
           {termsModal}
           <StatusBar
-            backgroundColor={this.state.keyboardOpen ? colors.primary.default : colors.white.default}
+            backgroundColor={this.state.keyboardOpen ? colors.primary.default : "#9b59b6"}
             barStyle="dark-content"
           />
           <Image source={Logo} style={styles.logo} resizeMode={"contain"} />
           <Text style={styles.title} allowFontScaling={false}>{t("auth.login.title").toUpperCase()}</Text>
           <Text style={styles.subtitle} allowFontScaling={false}>{t("auth.login.subtitle")}</Text>
 
-          <ImageBackground source={BackgroundPattern} style={{
-            height: '100%',
-            width: '100%',
-            marginTop: -30
-          }} resizeMode={'cover'}>
+
             <View style={styles.middleContainerStyle}>
 
               <Input
@@ -243,7 +239,7 @@ class LoginScreen extends React.Component {
                 {i18n.t("auth.terms.policySecondPart")}
               </Text>
             </View>
-          </ImageBackground>
+
         </KeyboardAwareScrollView>
 
       </View>
@@ -258,7 +254,7 @@ const styles = StyleSheet.create({
     //flex: 1,
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: colors.white.default
+    backgroundColor: "#9b59b6"
   },
   logo: {
     marginTop: themes.base.deviceDimensions.height/10,
@@ -306,17 +302,7 @@ const styles = StyleSheet.create({
     margin: 12,
     fontSize: 16,
   },
-  middleContainerStyle: {
-    width: '100%',
 
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    ...themes.base.elevations.depth2
-  },
   errorMessage: {
     position: 'absolute',
     bottom: -8,

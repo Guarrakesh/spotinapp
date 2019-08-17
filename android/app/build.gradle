@@ -119,11 +119,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-reanimated')
+    implementation project(':react-native-svg')
     implementation project(':react-native-android-location-enabler')
     compile project(':react-native-image-resizer')
     compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
-    compile project(':react-native-svg')
     compile project(':react-native-push-notification')
     compile project(':react-native-maps')
     compile project(':react-native-geolocation-service')
@@ -157,7 +158,6 @@ dependencies {
     implementation project(':react-native-android-open-settings')
     implementation project(':react-native-code-push')
     implementation project(':react-native-vector-icons')
-    implementation project(':react-native-svg')
     implementation project(':react-native-maps')
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-geolocation-service')
