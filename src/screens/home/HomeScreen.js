@@ -159,7 +159,7 @@ class HomeScreen extends React.Component {
                         allowFontScaling={true}
                         numberOfLines={1}
                         style={styles.inlineListHeader}>{
-                        this.props.cityName ?
+                        this.props.currentLocation === "address" && this.props.cityName ?
                           `${t("home.nearOffersCity")} ${this.props.cityName}` :
                           t('home.nearOffers')
                       }</Text>
@@ -206,7 +206,7 @@ class HomeScreen extends React.Component {
                         allowFontScaling={true}
                         numberOfLines={1}
                         style={styles.inlineListHeader}>{
-                        this.props.cityName ?
+                        this.props.currentLocation === "address" && this.props.cityName ?
                           `${t("home.nearBusinessesCity")} ${this.props.cityName}` :
                           t("home.nearBusinesses")
                       }</Text>
@@ -277,6 +277,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
+  currentLocation: state.location.currentLocation,
   cityName: state.location.address.position ? state.location.address.position.cityName : undefined,
   position: positionSelector(state),
 });

@@ -13,6 +13,7 @@ import ReferenceField from "../../components/common/ReferenceField"
 import themes from "../../styleTheme";
 import i18n from '../../i18n/i18n';
 import { entityView } from "../../actions/view";
+import { coordsSelector } from "../../reducers/location";
 
 const Fonts = themes.base.fonts;
 const HEADER_HEIGHT = 100;
@@ -165,7 +166,7 @@ class BroadcastsScreen extends React.Component {
       <View style={styles.container}>
         <ListController
           id={this.listId(eventId)}
-          perPage="15"
+          perPage="1000"
           resource="broadcasts"
           sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
           filter={{event: eventId}}
@@ -206,13 +207,18 @@ class BroadcastsScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+  // const { latitude, longitude } = state.location.address.position ?
+  //   state.location.address.position.coords :
+  //   state.location.device.position ? state.location.device.position.coords : {};
+
+  const { latitude, longitude } = coordsSelector(state);
+
   const { loggedIn } = state.auth;
   return {
     loggedIn, latitude, longitude
   }
 
-}
+};
 
 
 const styles = StyleSheet.create({

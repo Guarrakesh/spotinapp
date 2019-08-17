@@ -41,7 +41,7 @@ function* watchLocationChannel() {
 
     if (action.type === LOCATION_SET_POSITION) {
       const lastTimestamp = location.position ? location.position.timestamp : null;
-      if (!lastTimestamp || action.position.timestamo - lastTimestamp < 300000) {// posizione la aggiorno ogni max 5 minuti
+      if (!lastTimestamp || action.position.timestamp - lastTimestamp < 300000) {// posizione la aggiorno ogni max 5 minuti
         yield put(action);
       }
     } else {
@@ -110,7 +110,5 @@ function* watchPosition() {
 export default function* root() {
   yield spawn(watchLocationChannel);
   yield takeEvery(LOCATION_REQUEST, watchPosition);
-
-
 
 }

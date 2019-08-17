@@ -4,7 +4,7 @@ import View from '../../components/common/View';
 import { StyleSheet, Text, InteractionManager, Animated } from 'react-native';
 import MapView, { AnimatedRegion, Animated as AnimatedMap } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
-
+import { coordsSelector } from "../../reducers/location";
 import themes from '../../styleTheme';
 
 import BroadcastFloatingCard from '../../components/BroadcastComponents/BroadcastFloatingCard';
@@ -191,7 +191,8 @@ const mapStateToProps = (state, props) => {
 
 
 
-  const  {latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {}
+  const { latitude, longitude } = coordsSelector(state);
+
   return {
     latitude, longitude,
     businesses: businesses,

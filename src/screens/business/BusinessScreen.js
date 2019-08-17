@@ -16,6 +16,7 @@ import { entityView } from "../../actions/view";
 import themes from "../../styleTheme";
 import {Fonts} from "../../components/common/Fonts";
 import ListController from "../../controllers/ListController";
+import { coordsSelector } from "../../reducers/location";
 
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
@@ -153,7 +154,7 @@ class BusinessScreen extends React.Component {
       <ListController
         id='business_list'
         resource="businesses"
-        perPage="100"
+        perPage="1000"
         sort={{field: 'dist.calculated', order: 'asc'}}
         nearPosition={nearPosition}
         filterDefaultValues={undefined}
@@ -219,7 +220,10 @@ class BusinessScreen extends React.Component {
 }
 const mapStateToProps = (state) => {
 
-  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+  // const { latitude, longitude } = state.location.address.position ?
+  //   state.location.address.position.coords :
+  //   state.location.device.position ? state.location.device.position.coords : {};
+  const { latitude, longitude } = coordsSelector(state);
 
 
   const { loggedIn } = state.auth;

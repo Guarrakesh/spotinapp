@@ -18,6 +18,7 @@ import {fetchStart, fetchEnd} from "../../actions/fetchActions";
 import {showNotification} from "../../actions/notificationActions";
 import signup from "../../validations/signup";
 import validate from "validate.js";
+import { coordsSelector } from "../../reducers/location";
 
 const colors = themes.base.colors;
 const deviceWidth = themes.base.deviceDimensions.width;
@@ -353,7 +354,8 @@ class ContactUsScreen extends React.Component{
 
 const mapStateToProps = (state) => {
 
-  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+  const { latitude, longitude } = coordsSelector(state);
+
   const isLoading = state.loading > 0;
   const userId = state.auth.profile._id;
   const profile = state.auth.profile;
