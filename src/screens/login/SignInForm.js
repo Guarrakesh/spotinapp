@@ -49,7 +49,7 @@ const SignInForm = ({ t, isLoading, onSubmit, onPasswordForgot }) => {
           <TextInput
               onSubmitEditing={() => passwordRef.current.focus()}
               onChangeText={email =>  setFormValues({password, email: email.trim()})}
-              numberOfLines={1}
+
               allowFontScaling
               onFocus={() => setFocusedInput('email')}
               autoCapitalize='none'
