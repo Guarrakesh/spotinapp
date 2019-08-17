@@ -47,7 +47,7 @@ class BroadcastsScreen extends React.Component {
       headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
-        color: themes.base.colors.text.default,
+        color: themes.base.colors.accent.default,
         flex: 1,
         marginRight: Platform.OS === 'android' ? 75 : null,
       },
@@ -56,7 +56,7 @@ class BroadcastsScreen extends React.Component {
         shadowColor: 'transparent',
         elevation: 0,
         borderBottomWidth: 0,
-        backgroundColor: themes.base.colors.primary.default
+        //backgroundColor: themes.base.colors.primary.default
       },
     }
   };
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: themes.base.colors.primary.default
+    backgroundColor: themes.base.colors.white.light
   },
   eventName: {
     fontSize: 24,

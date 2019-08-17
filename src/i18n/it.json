@@ -48,6 +48,7 @@
     "nearOffers"         : "Offerte intorno a te",
     "getOffer": {
       "buttonTitle"            : "Ottieni offerta",
+      "join"                   : "Partecipa",
       "recommended"            : "Offerta consigliata",
       "title"                  : "Vuoi ottenere quest'offerta?",
       "info"                   : "Partecipando all'evento puoi usufruire del {{offer}}",

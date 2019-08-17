@@ -20,11 +20,11 @@ export const BusinessStack = createStackNavigator({
             shadowOffset: {width: 0, height: 0},
             shadowColor: 'transparent',
             borderBottomWidth: 0,
-            backgroundColor: themes.base.colors.primary.default
+            //backgroundColor: themes.base.colors.primary.default
           },
           headerTitleStyle: {
             fontFamily: Fonts.LatoBold,
-            color: themes.base.colors.text.default
+            color: themes.base.colors.accent.default
           }
         }
 

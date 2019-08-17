@@ -93,8 +93,7 @@ const BroadcastCardInProfile = (props) => {
                   </View> : <View/>
               }
               {!reserved  ?
-                <Button round uppercase variant="primary" onPress={onReservePress}>{hasOffer ? t('browse.getOffer.buttonTitle') : "Partecipa"}</Button>
-
+                <Button round uppercase variant="primary" onPress={onReservePress}>{hasOffer ? t('browse.getOffer.buttonTitle') : t('browse.getOffer.join')}</Button>
                 :
                 <View style={styles.reservedView}>
                   <Icon name={'check-circle'} size={20} color={themes.base.colors.accent.default} style={{marginRight: 3}}/>

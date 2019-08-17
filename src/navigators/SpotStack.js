@@ -70,7 +70,7 @@ export const SpotStack = createStackNavigator({
             flex: 1,
             textAlign: 'center',
             alignSelf: 'center',
-            color: themes.base.colors.text.default,
+            color: themes.base.colors.accent.default,
             //marginRight: Platform.OS === 'android' ? 75 : null,
           },
         }),
@@ -86,7 +86,7 @@ export const SpotStack = createStackNavigator({
             width: '100%',
             textAlign: 'center',
             alignSelf: 'center',
-            color: themes.base.colors.text.default,
+            color: themes.base.colors.accent.default,
             marginLeft: Platform.OS === 'android' ? -30 : null,
           },
 
@@ -102,7 +102,7 @@ export const SpotStack = createStackNavigator({
             width: '100%',
             textAlign: 'center',
             alignSelf: 'center',
-            color: themes.base.colors.text.default,
+            color: themes.base.colors.accent.default,
             marginLeft: Platform.OS === 'android' ? -30 : null,
           },
         })
@@ -122,7 +122,7 @@ export const SpotStack = createStackNavigator({
             width: '100%',
             textAlign: 'center',
             alignSelf: 'center',
-            color: themes.base.colors.text.default,
+            color: themes.base.colors.accent.default,
             marginLeft: Platform.OS === 'android' ? -30 : null,
           },
           headerBackImage: (<Icon

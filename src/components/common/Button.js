@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, StyleSheet } from 'react-native';
-import { Button as BaseButton } from 'react-native-elements'
+import { Platform, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import { Button as BaseButton } from 'react-native-elements';
 
 import themes, { accentColor, dangerColor, infoColor, primaryColor, textColor, whiteColor, warningColor } from '../../styleTheme';
 const fonts = themes.base.fonts;
@@ -50,10 +50,12 @@ export default class Button extends React.Component {
       color: clear ? themes.base.colors[variant] : "#fff",
     }, loadingProps];
     return (
+
       <BaseButton
-        containerStyle={_containerStyle}
+        containerStyle={[_containerStyle, {overflow: 'hidden'}]}
         activeOpacity={0.2}
         buttonStyle={_style}
+        background={TouchableNativeFeedback.Ripple( 'ThemeAttrAndroid', false )} //blocca il ripple al borderRadius
         titleProps={{
           numberOfLines: 1,
           ...titleProps
@@ -65,6 +67,7 @@ export default class Button extends React.Component {
         loadingProps={_loadingProps}
         {...props}
       />
+
     )
 
   }
@@ -93,7 +96,10 @@ Button.propTypes = {
 
 const styles = StyleSheet.create({
 
-
+  containerView: {
+    overflow: 'hidden',
+    borderRadius: 50
+  },
   base: {
     width: '100%',
     fontFamily: fonts.LatoMedium,

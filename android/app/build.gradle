@@ -96,7 +96,7 @@ android {
             buildConfigField "String", "CODEPUSH_KEY", '""'
         }
         releaseStaging {
-            initWith(buildTypes.release)
+            signingConfig signingConfigs.debug
             buildConfigField "String", "CODEPUSH_KEY", '"aoetyyAdwgh5FbL35ecwdeYbxOrCH1MqxDijX"' //uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ
             applicationIdSuffix ".staging"
             matchingFallbacks = ['release', 'debug']

@@ -60,11 +60,11 @@ class BusinessProfileScreen extends React.Component {
 
        },*/
       headerStyle: {
-        backgroundColor: themes.base.colors.primary.default
+        //backgroundColor: themes.base.colors.primary.default
       },
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
-        color: themes.base.colors.text.default
+        color: themes.base.colors.accent.default
       },
       headerBackTitle: null
 

@@ -46,6 +46,7 @@
     "nearOffers"         : "Near offers",
     "getOffer": {
       "buttonTitle"       : "Get offer",
+      "join"              : "Join",
       "title"             : "Would you like to get this offer?",
       "info"              : "If you get this offer you will receive {{offer}}",
       "additionalInfo"    : "The offer doesn't include a booked table in this restaurant",

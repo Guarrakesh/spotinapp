@@ -224,7 +224,7 @@ class ReservationConfirmView extends Component {
 
     const eventRecapView = () => (
       <View style={{marginLeft: 16, justifyContent: 'space-between', flex: 1}}>
-        <Text style={styles.eventNameText}>{event.name}</Text>
+        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.eventNameText}>{event.name}</Text>
         <Text style={styles.eventDateText}>{date}</Text>
         <Text style={styles.eventTimeText}>{time}</Text>
       </View>
@@ -258,7 +258,7 @@ class ReservationConfirmView extends Component {
             <AnimateNumber
               style={styles.percentageText}
               value={this.state.firstCompCheersPercentage}
-              countBy={1}
+              countBy={10}
               formatter={(val) => {
                 return parseFloat(val).toFixed(1)}}/>
             %
@@ -267,7 +267,7 @@ class ReservationConfirmView extends Component {
             <AnimateNumber
               style={styles.percentageText}
               value={this.state.secondCompCheersPercentage}
-              countBy={1}
+              countBy={10}
               formatter={(val) => {
                 return parseFloat(val).toFixed(1)}}/>
             %
@@ -314,11 +314,11 @@ class ReservationConfirmView extends Component {
             hasCompetitors ?
               cheerView() : playerCheerView()
           }
-          <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
-            <Button clear uppercase onPress={onCancelPress}>
+          <View style={{overflow: 'hidden', flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
+            <Button round clear uppercase onPress={onCancelPress}>
               {t("browse.getOffer.cancel")}
             </Button>
-            <Button elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, this.state.cheerFor) : onLoginPress}
+            <Button round elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, this.state.cheerFor) : onLoginPress}
                     uppercase clear variant="primary">
               {isAuth ? t("browse.getOffer.confirm") : t("auth.login.signIn")}
             </Button>
@@ -354,11 +354,11 @@ class ReservationConfirmView extends Component {
                   thumbTintColor={themes.base.colors.white.light}
                   onValueChange={(numPeople) => this.setState({numPeople})} />
               </View>
-              <View style={{flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
-                <Button clear uppercase onPress={onCancelPress}>
+              <View style={{overflow: 'hidden', flexDirection: 'row', justifyContent: 'space-around', width: '100%', paddingTop: 16, alignItems: 'center'}}>
+                <Button round clear uppercase onPress={onCancelPress}>
                   {t("browse.getOffer.cancel")}
                 </Button>
-                <Button elevation={1} onPress={isAuth ? () => this.nextPress() : onLoginPress}
+                <Button round elevation={1} onPress={isAuth ? () => this.nextPress() : onLoginPress}
                         uppercase clear variant="primary">
                   {isAuth ?
                     this.state.numPeople === 0 ? t("common.skip") : t("common.next")

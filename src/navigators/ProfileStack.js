@@ -30,7 +30,7 @@ export const ProfileStack = createStackNavigator({
           flex: 1,
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          //color: themes.base.colors.text.default,
           marginLeft: Platform.OS === 'android' ? 75 : null,
         },
       }
@@ -51,7 +51,7 @@ export const ProfileStack = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          //color: themes.base.colors.text.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
       }
@@ -64,7 +64,7 @@ export const ProfileStack = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          //color: themes.base.colors.text.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
       }
@@ -82,7 +82,7 @@ export const ProfileStack = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          //color: themes.base.colors.text.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
         headerBackImage: (<Icon
@@ -99,7 +99,7 @@ export const ProfileStack = createStackNavigator({
           flex: 1,
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          //color: themes.base.colors.text.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
       }
@@ -113,11 +113,10 @@ export const ProfileStack = createStackNavigator({
         color={themes.base.colors.text.default}
         name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
 
-      headerStyle: {
-        backgroundColor: themes.base.colors.primary.default
-
-      },
-      headerTintColor: themes.base.colors.text.default,
+      headerTintColor: themes.base.colors.accent.default,
+      headerTitleStyle: {
+        color: themes.base.colors.accent.default
+      }
     }
   }
 );
@@ -132,7 +131,7 @@ export const FavoriteNavigator = createStackNavigator({
             width: '100%',
             textAlign: 'center',
             alignSelf: 'center',
-            color: themes.base.colors.text.default,
+            color: themes.base.colors.accent.default,
             //marginLeft: Platform.OS === 'android' ? 0 : null,
           },
           headerBackImage: (<Icon
@@ -152,7 +151,7 @@ export const FavoriteNavigator = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          color: themes.base.colors.accent.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
         headerBackImage: (<Icon
@@ -169,7 +168,7 @@ export const FavoriteNavigator = createStackNavigator({
         name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
 
       headerStyle: {
-        backgroundColor: themes.base.colors.primary.default
+        //backgroundColor: themes.base.colors.primary.default
 
       },
       headerTintColor: themes.base.colors.text.default,

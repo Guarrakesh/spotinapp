@@ -102,7 +102,7 @@ class BusinessScreen extends React.Component {
         shadowOffset: {width: 0, height: 0},
         shadowColor: 'transparent',
         borderBottomWidth: 0,
-        backgroundColor: themes.base.colors.primary.default
+        //backgroundColor: themes.base.colors.primary.default
       },
       headerRight: <AnimatedIcon
         name={params.searchBar && params.searchBar.open ? "x" : "search"}
@@ -113,7 +113,7 @@ class BusinessScreen extends React.Component {
 
       headerTitleStyle: {
         fontFamily: Fonts.LatoBold,
-        color: themes.base.colors.text.default
+        color: themes.base.colors.accent.default
       },
       headerBackTitle: null
 
