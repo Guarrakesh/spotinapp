@@ -18,11 +18,22 @@ import ReferenceField from '../common/ReferenceField'
 
 moment.locale(DeviceInfo.getDeviceLocale());
 
+const CHEER_BAR_WIDTH = themes.base.deviceDimensions.width-48;
+
+//Inizializzo i voti a zero se non sono presenti nel broadcast
+const votes = {
+  cheers: {
+    home: 0,
+    guest: 0,
+    total: 0,
+  }
+};
+
 const BroadcastCardInProfile = (props) => {
 
   let { broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
-  const hasOffer = offer && offer !== {} && offer.value;
+  const hasOffer = offer && offer.value;
   const offerValue = hasOffer && offer.value.toFixed(2);
   const description = hasOffer && offer.description ? offer.description.replace(/\\n/g, '\n') : null;
 
@@ -38,6 +49,38 @@ const BroadcastCardInProfile = (props) => {
         return null;
     }
   };
+
+  const cheerBar = (event) => {
+
+    const hasCompetitors = event.sport.has_competitors;
+    const firstCompetitorColor = event.competitors[0] && event.competitors[0].color ? event.competitors[0].color : "#ABCDDD";
+    const secondCompetitorColor = event.competitors[1] && event.competitors[1].color ? event.competitors[1].color : "#2752A5";
+
+    const { cheers } = broadcast;
+    const total = cheers && cheers.total ? cheers.total : 0;
+    const home = cheers && cheers.home ? cheers.home: 0;
+
+    const firstCompPercentage = total === 0 ? 50 : (home*100)/total;
+    //const secondCompPercentage = 100 - firstCompPercentage;
+
+    const initialBarWidth =
+      total === 0 ?
+        CHEER_BAR_WIDTH/2 : home === 0 ?
+        0 : (CHEER_BAR_WIDTH * home)/total;
+    console.log("INITIAL BAR WIDTH: ", initialBarWidth);
+    console.log("CHEERS: ", cheers);
+
+    if(hasCompetitors){
+      return (
+        <View style={[styles.votesBar, {backgroundColor: secondCompetitorColor}]}>
+          <View style={[styles.firstCompVotes, {backgroundColor: firstCompetitorColor, width: initialBarWidth}]}/>
+        </View>
+      )
+    } else
+      return null;
+
+  };
+
 
   return (
     <ReferenceField reference="events" record={broadcast} source="event">
@@ -78,6 +121,7 @@ const BroadcastCardInProfile = (props) => {
                 <Image source={Images.icons.sports[Helpers.sportSlugIconMap(event.sport.slug)]} style={styles.sportIcon}/>
               </View>
             </View>
+            {cheerBar(event)}
             {
               (offer && offer.description && offer.description !== "" ) ?
                 <View style={styles.offerInfoView}>
@@ -222,8 +266,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.Lato,
     color: themes.base.colors.text.default
-  }
-
+  },
+  votesBar: {
+    margin: 16,
+    marginBottom: 0,
+    height: 10,
+    overflow: 'hidden',
+    //borderWidth: 1,
+    borderColor: themes.base.colors.accent.default,
+    borderRadius: 10
+  },
+  firstCompVotes: {
+    height: 10,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10
+  },
 
 });
 

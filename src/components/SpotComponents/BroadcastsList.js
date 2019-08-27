@@ -52,11 +52,15 @@ class BroadcastsList extends React.Component {
     }
 
     const footer = () => (
-      <View style={{alignItems: "center"}}>
-        <Typography variant="body" gutterBottom align={"center"}>Non hai trovato quello che cercavi?</Typography>
-        <Button variant="primary" onPress={onContactUsPress}
-                round uppercase>CONTATTACI</Button>
-        <Typography variant="body" gutterBottom align={"center"}>troveremo noi il locale piu' adatto a te!</Typography>
+      <View style={styles.noFoundView}>
+        <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundGeneric")}</Typography>
+        <Button
+          containerStyle={{marginBottom: 8}}
+          variant="primary"
+          onPress={onContactUsPress}
+          round
+          uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+        <Typography variant="body" gutterBottom align={"center"}>{t("browse.weFindBusiness")}</Typography>
       </View>
     );
 
@@ -76,7 +80,6 @@ class BroadcastsList extends React.Component {
             elevation={2}
             onPress={() =>  this._onItemPress(data[item], data[item].dist)}
             broadcast={data[item]}/>}
-
           contentContainerStyle={[styles.container, style]}
         />
         {
@@ -153,6 +156,16 @@ const styles = StyleSheet.create({
     bottom: 16,
     borderRadius: 32,
     justifyContent: 'center',
+  },
+  noFoundView: {
+    padding: 8,
+    alignItems: "center",
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
+    margin: 16,
+    paddingTop: 8,
+    borderWidth: 1,
+    borderColor: themes.base.colors.white.divisor
   }
 });
 

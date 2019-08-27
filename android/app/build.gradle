@@ -60,8 +60,8 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "0.6.4"
+        versionCode 13
+        versionName "0.6.3"
         multiDexEnabled true
 
         resValue "string", "build_config_package", "it.spotin"
@@ -96,7 +96,7 @@ android {
             buildConfigField "String", "CODEPUSH_KEY", '""'
         }
         releaseStaging {
-            signingConfig signingConfigs.debug
+            initWith(buildTypes.release)
             buildConfigField "String", "CODEPUSH_KEY", '"aoetyyAdwgh5FbL35ecwdeYbxOrCH1MqxDijX"' //uKbCzUIlgyIcbA6tph80iusE28jpSkitxPjjQ
             applicationIdSuffix ".staging"
             matchingFallbacks = ['release', 'debug']
@@ -122,6 +122,7 @@ dependencies {
     implementation project(':react-native-reanimated')
     implementation project(':react-native-svg')
     implementation project(':react-native-android-location-enabler')
+
     implementation project(':appcenter-push')
     implementation project(':appcenter-crashes')
     implementation project(':appcenter-analytics')
@@ -130,6 +131,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
 
     implementation project(':react-native-code-push')
     implementation project(':react-native-code-push')
@@ -148,7 +150,7 @@ dependencies {
     implementation project(':react-native-maps')
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-geolocation-service')
-    implementation  "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.android.gms:play-services-base:16.1.0"
     implementation 'com.facebook.android:facebook-login:+'
     implementation 'com.google.firebase:firebase-core:17.6'
     implementation "com.google.firebase:firebase-messaging:16.0"

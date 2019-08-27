@@ -18,6 +18,10 @@
     "selectEvent"         : "Select the event",
     "noCompetitions"      : "No tournaments for now",
     "noEvents"            : "No events for now",
+    "noFoundGeneric"      : "Didn't find what you were looking for?",
+    "weFindBusiness"      : "we will find the best place for you!",
+    "noFoundCompetition"  : "Didn't find the competition you were looking for?",
+    "noFoundEvent"        : "Didn't find the event you were looking for?",
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "This event is not broadcasted anywhere...",

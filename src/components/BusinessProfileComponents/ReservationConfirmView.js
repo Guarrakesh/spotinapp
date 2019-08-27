@@ -47,11 +47,16 @@ class ReservationConfirmView extends Component {
 
   componentDidMount(): void {
     const { cheers } = this.props.data.broadcast;
-    const { total, home } = cheers ? cheers : votes.cheers;
+    const total = cheers && cheers.total ? cheers.total : 0;
+    const home = cheers && cheers.home ? cheers.home : 0;
+
     const firstCompPercentage = total === 0 ? 50 : (home*100)/total;
     const secondCompPercentage = 100 - firstCompPercentage;
 
-    const initialBarWidth = total === 0 ? CHEER_BAR_WIDTH/2 : (CHEER_BAR_WIDTH * home)/total;
+    const initialBarWidth =
+      total === 0 ?
+        CHEER_BAR_WIDTH/2 : home === 0 ?
+        0 : (CHEER_BAR_WIDTH * home)/total;
 
     this.setState({
       firstCompCheersPercentage: firstCompPercentage.toFixed(0),
@@ -96,7 +101,9 @@ class ReservationConfirmView extends Component {
   firstCompetitorVoting() {
 
     const { cheers } = this.props.data.broadcast;
-    const { total, home } = cheers ? cheers : votes.cheers;
+    //const { total, home } = cheers ? cheers : votes.cheers;
+    const total = cheers && cheers.total ? cheers.total : 0;
+    const home = cheers && cheers.home ? cheers.home : 0;
     const newTotalCheers = total + 1;
     const newHomeCompCheers = home + 1;
     const newBarWidth = (CHEER_BAR_WIDTH * newHomeCompCheers)/newTotalCheers;
@@ -121,7 +128,9 @@ class ReservationConfirmView extends Component {
   secondCompetitorVoting() {
 
     const { cheers } = this.props.data.broadcast;
-    const { total, home } = cheers ? cheers : votes.cheers;
+    //const { total, home } = cheers ? cheers : votes.cheers;
+    const total = cheers && cheers.total ? cheers.total : 0;
+    const home = cheers && cheers.home ? cheers.home : 0;
     const newTotalCheers = total + 1;
     const newBarWidth = (CHEER_BAR_WIDTH * home)/newTotalCheers;
 
@@ -150,15 +159,16 @@ class ReservationConfirmView extends Component {
     const { broadcast } = this.props.data;
 
     const { offer } = broadcast;
-    const hasOffer = offer && offer !== {} && offer.value;
+    const hasOffer = offer && offer.value;
     const hasCompetitors = event.sport.has_competitors;
 
     const { competitorsHaveLogo } = event.competition;
     const { competitors } = event;
+    console.log("EVENT: ", event);
 
     //TODO: Da sostituire con i colori dei competitor presi dal server
-    const firstCompetitorColor = "#ABCDDD";
-    const secondCompetitorColor = "#2752A5";
+    const firstCompetitorColor = event.competitors[0] && event.competitors[0].color ? event.competitors[0].color : "#ABCDDD";
+    const secondCompetitorColor = event.competitors[1] && event.competitors[1].color ? event.competitors[1].color : "#2752A5";
 
     let date = moment(event.start_at).format('dddd D MMMM');
 
@@ -459,7 +469,9 @@ const styles = StyleSheet.create({
   competitorNameInButton: {
     color: themes.base.colors.white.light,
     fontFamily: Fonts.LatoBold,
-    fontSize: 16
+    fontSize: 16,
+    alignSelf: "center",
+    textAlign: "center"
   },
   votesBar: {
     marginTop: 16,

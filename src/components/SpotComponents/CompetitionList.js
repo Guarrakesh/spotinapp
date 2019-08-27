@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FlatList, View, StyleSheet, ActivityIndicator, Image} from 'react-native';
+import {FlatList, View, StyleSheet, ActivityIndicator, Image, Linking} from 'react-native';
 import { withNamespaces } from 'react-i18next';
-import { Typography } from '../common';
+import {Button, Typography} from '../common';
 import CompetitionCard from './CompetitionCard';
 import themes from '../../styleTheme';
 import {Fonts} from "../common/Fonts";
 
 import Images from '../../assets/images';
 const CompetitionList = ({
-    isLoading,
-    data,
-    ids,
-    refresh,
-    isRefreshing,
-    onItemPress,
-    noContent,
-    t
-}) => {
+                           isLoading,
+                           data,
+                           ids,
+                           refresh,
+                           isRefreshing,
+                           onItemPress,
+                           onContactUsPress,
+                           noContent,
+                           t
+                         }) => {
 
 
   const handlePress = (id, name) => {
@@ -32,16 +33,16 @@ const CompetitionList = ({
     const competition = data[item] || {};
 
     return (<CompetitionCard
-        key={item}
-        animate
-        index={index}
-        onPress={() => handlePress(item, competition.name)}
-        {...competition} />)
+      key={item}
+      animate
+      index={index}
+      onPress={() => handlePress(item, competition.name)}
+      {...competition} />)
   };
 
   const keyExtractor = (item) => item._id;
   const itemLayout = (data, index) => (
-      {length: 100, offset: (100+8)* index, index}
+    {length: 100, offset: (100+8)* index, index}
   );
 
   if (isLoading) {
@@ -60,26 +61,61 @@ const CompetitionList = ({
                      uppercase >
           {t("browse.noCompetitions")}
         </Typography>
+        <View style={styles.noFoundView}>
+          <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundEvent")}</Typography>
+          <Button
+            containerStyle={{marginBottom: 8}}
+            variant="primary"
+            onPress={() => onContactUsPress()}
+            round
+            uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+        </View>
       </View>
     )
   }
+
+  const footer = () => {
+    if(isLoading){
+      return (
+        <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
+      )
+    }
+    else if(ids.length > 0 && !isLoading) {
+      return (
+        <View style={styles.noFoundView}>
+          <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundCompetition")}</Typography>
+          <Button
+            containerStyle={{marginBottom: 8}}
+            variant="primary"
+            onPress={() => onContactUsPress()}
+            round
+            uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+        </View>
+      )
+    }
+    else {
+      return null;
+    }
+  };
+
   return (
 
-      <FlatList
-          ListHeaderComponent={
-            <Typography
-                style={{margin: 8, color: '000',fontWeight: '900'}}
-                align="center"
-                uppercase gutterBottom
-            >{t("browse.selectCompetition")}</Typography>}
-          contentContainerStyle={styles.container}
-          data={ids}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          refreshing={isRefreshing}
-          onRefresh={refresh}
-          getItemLayout={itemLayout.bind(this)}
-      />
+    <FlatList
+      ListHeaderComponent={
+        <Typography
+          style={{margin: 8, color: '000',fontWeight: '900'}}
+          align="center"
+          uppercase gutterBottom
+        >{t("browse.selectCompetition")}</Typography>}
+      contentContainerStyle={styles.container}
+      data={ids}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      refreshing={isRefreshing}
+      onRefresh={refresh}
+      getItemLayout={itemLayout.bind(this)}
+      ListFooterComponent={footer()}
+    />
 
   );
 
@@ -114,7 +150,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: themes.base.colors.text.default
   },
-
+  noFoundView: {
+    padding: 8,
+    alignItems: "center",
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
+    margin: 16,
+    paddingTop: 8,
+    borderWidth: 1,
+    borderColor: themes.base.colors.white.divisor
+  }
 });
 
 

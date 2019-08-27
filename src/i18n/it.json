@@ -19,6 +19,10 @@
     "selectEvent"         : "Seleziona evento",
     "noCompetitions"      : "Non ci sono competizioni al momento",
     "noEvents"            : "Non ci sono eventi al momento",
+    "noFoundGeneric"      : "Non hai trovato quello che cercavi?",
+    "weFindBusiness"      : "troveremo noi il locale piu' adatto a te!",
+    "noFoundCompetition"  : "Non hai trovato la competizione che cercavi?",
+    "noFoundEvent"        : "Non hai trovato l'evento che cercavi?",
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "Non ci sono locali che trasmettono questo evento...",
@@ -27,7 +31,7 @@
       },
 
 
-      "contactUs"          : "Contattaci",
+      "contactUs"         : "Contattaci",
       "weOrganizeForYou"  : "Organizziamo l'evento per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",
       "howMuchTravel"     : "Quanto sei disposto a spostarti?",

@@ -126,8 +126,8 @@ class BusinessMapScreen extends React.Component {
                 coordinate={{
                   latitude: data[id].dist.location.coordinates[1],
                   longitude: data[id].dist.location.coordinates[0]}}
-                title={businesses[data[id].business].name}
-                description={data[id].offer.title}
+                title={businesses[data[id].business] ? businesses[data[id].business].name : ""}
+                description={data[id].offer ? data[id].offer.title : ""}
               />
             )
           }
