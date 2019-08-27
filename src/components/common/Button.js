@@ -1,138 +1,74 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  ActivityIndicator,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import themes, {accentColor, dangerColor, textColor, whiteColor} from '../../styleTheme';
-import Touchable from '../common/Touchable';
+import PropTypes from 'prop-types';
+import { Platform, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import { Button as BaseButton } from 'react-native-elements';
 
+import themes, { accentColor, dangerColor, infoColor, primaryColor, textColor, whiteColor, warningColor } from '../../styleTheme';
 const fonts = themes.base.fonts;
 
 export default class Button extends React.Component {
 
-  _renderInnerText() {
-    const { uppercase, clear, loadingProps, variant} = this.props;
-    const _loadingProps = [{
-      size: uppercase ? "large" : "small",
-      color: clear ? themes.base.colors[variant] : "#fff",
-    }, loadingProps];
 
-    if (this.props.loading) {
-      const { size, color } = _loadingProps;
-      return (
-          <ActivityIndicator
-              animating={true}
-              style={[{alignSelf: 'center'}, _loadingProps.style]}
-              size={size}
-              color={color}
-          />
-      )
-    } else {
-      return this._renderChildren()
-    }
-  }
-
-  _renderChildren() {
-    const { icon, clear, size, uppercase, titleStyle, variant, children  } = this.props;
-    const _titleBaseStyle = [
-      styles.titleBase,
-      clear ? styles[`${variant}Simple`] : { color: styles[variant].color },
-
-      uppercase && {fontFamily: fonts.LatoBold},
-      titleStyle,
-      icon ? { marginLeft: 8 } : {},
-
-    ];
-    return (
-        <React.Fragment>
-          {icon}
-          <Text
-              style={_titleBaseStyle}
-              allowFontScaling
-          >
-            {typeof children === "string"  && uppercase ? children.toUpperCase() : children}
-          </Text>
-        </React.Fragment>
-    )
-  }
   render() {
 
-    const { clear, variant, round, uppercase, children, block, containerStyle, elevation, titleProps,
-      size, background,
+    const { clear, variant, round, buttonStyle, titleStyle, uppercase, children
+      , loadingProps, loadingStyle, block, containerStyle, elevation, titleProps,
+      icon, size,
 
       ...props} = this.props;
 
     //TODO tutta la roba dell'ombra e dei ripple
 
-    // const _style = StyleSheet.flatten([
-    //   clear ? { backgroundColor: 'transparent', elevation: 0} : {backgroundColor: 'transparent', elevation: 0},
-    //   styles.base,
-    //   styles.round,
-    //   buttonStyle,
-    //
-    // ]);
-    const _containerStyle = StyleSheet.flatten([
+    const _style = StyleSheet.flatten([
+      clear ? { backgroundColor: 'transparent', elevation: 0} : {backgroundColor: 'transparent', elevation: 0},
       styles.base,
+      styles.round,
+      buttonStyle,
+
+    ]);
+    const _containerStyle = StyleSheet.flatten([
       clear ? { } : styles[variant],
+
       round || clear ? styles.round : {},
-      block ? { alignSelf: 'stretch' } : { width: 150 },
+      block ? { width: '100%' } : { width: 150 },
 
       !clear && { elevation, ...themes.base.elevations[`depth${elevation}`] },
-      size === "big"
-          ? { paddingTop: 10, paddingBottom: 10  }
-          : { paddingTop: 8, paddingBottom: 8},
+
       styles.container,
       containerStyle
     ]);
+    const _titleBaseStyle = [
+      styles.titleBase,
+      clear ? styles[`${variant}Simple`] : { color: styles[variant].color },
+      size === "big" ? { fontSize: 17 } : {},
+      uppercase && {fontFamily: fonts.LatoBold},
+      titleStyle,
+    ];
 
+    const _loadingProps = [{
+      size: uppercase ? "large" : "small",
+      color: clear ? themes.base.colors[variant] : "#fff",
+    }, loadingProps];
+    return (
 
+      <BaseButton
+        containerStyle={[_containerStyle, {overflow: 'hidden'}]}
+        activeOpacity={0.2}
+        buttonStyle={_style}
+        background={TouchableNativeFeedback.Ripple( 'ThemeAttrAndroid', false )} //blocca il ripple al borderRadius
+        titleProps={{
+          numberOfLines: 1,
+          ...titleProps
+        }}
+        titleStyle={_titleBaseStyle}
+        icon={icon}
+        title={typeof children === "string"  && uppercase ? children.toUpperCase() : children}
+        loadingStyle={[{fontSize: styles.titleBase.fontSize, padding: 8}, loadingStyle]}
+        loadingProps={_loadingProps}
+        {...props}
+      />
 
-
-    if (Platform.OS === "Android") {
-      return <TouchableNativeFeedback
-          {...props}
-          background={background || TouchableNativeFeedback.SelectableBackground()}
-      >
-        <View style={[_containerStyle]}>
-          {this._renderInnerText()}
-        </View>
-
-      </TouchableNativeFeedback>
-    } else {
-      return (
-          <TouchableOpacity
-              {...props}
-              style={_containerStyle}>
-            {this._renderInnerText()}
-          </TouchableOpacity>
-      )
-    }
-    // return (
-    //
-    //     <Touchable
-    //         containerStyle={_containerStyle}
-    //         activeOpacity={0.2}
-    //         titleProps={{
-    //           numberOfLines: 1,
-    //           ...titleProps
-    //         }}
-    //
-    //         loadingStyle={[{fontSize: styles.titleBase.fontSize, padding: 8}, loadingStyle]}
-    //         loadingProps={_loadingProps}
-    //         {...props}
-    //     >
-    //       <View style={styles.titleView}>
-    //         {icon}
-    //         <Text style={_titleBaseStyle}>{typeof children === "string"  && uppercase ? children.toUpperCase() : children}</Text>
-    //       </View>
-    //     </Touchable>
-    // )
+    )
 
   }
 
@@ -146,6 +82,7 @@ Button.defaultProps = {
 };
 Button.propTypes = {
   titleStyle: PropTypes.object,
+  buttonStyle: PropTypes.object,
   containerStyle: PropTypes.object,
   block: PropTypes.bool,
   elevation: PropTypes.number,
@@ -155,39 +92,25 @@ Button.propTypes = {
   clear: PropTypes.bool,
   icon: PropTypes.element,
   size: PropTypes.string,
-  loading: PropTypes.bool,
-  loadingProps: PropTypes.shape({
-    color: PropTypes.string,
-    size: PropTypes.oneOf(['small','large'])
-  }),
-  onPress: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
 
-  titleView: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  containerView: {
+    overflow: 'hidden',
+    borderRadius: 50
   },
   base: {
+    width: '100%',
     fontFamily: fonts.LatoMedium,
     color: '#555',
-    overflow: "hidden",
-    height: 44,
-    flexDirection: 'row',
-    alignItems: 'center',
-
-    justifyContent: 'center',
+    overflow: "hidden"
 
   },
   titleBase: {
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: fonts.LatoMedium,
-    color: '#fff',
-    textAlign: 'center',
-
+    color: '#fff'
   },
   default: {
     backgroundColor: whiteColor.default,

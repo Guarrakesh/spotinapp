@@ -61,7 +61,8 @@ class LoginScreen extends React.Component {
     this.props.userRegister(formValues);
   }
   _handleGoBack() {
-    this.props.navigation.goBack(null)
+
+    this.props.navigation.navigate("Main");
   }
   render() {
 

@@ -56,7 +56,7 @@ const SportList = ({
 
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: themes.base.colors.white.default}}>
       <Typography
           style={{margin: 8, color: '000', fontWeight: '900'}}
           align="center"

@@ -71,13 +71,13 @@ function currentLocationReducer(state = 'device', action) {
  * Se invece l'utente
  */
 export const positionSelector = (state) => {
-  // Seleziona le coordinate in base al currentLccation
+  // Seleziona le coordinate in base al currentLocation
   const currentLocation = state.location.currentLocation;
   if (state.location[currentLocation].position) {
     return state.location[currentLocation].position;
   }
   return undefined;
-}
+};
 export const coordsSelector = state => {
   const subState = state.location.currentLocation;
   return {

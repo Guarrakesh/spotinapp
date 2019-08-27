@@ -1,7 +1,13 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 import themes from "../../styleTheme";
 const colors = themes.base.colors;
 
+const androidBorder = Platform.OS === "android"
+  ? {
+      borderBottomWidth: 2,
+      borderRadius: 0,
+      borderColor: '#ddd',
+    } : {};
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     paddingLeft: 16,
     marginBottom: 16,
+    ...androidBorder,
   },
   input: {
     flexBasis: 200,
@@ -60,6 +67,7 @@ const styles = StyleSheet.create({
     color: colors.text.dark,
     fontWeight: '500',
     justifyContent: 'center',
+    minHeight: 44,
 
   },
   inputIcon : {

@@ -18,6 +18,7 @@ import {fetchStart, fetchEnd} from "../../actions/fetchActions";
 import {showNotification} from "../../actions/notificationActions";
 import signup from "../../validations/signup";
 import validate from "validate.js";
+import { coordsSelector } from "../../reducers/location";
 
 const colors = themes.base.colors;
 const deviceWidth = themes.base.deviceDimensions.width;
@@ -296,17 +297,17 @@ class ContactUsScreen extends React.Component{
               <View style={styles.distancesContainer}>
                 {distances.map(dist => (
                   <Button
-                    containerStyle={[{flexGrow: 1, flexBasis: 30, maxHeight: 40},
+                    containerStyle={[{flex: 1, flexBasis: 30, maxHeight: 40},
                       dist === distances[0]
-                        ? {borderTopLeftRadius: 50, borderBottomLeftRadius: 50 }
-                        : dist === distances[distances.length-1] ? {borderTopRightRadius: 50, borderBottomRightRadius: 50} : {} ]}
+                        ? {borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }
+                        : dist === distances[distances.length-1] ? {borderTopRightRadius: 20, borderBottomRightRadius: 20} : {} ]}
                     variant={this.state.maxDistance === dist ? "primary" : "default"}
                     //buttonStyle={this.state.maxDistance === dist ? {borderColor: colors.accent.default} :  {borderColor: colors.white.light}}
                     onPress={() => { this.setState({maxDistance: dist}) }}
                   >{dist + ' km'}</Button>
                 ))}
               </View>
-              <Text style={[styles.header, {marginTop: -16}]}>{t("browse.noBroadcasts.howManyPeople")}</Text>
+              <Text style={[styles.header, {paddingTop: 16}]}>{t("browse.noBroadcasts.howManyPeople")}</Text>
               <View style={styles.peopleCard} elevation={2}>
                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                   <Text style={styles.peopleText}>{this.state.numOfPeople}</Text>
@@ -353,7 +354,8 @@ class ContactUsScreen extends React.Component{
 
 const mapStateToProps = (state) => {
 
-  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+  const { latitude, longitude } = coordsSelector(state);
+
   const isLoading = state.loading > 0;
   const userId = state.auth.profile._id;
   const profile = state.auth.profile;

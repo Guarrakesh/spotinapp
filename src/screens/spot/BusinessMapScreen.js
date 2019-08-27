@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from '../../components/common/View';
-import { StyleSheet, FlatList, InteractionManager, Animated } from 'react-native';
-import MapView from 'react-native-maps';
+import { StyleSheet, Text, InteractionManager, Animated } from 'react-native';
+import MapView, { AnimatedRegion, Animated as AnimatedMap } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
-
+import { coordsSelector } from "../../reducers/location";
 import themes from '../../styleTheme';
 
 import BroadcastFloatingCard from '../../components/BroadcastComponents/BroadcastFloatingCard';
@@ -28,33 +28,61 @@ class BusinessMapScreen extends React.Component {
 
     this._centerMapOnMarker = this._centerMapOnMarker.bind(this);
     this.slideCarousel = this.slideCarousel.bind(this);
+    this.onMarkerPress = this.onMarkerPress.bind(this);
   }
 
   componentDidMount() {
     //Evito la transizione a tratti (carico la mappa dopo che la transizione è finita)
     InteractionManager.runAfterInteractions(() => this.setState({transitionFinished: true}));
+
+    const { ids, data } = this.props.navigation.state.params;
+
+    this.setState({
+      region: new AnimatedRegion({
+        latitude: data[ids[0]].dist.location.coordinates[1],
+        longitude: data[ids[0]].dist.location.coordinates[0],
+        latitudeDelta: this.latitudeDelta,
+        longitudeDelta: this.longitudeDelta
+      })
+    })
   }
 
   _centerMapOnMarker(index) {
     const { data, ids } = this.props.navigation.state.params;
     const location = data[ids[index]].dist.location;
-    this.setState({
-      region: {
-        latitude: location.coordinates[1],
-        longitude: location.coordinates[0],
-        latitudeDelta: this.latitudeDelta,
-        longitudeDelta: this.longitudeDelta
-      }
+
+    const {region} = this.state;
+
+    requestAnimationFrame(() => {
+      region.timing({
+        latitude:  location.coordinates[1], // selected marker lat
+        longitude: location.coordinates[0], // selected marker lng
+      }).start();
+    });
+
+  }
+
+  slideCarousel() {
+    requestAnimationFrame(() => {
+      Animated.timing(this.state.carouselY, {
+        toValue: (this.state.carouselVisible ? 220 : 20),
+        duration: 500,
+      }).start(() => this.setState({
+        carouselVisible: !this.state.carouselVisible
+      }));
     })
   }
-  slideCarousel() {
-    Animated.timing(this.state.carouselY, {
-      toValue: (this.state.carouselVisible ? 220 : 20),
-      duration: 500,
-    }).start();
-    this.setState({
-      carouselVisible: !this.state.carouselVisible
-    });
+
+  onMarkerPress(business) {
+    const { ids } = this.props.navigation.state.params;
+    const indexToScroll = ids.indexOf(business.id);
+
+    requestAnimationFrame(() => {
+      if(!this.state.carouselVisible){
+        this.slideCarousel();
+      }
+      this.carousel.snapToItem(indexToScroll, true, false); //fireCallback false per non triggerare onSnapToItem del carousel
+    })
   }
 
   render() {
@@ -65,69 +93,74 @@ class BusinessMapScreen extends React.Component {
 
     if (ids.length === 0) {
       return (
-          <View style={themes.base.noContentView}>
-            <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
-          </View>
+        <View style={themes.base.noContentView}>
+          <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
+        </View>
       )
     }
 
-    const region = {
+    const region = new AnimatedRegion({
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
-    };
+    });
 
     const sliderWidth = themes.base.deviceDimensions.width;
 
     return (
-        <View style={{flex:1}}>
-          <MapView style={styles.map}
-                   region={this.state.region || region}
-                   onPress={this.slideCarousel}
+      <View style={{flex:1}}>
+        <AnimatedMap
+          style={styles.map}
+          region={this.state.region || region}
+          onPress={this.slideCarousel}
+          onRegionChange={() => null}
+        >
 
-          >
+          {
+            ids.map(id =>
 
-            {
-              ids.map(id =>
+              <MapView.Marker
+                pointerEvents={"auto"}
+                onPress={(e) => {e.stopPropagation(); this.onMarkerPress(data[id])}} //stopPropagation disabilita il MapPress su ios
+                coordinate={{
+                  latitude: data[id].dist.location.coordinates[1],
+                  longitude: data[id].dist.location.coordinates[0]}}
+                title={businesses[data[id].business] ? businesses[data[id].business].name : ""}
+                description={data[id].offer ? data[id].offer.title : ""}
+              />
+            )
+          }
 
-                  <MapView.Marker
-                      coordinate={{
-                        latitude: data[id].dist.location.coordinates[1],
-                        longitude: data[id].dist.location.coordinates[0]}}
-                      title={businesses[data[id].business].name}
-                      description={data[id].offer.title}
-                  />
-              )
+        </AnimatedMap>
+        <Animated.View style={{
+          transform: [{translateY: this.state.carouselY}],
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          paddingBottom: 20
+        }}>
+          <Carousel
+            ref={carousel => this.carousel = carousel}
+            data={ids}
+            activeSlideAlignment={"center"}
+            renderItem={({item}) =>
+              <BroadcastFloatingCard elevation={5}
+                                     broadcast={data[item]}
+                                     style={{flex: 1}}
+                                     onPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
             }
+            itemWidth={sliderWidth - 80}
+            sliderWidth={sliderWidth}
+            activeAnimationType={'spring'}
+            inactiveSlideOpacity={1}
+            inactiveSlideScale={1}
+            removeClippedSubviews={false}
+            onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
 
-          </MapView>
-          <Animated.View style={{
-            transform: [{translateY: this.state.carouselY}],
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            paddingBottom: 20
-          }}>
-            <Carousel
-                data={ids}
-                activeSlideAlignment={"center"}
-                renderItem={({item}) =>
-                    <BroadcastFloatingCard elevation={5}
-                                           broadcast={data[item]}
-                                           style={{flex: 1}}
-                                           onPress={() => this.handleBusPress(item, data[item].business, data[item].dist)}/>
-                }
-                itemWidth={sliderWidth - 80}
-                sliderWidth={sliderWidth}
-                activeAnimationType={'spring'}
-                inactiveSlideOpacity={1}
-                inactiveSlideScale={1}
-                onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
-
-            />
-          </Animated.View>
-        </View>
+          />
+        </Animated.View>
+      </View>
     )
   }
 
@@ -158,7 +191,8 @@ const mapStateToProps = (state, props) => {
 
 
 
-  const  {latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {}
+  const { latitude, longitude } = coordsSelector(state);
+
   return {
     latitude, longitude,
     businesses: businesses,

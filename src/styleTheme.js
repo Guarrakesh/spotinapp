@@ -94,7 +94,7 @@ const themes = {
     }
   },
   base: {
-    borderRadius: 4,
+    borderRadius: 8,
     colors: {
 
       primary: primaryColor,

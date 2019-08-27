@@ -17,7 +17,6 @@ const BroadcastCard = ({
 
   const { business, dist, offer } = broadcast;
 
-
   // Business deve essere un'id
   if (typeof business !== "string") return null;
 

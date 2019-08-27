@@ -23,7 +23,7 @@ const HomeStack = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          color: themes.base.colors.accent.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
       }
@@ -38,7 +38,7 @@ const HomeStack = createStackNavigator({
           width: '100%',
           textAlign: 'center',
           alignSelf: 'center',
-          color: themes.base.colors.text.default,
+          color: themes.base.colors.accent.default,
           marginLeft: Platform.OS === 'android' ? -10 : null,
         },
       }
@@ -48,10 +48,12 @@ const HomeStack = createStackNavigator({
       headerBackTitle: null,
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}
-        name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>)
-
+        name="ios-arrow-round-back" style={{marginLeft: Platform.OS === 'android' ? 0 : 16}} size={48}/>),
+      headerTitleStyle: {
+        color: themes.base.colors.accent.default
+      }
     }
-    }
+  }
 
 );
 

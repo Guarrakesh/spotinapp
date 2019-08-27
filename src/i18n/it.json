@@ -19,6 +19,10 @@
     "selectEvent"         : "Seleziona evento",
     "noCompetitions"      : "Non ci sono competizioni al momento",
     "noEvents"            : "Non ci sono eventi al momento",
+    "noFoundGeneric"      : "Non hai trovato quello che cercavi?",
+    "weFindBusiness"      : "troveremo noi il locale piu' adatto a te!",
+    "noFoundCompetition"  : "Non hai trovato la competizione che cercavi?",
+    "noFoundEvent"        : "Non hai trovato l'evento che cercavi?",
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "Non ci sono locali che trasmettono questo evento...",
@@ -27,7 +31,7 @@
       },
 
 
-      "contactUs"          : "Contattaci",
+      "contactUs"         : "Contattaci",
       "weOrganizeForYou"  : "Organizziamo l'evento per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",
       "howMuchTravel"     : "Quanto sei disposto a spostarti?",
@@ -48,6 +52,7 @@
     "nearOffers"         : "Offerte intorno a te",
     "getOffer": {
       "buttonTitle"            : "Ottieni offerta",
+      "join"                   : "Partecipa",
       "recommended"            : "Offerta consigliata",
       "title"                  : "Vuoi ottenere quest'offerta?",
       "info"                   : "Partecipando all'evento puoi usufruire del {{offer}}",
@@ -56,6 +61,10 @@
       "confirm"                : "Conferma",
       "howManyPeople"          : "Quante persone sarete?",
       "dontKnow"               : "Non so",
+      "whomSupport"            : "Per chi tiferai?",
+      "typeWhom"               : "Scrivi per chi tiferai",
+      "supportersEstimation"   : "Stima dei tifosi da",
+      "cheerWithUs"            : "Tifa con noi da",
       "notification": {
         "title"                : "Ottimo",
         "message"              : "Hai ottenuto l'offerta"
@@ -238,7 +247,8 @@
     "passwordConfirm"     : "Conferma la password",
     "longPressToRemove": "Tieni premuto per rimuovere un elemento",
     "update": "Aggiorna",
-    "next": "Avanti"
+    "next": "Avanti",
+    "noBusinesses" : "Nessun locale trovato"
   },
 
 
@@ -271,7 +281,7 @@
         "emailRequired"     : "^Inserisci la tua email",
         "emailNotValid"     : "^L'email che hai inserito non è valida",
         "passwordRequired"  : "^Inserisci la tua password",
-        "passwordLength"    : "^La password deve contenere almeno 6 caratteri",
+        "passwordLengthMin"    : "^La password deve contenere almeno 6 caratteri",
         "passwordLengthMax" : "^La password non può superare i 128 caratteri",
 
         "nameRequired"      : "^Inserisci il tuo nome",

@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
   inputOuterContainer: {
     ...signInStyles.inputOuterContainer,
     borderWidth: 2,
+    borderRadius: 4,
     borderColor: 'transparent',
   },
   inputError: {

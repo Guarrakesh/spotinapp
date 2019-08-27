@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Alert} from 'react-native';
+import {Alert, Linking} from 'react-native';
 import i18n from '../../i18n/i18n';
 /* Firebase */
 import firebase from 'react-native-firebase';
@@ -22,6 +22,7 @@ class EventScreen extends React.Component {
 
     this.handleEventPress = this.handleEventPress.bind(this);
     this.handleEventFavoritePress = this.handleEventFavoritePress.bind(this);
+    this.handleContactUsPress = this.handleContactUsPress.bind(this);
   }
 
   handleEventPress(eventId, event) {
@@ -56,6 +57,11 @@ class EventScreen extends React.Component {
       )
     }
 
+  }
+
+  handleContactUsPress() {
+    const competitionName = this.props.navigation.state.params.title;
+    Linking.openURL(`https://wa.me/+393512486394?text=Ciao,%20non%20riesco%20a%20trovare%20un%20evento%20di%20${competitionName},%20potete%20aiutarmi?`);
   }
 
   createPushNotification(event) {
@@ -127,6 +133,7 @@ class EventScreen extends React.Component {
         infiniteScroll
         filter={{next_events: true, competition: competitionId}}>
         { controllerProps => <EventList
+          onContactUsPress={this.handleContactUsPress}
           onItemPress={this.handleEventPress}
           onFavoritePress={this.handleEventFavoritePress}
           { ...controllerProps }

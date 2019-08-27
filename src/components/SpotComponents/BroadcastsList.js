@@ -40,51 +40,66 @@ class BroadcastsList extends React.Component {
 
     if (noContent) {
       return (
-          <View style={themes.base.noContentView}>
-            <Image source={Images.icons.common.connect}/>
-            <Typography variant="subheading" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
-            <Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
-                         uppercase  gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
-            <Button variant="primary" onPress={onContactUsPress}
-                    round uppercase>{t("browse.noBroadcasts.contactUsCta.buttonTitle")}</Button>
-          </View>
+        <View style={themes.base.noContentView}>
+          <Image source={Images.icons.common.connect}/>
+          <Typography variant="subheading" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
+          <Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
+                       uppercase  gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
+          <Button variant="primary" onPress={onContactUsPress}
+                  round uppercase>{t("browse.noBroadcasts.contactUsCta.buttonTitle")}</Button>
+        </View>
       )
     }
 
+    const footer = () => (
+      <View style={styles.noFoundView}>
+        <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundGeneric")}</Typography>
+        <Button
+          containerStyle={{marginBottom: 8}}
+          variant="primary"
+          onPress={onContactUsPress}
+          round
+          uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+        <Typography variant="body" gutterBottom align={"center"}>{t("browse.weFindBusiness")}</Typography>
+      </View>
+    );
+
     return (
-        <View style={{flex: 1}}>
-          <AnimatedFlatList
-              {...rest}
-              scrollEventThrottle={15}
-              data={ids}
-              refreshing={isRefreshing}
-              onRefresh={refresh}
-              renderItem={({item, index}) => <BroadcastFloatingCard
-                  index={index}
-                  overlayOpacity={0.8}
-                  titleStyle={{fontSize: 18}}
-                  elevation={2}
-                  onPress={() =>  this._onItemPress(data[item], data[item].dist)}
-                  broadcast={data[item]}/>}
-
-              contentContainerStyle={[styles.container, style]}
-          />
-          <Button
-              disabled={isLoading}
-              onPress={() => onMapPress({data, ids})}
-              variant="primary"
-              containerStyle={styles.mapButton}
-              titleStyle={{fontSize: 24}}
-          >
-            <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
-          </Button>
-
-        </View>
+      <View style={{flex: 1}}>
+        <AnimatedFlatList
+          {...rest}
+          ListFooterComponent={ids.length > 0 ? footer : null}
+          scrollEventThrottle={15}
+          data={ids}
+          refreshing={isRefreshing}
+          onRefresh={refresh}
+          renderItem={({item, index}) => <BroadcastFloatingCard
+            index={index}
+            overlayOpacity={0.8}
+            titleStyle={{fontSize: 18}}
+            elevation={2}
+            onPress={() =>  this._onItemPress(data[item], data[item].dist)}
+            broadcast={data[item]}/>}
+          contentContainerStyle={[styles.container, style]}
+        />
+        {
+        ids.length > 0 ?
+        <Button
+          disabled={isLoading}
+          onPress={() => onMapPress({data, ids})}
+          variant="primary"
+          containerStyle={styles.mapButton}
+          titleStyle={{fontSize: 24}}
+        >
+          <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+        </Button>: null
+        }
+      </View>
 
     );
   }
 
-};
+}
 
 BroadcastsList.propTypes = {
   //screen props
@@ -141,6 +156,16 @@ const styles = StyleSheet.create({
     bottom: 16,
     borderRadius: 32,
     justifyContent: 'center',
+  },
+  noFoundView: {
+    padding: 8,
+    alignItems: "center",
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
+    margin: 16,
+    paddingTop: 8,
+    borderWidth: 1,
+    borderColor: themes.base.colors.white.divisor
   }
 });
 

@@ -13,6 +13,7 @@ import ReferenceField from "../../components/common/ReferenceField"
 import themes from "../../styleTheme";
 import i18n from '../../i18n/i18n';
 import { entityView } from "../../actions/view";
+import { coordsSelector } from "../../reducers/location";
 
 const Fonts = themes.base.fonts;
 const HEADER_HEIGHT = 100;
@@ -47,7 +48,7 @@ class BroadcastsScreen extends React.Component {
       headerTitleStyle: {
         textAlign: 'center',
         alignSelf: 'center',
-        color: themes.base.colors.text.default,
+        color: themes.base.colors.accent.default,
         flex: 1,
         marginRight: Platform.OS === 'android' ? 75 : null,
       },
@@ -56,7 +57,7 @@ class BroadcastsScreen extends React.Component {
         shadowColor: 'transparent',
         elevation: 0,
         borderBottomWidth: 0,
-        backgroundColor: themes.base.colors.primary.default
+        //backgroundColor: themes.base.colors.primary.default
       },
     }
   };
@@ -144,7 +145,7 @@ class BroadcastsScreen extends React.Component {
 
     let date = event ? moment(event.start_at).format('D MMMM [' + i18n.t("common.at") +'] HH:mm') : "";
 
-    //TODO: Fare qualcosa qui in caso di mancata posizione!
+    //TODO: Fare qualcosa qui in caso di mancata posizione!cd ios
     if (!position) return null;
 
 
@@ -165,7 +166,7 @@ class BroadcastsScreen extends React.Component {
       <View style={styles.container}>
         <ListController
           id={this.listId(eventId)}
-          perPage="15"
+          perPage="1000"
           resource="broadcasts"
           sort={{field: 'dist.calculated', order: 'asc'}} //non funziona
           filter={{event: eventId}}
@@ -206,13 +207,18 @@ class BroadcastsScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { latitude, longitude } = state.location.device.position ? state.location.device.position.coords : {};
+  // const { latitude, longitude } = state.location.address.position ?
+  //   state.location.address.position.coords :
+  //   state.location.device.position ? state.location.device.position.coords : {};
+
+  const { latitude, longitude } = coordsSelector(state);
+
   const { loggedIn } = state.auth;
   return {
     loggedIn, latitude, longitude
   }
 
-}
+};
 
 
 const styles = StyleSheet.create({
@@ -228,7 +234,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: themes.base.colors.primary.default
+    backgroundColor: themes.base.colors.white.light
   },
   eventName: {
     fontSize: 24,

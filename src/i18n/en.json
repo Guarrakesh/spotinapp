@@ -18,6 +18,10 @@
     "selectEvent"         : "Select the event",
     "noCompetitions"      : "No tournaments for now",
     "noEvents"            : "No events for now",
+    "noFoundGeneric"      : "Didn't find what you were looking for?",
+    "weFindBusiness"      : "we will find the best place for you!",
+    "noFoundCompetition"  : "Didn't find the competition you were looking for?",
+    "noFoundEvent"        : "Didn't find the event you were looking for?",
     "noBroadcasts"  : {
       "contactUsCta"  : {
         "title"             : "This event is not broadcasted anywhere...",
@@ -46,6 +50,7 @@
     "nearOffers"         : "Near offers",
     "getOffer": {
       "buttonTitle"       : "Get offer",
+      "join"              : "Join",
       "title"             : "Would you like to get this offer?",
       "info"              : "If you get this offer you will receive {{offer}}",
       "additionalInfo"    : "The offer doesn't include a booked table in this restaurant",
@@ -53,6 +58,10 @@
       "confirm"           : "Confirm",
       "howManyPeople"     : "How many people will you be?",
       "dontKnow"          : "Don't know",
+      "whomSupport"       : "Whom are you going to support?",
+      "typeWhom"          : "Type for whom you will support",
+      "supportersEstimation" : "Supporters estimation at",
+      "cheerWithUs"       : "Cheer with us at",
       "notification" : {
         "title"           : "Great!",
         "message"         : "You obtained this deal"
@@ -234,8 +243,8 @@
     "passwordConfirm"     : "Confirm password",
     "longPressToRemove": "Long press to remove an item",
     "update": "Update",
-    "next": "Next"
-
+    "next": "Next",
+    "noBusinesses" : "No businesses found"
   },
 
 
@@ -253,7 +262,7 @@
       "formError": {
         "title"             : "Wait, we have a problem:",
         "emailRequired"     : "^Email is required",
-        "passwordRequired"  : "^Password is required",
+        "passwordRequired"  : "^Password is required"
 
       }
     },
@@ -266,7 +275,7 @@
         "emailRequired"     : "^Email is required",
         "emailNotValid"     : "^Email is not valid",
         "passwordRequired"  : "^Password is required",
-        "passwordLength"    : "^Password must contain at least 6 characters",
+        "passwordLengthMin"    : "^Password must contain at least 6 characters",
         "passwordLengthMax" : "^Password must not be longer than 128 characters",
         "nameRequired"      : "^Your name is required",
         "nameLengthMin"        : "^Name field must contain at least 2 characters",

@@ -16,6 +16,7 @@ import {Fonts} from "../../components/common/Fonts";
 import ReviewFloatingCard from "../../components/ProfileComponents/reviews/ReviewFloatingCard";
 import { profileGetInfo } from "../../actions/profile";
 import NavigationService from "../../navigators/NavigationService";
+import { coordsSelector } from "../../reducers/location";
 
 /*
 const response = {
@@ -389,7 +390,7 @@ const styles = StyleSheet.create({
 
 export default connect((state) => ({
   userId: state.auth.profile._id,
-  position: state.location.device.position ? state.location.device.position.coords : null
+  position: coordsSelector(state)
 }), {
   sendReview,
   profileGetInfo,

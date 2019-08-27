@@ -1,20 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import View from '../../components/common/View';
-import {StyleSheet, FlatList, InteractionManager, Animated, Text} from 'react-native';
-import MapView from 'react-native-maps';
-import Swiper from 'react-native-swiper';
+import {Animated, InteractionManager, StyleSheet, Text} from 'react-native';
+import MapView, { AnimatedRegion, Animated as AnimatedMap } from 'react-native-maps';
 import themes from '../../styleTheme';
 
 import BusinessCard from '../../components/BusinessComponents/BusinessCard';
 import Carousel from "react-native-snap-carousel";
-import BroadcastFloatingCard from "../../components/BroadcastComponents/BroadcastFloatingCard";
-import { entityView } from "../../actions/view";
+import {entityView} from "../../actions/view";
 
 class BusinessMapInBusiness extends React.Component {
 
-  state = {transitionFinished: false, region: null,
-    carouselVisible: true, carouselY: new Animated.Value(20)
+  state = {
+    transitionFinished: false,
+    region: null,
+    carouselVisible: true,
+    carouselY: new Animated.Value(20)
   };
 
   latitudeDelta = 0.1;
@@ -25,68 +26,105 @@ class BusinessMapInBusiness extends React.Component {
 
     this._centerMapOnMarker = this._centerMapOnMarker.bind(this);
     this.slideCarousel = this.slideCarousel.bind(this);
+    this.onMarkerPress = this.onMarkerPress.bind(this);
 
   }
 
   componentDidMount() {
     //Evito la transizione a tratti (carico la mappa dopo che la transizione è finita)
     InteractionManager.runAfterInteractions(() => this.setState({transitionFinished: true}));
-  }
 
-  _centerMapOnMarker(index) {
-    const { data, ids } = this.props.navigation.state.params;
-    const location = data[ids[index]].dist.location;
+    const { ids, data } = this.props.navigation.state.params;
+
     this.setState({
-      region: {
-        latitude: location.coordinates[1],
-        longitude: location.coordinates[0],
+      region: new AnimatedRegion({
+        latitude: data[ids[0]].dist.location.coordinates[1],
+        longitude: data[ids[0]].dist.location.coordinates[0],
         latitudeDelta: this.latitudeDelta,
         longitudeDelta: this.longitudeDelta
-      }
+      })
     })
   }
 
-  slideCarousel() {
-    Animated.timing(this.state.carouselY, {
-      toValue: (this.state.carouselVisible ? 220 : 20),
-      duration: 500,
-    }).start();
-    this.setState({
-      carouselVisible: !this.state.carouselVisible
+  _centerMapOnMarker(index) {
+
+    const { data, ids } = this.props.navigation.state.params;
+    const location = data[ids[index]].dist.location;
+
+    const {region} = this.state;
+
+    requestAnimationFrame(() => {
+      region.timing({
+        latitude:  location.coordinates[1], // selected marker lat
+        longitude: location.coordinates[0], // selected marker lng
+      }).start();
     });
+
+
   }
+
+  slideCarousel() {
+    requestAnimationFrame(() => {
+      Animated.timing(this.state.carouselY, {
+        toValue: (this.state.carouselVisible ? 220 : 20),
+        duration: 500,
+      }).start(() => this.setState({
+        carouselVisible: !this.state.carouselVisible
+      }));
+    });
+
+  }
+
+  onMarkerPress(business) {
+    const { ids } = this.props.navigation.state.params;
+    const indexToScroll = ids.indexOf(business.id);
+
+    requestAnimationFrame(() => {
+      if(!this.state.carouselVisible){
+        this.slideCarousel();
+      }
+      this.carousel.snapToItem(indexToScroll, true, false); //fireCallback false per non triggerare onSnapToItem del carousel
+    })
+
+  }
+
 
   render() {
 
-    //const { businesses } = this.props;
     const { ids, data } = this.props.navigation.state.params;
 
     if (!ids || !data || !this.state.transitionFinished) return null;
 
     if (ids.length === 0) {
       return (
-          <View style={themes.base.noContentView}>
-            <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
-          </View>
+        <View style={themes.base.noContentView}>
+          <Text style={themes.base.noContentText}>{'Nessun locale da mostrare'}</Text>
+        </View>
       )
     }
-    const region = {
+
+    const region = new AnimatedRegion({
       latitude: data[ids[0]].dist.location.coordinates[1],
       longitude: data[ids[0]].dist.location.coordinates[0],
       latitudeDelta: this.latitudeDelta,
       longitudeDelta: this.longitudeDelta
-    }
+    });
+
     const sliderWidth = themes.base.deviceDimensions.width;
 
     return (
       <View style={{flex:1}}>
-        <MapView style={styles.map}
-                 region={this.state.region || region}
-                 onPress={this.slideCarousel}
+        <AnimatedMap
+          style={styles.map}
+          region={this.state.region || region}
+          onPress={this.slideCarousel}
+          onRegionChange={() => null}
         >
           {
             ids.map(id =>
               <MapView.Marker
+                pointerEvents={"auto"}
+                onPress={(e) => {e.stopPropagation(); this.onMarkerPress(data[id])}} //stopPropagation disabilita il MapPress su ios
                 coordinate={{
                   latitude: data[id].address.location.coordinates[1],
                   longitude: data[id].address.location.coordinates[0]}}
@@ -96,7 +134,7 @@ class BusinessMapInBusiness extends React.Component {
             )
           }
 
-        </MapView>
+        </AnimatedMap>
         <Animated.View style={{
           transform: [{translateY: this.state.carouselY}],
           position: 'absolute',
@@ -105,6 +143,7 @@ class BusinessMapInBusiness extends React.Component {
           paddingBottom: 20
         }}>
           <Carousel
+            ref={carousel => this.carousel = carousel}
             data={ids}
             activeSlideAlignment={"center"}
             renderItem={({item}) =>
@@ -117,7 +156,8 @@ class BusinessMapInBusiness extends React.Component {
             activeAnimationType={'spring'}
             inactiveSlideOpacity={1}
             inactiveSlideScale={1}
-            onSnapToItem={(index, marker) => this._centerMapOnMarker(index, marker)}
+            removeClippedSubviews={false}
+            onSnapToItem={(index) => this._centerMapOnMarker(index)}
 
           />
         </Animated.View>

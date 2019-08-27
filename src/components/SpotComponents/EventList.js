@@ -1,14 +1,14 @@
 import React from "react";
 import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import { StyleSheet, SectionList, View, ActivityIndicator, Image } from "react-native";
+import { StyleSheet, SectionList, View, ActivityIndicator, Image, Linking } from "react-native";
 import { withNamespaces } from 'react-i18next';
 import DeviceInfo from 'react-native-device-info';
 import {groupBy, debounce} from "lodash";
 import moment from "moment";
 import "moment/min/moment-with-locales"
 
-import { Typography } from '../common';
+import {Button, Typography} from '../common';
 import themes from "../../styleTheme";
 import Images from "../../assets/images";
 
@@ -32,7 +32,6 @@ class EventList extends React.Component {
   }, 1000, { leading: true, trailing: false});
 
 
-
   render() {
 
     const {
@@ -43,6 +42,7 @@ class EventList extends React.Component {
       isRefreshing,
       onItemPress,
       onFavoritePress,
+      onContactUsPress,
       setPage,
       page,
       total,
@@ -91,16 +91,49 @@ class EventList extends React.Component {
                        uppercase >
             {t("browse.noEvents")}
           </Typography>
+          <View style={styles.noFoundView}>
+            <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundEvent")}</Typography>
+            <Button
+              containerStyle={{marginBottom: 8}}
+              variant="primary"
+              onPress={() => onContactUsPress()}
+              round
+              uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+          </View>
         </View>
       )
     }
+
+    const footer = () => {
+      if(isLoading){
+        return (
+          <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
+        )
+      }
+      else if(ids.length > 0 && !isLoading) {
+        return (
+          <View style={styles.noFoundView}>
+            <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundEvent")}</Typography>
+            <Button
+              containerStyle={{marginBottom: 8}}
+              variant="primary"
+              onPress={() => onContactUsPress()}
+              round
+              uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+          </View>
+        )
+      }
+      else {
+        return null;
+      }
+    };
 
     return (
       <SectionList
         renderItem={({item, index}) => <EventCard
           key={data[item]._id}
           index={index}
-          onPress={ ()=> onItemPress(item, data[item])}
+          onPress={ () => onItemPress(item, data[item])}
           onFavoritePress={ () => onFavoritePress(item, data[item])}
           {...data[item]}/>}
         contentContainerStyle={styles.container}
@@ -111,7 +144,7 @@ class EventList extends React.Component {
         stickySectionHeadersEnabled={false}
         onRefresh={refresh}
         refreshing={isRefreshing}
-        ListFooterComponent={isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
+        ListFooterComponent={footer()}
         ListHeaderComponent={<Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
                                           align="center"
                                           uppercase
@@ -158,15 +191,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: themes.base.colors.text.default
   },
-  sectionHeader:
-    {
-      marginLeft: 16,
-      marginTop: 16,
-      fontSize: 20,
-      color: themes.base.colors.text.default,
-      textTransform: 'capitalize',
-      fontFamily: Fonts.LatoBold
-    }
+  sectionHeader: {
+    marginLeft: 16,
+    marginTop: 16,
+    fontSize: 20,
+    color: themes.base.colors.text.default,
+    textTransform: 'capitalize',
+    fontFamily: Fonts.LatoBold
+  },
+  noFoundView: {
+    padding: 8,
+    alignItems: "center",
+    backgroundColor: themes.base.colors.white.light,
+    borderRadius: themes.base.borderRadius,
+    margin: 16,
+    paddingTop: 8,
+    borderWidth: 1,
+    borderColor: themes.base.colors.white.divisor
+  }
 });
 
 export default withNamespaces()(EventList);
