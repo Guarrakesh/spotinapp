@@ -4,7 +4,7 @@ const colors = themes.base.colors;
 
 const androidBorder = Platform.OS === "android"
     ? {
-      borderWidth: 0,
+
       borderBottomWidth: 2,
       borderRadius: 0,
       borderColor: '#ddd',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   focused: {
-    shadowColor: themes.base.colors.accent.dark,
+    shadowColor: themes.base.colors.accent.default,
     shadowOffset: { width: 1, height: 5 },
     shadowRadius: 15,
   },

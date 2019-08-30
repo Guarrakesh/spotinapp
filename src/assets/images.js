@@ -37,6 +37,7 @@ const images = {
       megaphone: require('./img/megaphone/megaphone.png'),
       beer: require('./img/beer/beer.png'),
       location: require('./img/icons/location_pin/location_pin.png'),
+      link: require('./img/icons/link/link.png'),
     },
 
     mascotte: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
+import {ActivityIndicator, Animated, AsyncStorage, Dimensions, Image, View} from 'react-native';
 import type {Notification, NotificationOpen} from 'react-native-firebase';
 import firebase from "react-native-firebase";
 import Permissions from 'react-native-permissions';
@@ -12,11 +12,18 @@ import {ALREADY_STARTED_UP} from "../helpers/asyncStorageKeys";
 import {ALREADY_SET_FAVORITE} from "../sagas/core/favorite";
 import themes from "../styleTheme";
 
-const Logo = require('../assets/img/logo/logo.png');
-const Together = require('../assets/img/together/together.png');
-const Mascotte = require("../assets/img/mascotte.png");
+const Logo = require('../assets/img/logo-text-white/logo-text.png');
+const Mascotte = require('../assets/img/mascotte/pallanuoto/POLPO_PALLANUOTO.png');
 
 class Launcher extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      logoY: new Animated.Value(1),
+    }
+  }
 
 
   componentDidMount() {
@@ -27,7 +34,15 @@ class Launcher extends React.Component {
     // AsyncStorage.removeItem(ALREADY_STARTED_UP);
 
     const self = this;
-
+    Animated.timing(this.state.logoY, {
+      toValue: 200,
+      duration: 800,
+      useNativeDriver: true,
+    }).start(() => {
+      if (this.state.canProceed) {
+        this.startup();
+      }
+    });
     firebase.notifications().getInitialNotification()
         .then((notificationOpen: NotificationOpen) => {
           if (notificationOpen) {
@@ -44,9 +59,10 @@ class Launcher extends React.Component {
 
 
   }
+
   componentWillReceiveProps(nextProps): void {
     if (nextProps.deviceLocation.position !== this.props.deviceLocation.position && !nextProps.deviceLocation.isFetching) {
-      this.props.navigate("Main", {}, true);
+      this.setState({ canProceed: true });
     } else if (nextProps.deviceLocation.error) {
       // Nessun permesso, vado schermata LocationScreen
       this.props.navigate("LocationScreen", {}, true)
@@ -54,6 +70,11 @@ class Launcher extends React.Component {
 
   }
 
+  startup() {
+    setTimeout(() => {
+      this.props.navigate("Main", {}, true);
+      }, 1000);
+  }
   //Da qui possiamo gestire tutte le aperture da notifica,
   //l'if sara' sostituito da uno switch per tutti i tipi di notifica
   notificationLaunch(notification){
@@ -122,8 +143,22 @@ class Launcher extends React.Component {
     const { isLoading } = this.props;
     return (
         <View style={styles.container}>
-          <Image resizeMethod={"scale"} resizeMode="contain" style={styles.logo} source={Mascotte}/>
-          <Image source={Together} resizeMethod={"scale"} resizeMode="contain" style={{marginTop: 12, width: 240, height: 128}}/>
+
+          <Animated.Image source={Logo}
+                          resizeMethod={"scale"} resizeMode="contain"
+                          style={{
+                            position: 'absolute',
+                            marginTop: 12,
+                            height: 32,
+                            transform: [{ translateY: Animated.multiply(this.state.logoY, -1) }]
+                          }}/>
+
+          <Animated.Image source={Mascotte}
+                          style={{
+                            marginTop: 12,
+                            opacity: this.state.logoY.interpolate({ inputRange: [0,140,200], outputRange: [0,0.04,1]}),
+                            transform:[{ scale: this.state.logoY.interpolate({ inputRange: [0,140,200], outputRange: [0, 0.8, 1]})}],
+                          }}/>
           {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
         </View>
     );
@@ -134,13 +169,11 @@ const styles = {
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 100,
-    backgroundColor: 'white'
+    justifyContent: 'center',
+    backgroundColor: themes.base.colors.accent.default,
   },
   logo: {
-    width: 240,
-    height: 148
+    height: 41
   }
 
 };

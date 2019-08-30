@@ -7,6 +7,7 @@ const deviceHeight = themes.base.deviceDimensions.height;
 const deviceWidth = themes.base.deviceDimensions.width;
 const androidBorder = Platform.OS === "android"
     ? {
+      borderWidth: 0,
       borderBottomWidth: 2,
       borderRadius: 0,
       borderColor: '#ddd',
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: colors.accent.dark,
+    backgroundColor: colors.accent.default,
   },
   header: {
     marginTop: deviceHeight / 10, // 10%
@@ -59,7 +60,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: themes.base.fonts.LatoBlack,
     textAlign: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    color: themes.base.colors.black.default,
   },
   subtitle: {
 
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '-100%',
     zIndex: 999,
-    backgroundColor: themes.base.colors.accent.dark,
+    backgroundColor: themes.base.colors.accent.default,
     height: 48,
     width:48,
     alignItems: 'center',
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 58,
     alignItems: 'center',
+    ...androidBorder,
   },
   close: {
     position: 'absolute',
