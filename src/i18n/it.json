@@ -346,6 +346,12 @@
   },
 
   "location": {
+    "title": "Servizi di geolocalizzazione",
+    "needLocation": "abbiamo bisogno della tua poszione per trovare i locali più vicini a te",
+    "enableLocation": "Abilita posizione",
+    "useLocation": "Usa la mia posizione",
+    "orInsertAddress": "oppure puoi inserire il tuo indirizzo",
+    "close": "Chiudi",
     "discoverWhere": "Scopri dove guardare il tuo evento!",
     "InsertLocation": "Inserisci un indirizzo o una città",
     "search": "Cerca",

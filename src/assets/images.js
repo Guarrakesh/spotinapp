@@ -36,6 +36,11 @@ const images = {
       notFound: require('./img/notFound/NotFound.png'),
       megaphone: require('./img/megaphone/megaphone.png'),
       beer: require('./img/beer/beer.png'),
+      location: require('./img/icons/location_pin/location_pin.png'),
+    },
+
+    mascotte: {
+      waterpolo: require('./img/mascotte/pallanuoto/POLPO_PALLANUOTO.png'),
     }
   }
 };

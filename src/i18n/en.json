@@ -341,6 +341,12 @@
     "discoverWhere": "Discover where to see your event!",
     "InsertLocation": "Insert an address or a city",
     "search": "Search",
+    "title": "Location services",
+    "needLocation": "we need to know your location to find nearby restaurants",
+    "enableLocation": "Enable location",
+    "useLocation": "Share location",
+    "orInsertAddress": "or you can type your address here",
+    "close": "Close",
     "locationPermissions": {
       "title": "Spot In doesn't have permission to access your location",
       "subtitle": "Enable permissions in settings"

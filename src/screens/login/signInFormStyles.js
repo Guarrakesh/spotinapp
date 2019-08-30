@@ -3,7 +3,8 @@ import themes from "../../styleTheme";
 const colors = themes.base.colors;
 
 const androidBorder = Platform.OS === "android"
-  ? {
+    ? {
+      borderWidth: 0,
       borderBottomWidth: 2,
       borderRadius: 0,
       borderColor: '#ddd',

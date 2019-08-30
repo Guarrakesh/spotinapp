@@ -89,7 +89,7 @@ const SignInForm = ({ t, isLoading, onSubmit, onPasswordForgot }) => {
             uppercase
             round
             containerStyle={{ marginBottom: 14 }}
-            buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
+            buttonStyle={{ borderRadius: 12}}
             onPress={handleSignIn}
             iconContainerStyle={{alignSelf: 'flex-start'}}
         >{t("auth.login.signIn")}</Button>

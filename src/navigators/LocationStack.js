@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from "react-navigation";
 //Screens
-import LocationScreen from "../screens/LocationScreen";
+import LocationScreen from "../screens/location/LocationScreen";
 
 
 export const LocationNavigator = createStackNavigator({
