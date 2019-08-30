@@ -22,6 +22,7 @@ class Launcher extends React.Component {
 
     this.state = {
       logoY: new Animated.Value(1),
+      mascotteX: new Animated.Value(400),
     }
   }
 
@@ -34,11 +35,18 @@ class Launcher extends React.Component {
     // AsyncStorage.removeItem(ALREADY_STARTED_UP);
 
     const self = this;
-    Animated.timing(this.state.logoY, {
-      toValue: 200,
-      duration: 800,
-      useNativeDriver: true,
-    }).start(() => {
+    Animated.sequence([
+      Animated.timing(this.state.logoY, {
+        toValue: 200,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.spring(this.state.mascotteX, {
+        toValue: 0,
+        tension: 150,
+        useNativeDriver: true,
+      })
+    ]).start(() => {
       if (this.state.canProceed) {
         this.startup();
       }
@@ -73,7 +81,7 @@ class Launcher extends React.Component {
   startup() {
     setTimeout(() => {
       this.props.navigate("Main", {}, true);
-      }, 1000);
+    }, 1000);
   }
   //Da qui possiamo gestire tutte le aperture da notifica,
   //l'if sara' sostituito da uno switch per tutti i tipi di notifica
@@ -156,8 +164,8 @@ class Launcher extends React.Component {
           <Animated.Image source={Mascotte}
                           style={{
                             marginTop: 12,
-                            opacity: this.state.logoY.interpolate({ inputRange: [0,140,200], outputRange: [0,0.04,1]}),
-                            transform:[{ scale: this.state.logoY.interpolate({ inputRange: [0,140,200], outputRange: [0, 0.8, 1]})}],
+
+                            transform:[{ translateX: this.state.mascotteX}],
                           }}/>
           {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
         </View>
