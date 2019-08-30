@@ -23,7 +23,7 @@ const ReservationFloatingCard = ({
 
   const { broadcast } = reservation;
   const { offer } = broadcast;
-  const hasOffer = offer && offer.value;
+  const hasOffer = offer && (offer.value || offer.value === 0)
 
   const discount = (type) => {
     switch (parseInt(type)) {

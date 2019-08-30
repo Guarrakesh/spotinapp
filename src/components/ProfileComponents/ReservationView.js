@@ -28,7 +28,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
   const { broadcast, created_at, peopleNum } = reservation;
   const { offer, newsfeed } = broadcast;
   const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
-  const hasOffer = offer && offer.value;
+  const hasOffer = offer && (offer.value || offer.value === 0)
 
 
   let date = (startAt) => {

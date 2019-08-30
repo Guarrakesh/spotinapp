@@ -166,7 +166,7 @@ class ReservationConfirmView extends Component {
     const { broadcast } = this.props.data;
 
     const { offer } = broadcast;
-    const hasOffer = offer && offer.value;
+    const hasOffer = offer && (offer.value || offer.value === 0)
     const hasCompetitors = event.sport.has_competitors;
 
     const { competitorsHaveLogo } = event.competition;

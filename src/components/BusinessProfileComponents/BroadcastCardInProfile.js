@@ -33,7 +33,7 @@ const BroadcastCardInProfile = (props) => {
 
   let {business, broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
-  const hasOffer = offer && offer.value;
+  const hasOffer = offer && (offer.value || offer.value === 0)
   const offerValue = hasOffer && offer.value.toFixed(2);
   const description = hasOffer && offer.description ? offer.description.replace(/\\n/g, '\n') : null;
 
