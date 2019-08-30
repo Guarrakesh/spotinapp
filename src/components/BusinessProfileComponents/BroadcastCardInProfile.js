@@ -31,7 +31,7 @@ const votes = {
 
 const BroadcastCardInProfile = (props) => {
 
-  let { broadcast, onReservePress, t, firstRed } = props;
+  let {business, broadcast, onReservePress, t, firstRed } = props;
   const { offer, newsfeed, reserved } = broadcast;
   const hasOffer = offer && offer.value;
   const offerValue = hasOffer && offer.value.toFixed(2);
@@ -67,8 +67,6 @@ const BroadcastCardInProfile = (props) => {
       total === 0 ?
         CHEER_BAR_WIDTH/2 : home === 0 ?
         0 : (CHEER_BAR_WIDTH * home)/total;
-    console.log("INITIAL BAR WIDTH: ", initialBarWidth);
-    console.log("CHEERS: ", cheers);
 
     if(hasCompetitors){
       return (
@@ -90,6 +88,7 @@ const BroadcastCardInProfile = (props) => {
         let date = moment(event.start_at).format('dddd D MMMM');
         let time = moment(event.start_at).format('HH:mm');
         const { competitors } = event;
+        console.log(broadcast);
 
         return (
           <View style={(1 === 0) ? styles.broadcastInfoViewWithHeader : [styles.broadcastInfoView, {borderWidth: firstRed ? 1:0, borderColor: themes.base.colors.danger.default}]} elevation={2}>
@@ -122,6 +121,7 @@ const BroadcastCardInProfile = (props) => {
               </View>
             </View>
             {cheerBar(event)}
+            {event.sport.has_competitors && <Text style={styles.estimationText}>{t("browse.getOffer.supportersEstimation")} {business.name}</Text>}
             {
               (offer && offer.description && offer.description !== "" ) ?
                 <View style={styles.offerInfoView}>
@@ -280,6 +280,12 @@ const styles = StyleSheet.create({
     height: 10,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10
+  },
+  estimationText: {
+    alignSelf: 'center',
+    marginTop: 5,
+    fontFamily: Fonts.LatoLightItalic,
+    fontSize: 14
   },
 
 });

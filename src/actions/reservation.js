@@ -9,7 +9,8 @@ export const RESERVE_BROADCAST_FAILURE = "RESERVE_BROADCAST_FAILURE";
 export const RESERVE_BROADCAST_SUCCESS = "RESERVE_BROADCAST_SUCCESS";
 export const RESERVE_BROADCAST_LOADING = "RESERVE_BROADCAST_LOADING";
 
-export const reserveBroadcast = (broadcast, userId, peopleNum, cheerFor, callback) => ({
+
+export const reserveBroadcast = (broadcast, userId, peopleNum, cheerFor, previousCheers, callback) => ({
   type: RESERVE_BROADCAST,
   payload: { data: { broadcast, peopleNum, cheerFor } },
   meta: {
@@ -18,7 +19,20 @@ export const reserveBroadcast = (broadcast, userId, peopleNum, cheerFor, callbac
     fetch: CREATE,
     listId: "profile_reservations_list",
     linkedResources: {
-      "broadcasts": { type: CRUD_UPDATE_OPTIMISTIC, payload: { id: broadcast, data: { reserved: true } } }
+      "broadcasts": {
+        type: CRUD_UPDATE_OPTIMISTIC,
+        payload: {
+          id: broadcast,
+          data: {
+            reserved: true,
+            cheers: {
+              total: cheerFor === "" ? previousCheers.total : previousCheers.total+1,
+              home: cheerFor === "__home__" ? previousCheers.home+1 : previousCheers.home,
+              guest: cheerFor === "__guest__" ? previousCheers.guest+1 : previousCheers.guest
+            }
+          }
+        }
+      }
     },
     onSuccess: {
       addToList: true,

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import BroadcastFloatingCard from "../BroadcastComponents/BroadcastFloatingCard";
 import { withNamespaces } from 'react-i18next';
 
-import { Button, Typography } from '../../components/common';
+import { Button, Typography, LoadingView} from '../../components/common';
 import themes from "../../styleTheme";
 import Icon from 'react-native-vector-icons/Feather';
 import Images from "../../assets/images";
@@ -51,18 +51,28 @@ class BroadcastsList extends React.Component {
       )
     }
 
-    const footer = () => (
-      <View style={styles.noFoundView}>
-        <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundGeneric")}</Typography>
-        <Button
-          containerStyle={{marginBottom: 8}}
-          variant="primary"
-          onPress={onContactUsPress}
-          round
-          uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
-        <Typography variant="body" gutterBottom align={"center"}>{t("browse.weFindBusiness")}</Typography>
-      </View>
-    );
+    const footer = () => {
+      if (isLoading){
+        return (
+          <LoadingView/>
+        )
+      }
+      else {
+        return (
+          <View style={styles.noFoundView}>
+            <Typography variant="body" gutterBottom align={"center"}>{t("browse.noFoundGeneric")}</Typography>
+            <Button
+              containerStyle={{marginBottom: 8}}
+              variant="primary"
+              onPress={onContactUsPress}
+              round
+              uppercase>{t("browse.noBroadcasts.contactUs")}</Button>
+            <Typography variant="body" gutterBottom align={"center"}>{t("browse.weFindBusiness")}</Typography>
+          </View>
+        )
+      }
+
+    };
 
     return (
       <View style={{flex: 1}}>
@@ -83,16 +93,16 @@ class BroadcastsList extends React.Component {
           contentContainerStyle={[styles.container, style]}
         />
         {
-        ids.length > 0 ?
-        <Button
-          disabled={isLoading}
-          onPress={() => onMapPress({data, ids})}
-          variant="primary"
-          containerStyle={styles.mapButton}
-          titleStyle={{fontSize: 24}}
-        >
-          <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
-        </Button>: null
+          ids.length > 0 ?
+            <Button
+              disabled={isLoading}
+              onPress={() => onMapPress({data, ids})}
+              variant="primary"
+              containerStyle={styles.mapButton}
+              titleStyle={{fontSize: 24}}
+            >
+              <Icon name="map" size={24} style={{color: themes.base.colors.white.default}}/>
+            </Button>: null
         }
       </View>
 

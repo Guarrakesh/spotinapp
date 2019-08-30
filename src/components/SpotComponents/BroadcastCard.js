@@ -11,9 +11,9 @@ import ReferenceField from '../common/ReferenceField';
 
 
 const BroadcastCard = ({
-    broadcast,
-    onItemPress
-}) => {
+                         broadcast,
+                         onItemPress
+                       }) => {
 
   const { business, dist, offer } = broadcast;
 
@@ -36,54 +36,54 @@ const BroadcastCard = ({
     }
   };
   return (
-      <TouchableOpacity onPress={onItemPress}>
-        <View style={styles.innerContainer}>
-          <View style={styles.topContainer}>
-            <ReferenceField reference="businesses" source="business" record={broadcast}>
-              { ({ record: business }) =>
-                  <ImageBackground
-                      imageStyle={{ borderRadius: themes.base.borderRadius }}
-                      source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://cdn0.matrimonio.com/emp/fotos/3/0/1/5/-dsf1954-ok_2_153015.jpg"}}
-                      style={styles.imgBackground}
-                  >
-                    <View style={styles.overlayView}>
-                      <View style={{flexDirection: 'column', justifyContent: 'flex-end', borderTopLeftRadius: themes.base.borderRadius}}>
-                        <Text style={styles.name}>{business.name} • {business.type}</Text>
-                        <Text style={styles.address}>{business.address.city} ({business.address.province})</Text>
-                      </View>
-                      <View style={{flexDirection: 'column', justifyContent: 'flex-end', flex: 1, borderTopRightRadius: themes.base.borderRadius}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                          <Icon name="map-marker-radius" color={themes.base.colors.white.light} style={styles.geoFenceImg} size={21}/>
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                          <Text style={styles.distance}>{roundedDistance} km</Text>
-                        </View>
-                      </View>
+    <TouchableOpacity onPress={onItemPress}>
+      <View style={styles.innerContainer}>
+        <View style={styles.topContainer}>
+          <ReferenceField reference="businesses" source="business" record={broadcast}>
+            { ({ record: business }) =>
+              <ImageBackground
+                imageStyle={{ borderRadius: themes.base.borderRadius }}
+                source={{uri: business.cover_versions ? business.cover_versions[0].url : "https://cdn0.matrimonio.com/emp/fotos/3/0/1/5/-dsf1954-ok_2_153015.jpg"}}
+                style={styles.imgBackground}
+              >
+                <View style={styles.overlayView}>
+                  <View style={{flexDirection: 'column', justifyContent: 'flex-end', borderTopLeftRadius: themes.base.borderRadius}}>
+                    <Text style={styles.name}>{business.name} • {business.type}</Text>
+                    <Text style={styles.address}>{business.address.city} ({business.address.province})</Text>
+                  </View>
+                  <View style={{flexDirection: 'column', justifyContent: 'flex-end', flex: 1, borderTopRightRadius: themes.base.borderRadius}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                      <Icon name="map-marker-radius" color={themes.base.colors.white.light} style={styles.geoFenceImg} size={21}/>
                     </View>
-                  </ImageBackground>
-              }
+                    <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                      <Text style={styles.distance}>{roundedDistance} km</Text>
+                    </View>
+                  </View>
+                </View>
+              </ImageBackground>
+            }
 
-            </ReferenceField>
+          </ReferenceField>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
+            <MaterialIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
+            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
+              {business.seats}
+            </Text>
+            <MaterialIcon name="tv" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
+            <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
+              {business.tvs}
+            </Text>
+            {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
           </View>
-          <View style={styles.bottomContainer}>
-            <View style={{flex: 2, height: '100%', flexDirection: 'row', alignItems: 'center', borderRightColor: themes.base.colors.text.default, borderRightWidth: 0.5}}>
-              <MaterialIcon name="event-seat" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-              <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
-                {business.seats}
-              </Text>
-              <MaterialIcon name="tv" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/>
-              <Text style={{fontSize: 18, color: themes.base.colors.text.default, marginLeft: 5, fontFamily: Fonts.LatoMedium}}>
-                {business.tvs}
-              </Text>
-              {business.wifi ? <MaterialIcon name="wifi" color={themes.base.colors.text.default} size={32} style={styles.seatsImg}/> : null}
-            </View>
-            <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontFamily: Fonts.LatoBlack}}>{discount(offer.type)}</Text>
-              <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
-            </View>
+          <View style={{flex: 1, height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 24, color: themes.base.colors.accent.default, fontFamily: Fonts.LatoBlack}}>{discount(offer.type)}</Text>
+            <Text style={{fontSize: 13, color: themes.base.colors.text.default, fontWeight: 'bold'}}>alla cassa</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
 
   );
 };

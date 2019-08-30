@@ -56,6 +56,7 @@ class BroadcastInProfileList extends React.Component {
   render() {
 
     const {
+      business,
       selectedBroadcast,
       isLoading,
       data,
@@ -102,6 +103,7 @@ class BroadcastInProfileList extends React.Component {
           getItemLayout={(data, index) => ({ length: 150, offset: 150 * index, index})}
           data={ids}
           renderItem={({item}) =>  <BroadcastCardInProfile
+            business={business}
             firstRed={!!selectedBroadcast && item === selectedBroadcast}
             reserved={reservedBroadcasts.includes(item)}
             broadcast={data[item]}

@@ -6,5 +6,5 @@ export default () => (
     <View style={themes.base.noContentView}>
       <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default} />
     </View>
-)
+);
 

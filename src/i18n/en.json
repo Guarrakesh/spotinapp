@@ -114,7 +114,7 @@
       "bookedNotification": {
         "success": {
           "title"              : "Great",
-          "message"            : "You got the offer! \nYou can view it in your profile"
+          "message"            : "You will attend the event!\nYou can view it in your profile"
         },
         "failure": {
           "title"             : "Something went wrong...",

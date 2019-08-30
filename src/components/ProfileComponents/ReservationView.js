@@ -28,7 +28,7 @@ const ReservationView = ({reservation, onCancel, t}) => {
   const { broadcast, created_at, peopleNum } = reservation;
   const { offer, newsfeed } = broadcast;
   const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
-
+  const hasOffer = offer && offer.value;
 
 
   let date = (startAt) => {
@@ -130,14 +130,14 @@ const ReservationView = ({reservation, onCancel, t}) => {
         }
       </ReferenceField>
       {
-        (offer.description && !offer.description.isEmpty) ?
+        (hasOffer && offer.description && !offer.description.isEmpty) ?
           <View style={styles.offerInfoView}>
             <Text style={styles.offerTitleText}>{offer.title && offer.title !== "" ? offer.title : t("common.discountAtCheckout")}</Text>
             <Text style={styles.offerDescriptionText}>{description}</Text>
           </View> : null
       }
       <View style={styles.peopleView}>
-        <Typography uppercase gutterBottom variant={"heading"} style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout").toUpperCase()}</Typography>
+        {hasOffer && <Typography uppercase gutterBottom variant={"heading"} style={styles.offerText}>{discount(offer.type)} {t("common.atCheckout").toUpperCase()}</Typography>}
         <Typography uppercase gutterBottom>{t("profile.bookedOffer.savedOn").toUpperCase()} {reservationDate.toUpperCase()}</Typography>
         {(peopleNum && peopleNum !== 0) ?
           <View style={{flexDirection: "row", alignItems: "flex-end"}}>

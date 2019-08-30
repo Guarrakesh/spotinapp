@@ -23,6 +23,7 @@ const ReservationFloatingCard = ({
 
   const { broadcast } = reservation;
   const { offer } = broadcast;
+  const hasOffer = offer && offer.value;
 
   const discount = (type) => {
     switch (parseInt(type)) {
@@ -67,10 +68,11 @@ const ReservationFloatingCard = ({
                     </View>
                   }
                 </ReferenceField>
+                {hasOffer &&
                 <View style={styles.offerView}>
                   <Text style={styles.offerValue}>{discount(offer.type)}</Text>
                   <Text style={styles.offerValueText}>{t("common.atCheckout")}</Text>
-                </View>
+                </View>}
 
               </View>
             </VersionedImageField>

@@ -117,7 +117,7 @@
       "bookedNotification": {
         "success": {
           "title"              : "Ottimo!",
-          "message"            : "Hai ottenuto l'offerta! \nPuoi rivederla nel tuo profilo"
+          "message"            : "Parteciperai all'evento!\nPuoi rivederlo nel tuo profilo"
         },
         "failure": {
           "title"             : "Qualcosa è andato storto...",

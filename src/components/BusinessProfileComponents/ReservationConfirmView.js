@@ -41,7 +41,8 @@ class ReservationConfirmView extends Component {
       firstCompViewWidth: new Animated.Value(0),
       firstCompCheersPercentage: 0,
       secondCompCheersPercentage: 0,
-      cheerFor: ""
+      cheerFor: "",
+      previousCheers: {}
     };
   }
 
@@ -49,6 +50,7 @@ class ReservationConfirmView extends Component {
     const { cheers } = this.props.data.broadcast;
     const total = cheers && cheers.total ? cheers.total : 0;
     const home = cheers && cheers.home ? cheers.home : 0;
+    const guest = cheers && cheers.guest ? cheers.guest : 0;
 
     const firstCompPercentage = total === 0 ? 50 : (home*100)/total;
     const secondCompPercentage = 100 - firstCompPercentage;
@@ -61,7 +63,12 @@ class ReservationConfirmView extends Component {
     this.setState({
       firstCompCheersPercentage: firstCompPercentage.toFixed(0),
       secondCompCheersPercentage: secondCompPercentage.toFixed(0),
-      firstCompViewWidth: new Animated.Value(initialBarWidth)
+      firstCompViewWidth: new Animated.Value(initialBarWidth),
+      previousCheers: {
+        total: total,
+        home: home,
+        guest: guest
+      }
     })
   }
 
@@ -164,7 +171,6 @@ class ReservationConfirmView extends Component {
 
     const { competitorsHaveLogo } = event.competition;
     const { competitors } = event;
-    console.log("EVENT: ", event);
 
     //TODO: Da sostituire con i colori dei competitor presi dal server
     const firstCompetitorColor = event.competitors[0] && event.competitors[0].color ? event.competitors[0].color : "#ABCDDD";
@@ -328,7 +334,7 @@ class ReservationConfirmView extends Component {
             <Button round clear uppercase onPress={onCancelPress}>
               {t("browse.getOffer.cancel")}
             </Button>
-            <Button round elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, this.state.cheerFor) : onLoginPress}
+            <Button round elevation={1} onPress={isAuth ? () => onConfirmPress(this.state.numPeople, this.state.cheerFor, this.state.previousCheers) : onLoginPress}
                     uppercase clear variant="primary">
               {isAuth ? t("browse.getOffer.confirm") : t("auth.login.signIn")}
             </Button>

@@ -7,3 +7,4 @@ export {default as View } from './View';
 export {default as SearchBar } from './SearchBar';
 export {default as Touchable } from './Touchable';
 export {default as Typography } from './Typography';
+export {default as LoadingView } from './LoadingView';
