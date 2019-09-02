@@ -7,4 +7,4 @@ export default {
   //apiUrl: Platform.select({android: 'http://10.11.51.230:3001/v1', ios: 'http://10.11.51.230:3001/v1'})
 };
 
-export const GOOGLE_API_KEY = "AIzaSyAjhLABUIehL464nlbYk3YobnCOGRi5sDI";
+export const GOOGLE_API_KEY = "AIzaSyBAIxUNGqQL7EM1GjRxsYNCshrawvHw4fc";

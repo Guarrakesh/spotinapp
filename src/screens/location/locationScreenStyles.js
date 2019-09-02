@@ -30,8 +30,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent.default,
   },
   header: {
-    marginTop: deviceHeight / 10, // 10%
-    marginBottom: deviceHeight / 10,
+    marginTop: deviceHeight * 0.05, // 5%
+    marginBottom: deviceHeight * 0.005,
+    flexGrow: 1,
   },
   button: {
     marginTop: 16,
@@ -119,17 +120,19 @@ const styles = StyleSheet.create({
     width: 150
   },
   inputOuterContainer: {
-    width: deviceWidth * 8/10,
     ...signInStyles.inputOuterContainer,
+    width: deviceWidth * 8/10,
     paddingLeft: 0,
     marginTop: 16,
     shadowOpacity: 0.2,
     borderBottomWidth: 0,
+
     borderTopWidth: 0,
 
   },
   input: {
     ...signInStyles.input,
+    ...androidBorder,
     marginTop: 0,
   },
   listView: {
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
   },
   confirmBtn: {
     position: 'absolute',
-    bottom: '-100%',
+    bottom: deviceHeight * 0.1,
     zIndex: 999,
     backgroundColor: themes.base.colors.accent.default,
     height: 48,

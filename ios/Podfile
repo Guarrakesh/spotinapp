@@ -32,7 +32,6 @@ target 'spotinapp' do
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
     pod 'Firebase/Core', '~> 6.3.0'
@@ -49,6 +48,8 @@ target 'spotinapp' do
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
 end
 post_install do |installer|

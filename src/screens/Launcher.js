@@ -22,9 +22,10 @@ class Launcher extends React.Component {
 
     this.state = {
       logoY: new Animated.Value(1),
-      mascotteX: new Animated.Value(400),
+
     }
   }
+
 
 
   componentDidMount() {
@@ -41,11 +42,6 @@ class Launcher extends React.Component {
         duration: 800,
         useNativeDriver: true,
       }),
-      Animated.spring(this.state.mascotteX, {
-        toValue: 0,
-        tension: 150,
-        useNativeDriver: true,
-      })
     ]).start(() => {
       if (this.state.canProceed) {
         this.startup();
@@ -54,7 +50,7 @@ class Launcher extends React.Component {
     firebase.notifications().getInitialNotification()
         .then((notificationOpen: NotificationOpen) => {
           if (notificationOpen) {
-            // App was opened by a notification
+            // App was opened by a notification3F18AF
 
             // Get information about the notification that was opened
             const notification: Notification = notificationOpen.notification;
@@ -164,8 +160,8 @@ class Launcher extends React.Component {
           <Animated.Image source={Mascotte}
                           style={{
                             marginTop: 12,
-
-                            transform:[{ translateX: this.state.mascotteX}],
+                            transform: [ { scale: this.state.logoY.interpolate({ inputRange: [0, 200], outputRange: [0.5, 1]})}],
+                            opacity : this.state.logoY.interpolate({ inputRange: [0, 180, 200], outputRange: [0, 0.2, 1] }),
                           }}/>
           {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}
         </View>

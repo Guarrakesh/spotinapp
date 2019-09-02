@@ -30,7 +30,7 @@
       },
 
       "contactUs"         : "Contact Us",
-      "weOrganizeForYou"  : "We organize the event for you!",
+      "weOrganizeForYou"  : "If you didn't find a place to follow {{eventName}} don't worry, we will do it for you!",
       "whereToWatch"      : "Where would you like to watch this?",
       "howMuchTravel"     : "How far are you willing to travel?",
       "howManyPeople"     : "How many people will there be?",
@@ -350,7 +350,8 @@
     "locationPermissions": {
       "title": "Spot In doesn't have permission to access your location",
       "subtitle": "Enable permissions in settings"
-    }
+    },
+    "fetching": "Fetching..."
   },
 
   "pushNotification": {

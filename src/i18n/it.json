@@ -32,7 +32,7 @@
 
 
       "contactUs"         : "Contattaci",
-      "weOrganizeForYou"  : "Organizziamo l'evento per te!",
+      "weOrganizeForYou"  : "Se non hai trovato un luogo dove poter seguire {{eventName}} non preoccuparti, lo faremo noi per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",
       "howMuchTravel"     : "Quanto sei disposto a spostarti?",
       "howManyPeople"     : "Quante persone sarete?",
@@ -358,7 +358,8 @@
     "locationPermissions": {
       "title": "Spot In non ha i permessi per accedere alla tua posizione",
       "subtitle": "Abilita i permessi nelle impostazioni"
-    }
+    },
+    "fetching": "Ricevo posizione..."
   },
 
 

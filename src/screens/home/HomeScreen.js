@@ -15,13 +15,14 @@ import EventCarousel from '../../components/EventComponents/EventCarousel';
 import {entityView} from "../../actions/view";
 import NavigationService from "../../navigators/NavigationService";
 import {positionSelector} from "../../reducers/location";
-
+import { Touchable } from "../../components/common";
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 import {refreshList as refreshListAction} from '../../actions/listActions';
 
 const logoImg = require('../../assets/img/logo/logo.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
+import Images from '../../assets/images'
 
 
 class HomeScreen extends React.Component {
@@ -40,16 +41,17 @@ class HomeScreen extends React.Component {
         style={styles.headerTitleStyle}
         resizeMode={'contain'}/>),
       headerRight:
-        <View style={{borderRadius: 20, borderColor: themes.base.colors.accent.default, borderWidth: 1, marginRight: 21}}>
-          <Icon
-            name={"edit-location"}
-            underlayColor={'transparent'}
-            //iconStyle={{marginRight: 21}}
+        <Touchable
+            onPress={params.onLocationPress}
+            style={{borderRadius: 20, marginRight: 21}}
+        >
+          <Image source={Images.icons.common.location}
+              //iconStyle={{marginRight: 21}}
             onPress={params.onLocationPress}
             color={themes.base.colors.accent.default}
-            size={25}
+            style={{ height: 32, width: 32 }}
           />
-        </View>
+        </Touchable>
       ,
       headerBackTitle: null,
       headerStyle: {

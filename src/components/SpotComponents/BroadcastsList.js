@@ -41,7 +41,7 @@ class BroadcastsList extends React.Component {
     if (noContent) {
       return (
         <View style={themes.base.noContentView}>
-          <Image source={Images.icons.common.link}/>
+          <Image source={Images.icons.common.link} style={{ height: 64, width: 64}}/>
           <Typography variant="subheading" gutterBottom align={"center"}>{t("browse.noBroadcasts.contactUsCta.title")}</Typography>
           <Typography  style={{margin: 8, color: '000',fontWeight: '900'}}
                        uppercase  gutterBottom align="center">{t("browse.noBroadcasts.contactUsCta.subtitle")}</Typography>
