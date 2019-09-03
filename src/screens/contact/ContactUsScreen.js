@@ -1,18 +1,16 @@
 import moment from "moment";
-import React, { useState, useEffect  } from "react";
+import React, {useEffect, useState} from "react";
 import {withNamespaces} from 'react-i18next';
-import {Animated, Text, TextInput, Dimensions} from "react-native";
+import {Animated, Dimensions, Platform, Text, TextInput, TouchableOpacity} from "react-native";
 import {Slider} from "react-native-elements";
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import {scale} from "react-native-size-matters";
 import {connect} from "react-redux";
 import validate from "validate.js";
 import {fetchEnd, fetchStart} from "../../actions/fetchActions";
 import {showNotification} from "../../actions/notificationActions";
 import auth from '../../api/auth';
 
-import {Button, Touchable, VersionedImageField, View} from "../../components/common";
+import {Button, Touchable, View} from "../../components/common";
 import usePrevious from "../../helpers/hooks/usePrevious";
 import {coordsSelector} from "../../reducers/location";
 import themes from "../../styleTheme";
@@ -20,8 +18,13 @@ import signup from "../../validations/signup";
 import vars from '../../vars';
 import styles from './contactScreenStyles';
 
-const colors = themes.base.colors;
+const deviceWidth = themes.base.deviceDimensions.width;
 
+const colors = themes.base.colors;
+const businessTypes = [
+  'Pub', 'Pizzeria', 'Ristorante',
+  'Trattoria', 'Bar', 'Altro',
+];
 const SlidingView = ({ visible, style = {}, children }) => {
   const [_visibility] = useState(new Animated.Value(visible ? 1 : 0));
   const [mounted, setMounted] = useState(visible);
@@ -246,75 +249,125 @@ const  ContactUsScreen = (props) => {
 
 
   return(
-      <View>
-        <KeyboardAwareScrollView
-            contentContainerStyle={styles.container}
-            bounces={false}
-        >
-          <View style={styles.header}>
-            <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name.toUpperCase()}</Text>
-            <Text style={styles.eventDate}>{date}</Text>
-          </View>
+      <View style={styles.container}>
+
+        <View style={styles.header}>
+          <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name.toUpperCase()}</Text>
+          <Text style={styles.eventDate}>{date}</Text>
+        </View>
 
 
-          <View style={styles.content}>
-            <SlidingView visible={index === 0}>
-              <Text style={styles.title}>{t("browse.noBroadcasts.weOrganizeForYou", { eventName: event.name})}</Text>
+        <View style={styles.content}>
+          <SlidingView visible={index === 0} style={{ position: 'absolute'}}>
+            <Text style={styles.title}>{t("browse.noBroadcasts.weOrganizeForYou", { eventName: event.name})}</Text>
 
-              <Text style={styles.label}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
-              <View style={styles.distancesContainer}>
-                {distances.map(dist => (
-                    <Touchable
+            <Text style={styles.label}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
+            <View style={styles.distancesContainer}>
+              {distances.map(dist => (
+                  <Touchable
 
-                        style={[styles.distanceButton,
-                          dist === state.maxDistance ? styles.distanceButtonSelected : {}
-                        ]}
-                        onPress={() => { setState({...state,maxDistance: dist}) }}
-                    >
-                      <Text
-                          allowFontScaling
-                          style={[
-                            styles.distanceButtonTitle,
-                            dist === state.maxDistance ? styles.distanceButtonSelectedTitle : {}
-                          ]}>
-                        {dist + ' km'.toUpperCase()}
-                      </Text></Touchable>
-                ))}
-              </View>
-              <Text style={styles.label}>{t("browse.noBroadcasts.howManyPeople")}</Text>
+                      style={[styles.selectableButton,  styles.distanceButton ,
+                        { flexBasis: deviceWidth / 4 - scale(24) },
+                        dist === state.maxDistance ? styles.selectableButtonSelected : {}
+                      ]}
+                      onPress={() => { setState({...state,maxDistance: dist}) }}
+                  >
+                    <Text
+                        allowFontScaling
+                        style={[
+                          styles.selectableButtonTitle,
+                          dist === state.maxDistance ? styles.selectableButtonSelectedTitle : {}
+                        ]}>
+                      {dist + ' km'.toUpperCase()}
+                    </Text></Touchable>
+              ))}
+            </View>
+            <Text style={styles.label}>{t("browse.noBroadcasts.howManyPeople")}</Text>
 
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Slider
-                    value={state.numOfPeople}
-                    minimumValue={1}
-                    maximumValue={20}
-                    step={1}
-                    style={{justifyContent: 'center', flexGrow: 2 }}
-                    thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
-                    thumbTintColor={colors.white.light}
-                    onValueChange={(numOfPeople) => setState({...state,numOfPeople})} />
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+              <Slider
+                  value={state.numOfPeople}
+                  minimumValue={1}
+                  maximumValue={20}
+                  step={1}
+                  style={{justifyContent: 'center', flexGrow: 2 }}
+                  thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
+                  thumbTintColor={colors.white.light}
+                  onValueChange={(numOfPeople) => setState({...state,numOfPeople})} />
 
-                <Text style={styles.peopleText}>{state.numOfPeople}</Text>
+              <Text style={styles.peopleText}>{state.numOfPeople}</Text>
 
-              </View>
+            </View>
+            <Text style={styles.label}>{t("browse.noBroadcasts.whichBusinessType")}</Text>
+            <View style={styles.businessTypeContainer}>
+              {businessTypes.map(type => (
+                  <Touchable
 
+                      style={[styles.selectableButton, styles.businessTypeButton,
+                        type === state.maxDistance ? styles.selectableButtonSelected : {}
+                      ]}
+                      onPress={() => { setState({...state,maxDistance: type}) }}
+                  >
+                    <Text
+                        allowFontScaling
+                        style={[
+                          styles.selectableButtonTitle,
+                          type === state.maxDistance ? styles.selectableButtonSelectedTitle : {}
+                        ]}>
+                      {type.toUpperCase()}
+                    </Text></Touchable>
+              ))}
+            </View>
+            <Button
 
-              <Button
-                  variant="primary"
-                  onPress={() => setIndex(index === 0 ? 1 : 0)}>press</Button>
+                uppercase
+                round
+                containerStyle={styles.continueButton}
+                variant="primary"
+                onPress={() => setIndex(1)}>{t("browse.noBroadcasts.continue")}</Button>
 
-            </SlidingView>
-            <SlidingView visible={index === 1}>
-                <View style={{justifyContent: 'center'}}>
-                  <Text>
-                    Inserisci la tua mail o il
-                    numero di cellulare
-                  </Text>
-                </View>
-            </SlidingView>
-          </View>
+          </SlidingView>
+          <SlidingView visible={index === 1} style={{ position: 'absolute'}}>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.label}>
+                Inserisci la tua mail o il
+                numero di cellulare
+              </Text>
+              <View style={styles.inputOuterContainer}>
+              <TextInput
+                 // onSubmitEditing={() => passwordRef.current.focus()}
+                 onChangeText={email =>  setState({...state, email: email.trim()})}
 
-        </KeyboardAwareScrollView>
+                  allowFontScaling
+                  autoCapitalize='none'
+                  value={state.email}
+                  textContentType='emailAddress'
+                  keyboardType='email-address'
+                  style={[
+                    styles.input,
+                  ]}
+                  placeholder={t("common.email")}
+                  placeholderTextColor={themes.base.inputPlaceholderColor}
+
+              />
+            </View>
+              <Text>{t("Qualora troveremo un locale adatto a te ti ricontatteremo con maggiori dettagli")}</Text>
+            </View>
+            <Button
+                block
+                uppercase
+                round
+                containerStyle={styles.sendButton}
+                variant="primary"
+                onPress={() => setIndex(2)}>{t("common.send")}</Button>
+          </SlidingView>
+          { Platform.OS === "ios" &&
+          <TouchableOpacity style={styles.iosCloseBtn} onPress={() =>props.navigation.navigate('BroadcastsList')}>
+            <Text style={{textDecorationLine: 'underline', fontSize: 13}}>{t("common.close").toUpperCase()}</Text>
+          </TouchableOpacity>
+            }
+        </View>
+
       </View>
   );
 }

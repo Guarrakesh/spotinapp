@@ -1,6 +1,7 @@
-import {normalizeUnits} from "moment";
+import { scale, verticalScale } from "react-native-size-matters";
 import {Platform, StyleSheet} from "react-native";
 import {Fonts} from "../../components/common/Fonts";
+import {platformShadow} from "../../helpers/styleUtils";
 import themes from "../../styleTheme";
 const colors = themes.base.colors;
 import signInStyles from '../login/signInFormStyles'; // bruttissimo, ma è per importarmi velocemente gli stili di input
@@ -17,6 +18,10 @@ const androidBorder = Platform.OS === "android"
 
 
 const styles = StyleSheet.create({
+  input: {
+    ...signInStyles.input,
+    fontSize: scale(14)
+  },
 
   eventContainer: {
     alignItems: 'center',
@@ -38,11 +43,13 @@ const styles = StyleSheet.create({
   },
   eventName: {
     fontFamily: Fonts.LatoBlack,
-    fontSize: 21,
+    fontSize: scale(21),
+    paddingLeft: scale(16),
+    paddingRight: scale(16),
     color: themes.base.colors.white.light,
     textTransform: 'uppercase',
     marginTop: 8,
-    marginBottom: 8,
+    marginBottom: scale(8),
     textAlign: 'center'
   },
   eventDate: {
@@ -53,10 +60,11 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    marginTop: deviceHeight * 0.03,
-    fontSize: 14,
+    marginTop: deviceHeight > 680 ? verticalScale(24) : verticalScale(7),
+    fontSize: scale(14),
     fontFamily: Fonts.LatoBlack,
-    color: colors.black.default,
+    color: colors.text.default,
+    textAlign: 'left',
     textTransform: 'uppercase',
   },
   errorMessage: {
@@ -65,16 +73,9 @@ const styles = StyleSheet.create({
     marginLeft: 32
   },
   inputOuterContainer: {
-    width:'100%',
-
-    backgroundColor: 'transparent',
-
-    maxHeight: 60,
-    justifyContent: 'center',
-    marginTop: -20,
-    marginBottom: 8,
-    ...themes.base.elevations.depth1,
-    position: 'relative',
+    ...signInStyles.inputOuterContainer,
+    height: 52,
+    marginTop: 16,
   },
   textInputStyle: {
     fontFamily: themes.base.fonts.LatoMedium,
@@ -83,39 +84,41 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     paddingLeft: 16,
     paddingRight: 16,
-    margin: 12,
-    fontSize: 16,
+    margin: scale(12),
+    fontSize: scale(16),
   },
   distancesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 8
+    marginTop: verticalScale(8),
   },
   distanceButton: {
-    padding: deviceWidth * 0.04,
-    paddingLeft: 4,
-    paddingRight: 4,
-    flexBasis: deviceWidth / 4 - 24,
+    paddingLeft: scale(4),
+    paddingRight: scale(4),
+    marginHorizontal: scale(8),
+
+  },
+  selectableButton: {
+    padding: verticalScale(10),
+    paddingLeft: scale(8),
+    paddingRight: scale(8),
+
     borderRadius: 4,
     backgroundColor: '#fff',
-    shadowColor: '#000000',
-    shadowOpacity: 0.08,
-    shadowRadius: 30,
-    shadowOffset: { width: 3, height: 10 },
-    elevation: 7,
+    ...platformShadow(7),
   },
-  distanceButtonSelected: {
+  selectableButtonSelected: {
     backgroundColor: colors.accent.default,
   },
-  distanceButtonTitle: {
+  selectableButtonTitle: {
     fontFamily: themes.base.fonts.LatoBlack,
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: scale(14),
     textTransform: 'uppercase',
     color: colors.black.default,
   },
-  distanceButtonSelectedTitle: {
+  selectableButtonSelectedTitle: {
     color: '#fff'
   },
   peopleCard: {
@@ -151,16 +154,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '90%',
   },
-  sendButton: {
-    paddingLeft: 48,
-    paddingRight: 48,
-    borderRadius: 40,
-    backgroundColor: colors.white.light,
-    borderWidth: 1,
-    alignSelf: 'center',
-    marginBottom: 16,
-    marginTop: 16
-  },
   sendButtonText: {
     fontFamily: Fonts.LatoBold,
     fontSize: 18,
@@ -173,40 +166,41 @@ const styles = StyleSheet.create({
 
   },
   container: {
-    //flex: 1,
-    flexGrow: 1,
-    position: 'relative',
+    flex: 1,
+    height: '100%',
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: colors.accent.default,
   },
   header: {
-    marginTop: deviceHeight * 0.05, // 5%
-
-    flexGrow: 1,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     marginTop: 16,
   },
   content: {
-    marginTop: deviceHeight * 0.05,
+    marginTop: verticalScale(24),
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     width: '100%',
-    padding: 32,
-    paddingLeft: 32,
-    paddingRight: 32,
-    flexGrow: 2,
+    paddingLeft: scale(32),
+    paddingRight: scale(32),
+    flex: 6,
+    paddingTop: verticalScale(16),
+    paddingBottom: verticalScale(16),
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   title: {
-    fontSize: 14,
+    fontSize: deviceHeight > 680 ? scale(17) : scale(14),
     fontFamily: themes.base.fonts.LatoMedium,
     textAlign: 'center',
-    color: themes.base.colors.black.default,
-    marginBottom: deviceHeight * 0.05,
+    color: themes.base.colors.text.default,
+    marginBottom: verticalScale(8),
   },
 
   subtitle: {
@@ -220,25 +214,48 @@ const styles = StyleSheet.create({
   subtitle2: {
     marginTop: 40,
   },
-  errorMessage: {
+  businessTypeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  businessTypeButton: {
+    marginHorizontal: scale(8),
+    marginBottom: verticalScale(8),
+  },
+  // errorMessage: {
+  //   position: 'absolute',
+  //   bottom: -8,
+  //   fontFamily: themes.base.fonts.LatoBlack,
+  //   color: colors.danger.default,
+  //   flex: 1,
+  //   backgroundColor: 'transparent',
+  //   marginLeft: 8,
+  //   zIndex: 100,
+  //   marginBottom: 8,
+  // },
+
+  // modalView: {
+  //   borderTopRightRadius: themes.base.borderRadius,
+  //   borderTopLeftRadius: themes.base.borderRadius,
+  //   overflow: "hidden"
+  // },
+  iosCloseBtn: {
+    alignSelf: 'center',
     position: 'absolute',
-    bottom: -8,
-    fontFamily: themes.base.fonts.LatoBlack,
-    color: colors.danger.default,
-    flex: 1,
-    backgroundColor: 'transparent',
-    marginLeft: 8,
-    zIndex: 100,
-    marginBottom: 8,
+    bottom: scale(24),
+
+
   },
-
-  modalView: {
-    borderTopRightRadius: themes.base.borderRadius,
-    borderTopLeftRadius: themes.base.borderRadius,
-    overflow: "hidden"
+  continueButton: {
+    alignSelf: 'center',
+    marginTop: verticalScale(8),
   },
-
-
+  sendButton: {
+    alignSelf: 'center',
+    marginTop: verticalScale(40)
+  },
   close: {
     position: 'absolute',
     bottom: 24,

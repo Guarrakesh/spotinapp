@@ -74,6 +74,7 @@
     "react-native-push-notification": "^3.1.2",
     "react-native-reanimated": "^1.1.0",
     "react-native-shadow": "^1.2.2",
+    "react-native-size-matters": "^0.2.1",
     "react-native-snap-carousel": "^3.7.4",
     "react-native-svg": "^9.5.3",
     "react-native-swiper": "^1.5.13",

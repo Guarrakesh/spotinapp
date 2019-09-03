@@ -18,14 +18,8 @@ import styles from './locationScreenStyles';
 
 const colors = themes.base.colors;
 
-const Logo = require('../../assets/img/logo-full.png');
-const Mascotte = require('../../assets/img/mascotte.png');
-const BackgroundPattern = require('../../assets/img/no_location_gradient.png');
 
 const deviceHeight = themes.base.deviceDimensions.height;
-const deviceWidth = themes.base.deviceDimensions.width;
-
-const AnimatedImage = Animated.createAnimatedComponent(Image);
 class LocationScreen extends React.Component {
 
 
@@ -83,11 +77,11 @@ class LocationScreen extends React.Component {
     }
     if (!nextProps.deviceLocation.fetching && nextProps.deviceLocation.error) {
       this.setState({ loading: false });
-      //    this.state.iconY.stopAnimation();
+      this.state.iconY.stopAnimation();
 
     } else if (!nextProps.deviceLocation.fetching && nextProps.deviceLocation.position) {
       this.props.navigation.navigate('Main');
-      //  this.state.iconY.stopAnimation();
+      this.state.iconY.stopAnimation();
       this.setState({loading: false})
     }
   }
@@ -124,12 +118,12 @@ class LocationScreen extends React.Component {
           Animated.sequence([
             Animated.timing(this.state.iconY, {
               toValue: 1,
-              duration: 500,
+              duration: 1000,
               useNativeDriver: true,
             }),
             Animated.timing(this.state.iconY, {
               toValue: 0,
-              duration: 500,
+              duration: 1000,
               useNativeDriver: true,
             }),
           ])
@@ -148,7 +142,7 @@ class LocationScreen extends React.Component {
         <KeyboardAwareScrollView
             contentContainerStyle={styles.container}
             // enableOnAndroid={true}
-            bounces={true}
+            bounces={false}
             keyboardShouldPersistTaps={"handled"}
             scrollEnabled={true}
             enableAutomaticScroll={true}
@@ -159,7 +153,7 @@ class LocationScreen extends React.Component {
                             style={{
                               width: 128,
                               height: 128,
-                              transform: [{ scale: this.state.iconY.interpolate({ inputRange: [0,1], outputRange: [1, 1.2]}) }]
+                              transform: [{ rotate: this.state.iconY.interpolate({ inputRange: [0,1], outputRange: ["0deg", "190deg"]}) }]
                             }}/>
           </View>
           <View style={styles.content}>
@@ -177,7 +171,7 @@ class LocationScreen extends React.Component {
                   : t("location.enableLocation")
               }
 
-              </Button>
+            </Button>
             <Text style={[styles.subtitle,styles.subtitle2]}
                   allowFontScaling={false}>{t("location.orInsertAddress")}</Text>
 

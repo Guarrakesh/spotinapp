@@ -32,6 +32,9 @@
 
 
       "contactUs"         : "Contattaci",
+      "whichBusinessType" : "Che tipo di locale desideri?",
+      "continue"        : "Conferma",
+
       "weOrganizeForYou"  : "Se non hai trovato un luogo dove poter seguire {{eventName}} non preoccuparti, lo faremo noi per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",
       "howMuchTravel"     : "Quanto sei disposto a spostarti?",
@@ -248,7 +251,9 @@
     "longPressToRemove": "Tieni premuto per rimuovere un elemento",
     "update": "Aggiorna",
     "next": "Avanti",
-    "noBusinesses" : "Nessun locale trovato"
+    "noBusinesses" : "Nessun locale trovato",
+    "close": "Chiudi"
+
   },
 
 

@@ -1,4 +1,5 @@
 import {StyleSheet, Platform} from "react-native";
+import {platformShadow} from "../../helpers/styleUtils";
 import themes from "../../styleTheme";
 const colors = themes.base.colors;
 
@@ -46,15 +47,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 4,
-    shadowColor: '#000000',
-    shadowOpacity: 0.08,
-    shadowRadius: 30,
-    shadowOffset: { width: 3, height: 10 },
+    ...platformShadow(7),
+    elevation: 0, //disattivo su android
     height: 44,
     backgroundColor: '#fff',
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 16,
+    paddingHorizontal: 16,
     marginBottom: 16,
     ...androidBorder,
   },
@@ -65,7 +64,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     borderRadius: 4,
     fontSize: 18,
-    color: colors.text.dark,
+    fontFamily: themes.base.fonts.LatoBlack,
+    color: colors.text.default,
     fontWeight: '500',
     justifyContent: 'center',
     minHeight: 44,
