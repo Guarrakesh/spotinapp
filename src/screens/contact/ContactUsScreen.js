@@ -16,7 +16,7 @@ import Mascotte from "../../components/common/Mascotte";
 import usePrevious from "../../helpers/hooks/usePrevious";
 import {coordsSelector} from "../../reducers/location";
 import themes from "../../styleTheme";
-import signup from "../../validations/signup";
+import contactUsValidation  from "../../validations/contactUs";
 import vars from '../../vars';
 import styles from './contactScreenStyles';
 
@@ -71,7 +71,7 @@ const  ContactUsScreen = (props) => {
           latitude: props.latitude,
           longitude: props.longitude
         },
-        maxDistance: 0,
+        maxDistance: undefined,
         numOfPeople: 1,
         businessTypes: [],
         errors: []
@@ -113,9 +113,21 @@ const  ContactUsScreen = (props) => {
       setState({...state, businessTypes: [...state.businessTypes, type]})
     }
   };
+  const submitFirstForm = () => {
+    const { maxDistance, numOfPeople, businessTypes } = state;
+    const validationErrors = validate({
+      maxDistance, businessTypes
+    }, contactUsValidation);
+    console.log(validationErrors, maxDistance, businessTypes);
+    if (validationErrors) {
+      setState({...state, errors: Object.keys(validationErrors).map(k => validationErrors[k][0])});
+    } else {
+      setIndex(1);
+    }
+
+  };
   const _sendRequest = () =>  {
 
-    const { userId, event, userPosition, location, maxDistance, numOfPeople, notes, email } = state;
     const { t } = props;
     const isAuth = props.userId;
     const fetchUrl = isAuth ? `${vars.apiUrl}/users/${userId}/requests` : `${vars.apiUrl}/broadcast-requests`;
@@ -124,7 +136,7 @@ const  ContactUsScreen = (props) => {
 
     const validationErrors = validate({
       email: email.replace(" ", "")
-    }, signup);
+    }, contactUsValidation);
 
     if (validationErrors.email) {
       setState({...state, errors: [validationErrors.email]});
@@ -288,7 +300,7 @@ const  ContactUsScreen = (props) => {
                           { flexBasis: deviceWidth / 4 - scale(24) },
                           dist === state.maxDistance ? styles.selectableButtonSelected : {}
                         ]}
-                        onPress={() => { setState({...state,maxDistance: dist}) }}
+                        onPress={() => setState({...state,maxDistance: dist}) }
                     >
                       <Text
                           allowFontScaling
@@ -340,9 +352,10 @@ const  ContactUsScreen = (props) => {
 
                   uppercase
                   round
+                  disabled={state.businessTypes.length === 0 || !state.maxDistance}
                   containerStyle={styles.continueButton}
                   variant="primary"
-                  onPress={() => setIndex(1)}>{t("browse.noBroadcasts.continue")}</Button>
+                  onPress={submitFirstForm}>{t("browse.noBroadcasts.continue")}</Button>
 
             </SlidingView>
             <SlidingView visible={index === 1} style={{ position: 'absolute'}}>

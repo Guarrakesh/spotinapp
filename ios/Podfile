@@ -51,6 +51,7 @@ target 'spotinapp' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
 end

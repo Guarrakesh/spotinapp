@@ -32,11 +32,14 @@
       "insertEmailHelperText": "Non appena troveremo un locale adatto a te, ti ricontatteremo con maggiori dettagli",
       "doneText": "Riceverai notizie al più presto dal nostro team!",
 
-
       "contactUs"         : "Contattaci",
       "whichBusinessType" : "Che tipo di locale desideri?",
       "continue"        : "Conferma",
+      "formErrors": {
+        "maxDistanceRequired": "Indica quanto sei disposto a spostarti",
+        "businessTypeRequired": "Scegli in che tipo di locale vuoi andare"
 
+      },
       "weOrganizeForYou"  : "Se non hai trovato un luogo dove poter seguire {{eventName}} non preoccuparti, lo faremo noi per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",
       "howMuchTravel"     : "Quanto sei disposto a spostarti?",
@@ -257,7 +260,12 @@
     "close": "Chiudi",
     "send": "Invia",
     "phone": "Cellulare",
-    "done": "Fatto"
+    "done": "Fatto",
+    "errors": {
+      "wait": "Aspetta, abbiamo un problema:",
+      "emailNotValid": "L'email che hai inserito non è valida",
+      "emailRequired": "Inserisci la tua email"
+    }
   },
 
 
