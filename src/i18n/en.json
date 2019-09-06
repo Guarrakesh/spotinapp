@@ -28,7 +28,8 @@
         "subtitle"          : "Let's organize it!",
         "buttonTitle"       : "Continue"
       },
-
+      "insertEmailHelperText": "As soon as we find a restaurant that maches your needs, we will contact you back with more details",
+      "doneText": "You will be contacted back soon!",
       "contactUs"         : "Contact Us",
       "weOrganizeForYou"  : "If you didn't find a place to follow {{eventName}} don't worry, we will do it for you!",
       "whereToWatch"      : "Where would you like to watch this?",
@@ -247,7 +248,11 @@
     "update": "Update",
     "next": "Next",
     "noBusinesses" : "No businesses found",
-    "close": "Close"
+    "close": "Close",
+    "send": "Send",
+    "phone": "Phone Number",
+    "done": "Done"
+
   },
 
 

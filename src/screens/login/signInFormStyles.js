@@ -1,6 +1,8 @@
 import {StyleSheet, Platform} from "react-native";
 import {platformShadow} from "../../helpers/styleUtils";
 import themes from "../../styleTheme";
+import { scale } from "react-native-size-matters";
+
 const colors = themes.base.colors;
 
 const androidBorder = Platform.OS === "android"
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     textAlign: 'left',
     borderRadius: 4,
-    fontSize: 18,
+    fontSize: scale(16),
     fontFamily: themes.base.fonts.LatoBlack,
     color: colors.text.default,
     fontWeight: '500',

@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(8),
     textAlign: 'center'
   },
+
   eventDate: {
     fontFamily: Fonts.LatoBold,
     fontSize: 14,
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
 
   },
   container: {
+    position: 'relative',
     flex: 1,
     height: '100%',
     alignItems: 'center',
@@ -262,5 +264,32 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
 
   },
+
+  doneContainer: {
+    alignItems: 'center',
+    paddingHorizontal: scale(32),
+    flex: 6,
+    top: deviceHeight / 3 - scale(32),
+    left: 0,
+    right: 0,
+    position: 'absolute',
+  },
+  doneTitle: {
+
+    fontFamily: Fonts.LatoBlack,
+    fontSize: scale(21),
+    paddingLeft: scale(16),
+    paddingRight: scale(16),
+    color: themes.base.colors.white.light,
+    textTransform: 'uppercase',
+    marginTop: 8,
+    marginBottom: scale(8),
+    textAlign: 'center'
+
+
+  },
+  doneText: {
+    color: themes.base.colors.white.default,
+  }
 });
 export default styles;

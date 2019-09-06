@@ -11,6 +11,8 @@ import {showNotification} from "../../actions/notificationActions";
 import auth from '../../api/auth';
 
 import {Button, Touchable, View} from "../../components/common";
+import FormErrorBox from "../../components/common/FormError/FormErrorBox";
+import Mascotte from "../../components/common/Mascotte";
 import usePrevious from "../../helpers/hooks/usePrevious";
 import {coordsSelector} from "../../reducers/location";
 import themes from "../../styleTheme";
@@ -19,7 +21,7 @@ import vars from '../../vars';
 import styles from './contactScreenStyles';
 
 const deviceWidth = themes.base.deviceDimensions.width;
-
+const deviceHeight = themes.base.deviceDimensions.height;
 const colors = themes.base.colors;
 const businessTypes = [
   'Pub', 'Pizzeria', 'Ristorante',
@@ -69,15 +71,24 @@ const  ContactUsScreen = (props) => {
           latitude: props.latitude,
           longitude: props.longitude
         },
-        location: "",
         maxDistance: 0,
         numOfPeople: 1,
-        notes: "",
-        errors: {}
+        businessTypes: [],
+        errors: []
       }
 
   );
   const [index, setIndex] = useState(0);
+  const [animatedDone] = useState(new Animated.Value(0));
+
+  const showDone = () => {
+    Animated.spring(animatedDone, {
+      toValue: 1,
+      tension: 100,
+      friction: 30,
+      useNativeDriver: true,
+    }).start();
+  };
   useEffect(() => {
 
   }, [index]);
@@ -95,22 +106,28 @@ const  ContactUsScreen = (props) => {
     });
   }, []);
 
-
+  const handleBusinessTypePress = (type) => {
+    if (state.businessTypes.includes(type)) {
+      setState({...state, businessTypes: state.businessTypes.filter(t => t !== type)})
+    } else {
+      setState({...state, businessTypes: [...state.businessTypes, type]})
+    }
+  };
   const _sendRequest = () =>  {
 
     const { userId, event, userPosition, location, maxDistance, numOfPeople, notes, email } = state;
-    const { t } = self.props;
+    const { t } = props;
     const isAuth = props.userId;
     const fetchUrl = isAuth ? `${vars.apiUrl}/users/${userId}/requests` : `${vars.apiUrl}/broadcast-requests`;
 
-    setState({...state, errors: {}});
+    setState({...state, errors: []});
 
     const validationErrors = validate({
       email: email.replace(" ", "")
     }, signup);
 
     if (validationErrors.email) {
-      setState({...state, errors: validationErrors});
+      setState({...state, errors: [validationErrors.email]});
     }
     else{
       if(isAuth) {
@@ -203,13 +220,7 @@ const  ContactUsScreen = (props) => {
               if(res.status === 204){
                 props.dispatch(fetchEnd());
                 //mostra notifica
-                props.dispatch(showNotification(
-                    t("browse.noBroadcasts.notification.success.message"),
-                    "success",
-                    {
-                      title: t("browse.noBroadcasts.notification.success.title"),
-                    }
-                ));
+                showDone();
                 props.navigation.navigate('BroadcastsList');
               }
               else{
@@ -218,12 +229,11 @@ const  ContactUsScreen = (props) => {
                     t("browse.noBroadcasts.notification.failure.message"),
                     "warning",
                     {
-                      title: t("browse.noBroadcasts.notification.success.title"),
+                      title: t("browse.noBroadcasts.notification.failure.message"),
                     }
                 ));
 
                 props.dispatch(fetchEnd());
-                console.log(res);
               }
             })
             .catch(function(res){
@@ -249,126 +259,146 @@ const  ContactUsScreen = (props) => {
 
 
   return(
-      <View style={styles.container}>
+      <React.Fragment>
+        <FormErrorBox errors={state.errors}
+                      show={state.errors.length > 0}
+                      onSwipeAway={() => setState({...state, errors: []})}/>
 
-        <View style={styles.header}>
-          <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name.toUpperCase()}</Text>
-          <Text style={styles.eventDate}>{date}</Text>
-        </View>
+        <View style={styles.container}>
+
+          <View style={styles.header}>
+            <Text style={styles.eventName} numberOfLines={1} adjustsFontSizeToFit={true}>{event.name.toUpperCase()}</Text>
+            <Text style={styles.eventDate}>{date}</Text>
+          </View>
 
 
-        <View style={styles.content}>
-          <SlidingView visible={index === 0} style={{ position: 'absolute'}}>
-            <Text style={styles.title}>{t("browse.noBroadcasts.weOrganizeForYou", { eventName: event.name})}</Text>
+          <Animated.View style={[
+            styles.content,
+            { transform: [{ translateY: animatedDone.interpolate({ inputRange: [0, 1], outputRange: [0, deviceHeight] }) }] }
+          ]}>
+            <SlidingView visible={index === 0} style={{ position: 'absolute'}}>
+              <Text style={styles.title}>{t("browse.noBroadcasts.weOrganizeForYou", { eventName: event.name})}</Text>
 
-            <Text style={styles.label}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
-            <View style={styles.distancesContainer}>
-              {distances.map(dist => (
-                  <Touchable
+              <Text style={styles.label}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
+              <View style={styles.distancesContainer}>
+                {distances.map(dist => (
+                    <Touchable
 
-                      style={[styles.selectableButton,  styles.distanceButton ,
-                        { flexBasis: deviceWidth / 4 - scale(24) },
-                        dist === state.maxDistance ? styles.selectableButtonSelected : {}
+                        style={[styles.selectableButton,  styles.distanceButton ,
+                          { flexBasis: deviceWidth / 4 - scale(24) },
+                          dist === state.maxDistance ? styles.selectableButtonSelected : {}
+                        ]}
+                        onPress={() => { setState({...state,maxDistance: dist}) }}
+                    >
+                      <Text
+                          allowFontScaling
+                          style={[
+                            styles.selectableButtonTitle,
+                            dist === state.maxDistance ? styles.selectableButtonSelectedTitle : {}
+                          ]}>
+                        {dist + ' km'.toUpperCase()}
+                      </Text></Touchable>
+                ))}
+              </View>
+              <Text style={styles.label}>{t("browse.noBroadcasts.howManyPeople")}</Text>
+
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Slider
+                    value={state.numOfPeople}
+                    minimumValue={1}
+                    maximumValue={20}
+                    step={1}
+                    style={{justifyContent: 'center', flexGrow: 2 }}
+                    thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
+                    thumbTintColor={colors.white.light}
+                    onValueChange={(numOfPeople) => setState({...state,numOfPeople})} />
+
+                <Text style={styles.peopleText}>{state.numOfPeople}</Text>
+
+              </View>
+              <Text style={styles.label}>{t("browse.noBroadcasts.whichBusinessType")}</Text>
+              <View style={styles.businessTypeContainer}>
+                {businessTypes.map(type => (
+                    <Touchable
+
+                        style={[styles.selectableButton, styles.businessTypeButton,
+                          state.businessTypes.includes(type) ? styles.selectableButtonSelected : {}
+                        ]}
+                        onPress={() => handleBusinessTypePress(type)}
+                    >
+                      <Text
+                          allowFontScaling
+                          style={[
+                            styles.selectableButtonTitle,
+                            state.businessTypes.includes(type) ? styles.selectableButtonSelectedTitle : {}
+                          ]}>
+                        {type.toUpperCase()}
+                      </Text></Touchable>
+                ))}
+              </View>
+              <Button
+
+                  uppercase
+                  round
+                  containerStyle={styles.continueButton}
+                  variant="primary"
+                  onPress={() => setIndex(1)}>{t("browse.noBroadcasts.continue")}</Button>
+
+            </SlidingView>
+            <SlidingView visible={index === 1} style={{ position: 'absolute'}}>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.label}>
+                  Inserisci la tua mail o il
+                  numero di cellulare
+                </Text>
+                <View style={styles.inputOuterContainer}>
+                  <TextInput
+                      // onSubmitEditing={() => passwordRef.current.focus()}
+                      onChangeText={email =>  setState({...state, email: email.trim()})}
+
+                      allowFontScaling
+                      autoCapitalize='none'
+                      value={state.email}
+                      textContentType='emailAddress'
+                      keyboardType='email-address'
+                      style={[
+                        styles.input,
                       ]}
-                      onPress={() => { setState({...state,maxDistance: dist}) }}
-                  >
-                    <Text
-                        allowFontScaling
-                        style={[
-                          styles.selectableButtonTitle,
-                          dist === state.maxDistance ? styles.selectableButtonSelectedTitle : {}
-                        ]}>
-                      {dist + ' km'.toUpperCase()}
-                    </Text></Touchable>
-              ))}
-            </View>
-            <Text style={styles.label}>{t("browse.noBroadcasts.howManyPeople")}</Text>
+                      placeholder={`${t("common.email")}/${t("common.phone")}`}
+                      placeholderTextColor={themes.base.inputPlaceholderColor}
 
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Slider
-                  value={state.numOfPeople}
-                  minimumValue={1}
-                  maximumValue={20}
-                  step={1}
-                  style={{justifyContent: 'center', flexGrow: 2 }}
-                  thumbStyle={{borderWidth: 2, borderColor: colors.accent.default}}
-                  thumbTintColor={colors.white.light}
-                  onValueChange={(numOfPeople) => setState({...state,numOfPeople})} />
-
-              <Text style={styles.peopleText}>{state.numOfPeople}</Text>
-
-            </View>
-            <Text style={styles.label}>{t("browse.noBroadcasts.whichBusinessType")}</Text>
-            <View style={styles.businessTypeContainer}>
-              {businessTypes.map(type => (
-                  <Touchable
-
-                      style={[styles.selectableButton, styles.businessTypeButton,
-                        type === state.maxDistance ? styles.selectableButtonSelected : {}
-                      ]}
-                      onPress={() => { setState({...state,maxDistance: type}) }}
-                  >
-                    <Text
-                        allowFontScaling
-                        style={[
-                          styles.selectableButtonTitle,
-                          type === state.maxDistance ? styles.selectableButtonSelectedTitle : {}
-                        ]}>
-                      {type.toUpperCase()}
-                    </Text></Touchable>
-              ))}
-            </View>
-            <Button
-
-                uppercase
-                round
-                containerStyle={styles.continueButton}
-                variant="primary"
-                onPress={() => setIndex(1)}>{t("browse.noBroadcasts.continue")}</Button>
-
-          </SlidingView>
-          <SlidingView visible={index === 1} style={{ position: 'absolute'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={styles.label}>
-                Inserisci la tua mail o il
-                numero di cellulare
-              </Text>
-              <View style={styles.inputOuterContainer}>
-              <TextInput
-                 // onSubmitEditing={() => passwordRef.current.focus()}
-                 onChangeText={email =>  setState({...state, email: email.trim()})}
-
-                  allowFontScaling
-                  autoCapitalize='none'
-                  value={state.email}
-                  textContentType='emailAddress'
-                  keyboardType='email-address'
-                  style={[
-                    styles.input,
-                  ]}
-                  placeholder={t("common.email")}
-                  placeholderTextColor={themes.base.inputPlaceholderColor}
-
-              />
-            </View>
-              <Text>{t("Qualora troveremo un locale adatto a te ti ricontatteremo con maggiori dettagli")}</Text>
-            </View>
-            <Button
-                block
-                uppercase
-                round
-                containerStyle={styles.sendButton}
-                variant="primary"
-                onPress={() => setIndex(2)}>{t("common.send")}</Button>
-          </SlidingView>
-          { Platform.OS === "ios" &&
-          <TouchableOpacity style={styles.iosCloseBtn} onPress={() =>props.navigation.navigate('BroadcastsList')}>
-            <Text style={{textDecorationLine: 'underline', fontSize: 13}}>{t("common.close").toUpperCase()}</Text>
-          </TouchableOpacity>
+                  />
+                </View>
+                <Text>{t("browse.noBroadcasts.insertEmailHelperText")}</Text>
+              </View>
+              <Button
+                  block
+                  uppercase
+                  round
+                  disabled={!state.email}
+                  containerStyle={styles.sendButton}
+                  variant="primary"
+                  onPress={() => _sendRequest()}>{t("common.send")}</Button>
+            </SlidingView>
+            { Platform.OS === "ios" &&
+            <TouchableOpacity style={styles.iosCloseBtn} onPress={() =>props.navigation.navigate('BroadcastsList')}>
+              <Text style={{textDecorationLine: 'underline', fontSize: 13}}>{t("common.close").toUpperCase()}</Text>
+            </TouchableOpacity>
             }
-        </View>
+          </Animated.View>
+          <Animated.View
 
-      </View>
+              style={[
+                styles.doneContainer,
+                { opacity: animatedDone, transform: [{ scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0.5, 1] }) }] }
+              ]
+              }>
+            <Mascotte sport="waterpolo" width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>
+            <Text style={styles.doneTitle}>{t("common.done")}</Text>
+            <Text style={styles.doneText}>{t("browse.noBroadcasts.doneText")}</Text>
+          </Animated.View>
+        </View>
+      </React.Fragment>
   );
 }
 

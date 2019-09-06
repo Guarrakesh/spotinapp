@@ -29,6 +29,8 @@
         "subtitle"          : "Organizziamolo insieme!",
         "buttonTitle"       : "Continua"
       },
+      "insertEmailHelperText": "Non appena troveremo un locale adatto a te, ti ricontatteremo con maggiori dettagli",
+      "doneText": "Riceverai notizie al più presto dal nostro team!",
 
 
       "contactUs"         : "Contattaci",
@@ -252,8 +254,10 @@
     "update": "Aggiorna",
     "next": "Avanti",
     "noBusinesses" : "Nessun locale trovato",
-    "close": "Chiudi"
-
+    "close": "Chiudi",
+    "send": "Invia",
+    "phone": "Cellulare",
+    "done": "Fatto"
   },
 
 

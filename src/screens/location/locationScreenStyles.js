@@ -1,5 +1,7 @@
 import {Platform, StyleSheet} from "react-native";
 import themes from "../../styleTheme";
+import { scale } from "react-native-size-matters";
+
 const colors = themes.base.colors;
 import signInStyles from '../login/signInFormStyles'; // bruttissimo, ma è per importarmi velocemente gli stili di input
 
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   subtitle: {
 
     marginTop: 8,
-    fontSize: 14,
+    fontSize: scale(14),
     fontFamily: themes.base.fonts.LatoMedium,
     color: colors.text.default,
     textAlign: 'center'
