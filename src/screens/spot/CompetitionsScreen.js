@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {InteractionManager, Linking} from 'react-native';
 
 import ListController from '../../controllers/ListController';
 import CompetitionList from '../../components/SpotComponents/CompetitionList';
 import { entityView } from "../../actions/view";
-
-import {InteractionManager, Linking} from 'react-native';
+import { PHONE_NUMBER } from "../../vars";
 
 
 class CompetitionsScreen extends React.Component {
@@ -24,7 +24,7 @@ class CompetitionsScreen extends React.Component {
 
   handleContactUsPress() {
     const sportName = this.props.navigation.state.params.title;
-    Linking.openURL(`https://wa.me/+393512486394?text=Ciao,%20non%20riesco%20a%20trovare%20un%20evento%20di%20${sportName},%20potete%20aiutarmi?`);
+    Linking.openURL(`https://wa.me/${PHONE_NUMBER}?text=Ciao,%20non%20riesco%20a%20trovare%20un%20evento%20di%20${sportName},%20potete%20aiutarmi?`);
   }
 
   render() {

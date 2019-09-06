@@ -10,6 +10,7 @@ import EventList from '../../components/SpotComponents/EventList';
 import ListController from '../../controllers/ListController';
 import { addFavoriteEvent, deleteFavoriteEvent } from '../../actions/events';
 import { entityView } from "../../actions/view";
+import { PHONE_NUMBER } from "../../vars";
 
 import themes from "../../styleTheme";
 
@@ -61,7 +62,7 @@ class EventScreen extends React.Component {
 
   handleContactUsPress() {
     const competitionName = this.props.navigation.state.params.title;
-    Linking.openURL(`https://wa.me/+393512486394?text=Ciao,%20non%20riesco%20a%20trovare%20un%20evento%20di%20${competitionName},%20potete%20aiutarmi?`);
+    Linking.openURL(`https://wa.me/${PHONE_NUMBER}?text=Ciao,%20non%20riesco%20a%20trovare%20un%20evento%20di%20${competitionName},%20potete%20aiutarmi?`);
   }
 
   createPushNotification(event) {
