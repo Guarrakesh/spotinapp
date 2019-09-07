@@ -391,7 +391,7 @@ const  ContactUsScreen = (props) => {
                   disabled={!state.email}
                   containerStyle={styles.sendButton}
                   variant="primary"
-                  onPress={() => _sendRequest()}>{t("common.send")}</Button>
+                  onPress={() => showDone()}>{t("common.send")}</Button>
             </SlidingView>
             { Platform.OS === "ios" &&
             <TouchableOpacity style={styles.iosCloseBtn} onPress={() =>props.navigation.navigate('BroadcastsList')}>
@@ -403,12 +403,15 @@ const  ContactUsScreen = (props) => {
 
               style={[
                 styles.doneContainer,
-                { opacity: animatedDone, transform: [{ scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0.5, 1] }) }] }
+                { opacity: animatedDone, transform: [{ scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0, 1] }) }] }
               ]
               }>
             <Mascotte sport="waterpolo" width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>
             <Text style={styles.doneTitle}>{t("common.done")}</Text>
             <Text style={styles.doneText}>{t("browse.noBroadcasts.doneText")}</Text>
+            <Button
+                onPress={() => props.navigation.navigate('Main')}
+                round block containerStyle={{marginTop: deviceHeight * 0.1}}>{t("common.backToHome")}</Button>
           </Animated.View>
         </View>
       </React.Fragment>
