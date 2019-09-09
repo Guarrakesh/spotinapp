@@ -23,7 +23,7 @@ import styles from './contactScreenStyles';
 const deviceWidth = themes.base.deviceDimensions.width;
 const deviceHeight = themes.base.deviceDimensions.height;
 const colors = themes.base.colors;
-const businessTypes = [
+const _businessTypes = [
   'Pub', 'Pizzeria', 'Ristorante',
   'Trattoria', 'Bar', 'Altro',
 ];
@@ -74,7 +74,8 @@ const  ContactUsScreen = (props) => {
         maxDistance: undefined,
         numOfPeople: 1,
         businessTypes: [],
-        errors: []
+        errors: [],
+        fieldsWithError: [],
       }
 
   );
@@ -89,11 +90,8 @@ const  ContactUsScreen = (props) => {
       useNativeDriver: true,
     }).start();
   };
-  useEffect(() => {
 
-  }, [index]);
   useEffect(() => {
-    const {event} = props.navigation.state.params;
 
     setState({...state,
       event: event._id,
@@ -114,11 +112,10 @@ const  ContactUsScreen = (props) => {
     }
   };
   const submitFirstForm = () => {
-    const { maxDistance, numOfPeople, businessTypes } = state;
+    const { maxDistance, businessTypes } = state;
     const validationErrors = validate({
       maxDistance, businessTypes
     }, contactUsValidation);
-    console.log(validationErrors, maxDistance, businessTypes);
     if (validationErrors) {
       setState({...state, errors: Object.keys(validationErrors).map(k => validationErrors[k][0])});
     } else {
@@ -126,145 +123,90 @@ const  ContactUsScreen = (props) => {
     }
 
   };
-  const _sendRequest = () =>  {
 
-    const { t } = props;
-    const isAuth = props.userId;
-    const fetchUrl = isAuth ? `${vars.apiUrl}/users/${userId}/requests` : `${vars.apiUrl}/broadcast-requests`;
 
-    setState({...state, errors: []});
-
-    const validationErrors = validate({
-      email: email.replace(" ", "")
-    }, contactUsValidation);
-
-    if (validationErrors.email) {
-      setState({...state, errors: [validationErrors.email]});
-    }
-    else{
-      if(isAuth) {
-        auth.check().then(() => {
-          auth.getAuthToken().then(token => {
-            props.dispatch(fetchStart());
-            fetch(fetchUrl,
-                {
-                  headers: {
-                    'Authorization':`Bearer ${token.accessToken}`,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  },
-                  method: "POST",
-                  body: JSON.stringify({
-                    email,
-                    event,
-                    location,
-                    maxDistance,
-                    numOfPeople,
-                    userPosition,
-                    note: notes
-                  })
-                })
-                .then(function(res){
-                  if(res.status === 204){
-                    props.dispatch(fetchEnd());
-                    //mostra notifica
-                    props.dispatch(showNotification(
-                        t("browse.noBroadcasts.notification.success.message"),
-                        "success",
-                        {
-                          title: t("browse.noBroadcasts.notification.success.title"),
-                        }
-                    ));
-                    props.navigation.navigate('BroadcastsList');
-                  }
-                  else{
-                    //mostra notifica
-                    props.dispatch(showNotification(
-                        t("browse.noBroadcasts.notification.failure.message"),
-                        "warning",
-                        {
-                          title: t("browse.noBroadcasts.notification.success.title"),
-                        }
-                    ));
-
-                    props.dispatch(fetchEnd());
-                    console.log(res);
-                  }
-                })
-                .catch(function(res){
-                  props.dispatch(showNotification(
-                      t("common.notificationFailure.message"),
-                      "error",
-                      {
-                        title: t("common.notificationFailure.title")
-                      }
-                  ));
-                  props.dispatch(fetchEnd());
-                  console.log(res);
-                })
-          })
-        }).catch(function(e){
-          props.navigation.navigate("Auth", {}, true);
-          props.dispatch(fetchEnd());
-          console.log(e);
-        })
-      }
-      else {
-        fetch(fetchUrl,
-            {
-              headers: {
-                //'Authorization':`Bearer ${token.accessToken}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              method: "POST",
-              body: JSON.stringify({
-                email,
-                event,
-                location,
-                maxDistance,
-                numOfPeople,
-                userPosition,
-                note: notes
-              })
-            })
-            .then(function(res){
-              if(res.status === 204){
-                props.dispatch(fetchEnd());
-                //mostra notifica
-                showDone();
-                props.navigation.navigate('BroadcastsList');
-              }
-              else{
-                //mostra notifica
-                props.dispatch(showNotification(
-                    t("browse.noBroadcasts.notification.failure.message"),
-                    "warning",
-                    {
-                      title: t("browse.noBroadcasts.notification.failure.message"),
-                    }
-                ));
-
-                props.dispatch(fetchEnd());
-              }
-            })
-            .catch(function(res){
-              props.dispatch(showNotification(
-                  t("common.notificationFailure.message"),
-                  "error",
-                  {
-                    title: t("common.notificationFailure.title")
-                  }
-              ));
-              props.dispatch(fetchEnd());
-              console.log(res);
-            })
-      }
+  const showFailure = (response) => {
+    if (response) {
+      props.dispatch(showNotification(
+          t("browse.noBroadcasts.notification.failure.message"),
+          "warning",
+          {
+            title: t("browse.noBroadcasts.notification.failure.title"),
+          }
+      ));
+    } else {
+      props.dispatch(showNotification(
+          t("common.notificationFailure.message"),
+          "error",
+          {
+            title: t("common.notificationFailure.title")
+          }
+      ));
     }
 
   };
 
-  const {event} = props.navigation.state.params;
+  const isPhoneNumber = value => /^(([+]|00)39)?((3[1-6][0-9]))(\d{6,7})$/g.test(value);
+  const _sendRequest = async () =>  {
+
+    const { t } = props;
+    const isAuth = props.userId;
+    const { email, userPosition, businessTypes, maxDistance, userId, numOfPeople, event } = state;
+
+    // Validation
+    setState({...state, errors: []});
+    if (!isPhoneNumber(email) && !/^\S+@\S+\.\S+$/.test(email)) {
+      return setState({
+        ...state,
+        errors: [t('browse.noBroadcasts.formErrors.emailOrPhoneNotValid')],
+        fieldsWithError: [...state.fieldsWithError, 'email']
+      });
+    }
+
+    const fetchUrl = isAuth ? `${vars.apiUrl}/users/${userId}/requests` : `${vars.apiUrl}/broadcast-requests`;
+    const fetchOptions = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        event,
+        maxDistance,
+        numOfPeople,
+        userPosition,
+        businessTypes,
+        ...(isPhoneNumber(email) ? { phone: email } : { email }),
+      })
+    };
+    try {
+      props.dispatch(fetchStart());
+      if (isAuth) {
+        await auth.check();
+        const token = await auth.getAuthToken();
+        fetchOptions.Authorization = `Bearer ${token.accessToken}`;
+      }
+      try {
+        const response = await fetch(fetchUrl, fetchOptions);
+        if (response.status === 204) {
+          showDone();
+        } else {
+          console.error(response)
+          showFailure(response);
+        }
+      } catch (e) {
+        console.error(e);
+        showFailure();
+      }
+    } catch (e) {
+      props.navigation.navigate("Auth", {}, true);
+    } finally {
+      props.dispatch(fetchEnd());
+    }
+
+  };
+
+  const { event } = props.navigation.state.params;
   const distances = [5, 10, 50, 100];
   const { t } = props;
   let date = moment(event.start_at).calendar();
@@ -330,7 +272,7 @@ const  ContactUsScreen = (props) => {
               </View>
               <Text style={styles.label}>{t("browse.noBroadcasts.whichBusinessType")}</Text>
               <View style={styles.businessTypeContainer}>
-                {businessTypes.map(type => (
+                {_businessTypes.map(type => (
                     <Touchable
 
                         style={[styles.selectableButton, styles.businessTypeButton,
@@ -364,10 +306,16 @@ const  ContactUsScreen = (props) => {
                   Inserisci la tua mail o il
                   numero di cellulare
                 </Text>
-                <View style={styles.inputOuterContainer}>
+                <View style={[
+                    styles.inputOuterContainer,
+                  state.fieldsWithError.includes('email') ? {
+                    borderColor: themes.base.colors.danger.light,
+                    borderWidth: 1,
+                    } : {}
+                ]}>
                   <TextInput
                       // onSubmitEditing={() => passwordRef.current.focus()}
-                      onChangeText={email =>  setState({...state, email: email.trim()})}
+                      onChangeText={email => setState({...state, email: email.trim()})}
 
                       allowFontScaling
                       autoCapitalize='none'
@@ -391,7 +339,7 @@ const  ContactUsScreen = (props) => {
                   disabled={!state.email}
                   containerStyle={styles.sendButton}
                   variant="primary"
-                  onPress={() => showDone()}>{t("common.send")}</Button>
+                  onPress={_sendRequest}>{t("common.send")}</Button>
             </SlidingView>
             { Platform.OS === "ios" &&
             <TouchableOpacity style={styles.iosCloseBtn} onPress={() =>props.navigation.navigate('BroadcastsList')}>
@@ -406,12 +354,12 @@ const  ContactUsScreen = (props) => {
                 { opacity: animatedDone, transform: [{ scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0, 1] }) }] }
               ]
               }>
-            <Mascotte sport="waterpolo" width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>
+            <Mascotte sport={event.sport.slug} width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>
             <Text style={styles.doneTitle}>{t("common.done")}</Text>
             <Text style={styles.doneText}>{t("browse.noBroadcasts.doneText")}</Text>
             <Button
                 onPress={() => props.navigation.navigate('Main')}
-                round block containerStyle={{marginTop: deviceHeight * 0.1}}>{t("common.backToHome")}</Button>
+                round block containerStyle={{marginTop: deviceHeight * 0.1}}>{t("common.close")}</Button>
           </Animated.View>
         </View>
       </React.Fragment>

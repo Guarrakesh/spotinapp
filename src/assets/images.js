@@ -42,6 +42,16 @@ const images = {
 
     mascotte: {
       waterpolo: require('./img/mascotte/pallanuoto/POLPO_PALLANUOTO.png'),
+      soccer: require('./img/mascotte/soccer/BIRRA_CALCIO.png'),
+      basket: require('./img/mascotte/basket/HOTDOG_BASKET.png'),
+      tennis: require('./img/mascotte/tennis/BROCCOLO_TENNIS.png'),
+      martial: require('./img/mascotte/martial/POLLO_BOXE.png'),
+      volley: require('./img/mascotte/volley/BANANA_PALLAVOLO.png'),
+      football: require('./img/mascotte/football/PIZZA_FOOTBALL.png'),
+      motori: require('./img/mascotte/motori/ENERGY_MOTORI.png'),
+      rugby: require('./img/mascotte/rugby/HAMBURGER_RUGBY.png'),
+
+
     }
   }
 };

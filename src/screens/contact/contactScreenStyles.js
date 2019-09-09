@@ -20,7 +20,9 @@ const androidBorder = Platform.OS === "android"
 const styles = StyleSheet.create({
   input: {
     ...signInStyles.input,
-    fontSize: scale(14)
+    fontSize: scale(14),
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
 
   eventContainer: {

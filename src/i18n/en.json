@@ -30,8 +30,8 @@
       },
       "formErrors": {
         "maxDistanceRequired": "Tell us how far you want to travel",
-        "businessTypeRequired": "Choose which restaurant you want to go to"
-
+        "businessTypeRequired": "Choose which restaurant you want to go to",
+        "emailOrPhoneNotValid": "Please insert a valid email or phone number"
       },
       "insertEmailHelperText": "As soon as we find a restaurant that maches your needs, we will contact you back with more details",
       "doneText": "You will be contacted back soon!",

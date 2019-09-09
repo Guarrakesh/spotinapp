@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {withNamespaces} from "react-i18next";
 import {Animated, Text, StyleSheet, View} from "react-native";
 import PropTypes from 'prop-types';
 import {
@@ -13,7 +14,7 @@ import themes from "../../../styleTheme";
 const deviceHeight = themes.base.deviceDimensions.height;
 const deviceWidth = themes.base.deviceDimensions.width;
 
-const FormErrorBox = ({ errors, show, onSwipeAway }) => {
+const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
 
   // 0 close, 1 show, 2 reset
   const [status, setStatus] = useState(0);
@@ -115,7 +116,7 @@ const FormErrorBox = ({ errors, show, onSwipeAway }) => {
             ]}
         >
           <View style={styles.line}></View>
-          <Text style={styles.title}>Aspetta, abbiamo un problema</Text>
+          <Text style={styles.title}>{t("common.errors.wait")}</Text>
           {errors.map(error => (
                   <Text style={styles.text}>{error}</Text>
 
@@ -168,4 +169,4 @@ FormErrorBox.propTypes = {
   autoHideDuration: PropTypes.number,
 };
 
-export default FormErrorBox;
+export default withNamespaces()(FormErrorBox);
