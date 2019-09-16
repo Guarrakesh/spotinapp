@@ -77,7 +77,7 @@ const AuthNavigator = createStackNavigator(
       mode: 'modal',
       headerMode: 'screen',
       cardStyle: {
-        backgroundColor: themes.base.colors.accent.dark
+        backgroundColor: themes.base.colors.accent.default
       }
 
 

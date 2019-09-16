@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {ActivityIndicator, Image, ScrollView, StyleSheet, Text, View, Platform} from 'react-native';
-import {Button, Icon} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {withNamespaces} from 'react-i18next';
 
 import HomeController from '../../controllers/HomeController';
@@ -15,13 +15,14 @@ import EventCarousel from '../../components/EventComponents/EventCarousel';
 import {entityView} from "../../actions/view";
 import NavigationService from "../../navigators/NavigationService";
 import {positionSelector} from "../../reducers/location";
-
+import { Touchable } from "../../components/common";
 import themes from '../../styleTheme';
 import {Fonts} from "../../components/common/Fonts";
 import {refreshList as refreshListAction} from '../../actions/listActions';
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 const logoImg = require('../../assets/img/logo/logo.png');
 const localImg = require('../../assets/img/barIcons/local/LocalIcon.png');
+import Images from '../../assets/images'
 
 
 class HomeScreen extends React.Component {
@@ -36,20 +37,19 @@ class HomeScreen extends React.Component {
 
     return {
       headerTitle: (<Image
-        source={logoImg}
-        style={styles.headerTitleStyle}
-        resizeMode={'contain'}/>),
+          source={logoImg}
+          style={styles.headerTitleStyle}
+          resizeMode={'contain'}/>),
       headerRight:
-        <View style={{borderRadius: 20, borderColor: themes.base.colors.accent.default, borderWidth: 1, marginRight: 21}}>
-          <Icon
-            name={"edit-location"}
-            underlayColor={'transparent'}
-            //iconStyle={{marginRight: 21}}
-            onPress={params.onLocationPress}
-            color={themes.base.colors.accent.default}
-            size={25}
+
+          <Icon name="location-arrow"
+                style={{marginRight: 21}}
+                onPress={params.onLocationPress}
+                size={24}
+                color={themes.base.colors.accent.default}
+
           />
-        </View>
+
       ,
       headerBackTitle: null,
       headerStyle: {
@@ -134,100 +134,100 @@ class HomeScreen extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <HomeController>
-        {({isLoading, coords,...rest}) =>
-          !coords ?
-            <View style={{flex: 1, justifyContent: 'center'}}>
-              <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
-            </View> :
-            <ScrollView
-              style={styles.homeContainer}
-            >
-              <InlineListController
-                id={this.HOME_BROADCASTS_LIST_ID}
-                resource="broadcasts"
-                nearPosition={{...coords, radius: 99999}}>
-                {controllerProps => controllerProps.isLoading ?
-                  <View style={{height: 325, justifyContent: 'center'}}>
+        <HomeController>
+          {({isLoading, coords,...rest}) =>
+              !coords ?
+                  <View style={{flex: 1, justifyContent: 'center'}}>
                     <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
                   </View> :
-                  <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginRight: 8}}>
-                      <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                      <Text
-                        adjustsFontSizeToFit={true}
-                        allowFontScaling={true}
-                        numberOfLines={1}
-                        style={styles.inlineListHeader}>{
-                        this.props.currentLocation === "address" && this.props.cityName ?
-                          `${t("home.nearOffersCity")} ${this.props.cityName}` :
-                          t('home.nearOffers')
-                      }</Text>
-                    </View>
-                    <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
-                  </View>
-                }
-              </InlineListController>
-              <InlineListController
+                  <ScrollView
+                      style={styles.homeContainer}
+                  >
+                    <InlineListController
+                        id={this.HOME_BROADCASTS_LIST_ID}
+                        resource="broadcasts"
+                        nearPosition={{...coords, radius: 99999}}>
+                      {controllerProps => controllerProps.isLoading ?
+                          <View style={{height: 325, justifyContent: 'center'}}>
+                            <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>
+                          </View> :
+                          <View>
+                            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginRight: 8}}>
+                              <MaterialIcon name={'local-offer'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                              <Text
+                                  adjustsFontSizeToFit={true}
+                                  allowFontScaling={true}
+                                  numberOfLines={1}
+                                  style={styles.inlineListHeader}>{
+                                this.props.currentLocation === "address" && this.props.cityName ?
+                                    `${t("home.nearOffersCity")} ${this.props.cityName}` :
+                                    t('home.nearOffers')
+                              }</Text>
+                            </View>
+                            <BroadcastCarousel onItemPress={this.handleBroadcastPress} {...controllerProps} />
+                          </View>
+                      }
+                    </InlineListController>
+                    <InlineListController
 
-                id={this.HOME_EVENTS_LIST_ID}
-                resource="events"
-                filter={{next_events: true}}
-                sort={{field: '_id', order: -1}}
-              >
-                {controllerProps => controllerProps.isLoading ?
-                  null :
-                  <View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
-                      <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
-                      <Text style={styles.inlineListHeader}>{t('home.nextEvents')}</Text>
-                      <Button
-                        title={t('home.seeAll').toUpperCase()}
-                        titleStyle={styles.seeAllTitle}
-                        buttonStyle={styles.seeAllButton}
-                        onPress={() => this.props.navigation.navigate('SportList')}
-                      />
-                    </View>
-                    <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
-                  </View>
-                }
-              </InlineListController>
-              <InlineListController
-                id={this.HOME_BUSINESSES_LIST_ID}
-                resource="businesses"
-                nearPosition={{...coords, radius: 99999}}>
-                {controllerProps => controllerProps.isLoading ?
-                  null :
-                  <View style={{marginBottom: 16}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
-                      <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
-                      <Text
-                        adjustsFontSizeToFit={true}
-                        allowFontScaling={true}
-                        numberOfLines={1}
-                        style={styles.inlineListHeader}>{
-                        this.props.currentLocation === "address" && this.props.cityName ?
-                          `${t("home.nearBusinessesCity")} ${this.props.cityName}` :
-                          t("home.nearBusinesses")
-                      }</Text>
-                      <Button
-                        title={t('home.seeAll').toUpperCase()}
-                        titleStyle={styles.seeAllTitle}
-                        buttonStyle={styles.seeAllButton}
-                        onPress={() => this.props.navigation.navigate('BusinessScreen')}
-                      />
+                        id={this.HOME_EVENTS_LIST_ID}
+                        resource="events"
+                        filter={{next_events: true}}
+                        sort={{field: '_id', order: -1}}
+                    >
+                      {controllerProps => controllerProps.isLoading ?
+                          null :
+                          <View>
+                            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
+                              <MaterialCommunity name={'clock'} size={21} color={themes.base.colors.text.default} style={{marginRight: 5, marginTop: 3}}/>
+                              <Text style={styles.inlineListHeader}>{t('home.nextEvents')}</Text>
+                              <Button
+                                  title={t('home.seeAll').toUpperCase()}
+                                  titleStyle={styles.seeAllTitle}
+                                  buttonStyle={styles.seeAllButton}
+                                  onPress={() => this.props.navigation.navigate('SportList')}
+                              />
+                            </View>
+                            <EventCarousel onItemPress={this.handleEventPress} {...controllerProps} />
+                          </View>
+                      }
+                    </InlineListController>
+                    <InlineListController
+                        id={this.HOME_BUSINESSES_LIST_ID}
+                        resource="businesses"
+                        nearPosition={{...coords, radius: 99999}}>
+                      {controllerProps => controllerProps.isLoading ?
+                          null :
+                          <View style={{marginBottom: 16}}>
+                            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 8, marginTop: 8, justifyContent: 'space-between'}}>
+                              <Image source={localImg} style={{width: 21, height: 21, marginRight: 5}}/>
+                              <Text
+                                  adjustsFontSizeToFit={true}
+                                  allowFontScaling={true}
+                                  numberOfLines={1}
+                                  style={styles.inlineListHeader}>{
+                                this.props.currentLocation === "address" && this.props.cityName ?
+                                    `${t("home.nearBusinessesCity")} ${this.props.cityName}` :
+                                    t("home.nearBusinesses")
+                              }</Text>
+                              <Button
+                                  title={t('home.seeAll').toUpperCase()}
+                                  titleStyle={styles.seeAllTitle}
+                                  buttonStyle={styles.seeAllButton}
+                                  onPress={() => this.props.navigation.navigate('BusinessScreen')}
+                              />
 
-                    </View>
-                    <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
+                            </View>
+                            <BusinessCarousel onItemPress={this.handleBusinessPress} {...controllerProps} />
 
 
-                  </View>
-                }
-              </InlineListController>
-            </ScrollView>
-        }
+                          </View>
+                      }
+                    </InlineListController>
+                  </ScrollView>
+          }
 
-      </HomeController>
+        </HomeController>
 
     );
   }

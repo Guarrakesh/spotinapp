@@ -130,7 +130,7 @@ const SignUpForm = ({ isLoading, onSubmit, ...props }) => {
             uppercase
             round
             containerStyle={{ marginBottom: 14, marginTop: 32 }}
-            buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
+         //   buttonStyle={{ borderRadius: 12, }}
             onPress={handleSubmit}
             iconContainerStyle={{alignSelf: 'flex-start'}}
         >{t("auth.register.button")}</Button>

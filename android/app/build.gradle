@@ -60,8 +60,8 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "0.6.3"
+        versionCode 14
+        versionName "0.6.4"
         multiDexEnabled true
 
         resValue "string", "build_config_package", "it.spotin"
@@ -119,6 +119,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-gesture-handler')
+    implementation project(':react-native-fbsdk')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-svg')
     implementation project(':react-native-android-location-enabler')
@@ -148,13 +150,13 @@ dependencies {
     implementation project(':react-native-code-push')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-maps')
-    implementation project(':react-native-fbsdk')
     implementation project(':react-native-geolocation-service')
     implementation "com.google.android.gms:play-services-base:16.1.0"
     implementation 'com.facebook.android:facebook-login:+'
     implementation 'com.google.firebase:firebase-core:17.6'
     implementation "com.google.firebase:firebase-messaging:16.0"
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+
 
 }
 

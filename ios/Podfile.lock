@@ -41,11 +41,11 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseAnalyticsInterop (1.4.0)
   - FirebaseCore (6.0.3):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseInstanceID (4.2.2):
+  - FirebaseInstanceID (4.2.3):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
@@ -86,23 +86,23 @@ PODS:
   - GoogleMaps/Base (3.1.0)
   - GoogleMaps/Maps (3.1.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (6.2.3):
+  - GoogleUtilities/AppDelegateSwizzler (6.2.5):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.2.3)
-  - GoogleUtilities/Logger (6.2.3):
+  - GoogleUtilities/Environment (6.2.5)
+  - GoogleUtilities/Logger (6.2.5):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.2.3):
+  - GoogleUtilities/MethodSwizzler (6.2.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.2.3):
+  - GoogleUtilities/Network (6.2.5):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.2.3)"
-  - GoogleUtilities/Reachability (6.2.3):
+  - "GoogleUtilities/NSData+zlib (6.2.5)"
+  - GoogleUtilities/Reachability (6.2.5):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.2.3):
+  - GoogleUtilities/UserDefaults (6.2.5):
     - GoogleUtilities/Logger
   - JWT (3.0.0-beta.11):
     - Base64 (~> 1.1.2)
@@ -120,13 +120,13 @@ PODS:
     - react-native-fbsdk/Login (= 0.10.1)
     - react-native-fbsdk/Share (= 0.10.1)
   - react-native-fbsdk/Core (0.10.1):
-    - FBSDKCoreKit (~> 5.0.0)
+    - FBSDKCoreKit (~> 5.0)
     - React
   - react-native-fbsdk/Login (0.10.1):
-    - FBSDKLoginKit (~> 5.0.0)
+    - FBSDKLoginKit (~> 5.0)
     - React
   - react-native-fbsdk/Share (0.10.1):
-    - FBSDKShareKit (~> 5.0.0)
+    - FBSDKShareKit (~> 5.0)
     - React
   - react-native-google-maps (0.25.0):
     - Google-Maps-iOS-Utils (= 2.1.0)
@@ -173,6 +173,8 @@ PODS:
     - React
   - RNDeviceInfo (0.21.5):
     - React
+  - RNGestureHandler (1.4.1):
+    - React
   - RNReanimated (1.1.0):
     - React
   - RNSVG (9.5.3):
@@ -211,6 +213,7 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -259,6 +262,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNSVG:
@@ -278,32 +283,33 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 8695bbb97c18a381bbf2851a3f24f95a59121b82
   Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
   FirebaseAnalytics: 470ddab7253b21ad5a40bebd4a9903d7ae19386a
-  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
   FirebaseCore: 68f8a7f50cdae542715d4e86afa37c4067217dcb
-  FirebaseInstanceID: 662b8108a09fe9ed01aafdedba100fde8536b0f6
+  FirebaseInstanceID: 8b42755db950682e7de0d167bc6fb26a57b244af
   FirebaseMessaging: 6bb0bdaf64c55fef7a219b7bb1e94e94a0855ced
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: a35a645835bae31b6bdc0576396bc23908f12a22
   GoogleIDFASupport: aaf8c10bd429abb1c15349d5252244f5eda8ead1
   GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
-  GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
+  GoogleUtilities: e7dc37039b19df7fe543479d3e4a02ac8d11bb69
   JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
-  react-native-fbsdk: 73370971d27ac3c73716e9431093e1a4388289cc
+  react-native-fbsdk: ee254012cfb13cdfea4fc422d046d56dec8c750b
   react-native-google-maps: 8a4742668243022bd67d29c9d221bf83c6843f02
   react-native-image-picker: f42de90075c5b1af53417af927631d909a1a746e
   react-native-image-resizer: 04a3409e7d4ad646c4468671c69dec490def139c
   react-native-maps: bb480348a3fe1e5a811fed1ba3387b329161c5cc
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   RNDeviceInfo: 568c5641057313b4912d08a7742ff0b2f753ed5c
+  RNGestureHandler: 311e3b1cef021a7c9ef31e97e7dc31970cc6288d
   RNReanimated: 45d9313b7a62318ed00d60a811937321e43e076e
   RNSVG: 4834be1d644eb77f0e3f6de851881b83758a3124
   RNVectorIcons: c0dbfbf6068fefa240c37b0f71bd03b45dddac44
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 96944e50382ef2437b7f1f05a516fa8cd4f61bc2
+PODFILE CHECKSUM: a3b02cb7a0a150db776b2ddc0113974a0691bcc2
 
 COCOAPODS: 1.5.3

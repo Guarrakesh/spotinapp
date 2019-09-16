@@ -11,7 +11,7 @@ import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import CompetitionsScreen from "../screens/spot/CompetitionsScreen";
 import BusinessMapScreen from "../screens/spot/BusinessMapScreen";
 import BusinessProfileScreen from '../screens/spot/BusinessProfileScreen';
-import ContactUsScreen from '../screens/spot/ContactUsScreen';
+import ContactUsScreen from '../screens/contact/ContactUsScreen';
 //Components
 import DismissButton from '../components/common/DismissButton';
 //Styles
@@ -49,9 +49,6 @@ export const ContactUsNavigator = createStackNavigator({
               shadowColor: 'transparent',
               borderBottomWidth: 0,
             },
-            headerRight: (
-                <DismissButton onPress={() => {navigation.navigate('BroadcastsList')}} color={themes.base.colors.text.default} style={{marginRight: 16}}/>
-            ),
           }
         },
       }

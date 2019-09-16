@@ -7,9 +7,10 @@ export const primaryColor = {
   dark: '#7ECB20'
 };
 export const accentColor = {
-  default: '#7C4DFF',
-  light: '#B47CFF',
-  dark: '#3F18AF'
+  light: '#7C4DFF',
+  extraLight: '#B47CFF',
+  default: '#3F18AF',
+  dark: '#3F18AF',
 };
 export const textColor = {
   default: '#555555',
