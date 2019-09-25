@@ -15,6 +15,9 @@ import setFavorites from "./favorite";
 import dataProvider from '../../api/dataProvider';
 import uploadImage from "./upload";
 import reviewNotification from "./review";
+import couponRoot from "./coupon";
+
+//COUPON
 
 export default function* root() {
   yield all([
@@ -29,7 +32,9 @@ export default function* root() {
     fork(reviewNotification),
     //Firebase
     fork(firebaseSaga),
-    fork(uploadImage)
+    fork(uploadImage),
+    //Coupon
+    fork(couponRoot)
   ]);
 
 }

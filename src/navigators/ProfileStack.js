@@ -19,7 +19,6 @@ import DismissButton from "../components/common/DismissButton";
 
 
 
-
 export const ProfileStack = createStackNavigator({
     ProfileScreen: {
       screen: ProfileScreen,
@@ -40,7 +39,6 @@ export const ProfileStack = createStackNavigator({
       navigationOptions: {
         headerTransparent: true,
         headerTintColor: themes.base.colors.text.default,
-
         headerStyle: {
           shadowColor: 'transparent',
           borderBottomWidth: 0,

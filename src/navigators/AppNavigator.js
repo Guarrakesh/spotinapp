@@ -8,6 +8,7 @@ import Images from '../assets/images';
 import {BusinessMapNavigatorInBusiness} from "./BusinessStack";
 import {BusinessMapNavigatorInSpot, ContactUsNavigator, SpotStack} from './SpotStack';
 import {FavoriteNavigator, ProfileStack, ReviewsNavigator} from './ProfileStack';
+import {GameStack} from "./GameStack";
 import {LocationNavigator} from "./LocationStack";
 import HomeStack from './HomeStack';
 
@@ -23,6 +24,7 @@ export const MainNavigation = createBottomTabNavigator(
     Home: HomeStack,
     Browse: SpotStack,
     Profile: ProfileStack,
+    Game: GameStack
   },
   {
     lazy: false,

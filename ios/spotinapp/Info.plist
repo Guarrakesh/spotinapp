@@ -4,41 +4,25 @@
 <dict>
 	<key></key>
 	<string></string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>Spot In</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>it.spotin.spotinapp</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+		<string>location-services</string>
+	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>0.6.3</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb301945323939544</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>12</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODEPUSH_KEY)</string>
-	<key>FacebookAppID</key>
-	<string>301945323939544</string>
-	<key>FacebookDisplayName</key>
-	<string>Spot IN</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Would like access to your photo gallery to change your profile picture</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>CFBundleDisplayName</key>
+	<string>Spot In</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -46,47 +30,24 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>codepush.azurewebsites.net</key>
-			<string></string>
-			<key>codepush.blob.core.windows.net</key>
-			<string></string>
-			<key>codepushupdates.azureedge.net</key>
-			<string></string>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Would like access to your camera to change your profile picture</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Spot In ha bisogno della tua posizione per poter trovare i locali più vicini a te</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Spot In ha bisogno della tua posizione per poter trovare i locali più vicini a te</string>
-	<key>NSMotionUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Would like access to your camera to change your profile picture</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.6.5</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Spot In ha bisogno della tua posizione per poter trovare i locali più vicini a te</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Not effectively used (required for react-native-permissions)</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Would like to save photos to your gallery to change your profile picture</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Would like access to your photo gallery to change your profile picture</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FontAwesome.ttf</string>
@@ -119,18 +80,57 @@
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-ThinItalic.ttf</string>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>15</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Would like to save photos to your gallery to change your profile picture</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>FacebookAppID</key>
+	<string>301945323939544</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
+	<key>NSMotionUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>FacebookDisplayName</key>
+	<string>Spot IN</string>
+	<key>CFBundleIdentifier</key>
+	<string>it.spotin.spotinapp</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Not effectively used (required for react-native-permissions)</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>codepush.blob.core.windows.net</key>
+			<string></string>
+			<key>codepushupdates.azureedge.net</key>
+			<string></string>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>codepush.azurewebsites.net</key>
+			<string></string>
+		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
 	<array>
-		<string>armv7</string>
-		<string>location-services</string>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb301945323939544</string>
+			</array>
+		</dict>
 	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>

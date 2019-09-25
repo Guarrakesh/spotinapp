@@ -1,4 +1,7 @@
 <resources>
     <color name="white">#FFF</color>
     <color name="accent">#B47CFF</color>
+    <color name="com_facebook_button_background_color_focused_disabled">#FFF</color>
+    <color name="com_facebook_button_background_color_focused">#FFF</color>
+    <color name="com_facebook_button_border_color_focused">#FFF</color>
 </resources>

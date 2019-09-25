@@ -1,5 +1,6 @@
 import {
-  GET_PROFILE, UPDATE
+  GET_PROFILE,
+  UPDATE
 } from './types';
 import i18n from "../i18n/i18n";
 import {CRUD_DELETE_OPTIMISTIC, CRUD_UPDATE, CRUD_UPDATE_OPTIMISTIC} from "./dataActions";

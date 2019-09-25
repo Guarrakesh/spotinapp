@@ -17,9 +17,7 @@ export const addFavoriteEvent = (event, userId, eventObj) => ({
     resource: "events",
     fetch: CREATE,
     listId: "profile_savedEvents_list",
-    addToList: true,
-
-
+    addToList: true
   }
 });
 
@@ -32,7 +30,15 @@ export const deleteFavoriteEvent = (userId, id) => ({
     fetch: DELETE,
     listId: 'profile_savedEvents_list',
     linkedResources: {
-      "events": {type: CRUD_UPDATE_OPTIMISTIC, payload: { id: id, data: { isUserFavorite: false}}}
+      "events": {
+        type: CRUD_UPDATE_OPTIMISTIC,
+        payload: {
+          id: id,
+          data: {
+            isUserFavorite: false
+          }
+        }
+      }
     }
   }
 });

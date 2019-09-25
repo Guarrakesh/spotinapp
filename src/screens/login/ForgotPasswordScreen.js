@@ -71,7 +71,7 @@ class ForgotPasswordScreen extends React.Component {
 
 
     if (validationErrors) {
-      console.log(validationErrors);
+      //console.log(validationErrors);
       this.errorTextRef.bounceIn(800);
       return this.setState({errors: validationErrors});
 

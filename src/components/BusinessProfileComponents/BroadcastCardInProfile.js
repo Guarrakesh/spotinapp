@@ -88,7 +88,7 @@ const BroadcastCardInProfile = (props) => {
         let date = moment(event.start_at).format('dddd D MMMM');
         let time = moment(event.start_at).format('HH:mm');
         const { competitors } = event;
-        console.log(broadcast);
+        //console.log(broadcast);
 
         return (
           <View style={(1 === 0) ? styles.broadcastInfoViewWithHeader : [styles.broadcastInfoView, {borderWidth: firstRed ? 1:0, borderColor: themes.base.colors.danger.default}]} elevation={2}>

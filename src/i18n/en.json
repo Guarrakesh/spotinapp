@@ -223,10 +223,22 @@
 
   },
 
+  "game": {
+    "gameScreen": {
+      "aNewWay": "A NEW WAY",
+      "toSeeSport": "TO SEE SPORT",
+      "moreInfo": "more info",
+      "collectedCoins": "Collected points",
+      "insertCode": "Insert Spot Coin Code",
+      "seeCatalog": "see complete catalog"
+    }
+  },
+
   "common": {
     "Home": "Home",
     "Browse": "Browse",
     "Profile": "Profile",
+    "Game": "Game",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "skip": "Skip",

@@ -128,7 +128,7 @@ class ContactUsScreen extends React.Component{
                   ));
 
                   self.props.dispatch(fetchEnd());
-                  console.log(res);
+                  //console.log(res);
                 }
               })
               .catch(function(res){
@@ -140,13 +140,13 @@ class ContactUsScreen extends React.Component{
                   }
                 ));
                 self.props.dispatch(fetchEnd());
-                console.log(res);
+                //console.log(res);
               })
           })
         }).catch(function(e){
           self.props.navigation.navigate("Auth", {}, true);
           self.props.dispatch(fetchEnd());
-          console.log(e);
+          //console.log(e);
         })
       }
       else {
@@ -192,7 +192,7 @@ class ContactUsScreen extends React.Component{
               ));
 
               self.props.dispatch(fetchEnd());
-              console.log(res);
+              //console.log(res);
             }
           })
           .catch(function(res){
@@ -204,7 +204,7 @@ class ContactUsScreen extends React.Component{
               }
             ));
             self.props.dispatch(fetchEnd());
-            console.log(res);
+            //console.log(res);
           })
       }
     }

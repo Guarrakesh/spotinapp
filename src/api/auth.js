@@ -40,18 +40,18 @@ const auth = {
 
         };
         fetch(`${vars.apiUrl}/auth/login`, config)
-            .then(response => {
-              response.json().then(data => {
-                if (response.status < 200 || response.status >= 300) {
-                  return reject({status: response.status, message: data.message});
-                }
-                Promise.all([
-                  auth.setAuthToken(data.token),
-                  auth.setUserInfo(data.user)
-                ]).then(() =>  resolve(data)).catch((e) => reject(e));
+          .then(response => {
+            response.json().then(data => {
+              if (response.status < 200 || response.status >= 300) {
+                return reject({status: response.status, message: data.message});
+              }
+              Promise.all([
+                auth.setAuthToken(data.token),
+                auth.setUserInfo(data.user)
+              ]).then(() =>  resolve(data)).catch((e) => reject(e));
 
-              })
-            }).catch(e =>reject(e));
+            })
+          }).catch(e =>reject(e));
       } catch (err) {
         reject(err);
       }
@@ -65,7 +65,7 @@ const auth = {
 
   check(payload) {
     return new Promise((resolve, reject) => {
-    //AsyncStorage.removeItem("ALREADY_SET_FAVORITE");
+      //AsyncStorage.removeItem("ALREADY_SET_FAVORITE");
       Promise.all([auth.getAuthToken(), auth.getUserInfo()]).then(values => {
         const token = values[0];
         const user = values[1];
@@ -100,31 +100,31 @@ const auth = {
 
 
           LoginManager.logInWithPermissions(['public_profile','email'])
-              .then(result => {
-                if (result.isCancelled) {
-                  return reject({message: "Login annullato dall'utente", hidden: true});
-                }
-                AccessToken.getCurrentAccessToken().then(accessTokenResponse => {
-                  const config = {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({access_token: accessTokenResponse.accessToken})
-                  };
-                  //Effettuo login con AccessToken
-                  const response = fetch(`${vars.apiUrl}/auth/facebook`, config)
-                      .then(response => response.json().then(data => {
-                        if (response.status < 200 || response.status >= 300) {
-                          return reject({status: response.status, message: data.message});
-                        };
+            .then(result => {
+              if (result.isCancelled) {
+                return reject({message: "Login annullato dall'utente", hidden: true});
+              }
+              AccessToken.getCurrentAccessToken().then(accessTokenResponse => {
+                const config = {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({access_token: accessTokenResponse.accessToken})
+                };
+                //Effettuo login con AccessToken
+                const response = fetch(`${vars.apiUrl}/auth/facebook`, config)
+                  .then(response => response.json().then(data => {
+                    if (response.status < 200 || response.status >= 300) {
+                      return reject({status: response.status, message: data.message});
+                    }
 
-                        Promise.all([auth.setAuthToken(data.token), auth.setUserInfo(data.user)]).then(() => {
-                          resolve(data);
-                        })
+                    Promise.all([auth.setAuthToken(data.token), auth.setUserInfo(data.user)]).then(() => {
+                      resolve(data);
+                    })
 
 
-                      }));
-                });
+                  }));
               });
+            });
 
 
 
@@ -156,20 +156,21 @@ const auth = {
 
 
       fetch(`${vars.apiUrl}/auth/register`, config)
-          .then(response => response.json()
-              .then(data => {
-                if (response.status < 200 || response.status >= 300) {
-                  return reject({status: response.status, message: data.message});
-                }
-                Promise.all([
-                  auth.setAuthToken(data.token),
-                  auth.setUserInfo(data.user)
-                ]).then(() =>  resolve(data)).catch((e) => reject(e));
+        .then(response => response.json()
+          .then(data => {
+            if (response.status < 200 || response.status >= 300) {
+              return reject({status: response.status, message: data.message});
+            }
+            Promise.all([
+              auth.setAuthToken(data.token),
+              auth.setUserInfo(data.user)
+            ]).then(() =>  resolve(data)).catch((e) => reject(e));
 
-              })
-          ).catch(e => reject(e));
+          })
+        ).catch(e => reject(e));
     });
   },
+
   refresh(username, token) {
     return new Promise((resolve, reject) => {
       const config = {
@@ -180,15 +181,15 @@ const auth = {
       try {
 
         fetch(`${vars.apiUrl}/auth/refresh-token`, config)
-            .then(response => response.json().then(data => {
+          .then(response => response.json().then(data => {
 
-                  if (response.status < 200 || response.status >= 300) {
-                    return reject({status: response.status, message: data.message});
-                  }
-                  auth.setAuthToken(data).then(() => resolve(data));
+              if (response.status < 200 || response.status >= 300) {
+                return reject({status: response.status, message: data.message});
+              }
+              auth.setAuthToken(data).then(() => resolve(data));
 
-                })
-            );
+            })
+          );
       } catch (err) {
         reject(err);
       }
@@ -213,7 +214,7 @@ const auth = {
   logout() {
     return new Promise((resolve, reject) => {
       Promise.all([auth.removeAuthToken(),auth.removeUserInfo()]).then(() => resolve())
-          .catch((e) => reject(e))
+        .catch((e) => reject(e))
     })
 
   },
@@ -227,13 +228,13 @@ const auth = {
           body: JSON.stringify({email})
         };
         fetch(`${vars.apiUrl}/auth/forgot-password`, config)
-            .then(response => {
-              if (response && response.status === 200) resolve(response);
-              else reject(response);
-            })
-            .catch(error => {
-              reject(error);
-            })
+          .then(response => {
+            if (response && response.status === 200) resolve(response);
+            else reject(response);
+          })
+          .catch(error => {
+            reject(error);
+          })
       } catch (error) {
         reject(error);
       }

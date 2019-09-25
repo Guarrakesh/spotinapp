@@ -226,11 +226,23 @@
 
   },
 
+  "game": {
+    "gameScreen": {
+      "aNewWay": "UN NUOVO MODO",
+      "toSeeSport": "DI VEDERE LO SPORT",
+      "moreInfo": "più informazioni",
+      "collectedCoins": "Punti raccolti",
+      "insertCode": "Inserisci Codice Spot Coin",
+      "seeCatalog": "vedi catalogo completo"
+    }
+  },
+
 
   "common": {
     "Home": "Home",
     "Browse": "Esplora",
     "Profile": "Profilo",
+    "Game": "Game",
     "cancel": "Annulla",
     "confirm": "Conferma",
     "skip": "Salta",

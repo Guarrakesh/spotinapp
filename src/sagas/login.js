@@ -55,7 +55,7 @@ export function* authorize({email, password, isRegistering, name}) {
             return response.token;
         } else {
             //Informo redux dell'errore
-            yield put(requestError(response))
+            yield put(requestError(response));
             return null;
         }
 
