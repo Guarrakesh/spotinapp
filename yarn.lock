@@ -3294,6 +3294,11 @@ gud@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
 
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
+
 handlebars@^4.0.3:
   version "4.0.12"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.0.12.tgz#2c15c8a96d46da5e266700518ba8cb8d919d5bc5"
@@ -4207,6 +4212,11 @@ jest@^23.6.0:
   dependencies:
     import-local "^1.0.0"
     jest-cli "^23.6.0"
+
+jetifier@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/jetifier/-/jetifier-1.6.4.tgz#6159db8e275d97980d26162897a0648b6d4a3222"
+  integrity sha512-+f/4OLeqY8RAmXnonI1ffeY1DR8kMNJPhv5WMFehchf7U71cjMQVKkOz1n6asz6kfVoAqKNWJz1A/18i18AcXA==
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -6001,6 +6011,16 @@ react-native-geolocation-service@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-2.0.1.tgz#d8c49fc46c3337c0fa27ecd3c3beb12f228839a0"
 
+react-native-gesture-handler@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.4.1.tgz#c38d9e57637b95e221722a79f2bafac62e3aeb21"
+  integrity sha512-Ffcs+SbEbkGaal0CClYL+v7A9y4OA5G5lW01qrzjxaqASp5C8BfnWSKuqYKE00s6bLwE5L4xnlHkG0yIxAtbrQ==
+  dependencies:
+    hammerjs "^2.0.8"
+    hoist-non-react-statics "^2.3.1"
+    invariant "^2.2.4"
+    prop-types "^15.7.2"
+
 react-native-google-places-autocomplete@^1.3.9:
   version "1.3.9"
   resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-1.3.9.tgz#34c2e8b51df40ecb55ef3ccf57caba4c89ff9b56"
@@ -6364,6 +6384,11 @@ realpath-native@^1.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-1.0.2.tgz#cd51ce089b513b45cf9b1516c82989b51ccc6560"
   dependencies:
     util.promisify "^1.0.0"
+
+reanimated-bottom-sheet@^1.0.0-alpha.14:
+  version "1.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.14.tgz#2df541b1cfd589cd8e48abab71510a1403aef9a7"
+  integrity sha512-ytoh/N8kU1Dd+r+N7uapRR7GfqJnn4dV3Oi7gqz4lyGmgjB1QGGL6eFOVRGuaKx5xPfb3r9s6JXltvO9XxBj2Q==
 
 recompose@^0.30.0:
   version "0.30.0"

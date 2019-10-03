@@ -3,6 +3,8 @@ package it.spotin;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.horcrux.svg.SvgPackage;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
@@ -70,6 +72,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
+            new RNGestureHandlerPackage(),
             new ReanimatedPackage(),
             new SvgPackage(),
             new RNAndroidLocationEnablerPackage(),

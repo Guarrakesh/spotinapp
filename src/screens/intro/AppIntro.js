@@ -65,7 +65,6 @@ class AppIntro extends React.Component {
       <ImageBackground
         source={BackgroundPattern}
         style={styles.imageBack}
-
       >
         <Image source={props.image} style={props.imageStyle}/>
         <View level={200}>

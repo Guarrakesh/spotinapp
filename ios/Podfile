@@ -51,6 +51,8 @@ target 'spotinapp' do
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|

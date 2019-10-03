@@ -14,7 +14,7 @@ import HomeStack from './HomeStack';
 
 import BroadcastsScreen from '../screens/spot/BroadcastsScreen';
 import Launcher from '../screens/Launcher';
-import AppIntro from "../screens/intro/AppIntro"
+import AppIntro from "../screens/intro/NewAppIntro"
 
 import i18n from '../i18n/i18n';
 import themes from '../styleTheme';
