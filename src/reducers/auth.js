@@ -14,7 +14,11 @@ import {
 
 } from '../actions/authActions';
 
-import { SET_COUPON, SET_SPOTCOINS } from "../actions/coupon";
+import {
+  SET_COUPON,
+  SET_SPOTCOINS,
+  SET_COUPON_ERROR
+} from "../actions/coupon";
 
 import {
   PROFILE_GET_INFO_SUCCESS,
@@ -57,9 +61,23 @@ export default function authReducer(state = initialState, { payload, type, error
     case USER_REGISTER_FAILURE:
       return { ...state, registerError: error };
     case SET_COUPON:
-      return { ...state, profile: { ...state.profile, usedCoupon: [...state.profile.usedCoupon || [], payload.data.code]}};
+      return { ...state, profile: {
+          ...state.profile,
+          usedCoupon: [
+            ...state.profile.usedCoupon || [],
+            { code: payload.data.code, value: payload.data.value }]
+        }
+      };
     case SET_SPOTCOINS:
-      return { ...state, profile: { ...state.profile, spotCoins: state.profile.spotCoins || 0 + payload.data.value}};
+      return { ...state, profile: { ...state.profile, spotCoins: state.profile.spotCoins + payload.data.value}};
+    case SET_COUPON_ERROR:
+      return { ...state, profile: {
+          ...state.profile,
+          usedCoupon: [
+            ...state.profile.usedCoupon || [],
+            { code: payload.data.code, errorCode: payload.data.errorCode }]
+        }
+      };
     default:
       return state;
   }

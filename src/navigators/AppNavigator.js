@@ -23,8 +23,8 @@ export const MainNavigation = createBottomTabNavigator(
   {
     Home: HomeStack,
     Browse: SpotStack,
-    Profile: ProfileStack,
-    Game: GameStack
+    Game: GameStack,
+    Profile: ProfileStack
   },
   {
     lazy: false,
@@ -44,6 +44,9 @@ export const MainNavigation = createBottomTabNavigator(
             break;
           case 'Profile':
             image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
+            break;
+          case 'Game':
+            image = focused ? Images.icons.barIcons.gameSelected : Images.icons.barIcons.game;
         }
 
         return <Image source={image} style={{height: 24, width: 24}} />;
