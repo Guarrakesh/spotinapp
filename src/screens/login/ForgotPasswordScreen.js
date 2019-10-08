@@ -117,7 +117,7 @@ class ForgotPasswordScreen extends React.Component {
 
           <G>
             <SvgWave pathProps={{fill: themes.base.colors.accent.default}}/>
-            <SvgWave pathProps={{scale: 1.5, fill: themes.base.colors.accent.dark}}/>
+            <SvgWave pathProps={{scale: 1.5, fill: themes.base.colors.accent.default}}/>
 
           </G>
 

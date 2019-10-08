@@ -28,12 +28,20 @@
         "subtitle"          : "Let's organize it!",
         "buttonTitle"       : "Continue"
       },
-
+      "formErrors": {
+        "maxDistanceRequired": "Tell us how far you want to travel",
+        "businessTypeRequired": "Choose which restaurant you want to go to",
+        "emailOrPhoneNotValid": "Please insert a valid email or phone number"
+      },
+      "insertEmailHelperText": "As soon as we find a restaurant that maches your needs, we will contact you back with more details",
+      "doneText": "You will be contacted back soon!",
       "contactUs"         : "Contact Us",
-      "weOrganizeForYou"  : "We organize the event for you!",
+      "weOrganizeForYou"  : "If you didn't find a place to follow {{eventName}} don't worry, we will do it for you!",
       "whereToWatch"      : "Where would you like to watch this?",
       "howMuchTravel"     : "How far are you willing to travel?",
       "howManyPeople"     : "How many people will there be?",
+      "whichBusinessType" : "Which restaurant type you want to go to?",
+      "continue"        : "Confirm",
       "addNotes"          : "Add more details",
       "send"              : "Send",
       "notification": {
@@ -256,7 +264,17 @@
     "longPressToRemove": "Long press to remove an item",
     "update": "Update",
     "next": "Next",
-    "noBusinesses" : "No businesses found"
+    "noBusinesses" : "No businesses found",
+    "close": "Close",
+    "send": "Send",
+    "phone": "Phone Number",
+    "done": "Done",
+    "errors": {
+      "wait": "Wait, we have had a problem:",
+      "emailNotValid": "Email is not valid",
+      "emailRequired": "Email is required"
+    }
+
   },
 
 
@@ -353,10 +371,17 @@
     "discoverWhere": "Discover where to see your event!",
     "InsertLocation": "Insert an address or a city",
     "search": "Search",
+    "title": "Location services",
+    "needLocation": "we need to know your location to find nearby restaurants",
+    "enableLocation": "Enable location",
+    "useLocation": "Share location",
+    "orInsertAddress": "or you can type your address here",
+    "close": "Close",
     "locationPermissions": {
       "title": "Spot In doesn't have permission to access your location",
       "subtitle": "Enable permissions in settings"
-    }
+    },
+    "fetching": "Fetching...",
   },
 
   "pushNotification": {

@@ -1,9 +1,13 @@
 import {StyleSheet, Platform} from "react-native";
+import {platformShadow} from "../../helpers/styleUtils";
 import themes from "../../styleTheme";
+import { scale } from "react-native-size-matters";
+
 const colors = themes.base.colors;
 
 const androidBorder = Platform.OS === "android"
-  ? {
+    ? {
+
       borderBottomWidth: 2,
       borderRadius: 0,
       borderColor: '#ddd',
@@ -45,15 +49,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 4,
-    shadowColor: '#000000',
-    shadowOpacity: 0.08,
-    shadowRadius: 30,
-    shadowOffset: { width: 3, height: 10 },
+    ...platformShadow(7),
+    elevation: 0, //disattivo su android
     height: 44,
     backgroundColor: '#fff',
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 16,
+    paddingHorizontal: 16,
     marginBottom: 16,
     ...androidBorder,
   },
@@ -63,8 +65,9 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     textAlign: 'left',
     borderRadius: 4,
-    fontSize: 18,
-    color: colors.text.dark,
+    fontSize: scale(16),
+    fontFamily: themes.base.fonts.LatoBlack,
+    color: colors.text.default,
     fontWeight: '500',
     justifyContent: 'center',
     minHeight: 44,
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   focused: {
-    shadowColor: themes.base.colors.accent.dark,
+    shadowColor: themes.base.colors.accent.default,
     shadowOffset: { width: 1, height: 5 },
     shadowRadius: 15,
   },

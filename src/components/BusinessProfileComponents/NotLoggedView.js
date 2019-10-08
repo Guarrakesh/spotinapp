@@ -14,7 +14,7 @@ const NotLoggedView = (props) => {
   return (
     <View elevation={2} style={styles.container}>
       <View style={{flexDirection: "row", marginBottom: 16}}>
-       <Image source={Images.icons.common.beer} resizeMode="contain" style={{height: 128}}/>
+       <Image source={Images.icons.mascotte.waterpolo} resizeMode="contain" style={{height: 128}}/>
       </View>
       <Typography variant={"heading"}>{i18n.t("auth.notLogged.title")}</Typography>
       <Typography variant={"body"}>{i18n.t("auth.login.subtitle")}</Typography>

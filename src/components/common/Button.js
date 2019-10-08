@@ -106,27 +106,30 @@ const styles = StyleSheet.create({
     color: '#555',
     overflow: "hidden"
 
+
   },
   titleBase: {
     fontSize: 14,
     fontFamily: fonts.LatoMedium,
-    color: '#fff'
+    color: '#fff',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   default: {
     backgroundColor: whiteColor.default,
-    color: accentColor.default
+    color: accentColor.dark,
   },
   defaultSimple: {
     backgroundColor: 'transparent',
     color: textColor.default
   },
   primary: {
-    backgroundColor: accentColor.default,
+    backgroundColor: accentColor.dark,
     color: whiteColor.default,
   },
   primarySimple: {
     backgroundColor: 'transparent',
-    color: accentColor.default,
+    color: accentColor.dark,
   },
   danger: {
     backgroundColor: dangerColor.light

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button} from "react-native-elements";
 import { compose } from 'recompose';
 import { Provider, connect } from 'react-redux';
 import { AppState, Alert, View, BackHandler, Text } from 'react-native';
@@ -19,6 +20,8 @@ import { reduxifyNavigator } from 'react-navigation-redux-helpers';
 
 /* Internationalization */
 import { I18nextProvider, withNamespaces } from 'react-i18next';
+import Example from "./components/common/FormError/default";
+import FormErrorBox from "./components/common/FormError/FormErrorBox";
 import i18n from './i18n/i18n'
 
 /* Store, navigation and actions */
@@ -52,6 +55,7 @@ Text.defaultProps.allowFontScaling = false;
 Text.defaultProps.adjustsFontSizeToFit = true;
 
 class ResourceInitializer extends Component {
+
 
   resources = ['sports', 'competitions', 'competitors',
     'events', 'broadcasts', 'businesses', 'reservations'];
