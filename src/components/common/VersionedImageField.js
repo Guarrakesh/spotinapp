@@ -87,7 +87,7 @@ VersionedImageField.defaultProps = {
 };
 
 VersionedImageField.propTypes = {
-  imgSize: PropTypes.object,
+  imgSize: PropTypes.object.isRequired,
   style: PropTypes.object,
   minSize: PropTypes.object,
   source: PropTypes.string.isRequired,

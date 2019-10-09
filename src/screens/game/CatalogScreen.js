@@ -10,24 +10,6 @@ import themes from "../../newTheme";
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
-const awards = [
-  {
-    name: "Birra",
-    image: require("../../assets/img/awards/Birra.png")
-  },
-  {
-    name: "2 Birre",
-    image: require("../../assets/img/awards/BirraX2.png")
-  },
-  {
-    name: "Panino",
-    image: require("../../assets/img/awards/Panino.png")
-  },
-  {
-    name: "Ticket",
-    image: require("../../assets/img/awards/Ticket.png")
-  }
-];
 
 const earningMethods = [
   {
@@ -46,7 +28,7 @@ const earningMethods = [
   }
 ];
 
-const catalogList = () => {
+const renderCatalogList = (awards) => {
 
   const leftAwards = [];
   const rightAwards = [];
@@ -59,7 +41,6 @@ const catalogList = () => {
       rightAwards.push((awards[i]));
     }
   }
-
   return(
     <View style={styles.catalogView}>
       <View>
@@ -102,7 +83,9 @@ const CatalogScreen = (props) => {
     ],
   });
 
-  const controllerProps = useSimpleListController({ resource: 'prizes' });
+  const { isLoading, data} = useSimpleListController('prizes');
+  const catalogList = React.useCallback(() => renderCatalogList(data), [isLoading]);
+
   const renderTabBar = (props) => {
     return (
         <TabBar
