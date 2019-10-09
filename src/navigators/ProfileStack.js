@@ -105,7 +105,7 @@ export const ProfileStack = createStackNavigator({
     },
 
   },{
-    navigationOptions: {
+    defaultNavigationOptions: {
       headerBackTitle: null,
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}
@@ -159,7 +159,7 @@ export const FavoriteNavigator = createStackNavigator({
     }
   },
   {
-    navigationOptions: {
+    defaultNavigationOptions: {
       headerBackTitle: null,
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}

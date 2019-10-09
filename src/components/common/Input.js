@@ -85,7 +85,7 @@ const styles = {
     fontFamily: themes.base.fonts.LatoMedium,
     backgroundColor: '#fff',
     elevation: 2,
-    borderRadius: 100,
+    borderRadius: 4,
     paddingLeft: 16,
     paddingRight: 16,
     margin: 12,

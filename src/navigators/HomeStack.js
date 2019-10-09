@@ -26,12 +26,14 @@ const HomeStack = createStackNavigator({
           color: themes.base.colors.accent.default,
           marginLeft: Platform.OS === 'android' ? -30 : null,
         },
-      }
+      },
+
     },
     BroadcastsList: BroadcastsScreen,
     BusinessScreen: {
       screen: BusinessScreen,
       navigationOptions: {
+
         title: i18n.t('home.closestBusinesses'),
 
         headerTitleStyle: {
@@ -41,10 +43,11 @@ const HomeStack = createStackNavigator({
           color: themes.base.colors.accent.default,
           marginLeft: Platform.OS === 'android' ? -10 : null,
         },
-      }
+      },
+
     },
   },{
-    navigationOptions: {
+  defaultNavigationOptions: {
       headerBackTitle: null,
       headerBackImage: (<Icon
         color={themes.base.colors.text.default}

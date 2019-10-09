@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, ScrollView} from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {Typography, View} from "../../components/common";
+import useSimpleListController from '../../helpers/hooks/useSimpleListController';
 import AwardCard from "../../components/GameComponents/AwardCard";
 import EarningMethodCard from "../../components/GameComponents/EarningMethodCard";
 import themes from "../../newTheme";
@@ -92,63 +93,50 @@ const howToEarn = () => {
   )
 };
 
-class CatalogScreen extends React.Component {
+const CatalogScreen = (props) => {
+  const [navState, setNavState] = React.useState({
+    index: 0,
+    routes: [
+      { key: 'first', title: 'Catalogo' },
+      { key: 'second', title: 'Come guadagnare' },
+    ],
+  });
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      index: 0,
-      routes: [
-        { key: 'first', title: 'Catalogo' },
-        { key: 'second', title: 'Come guadagnare' },
-      ],
-    };
-
-  }
-
-  componentDidMount(): void {
-
-  }
-
-  renderTabBar(props) {
+  const controllerProps = useSimpleListController({ resource: 'prizes' });
+  const renderTabBar = (props) => {
     return (
-      <TabBar
-        style={{backgroundColor: 'transparent'}}
-        labelStyle={styles.catalog}
-        textTransform={'none'}
-        {...props}
-        indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
-        navigationState={this.state}/>
+        <TabBar
+            style={{backgroundColor: 'transparent'}}
+            labelStyle={styles.catalog}
+            textTransform={'none'}
+            {...props}
+            indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
+            navigationState={navState}/>
     );
-  }
-
-
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-
-
-    return (
+  };
+  return (
       <View style={styles.container}>
         <View style={styles.topView}>
           <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
         </View>
         <View style={styles.bottomView}/>
         <TabView
-          style={styles.tabView}
-          activeColor={'red'}
-          indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
-          indicatorContainerStyle={{ backgroundColor: 'red' }}
-          onIndexChange={index => this.setState({ index })}
-          renderScene={SceneMap({
-            first: catalogList,
-            second: howToEarn,
-          })}
-          renderTabBar={(props) => this.renderTabBar(props)}
-          navigationState={this.state}/>
+            style={styles.tabView}
+            activeColor={'red'}
+            indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
+            indicatorContainerStyle={{ backgroundColor: 'red' }}
+            onIndexChange={index => setNavState({...navState,  index })}
+            renderScene={SceneMap({
+              first: catalogList,
+              second: howToEarn,
+            })}
+            renderTabBar={(props) => renderTabBar(props)}
+            navigationState={navState}/>
       </View>
-    );
-  }
-}
+  )
+
+};
+
 
 const styles = StyleSheet.create({
   container: {
