@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {crudGetList} from '../../actions/dataActions';
 
-
 function equalFn(state, prevState) {
   // Re-render solo quando cambia isLoading
   return state.isLoading === prevState.isLoading;

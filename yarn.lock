@@ -6047,6 +6047,12 @@ react-native-image-resizer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-image-resizer/-/react-native-image-resizer-1.0.1.tgz#e9eeb7f81596ffc490f822897952b046c07ee95c"
 
+react-native-indicators@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-indicators/-/react-native-indicators-0.16.0.tgz#7e672fb8c213c471db1fac1bef89625d4261cc1a"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"

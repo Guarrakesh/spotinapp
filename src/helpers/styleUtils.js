@@ -14,3 +14,11 @@ export const platformShadow = (elevation, custom) => Platform.select({
 
 
 })
+
+export const androidBorder = Platform.OS === "android"
+    ? {
+
+      borderBottomWidth: 2,
+      borderRadius: 0,
+      borderColor: '#ddd',
+    } : {};
