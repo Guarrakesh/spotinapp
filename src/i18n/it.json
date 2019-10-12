@@ -241,7 +241,21 @@
       "moreInfo": "più informazioni",
       "collectedCoins": "Punti raccolti",
       "insertCode": "Inserisci Codice Spot Coin",
-      "seeCatalog": "vedi catalogo completo"
+      "seeCatalog": "vedi catalogo completo",
+      "loginToDiscover": "Accedi per scoprire i premi",
+      "bottomSheet": {
+        "receiveAward": "Ricevi il tuo premio!",
+        "insertCoupon": "inserisci codice coupon:",
+        "receiveMore": "Vuoi ricevere altri\nSpot Coin?",
+        "discoverHow": "Scopri come",
+        "regulation": "regolamento"
+      },
+      "couponErrors": {
+        "notValid": "Coupon non valido",
+        "alreadyUsed": "Coupon già utilizzato",
+        "notExist": "Coupon non esistente",
+        "expired": "Coupon scaduto"
+      }
     }
   },
 
@@ -371,6 +385,31 @@
     "button": {
       "continue": "Continua",
       "start": "Inizia"
+    }
+  },
+
+  "newIntro": {
+    "slide1": {
+      "titleTop": "un nuovo modo",
+      "titleBottom": "di vivere lo sport",
+      "bottomText": "Scopri i locali dove poter vedere\nil tuo evento sportivo preferito"
+    },
+    "slide2": {
+      "titleTop": "con noi non sarai",
+      "titleBottom": "mai solo",
+      "bottomText": "Partecipa agli eventi insieme\nad altri tifosi"
+    },
+    "slide3": {
+      "titleTop": "non c'è sport",
+      "titleBottom": "senza gioco",
+      "bottomText": "Guadagna Spot Coin e vinci\ntanti premi dal nostro catalogo",
+      "buttonText": "Gioca Ora!"
+    },
+    "slide4": {
+      "titleTop": "birre, panini e tanto",
+      "titleBottom": "altro ti aspetta",
+      "bottomText": "Inizia a navigare e scopri\ntutti i vantaggi Spot In",
+      "buttonText": "Cominciamo!"
     }
   },
 

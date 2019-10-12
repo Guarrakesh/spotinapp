@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, ScrollView, StyleSheet, Alert, ActivityIndicator} from "react-native";
 import {Input} from "react-native-elements";
 import BottomSheet from 'reanimated-bottom-sheet';
+import * as Animatable from 'react-native-animatable';
 import AnimateNumber from 'react-native-animate-number';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from "react-redux";
@@ -10,13 +11,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import themes from "../../newTheme";
 import {Fonts} from "../../components/common/Fonts";
 import Button from "../../components/common/Button";
+import NewButton from "../../components/common/NewButton";
 import i18n from "../../i18n/i18n";
 import {useCoupon} from "../../actions/coupon";
 import MakeItRain from "../../components/GameComponents/MakeItRain";
 import FormErrorBox from "../../components/common/FormError/FormErrorBox";
 
 const rugbyMascotte = require("../../assets/img/mascots/rugby/Rugby.png");
-const motoriMascotte = require("../../assets/img/mascots/motori/Motori.png");
+const soccerMascotte = require("../../assets/img/mascots/soccer/Soccer.png");
 const gameMascotte = require("../../assets/img/mascots/gameMascotte/gameMascotte.png");
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
 const coinsImg = require("../../assets/img/coins.png");
@@ -35,8 +37,11 @@ class GameScreen extends React.Component {
       code: "",
       coinRain: false,
       couponError: "",
-      showError: false
+      showError: false,
+      showCongratulation: false
     };
+
+    this.handleDiscoverHowPress = this.handleDiscoverHowPress.bind(this);
 
   }
 
@@ -49,50 +54,49 @@ class GameScreen extends React.Component {
   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
     if(this.props.usedCoupon !== prevProps.usedCoupon){
       if(this.props.usedCoupon[this.props.usedCoupon.length - 1].value) {
-        this.bottomSheetRef.snapTo(0);
-        this.showAlert();
-        this.setState({code: ""});
+        //this.bottomSheetRef.snapTo(0);
+        //this.showAlert();
+        this.setState({coinRain: true, code: "", showCongratulation: true});
+        this.bottomSheetContentRef.fadeOut().then(() => this.congratulationAppear());
         this.codeInput.clear();
-        this.setState({coinRain: true})
+
       }
       else {
         const error = this.props.usedCoupon[this.props.usedCoupon.length - 1].errorCode;
         this.codeInput.shake();
-        this.setState({couponError: this.couponErrorHandler(error), showError: true})
+        this.setState({couponError: this.couponErrorHandler(error), showError: true});
       }
     }
+  }
+
+  congratulationAppear() {
+    this.congratulationRef.fadeInUpBig().then(() => this.setState({ showCongratulation: true }));
   }
 
   couponErrorHandler(error) {
     switch (error) {
       case 11:
-        return "Coupon non valido";
+        return i18n.t("game.gameScreen.couponErrors.notValid");
       case 12:
-        return "Coupon già utilizzato";
+        return i18n.t("game.gameScreen.couponErrors.alreadyUsed");
       case 13:
-        return "Coupon non esistente";
+        return i18n.t("game.gameScreen.couponErrors.notExist");
       case 14:
-        return "Coupon scaduto";
+        return i18n.t("game.gameScreen.couponErrors.expired");
       default:
-        return "Coupon non valido"
+        return i18n.t("game.gameScreen.couponErrors.notValid");
     }
   };
 
   shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
 
-    if(
-      nextProps.spotCoins !== this.props.spotCoins ||
+    return nextProps.spotCoins !== this.props.spotCoins ||
       nextProps.usedCoupon !== this.props.usedCoupon ||
       nextProps.isLoading !== this.props.isLoading ||
       nextProps.isLoggedIn !== this.props.isLoggedIn ||
       nextState.coinRain !== this.state.coinRain ||
       nextState.couponError !== this.state.couponError ||
-      nextState.showError !== this.state.showError
-    ){
-      return true;
-    }
-    else
-      return false;
+      nextState.showError !== this.state.showError;
 
   }
 
@@ -113,8 +117,7 @@ class GameScreen extends React.Component {
   };
 
   handleUseCoupon() {
-    console.log("INPUT: ", this.codeInput);
-    //this.codeInput.shake();
+
     this.props.useCoupon(this.state.code);
 
   }
@@ -158,34 +161,72 @@ class GameScreen extends React.Component {
     }
   };
 
+  handleDiscoverHowPress = () => {
+    this.bottomSheetRef.snapTo(0);
+    this.props.navigation.navigate("CatalogScreen", { method: true });
+  };
+
   bottomSheetContent = () => {
     return(
       <View style={styles.bottomSheetContentContainer}>
-        <Typography variant={"title"} style={styles.receiveAward}>Ricevi il tuo premio!</Typography>
-        <Typography variant={"caption"} style={styles.insertCode}>inserisci codice coupon:</Typography>
-        <Input
-          errorMessage={this.state.couponError!=="" && this.state.couponError}
-          errorStyle={{marginTop: 16}}
-          ref={ref => this.codeInput = ref}
-          textTransform={"uppercase"}
-          shake={true}
-          onChangeText={(text) => this.handleInputChangeText(text)}
-          inputContainerStyle={styles.codeInputText}
-          containerStyle={styles.codeInputContainer}
-          fontWeight={"900"}
-          rightIcon={() => this.inputRightIcon()}
-        />
-        <Typography variant={"heading"} style={styles.moreSpotCoin}>{"Vuoi ricevere altri\nSpot Coin?"}</Typography>
-        <Button
-          titleStyle={styles.discoverHowButtonTitle}
-          containerStyle={styles.discoverHowButtonContainer}
-        >
-          SCOPRI COME
-        </Button>
-        <Typography variant={"caption"} style={styles.regulationText}>regolamento</Typography>
+        <Animatable.View style={{}} ref={ref => this.bottomSheetContentRef = ref}>
+          <Typography variant={"title"} style={styles.receiveAward}>{i18n.t("game.gameScreen.bottomSheet.receiveAward")}</Typography>
+          <Typography variant={"caption"} style={styles.insertCode}>{i18n.t("game.gameScreen.bottomSheet.insertCoupon")}</Typography>
+          <Input
+            errorMessage={this.state.couponError!=="" && this.state.couponError}
+            errorStyle={{marginTop: 16}}
+            ref={ref => this.codeInput = ref}
+            textTransform={"uppercase"}
+            shake={true}
+            onChangeText={(text) => this.handleInputChangeText(text)}
+            inputContainerStyle={styles.codeInputText}
+            containerStyle={styles.codeInputContainer}
+            fontWeight={"900"}
+            rightIcon={() => this.inputRightIcon()}
+          />
+          <Typography variant={"heading"} style={styles.moreSpotCoin}>{i18n.t("game.gameScreen.bottomSheet.receiveMore")}</Typography>
+          <Button
+            uppercase
+            titleStyle={styles.discoverHowButtonTitle}
+            containerStyle={styles.discoverHowButtonContainer}
+            onPress={this.handleDiscoverHowPress}
+          >
+            {i18n.t("game.gameScreen.bottomSheet.discoverHow")}
+          </Button>
+          <Typography variant={"caption"} style={styles.regulationText}>{i18n.t("game.gameScreen.bottomSheet.regulation")}</Typography>
+        </Animatable.View>
+        <Animatable.View
+          ref={ref => this.congratulationRef = ref}
+          style={styles.congratulationView}
+          pointerEvents={this.state.showCongratulation ? "auto" : "none"}>
+          <Image source={soccerMascotte} style={styles.soccerMascotte} resizeMode={'contain'}/>
+          <Typography variant={"title"} style={styles.congratulationText}>CONGRATULAZIONI!</Typography>
+          <Typography variant={"heading"} style={styles.youWonText}>
+            {"Hai vinto "}
+            <Typography variant={"title"} style={{color: 'yellow'}}>
+              {this.props.usedCoupon ? this.props.usedCoupon[this.props.usedCoupon.length - 1].value : 0}
+            </Typography>
+            {" Spot Coins!"}
+          </Typography>
+          <NewButton
+            block
+            uppercase
+            round
+            onPress={() => this.handleCongratulationHide()}
+          >
+            OK
+          </NewButton>
+        </Animatable.View>
       </View>
     )
   };
+
+  handleCongratulationHide() {
+    this.setState({showCongratulation: false, coinRain: false});
+    this.congratulationRef.fadeOut(0);
+    this.bottomSheetContentRef.fadeIn(0);
+    this.bottomSheetRef.snapTo(0);
+  }
 
   bottomSheetHeader = () => {
 
@@ -216,19 +257,19 @@ class GameScreen extends React.Component {
               <View style={styles.coinsContainer}>
                 {this.props.isLoggedIn ?
                   <View style={styles.coinsNumberContainer}>
-                  <Image source={coinsImg} style={styles.coinsIcon}/>
-                  <AnimateNumber style={styles.coinsNumberText}
-                                 value={this.props.spotCoins}
-                    //onFinish={() => this.showAlert()}
-                                 formatter={(val) => {
-                                   return parseFloat(val).toFixed(0)}}
-                  />
-                  {/*<Typography style={styles.coinsNumberText}>{this.props.spotCoins}</Typography>*/}
-                </View> : null
+                    <Image source={coinsImg} style={styles.coinsIcon}/>
+                    <AnimateNumber style={styles.coinsNumberText}
+                                   value={this.props.spotCoins}
+                      //onFinish={() => this.showAlert()}
+                                   formatter={(val) => {
+                                     return parseFloat(val).toFixed(0)}}
+                    />
+                    {/*<Typography style={styles.coinsNumberText}>{this.props.spotCoins}</Typography>*/}
+                  </View> : null
                 }
-                <Typography style={styles.collectedCoins}>{this.props.isLoggedIn ? i18n.t("game.gameScreen.collectedCoins") : "Accedi per scoprire i premi"}</Typography>
+                <Typography style={styles.collectedCoins}>{this.props.isLoggedIn ? i18n.t("game.gameScreen.collectedCoins") : i18n.t("game.gameScreen.loginToDiscover")}</Typography>
                 <Button titleStyle={styles.insertButtonTitle} containerStyle={styles.insertButtonContainer} onPress={() => this.handleInsertCode()}>
-                  {this.props.isLoggedIn ? i18n.t("game.gameScreen.insertCode") : "Accedi"}
+                  {this.props.isLoggedIn ? i18n.t("game.gameScreen.insertCode") : i18n.t("auth.login.signIn")}
                 </Button>
               </View>
               <Typography style={styles.seeCatalog} onPress={() => this.props.navigation.navigate("CatalogScreen")}>{i18n.t("game.gameScreen.seeCatalog")}</Typography>
@@ -239,10 +280,11 @@ class GameScreen extends React.Component {
             snapPoints={[0, themes.base.deviceDimensions.height*(3/4)]}
             renderContent={this.bottomSheetContent}
             renderHeader={this.bottomSheetHeader}
+            enabledContentTapInteraction={false}
             enabledInnerScrolling={false}
+            enabledGestureInteraction={!this.state.showCongratulation}
           />
           {this.state.coinRain ? <MakeItRain/> : null}
-
         </View>
       </React.Fragment>
 
@@ -319,17 +361,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: themes.base.borderRadius,
     backgroundColor: greenColor,
-    paddingLeft: 16,
-    paddingRight : 16,
-    paddingTop: 5,
-    paddingBottom: 5,
     width: themes.base.deviceDimensions.width/1.5,
     marginTop: themes.base.deviceDimensions.height/50
   },
   insertButtonTitle: {
     color: themes.base.colors.white.light,
     fontSize: 16,
-    fontWeight: "900"
+    fontWeight: "900",
+    marginLeft: 16,
+    marginRight : 16,
+    marginTop: 5,
+    marginBottom: 5,
   },
   seeCatalog: {
     color: 'yellow',
@@ -387,13 +429,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: themes.base.borderRadius,
     backgroundColor: greenColor,
-    paddingTop: 5,
-    paddingBottom: 5,
     width: themes.base.deviceDimensions.width/1.5,
     marginTop: themes.base.deviceDimensions.height/40
   },
   discoverHowButtonTitle: {
     color: themes.base.colors.white.light,
+    marginTop: 5,
+    marginBottom: 5,
     fontSize: 22,
     fontWeight: "900"
   },
@@ -402,6 +444,27 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: Fonts.LatoItalic,
     marginTop: themes.base.deviceDimensions.height/25
+  },
+  congratulationView: {
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //marginTop: themes.base.deviceDimensions.height/30,
+    opacity: 0
+  },
+  soccerMascotte: {
+    height: themes.base.deviceDimensions.width/2,
+    width: themes.base.deviceDimensions.width/2
+  },
+  congratulationText: {
+    marginTop: 16,
+    color: themes.base.colors.white.light
+  },
+  youWonText: {
+    marginTop: 16,
+    marginBottom: 16,
+    color: themes.base.colors.white.light
   }
 });
 

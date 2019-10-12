@@ -12,7 +12,9 @@ const images = {
       profile: require('./img/barIcons/profile/ProfileIcon-outline.png'),
       profileSelected: require('./img/barIcons/profile/ProfileIcon.png'),
       game: require('./img/barIcons/game/GameIcon-outline.png'),
-      gameSelected: require('./img/barIcons/game/GameIcon.png')
+      gameSelected: require('./img/barIcons/game/GameIcon.png'),
+      gameViolet: require('./img/barIcons/game-violet/GameIcon-violet-outline.png'),
+      gameVioletSelected: require('./img/barIcons/game-violet/GameIcon-violet.png'),
     },
     sports: {
       soccer: require('./img/mascots/soccer/Soccer.png'),

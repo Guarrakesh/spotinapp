@@ -69,7 +69,7 @@ class Launcher extends React.Component {
       this.setState({ canProceed: true });
     } else if (nextProps.deviceLocation.error) {
       // Nessun permesso, vado schermata LocationScreen
-      this.props.navigate("LocationScreen", {}, true)
+      this.props.navigate("LocationScreen", {}, true);
     }
 
   }

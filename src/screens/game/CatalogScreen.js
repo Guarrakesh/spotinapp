@@ -1,6 +1,7 @@
 import React from 'react';
-import {Image, StyleSheet, ScrollView} from "react-native";
+import {Image, StyleSheet, ScrollView, Platform} from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import Icon from 'react-native-vector-icons/Ionicons'
 import {Typography, View} from "../../components/common";
 import AwardCard from "../../components/GameComponents/AwardCard";
 import EarningMethodCard from "../../components/GameComponents/EarningMethodCard";
@@ -37,60 +38,60 @@ const earningMethods = [
     profit: 25
   },
   {
-    image: "https://www.edigitalagency.com.au/wp-content/uploads/new-instagram-logo-png-transparent-800x799.png",
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
     title: "Seguici su Instagram",
     tag: "@spotin_sport",
     subtitle: "maggiori info",
     profit: 25
-  }
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    subtitle: "maggiori info",
+    profit: 25
+  },
+
+
 ];
 
-const catalogList = () => {
 
-  const leftAwards = [];
-  const rightAwards = [];
 
-  for(let i = 0; i < awards.length; i++){
-    if (i % 2 === 0){
-      leftAwards.push(awards[i]);
-    }
-    else {
-      rightAwards.push((awards[i]));
-    }
-  }
-
-  return(
-    <View style={styles.catalogView}>
-      <View>
-        {leftAwards.map((item, index) => (
-          <AwardCard award={item}/>
-        ))}
-      </View>
-      <View style={{marginTop: 32}}>
-        {rightAwards.map((item, index) => (
-          <AwardCard award={item}/>
-        ))}
-      </View>
-    </View>
-  )
-};
-
-const howToEarn = () => {
-
-  return(
-    <View>
-      <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
-      <ScrollView style={styles.methodsList} contentContainerStyle={{alignItems: "center"}}>
-        {
-          earningMethods.map((item, index) => (
-            <EarningMethodCard method={item}/>
-          ))
-        }
-
-      </ScrollView>
-    </View>
-  )
-};
 
 class CatalogScreen extends React.Component {
 
@@ -109,6 +110,7 @@ class CatalogScreen extends React.Component {
 
   componentDidMount(): void {
 
+
   }
 
   renderTabBar(props) {
@@ -123,6 +125,59 @@ class CatalogScreen extends React.Component {
     );
   }
 
+  howToEarn = (props) => {
+
+    if (this.props.navigation.state.params && this.props.navigation.state.params.method) {
+      console.log("Catalog props: ", props);
+      setTimeout(() => props.jumpTo('second'), 500);
+    }
+
+    return(
+      <View>
+        <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
+        <ScrollView style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
+          {
+            earningMethods.map((item, index) => (
+              <EarningMethodCard method={item}/>
+            ))
+          }
+
+        </ScrollView>
+      </View>
+    )
+  };
+
+  catalogList = (props) => {
+
+    const leftAwards = [];
+    const rightAwards = [];
+
+    for(let i = 0; i < awards.length; i++){
+      if (i % 2 === 0){
+        leftAwards.push(awards[i]);
+      }
+      else {
+        rightAwards.push((awards[i]));
+      }
+    }
+
+
+    return(
+      <View style={styles.catalogView}>
+        <View>
+          {leftAwards.map((item, index) => (
+            <AwardCard award={item}/>
+          ))}
+        </View>
+        <View style={{marginTop: 32}}>
+          {rightAwards.map((item, index) => (
+            <AwardCard award={item}/>
+          ))}
+        </View>
+      </View>
+    )
+  };
+
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
 
@@ -131,6 +186,12 @@ class CatalogScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.topView}>
           <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
+          <Icon
+            onPress={() => this.props.navigation.goBack()}
+            color={themes.base.colors.white.light}
+            name="ios-arrow-round-back"
+            style={styles.backArrow}
+            size={48}/>
         </View>
         <View style={styles.bottomView}/>
         <TabView
@@ -140,8 +201,8 @@ class CatalogScreen extends React.Component {
           indicatorContainerStyle={{ backgroundColor: 'red' }}
           onIndexChange={index => this.setState({ index })}
           renderScene={SceneMap({
-            first: catalogList,
-            second: howToEarn,
+            first: this.catalogList,
+            second: this.howToEarn,
           })}
           renderTabBar={(props) => this.renderTabBar(props)}
           navigationState={this.state}/>
@@ -161,6 +222,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     top: 8
+  },
+  backArrow: {
+    position: 'absolute',
+    top: 0,
+    left: 16
   },
   topView: {
     height: themes.base.deviceDimensions.height/4,
@@ -197,12 +263,17 @@ const styles = StyleSheet.create({
   howToEarn: {
     alignSelf: 'center',
     color: 'yellow',
-    marginTop: 8
+    marginTop: 16,
   },
   methodsList: {
-    marginTop: themes.base.deviceDimensions.height/10,
+    marginTop: themes.base.deviceDimensions.height/30,
     paddingLeft: 32,
-    paddingRight: 32
+    paddingRight: 32,
+    paddingBottom: themes.base.deviceDimensions.height/10
+  },
+  methodsListContainer: {
+    alignItems: "center",
+    paddingBottom: themes.base.deviceDimensions.height/10
   }
 });
 

@@ -238,7 +238,21 @@
       "moreInfo": "more info",
       "collectedCoins": "Collected points",
       "insertCode": "Insert Spot Coin Code",
-      "seeCatalog": "see complete catalog"
+      "seeCatalog": "see complete catalog",
+      "loginToDiscover": "Login to discover the prizes",
+      "bottomSheet": {
+        "receiveAward": "Get your prize!",
+        "insertCoupon": "enter coupon code:",
+        "receiveMore": "Do you want to receive\nmore Spot Coins?",
+        "discoverHow": "Find how",
+        "regulation": "regulation"
+      },
+      "couponErrors": {
+        "notValid": "Coupon is not valid",
+        "alreadyUsed": "Coupon already used",
+        "notExist": "Coupon does not exist",
+        "expired": "Coupon expired"
+      }
     }
   },
 
@@ -367,6 +381,31 @@
     }
   },
 
+  "newIntro": {
+    "slide1": {
+      "titleTop": "a new way",
+      "titleBottom": "to live sport",
+      "bottomText": "Discover the places where you can see\nyour favorite sporting event"
+    },
+    "slide2": {
+      "titleTop": "with us you will never",
+      "titleBottom": "be alone",
+      "bottomText": "Participate in events\nwith other fans"
+    },
+    "slide3": {
+      "titleTop": "there is no sport",
+      "titleBottom": "without game",
+      "bottomText": "Earn Spot Coins and win\nmany awards from our catalog",
+      "buttonText": "Play Now!"
+    },
+    "slide4": {
+      "titleTop": "beers, food and",
+      "titleBottom": "much more awaits you",
+      "bottomText": "Start surfing and discover\nall the advantages of Spot In",
+      "buttonText": "Let's Go!"
+    }
+  },
+
   "location": {
     "discoverWhere": "Discover where to see your event!",
     "InsertLocation": "Insert an address or a city",
@@ -381,7 +420,7 @@
       "title": "Spot In doesn't have permission to access your location",
       "subtitle": "Enable permissions in settings"
     },
-    "fetching": "Fetching...",
+    "fetching": "Fetching..."
   },
 
   "pushNotification": {

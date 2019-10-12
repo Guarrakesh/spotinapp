@@ -46,7 +46,7 @@ export const MainNavigation = createBottomTabNavigator(
             image = focused ? Images.icons.barIcons.profileSelected : Images.icons.barIcons.profile;
             break;
           case 'Game':
-            image = focused ? Images.icons.barIcons.gameSelected : Images.icons.barIcons.game;
+            image = focused ? Images.icons.barIcons.gameVioletSelected : Images.icons.barIcons.gameViolet;
         }
 
         return <Image source={image} style={{height: 24, width: 24}} />;

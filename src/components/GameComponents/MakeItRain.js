@@ -75,7 +75,7 @@ const Falling = ({ duration, delay, style, children }) => (
 );
 
 const BackgroundView = ({ children }) => (
-  <View style={{ flex: 1, position: 'absolute' }}>
+  <View style={{ flex: 1, position: 'absolute', zIndex: 1000 }}>
     {children}
   </View>
 );

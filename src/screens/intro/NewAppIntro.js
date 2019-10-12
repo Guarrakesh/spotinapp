@@ -20,40 +20,40 @@ const bottomViewBackground = "#6314BF";
 const slides = ({t}) => [
   {
     key: 'slide1',
-    titleTop: "UN NUOVO MODO",
-    titleBottom: "DI VEDERE LO SPORT",
+    titleTop: t("newIntro.slide1.titleTop"),
+    titleBottom: t("newIntro.slide1.titleBottom"),
     titleTopFontSize: 24,
     titleBottomFontSize: 22,
-    bottomText: "Scopri i locali dove poter vedere\nil tuo evento sportivo preferito",
+    bottomText: t("newIntro.slide1.bottomText"),
     image: Images.icons.sports.martial
   },
   {
     key: 'slide2',
-    titleTop: "CON NOI NON SARAI",
-    titleBottom: "MAI SOLO",
+    titleTop: t("newIntro.slide2.titleTop"),
+    titleBottom: t("newIntro.slide2.titleBottom"),
     titleTopFontSize: 24,
     titleBottomFontSize: 50,
-    bottomText: "Partecipa agli eventi insieme\nagli altri tifosi",
+    bottomText: t("newIntro.slide2.bottomText"),
     image: Images.icons.sports.football
   },
   {
     key: 'slide3',
-    titleTop: "NON C'È SPORT",
-    titleBottom: "SENZA GIOCO",
+    titleTop: t("newIntro.slide3.titleTop"),
+    titleBottom: t("newIntro.slide3.titleBottom"),
     titleTopFontSize: 24,
     titleBottomFontSize: 27,
-    bottomText: "Scopri come guadagnare Spot Coin e\nvincere tanti premi dal nostro catalogo",
-    buttonText: "Gioca Ora!",
+    bottomText: t("newIntro.slide3.bottomText"),
+    buttonText: t("newIntro.slide3.buttonText"),
     image: Images.icons.sports.motori
   },
   {
     key: 'slide4',
-    titleTop: "BIRRE, PANINI E TANTO",
-    titleBottom: "ALTRO TI ASPETTA",
+    titleTop: t("newIntro.slide4.titleTop"),
+    titleBottom: t("newIntro.slide4.titleBottom"),
     titleTopFontSize: 24,
     titleBottomFontSize: 28,
-    bottomText: "Inizia a navigare e scopri\ntutti i vantaggi Spot In",
-    buttonText: "Cominciamo!",
+    bottomText: t("newIntro.slide4.bottomText"),
+    buttonText: t("newIntro.slide4.buttonText"),
     image: Images.icons.sports.rugby
   },
 
@@ -65,8 +65,8 @@ class NewAppIntro extends React.Component {
     <View style={styles.slideView}>
       <Image source={props.image} resizeMode={'contain'} style={styles.mascotteImg}/>
       <View style={styles.titleView}>
-        <Typography variant={"title"} style={[styles.titleStyle, {fontSize: props.titleTopFontSize}]}>{props.titleTop}</Typography>
-        <Typography variant={"heading"} style={[styles.titleStyle, {fontSize: props.titleBottomFontSize}]}>{props.titleBottom}</Typography>
+        <Typography variant={"title"} style={[styles.titleStyle, {fontSize: props.titleTopFontSize}]}>{props.titleTop.toUpperCase()}</Typography>
+        <Typography variant={"heading"} style={[styles.titleStyle, {fontSize: props.titleBottomFontSize}]}>{props.titleBottom.toUpperCase()}</Typography>
       </View>
       {
         props.buttonText ?

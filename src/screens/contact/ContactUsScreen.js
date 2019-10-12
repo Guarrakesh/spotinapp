@@ -59,7 +59,7 @@ const SlidingView = ({ visible, style = {}, children }) => {
         {mounted ? children : null}
       </Animated.View>
   )
-}
+};
 const  ContactUsScreen = (props) => {
 
   const [state, setState] = useState({

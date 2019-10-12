@@ -16,16 +16,16 @@ const EarningMethodCard = (props) => {
       <Touchable style={styles.innerTouchable}>
         <View style={styles.innerContainer}>
           <View>
-            <Image resizeMode={'contain'} style={styles.methodImg} source={{uri: image}}/>
+            <Image resizeMode={'cover'} style={styles.methodImg} source={{uri: image}}/>
           </View>
-          <View>
+          <View style={styles.textView}>
             <Typography style={styles.title} variant={"title"}>{title}</Typography>
             <Typography style={styles.tag} variant={"title"}>{tag}</Typography>
             <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
               <Typography variant={"caption"} style={styles.moreInfoText}>maggiori info</Typography>
               <View style={{flexDirection: "row"}}>
                 <Image source={coinsImg} style={styles.coinsImg}/>
-                <Typography>{profit}</Typography>
+                <Typography style={styles.profitText}>{profit}</Typography>
               </View>
             </View>
           </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     borderRadius: themes.base.borderRadius*2,
     overflow: 'hidden',
-    //opacity: 0.2
+    opacity: 0.4
   },
   innerTouchable: {
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -50,12 +50,14 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: "row",
     padding: 16,
-    justifyContent: 'space-between',
     alignItems: "center"
   },
   methodImg: {
     width: 64,
     height: 64
+  },
+  textView: {
+    marginLeft: 16
   },
   title: {
     fontSize: 18,
@@ -72,6 +74,11 @@ const styles = StyleSheet.create({
   coinsImg: {
     width: 20,
     height: 20
+  },
+  profitText: {
+    color: themes.base.colors.accent.default,
+    marginLeft: 5,
+    fontFamily: Fonts.LatoBlack
   }
 });
 
