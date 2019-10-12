@@ -1,7 +1,7 @@
 import React from "react";
 import {View, StyleSheet, Platform} from "react-native";
 import CompetitorsList from "../../components/ProfileComponents/favorites/CompetitorsList";
-import connect from "react-redux/es/connect/connect";
+import { connect } from "react-redux";
 import ListController from "../../controllers/ListController";
 import {Button, SearchBar} from "../../components/common";
 import i18n from "../../i18n/i18n";

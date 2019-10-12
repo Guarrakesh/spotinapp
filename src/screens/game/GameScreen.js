@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Alert, ActivityIndicator} from "react-native";
+import {Image, ScrollView, StyleSheet, Alert, ActivityIndicator, Text} from "react-native";
 import {scale, verticalScale} from "react-native-size-matters";
 import BottomSheet from 'reanimated-bottom-sheet';
 import * as Animatable from 'react-native-animatable';
@@ -38,7 +38,7 @@ class GameScreen extends React.Component {
       code: null,
       coinRain: false,
       couponError: null,
-      showCongratulation: false
+      showCongratulation: false,
       showError: false
     };
 
@@ -134,10 +134,10 @@ class GameScreen extends React.Component {
               backgroundColor: disabled ?
                   themes.base.colors.text.default : (showError ? themes.base.colors.danger.light : themes.base.colors.accent.default)}]}
             onPress={this.handleUseCoupon}>
-        <Icon
-            color={themes.base.colors.white.light}
-            name={!showError ? "check" : "exclamation"}
-            size={40}/>
+          <Icon
+              color={themes.base.colors.white.light}
+              name={!showError ? "check" : "exclamation"}
+              size={40}/>
         </Touchable>
     )
   };
@@ -153,56 +153,56 @@ class GameScreen extends React.Component {
 
   bottomSheetContent = () => {
     return(
-      <View style={styles.bottomSheetContentContainer}>
-        <Animatable.View style={{}} ref={ref => this.bottomSheetContentRef = ref}>
-          <Typography variant={"title"} style={styles.receiveAward}>{i18n.t("game.gameScreen.bottomSheet.receiveAward")}</Typography>
-          <Typography variant={"caption"} style={styles.insertCode}>{i18n.t("game.gameScreen.bottomSheet.insertCoupon")}</Typography>
-          <TextInput
-              hasError={this.state.showError}
-              value={this.state.code}
-              ref={ref => this.codeInput = ref}
-              autoCapitalize="characters"
-              //shake={true}
-              onChangeText={this.handleInputChangeText}
-              containerStyle={{marginTop: verticalScale(16), height: 55, paddingRight: 0, paddingTop: 0, paddingBottom: 0} }
-              style={[styles.codeInputText, { height: 55 }]}
-              fontWeight={"900"}
-              append={this.inputRightIcon()}
-          />
-          <Typography variant={"heading"} style={styles.moreSpotCoin}>{i18n.t("game.gameScreen.bottomSheet.receiveMore")}</Typography>
-          <Button
-            uppercase
-            titleStyle={styles.discoverHowButtonTitle}
-            containerStyle={styles.discoverHowButtonContainer}
-            onPress={this.handleDiscoverHowPress}
-          >
-            {i18n.t("game.gameScreen.bottomSheet.discoverHow")}
-          </Button>
-          <Typography variant={"caption"} style={styles.regulationText}>{i18n.t("game.gameScreen.bottomSheet.regulation")}</Typography>
-        </Animatable.View>
-        <Animatable.View
-          ref={ref => this.congratulationRef = ref}
-          style={styles.congratulationView}
-          pointerEvents={this.state.showCongratulation ? "auto" : "none"}>
-          <Image source={soccerMascotte} style={styles.soccerMascotte} resizeMode={'contain'}/>
-          <Typography variant={"title"} style={styles.congratulationText}>CONGRATULAZIONI!</Typography>
-          <Typography variant={"heading"} style={styles.youWonText}>
-            {"Hai vinto "}
-            <Typography variant={"title"} style={{color: 'yellow'}}>
-              {this.props.usedCoupon ? this.props.usedCoupon[this.props.usedCoupon.length - 1].value : 0}
+        <View style={styles.bottomSheetContentContainer}>
+          <Animatable.View style={{}} ref={ref => this.bottomSheetContentRef = ref}>
+            <Typography variant={"title"} style={styles.receiveAward}>{i18n.t("game.gameScreen.bottomSheet.receiveAward")}</Typography>
+            <Typography variant={"caption"} style={styles.insertCode}>{i18n.t("game.gameScreen.bottomSheet.insertCoupon")}</Typography>
+            <TextInput
+                hasError={this.state.showError}
+                value={this.state.code}
+                ref={ref => this.codeInput = ref}
+                autoCapitalize="characters"
+                //shake={true}
+                onChangeText={this.handleInputChangeText}
+                containerStyle={{marginTop: verticalScale(16), height: 55, paddingRight: 0, paddingTop: 0, paddingBottom: 0} }
+                style={[styles.codeInputText, { height: 55 }]}
+                fontWeight={"900"}
+                append={this.inputRightIcon()}
+            />
+            <Typography variant={"heading"} style={styles.moreSpotCoin}>{i18n.t("game.gameScreen.bottomSheet.receiveMore")}</Typography>
+            <Button
+                uppercase
+                titleStyle={styles.discoverHowButtonTitle}
+                containerStyle={styles.discoverHowButtonContainer}
+                onPress={this.handleDiscoverHowPress}
+            >
+              {i18n.t("game.gameScreen.bottomSheet.discoverHow")}
+            </Button>
+            <Typography variant={"caption"} style={styles.regulationText}>{i18n.t("game.gameScreen.bottomSheet.regulation")}</Typography>
+          </Animatable.View>
+          <Animatable.View
+              ref={ref => this.congratulationRef = ref}
+              style={styles.congratulationView}
+              pointerEvents={this.state.showCongratulation ? "auto" : "none"}>
+            <Image source={soccerMascotte} style={styles.soccerMascotte} resizeMode={'contain'}/>
+            <Typography variant={"title"} style={styles.congratulationText}>CONGRATULAZIONI!</Typography>
+            <Typography variant={"heading"} style={styles.youWonText}>
+              {"Hai vinto "}
+              <Typography variant={"title"} style={{color: 'yellow'}}>
+                {this.props.usedCoupon ? this.props.usedCoupon[this.props.usedCoupon.length - 1].value : 0}
+              </Typography>
+              {" Spot Coins!"}
             </Typography>
-            {" Spot Coins!"}
-          </Typography>
-          <NewButton
-            block
-            uppercase
-            round
-            onPress={() => this.handleCongratulationHide()}
-          >
-            OK
-          </NewButton>
-        </Animatable.View>
-      </View>
+            <NewButton
+                block
+                uppercase
+                round
+                onPress={() => this.handleCongratulationHide()}
+            >
+              OK
+            </NewButton>
+          </Animatable.View>
+        </View>
     )
   };
 
@@ -227,52 +227,53 @@ class GameScreen extends React.Component {
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
     return(
-      <React.Fragment>
-        <FormErrorBox
-            autoHideDuration={3000}
-            errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>        <View style={styles.container}>
-          <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={{flex: 1}}>
-            <ScrollView bounces={false}>
-              <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
-              <Image style={styles.gameMascotte} source={gameMascotte} resizeMode={'contain'}/>
-              <View style={styles.titleContainer}>
-                <Typography style={styles.aNewWay}>{i18n.t("game.gameScreen.aNewWay")}</Typography>
-                <Typography style={styles.toSeeSport}>{i18n.t("game.gameScreen.toSeeSport")}</Typography>
-                <Typography style={styles.moreInfo} onPress={() => this.setState({coinRain: !this.state.coinRain})}>{i18n.t("game.gameScreen.moreInfo")}</Typography>
-              </View>
-              <View style={styles.coinsContainer}>
-                {this.props.isLoggedIn ?
-                  <View style={styles.coinsNumberContainer}>
-                    <Image source={coinsImg} style={styles.coinsIcon}/>
-                    <AnimateNumber style={styles.coinsNumberText}
-                                   value={this.props.spotCoins}
-                      //onFinish={() => this.showAlert()}
-                                   formatter={(val) => {
-                                     return parseFloat(val).toFixed(0)}}
-                    />
-                    {/*<Typography style={styles.coinsNumberText}>{this.props.spotCoins}</Typography>*/}
-                  </View> : null
-                }
-                <Typography style={styles.collectedCoins}>{this.props.isLoggedIn ? i18n.t("game.gameScreen.collectedCoins") : i18n.t("game.gameScreen.loginToDiscover")}</Typography>
-                <Button titleStyle={styles.insertButtonTitle} containerStyle={styles.insertButtonContainer} onPress={() => this.handleInsertCode()}>
-                  {this.props.isLoggedIn ? i18n.t("game.gameScreen.insertCode") : i18n.t("auth.login.signIn")}
-                </Button>
-              </View>
-              <Typography style={styles.seeCatalog} onPress={() => this.props.navigation.navigate("CatalogScreen")}>{i18n.t("game.gameScreen.seeCatalog")}</Typography>
-            </ScrollView>
-          </LinearGradient>
-          <BottomSheet
-            ref={ref => this.bottomSheetRef = ref}
-            snapPoints={[0, themes.base.deviceDimensions.height*(3/4)]}
-            renderContent={this.bottomSheetContent}
-            renderHeader={this.bottomSheetHeader}
-            enabledContentTapInteraction={false}
-            enabledInnerScrolling={false}
-            enabledGestureInteraction={!this.state.showCongratulation}
-          />
-          {this.state.coinRain ? <MakeItRain/> : null}
-        </View>
-      </React.Fragment>
+        <React.Fragment>
+          <FormErrorBox
+              autoHideDuration={3000}
+              errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>
+          <View style={styles.container}>
+            <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={{flex: 1}}>
+              <ScrollView bounces={false}>
+                <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
+                <Image style={styles.gameMascotte} source={gameMascotte} resizeMode={'contain'}/>
+                <View style={styles.titleContainer}>
+                  <Typography style={styles.aNewWay}>{i18n.t("game.gameScreen.aNewWay")}</Typography>
+                  <Typography style={styles.toSeeSport}>{i18n.t("game.gameScreen.toSeeSport")}</Typography>
+                  <Typography style={styles.moreInfo} onPress={() => this.setState({coinRain: !this.state.coinRain})}>{i18n.t("game.gameScreen.moreInfo")}</Typography>
+                </View>
+                <View style={styles.coinsContainer}>
+                  {this.props.isLoggedIn ?
+                      <View style={styles.coinsNumberContainer}>
+                        <Image source={coinsImg} style={styles.coinsIcon}/>
+                        <AnimateNumber style={styles.coinsNumberText}
+                                       value={this.props.spotCoins}
+                            //onFinish={() => this.showAlert()}
+                                       formatter={(val) => {
+                                         return parseFloat(val).toFixed(0)}}
+                        />
+                        {/*<Typography style={styles.coinsNumberText}>{this.props.spotCoins}</Typography>*/}
+                      </View> : null
+                  }
+                  <Typography style={styles.collectedCoins}>{this.props.isLoggedIn ? i18n.t("game.gameScreen.collectedCoins") : i18n.t("game.gameScreen.loginToDiscover")}</Typography>
+                  <Button titleStyle={styles.insertButtonTitle} containerStyle={styles.insertButtonContainer} onPress={() => this.handleInsertCode()}>
+                    {this.props.isLoggedIn ? i18n.t("game.gameScreen.insertCode") : i18n.t("auth.login.signIn")}
+                  </Button>
+                </View>
+                <Typography style={styles.seeCatalog} onPress={() => this.props.navigation.navigate("CatalogScreen")}>{i18n.t("game.gameScreen.seeCatalog")}</Typography>
+              </ScrollView>
+            </LinearGradient>
+            <BottomSheet
+                ref={ref => this.bottomSheetRef = ref}
+                snapPoints={[0, themes.base.deviceDimensions.height*(3/4)]}
+                renderContent={this.bottomSheetContent}
+                renderHeader={this.bottomSheetHeader}
+                enabledContentTapInteraction={false}
+                enabledInnerScrolling={false}
+                enabledGestureInteraction={!this.state.showCongratulation}
+            />
+            {this.state.coinRain ? <MakeItRain/> : null}
+          </View>
+        </React.Fragment>
 
     );
   }

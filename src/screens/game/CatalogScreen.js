@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, ScrollView, Platform} from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { scale, verticalScale } from 'react-native-size-matters';
 import {Typography, View} from "../../components/common";
 import AwardCard from "../../components/GameComponents/AwardCard";
 import useSimpleListController from '../../helpers/hooks/useSimpleListController';
@@ -35,60 +36,31 @@ const awards = [
 const earningMethods = [
   {
     image: "https://seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png",
+    icon: <Icon name="md-camera" color="#fff" size={48}/>,
+    title: "Scatta una foto",
+    //tag: "@spotin",
+    active: true,
+    subtitle: "Scatta una foto nel tuo locale preferito e tagga @spotin_sport su una Instagram Story",
+    profit: 25
+  },
+  {
+    icon: <Icon name="logo-facebook" color="#fff" size={48}/>,
+    title: "Seguici su Instagram",
+    tag: "@spotin_sport",
+    active: false,
+
+    subtitle: "maggiori info",
+    profit: 25
+  },
+  {
+    icon: <Icon name="logo-instagram" color="#fff" size={48}/>,
     title: "Seguici su Facebook",
     tag: "@spotin",
+    active: false,
     subtitle: "maggiori info",
     profit: 25
   },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  },
-  {
-    image: "http://pngimg.com/uploads/instagram/instagram_PNG3.png",
-    title: "Seguici su Instagram",
-    tag: "@spotin_sport",
-    subtitle: "maggiori info",
-    profit: 25
-  }
+
 ];
 
 const CatalogList = () => {
@@ -140,17 +112,22 @@ const CatalogScreen = (props) => {
 
 
 
-  const howToEarn = (props) => {
+  const howToEarn = (_props) => {
 
-    if (this.props.navigation.state.params && this.props.navigation.state.params.method) {
-      console.log("Catalog props: ", props);
-      setTimeout(() => props.jumpTo('second'), 500);
-    }
+
+    React.useEffect(() => {
+      if (props.navigation.state.params && props.navigation.state.params.method) {
+        setTimeout(() => _props.jumpTo('second'), 500);
+      }
+
+    }, []);
 
     return(
         <View>
           <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
-          <ScrollView style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
+          <ScrollView
+
+              style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
             {
               earningMethods.map((item, index) => (
                   <EarningMethodCard method={item}/>
@@ -191,8 +168,8 @@ const CatalogScreen = (props) => {
         <View style={styles.bottomView}/>
         <TabView
             style={styles.tabView}
-            activeColor={'red'}
-            indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
+            // activeColor={'red'}
+            // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
             indicatorContainerStyle={{ backgroundColor: 'red' }}
             onIndexChange={index => setNavState({...navState,  index })}
             renderScene={SceneMap({
@@ -268,8 +245,9 @@ const styles = StyleSheet.create({
   },
   methodsListContainer: {
     alignItems: "center",
-    paddingBottom: themes.base.deviceDimensions.height/10
-    paddingRight: 32
+    alignSelf: 'stretch',
+    paddingBottom: themes.base.deviceDimensions.height/10,
+
   },
   gridItem: {
     margin: 16,

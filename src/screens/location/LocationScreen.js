@@ -17,9 +17,10 @@ import {GOOGLE_API_KEY} from "../../vars";
 import styles from './locationScreenStyles';
 
 const colors = themes.base.colors;
-
-
 const deviceHeight = themes.base.deviceDimensions.height;
+
+// TODO: Fare la freccia di conferma più in alto, più lontana dal close
+
 class LocationScreen extends React.Component {
 
 
@@ -218,7 +219,7 @@ class LocationScreen extends React.Component {
                 name='arrow-right'
                 size={21}/></Touchable>
 
-
+            { /* TODO: Togliere il close quando non c'è la poisizione e gestire su Android il back button  */ }
             <Touchable style={styles.close} onPress={() => this.props.navigation.navigate('Main')}>
               <Text>{t("location.close").toUpperCase()}</Text>
             </Touchable>

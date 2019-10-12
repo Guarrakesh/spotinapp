@@ -43,30 +43,27 @@ class Launcher extends React.Component {
         useNativeDriver: true,
       }),
     ]).start(() => {
-      if (this.state.canProceed) {
-        this.startup();
-      }
+      firebase.notifications().getInitialNotification()
+          .then((notificationOpen: NotificationOpen) => {
+            if (notificationOpen) {
+              // App was opened by a notification3F18AF
+
+              // Get information about the notification that was opened
+              const notification: Notification = notificationOpen.notification;
+              self.notificationLaunch(notification);
+
+            } else {
+              self.normalLaunch();
+            }
+          });
     });
-    firebase.notifications().getInitialNotification()
-        .then((notificationOpen: NotificationOpen) => {
-          if (notificationOpen) {
-            // App was opened by a notification3F18AF
-
-            // Get information about the notification that was opened
-            const notification: Notification = notificationOpen.notification;
-            self.notificationLaunch(notification);
-
-          } else {
-            self.normalLaunch();
-          }
-        });
 
 
   }
 
   componentWillReceiveProps(nextProps): void {
     if (nextProps.deviceLocation.position !== this.props.deviceLocation.position && !nextProps.deviceLocation.isFetching) {
-      this.setState({ canProceed: true });
+      this.props.navigate('Main');
     } else if (nextProps.deviceLocation.error) {
       // Nessun permesso, vado schermata LocationScreen
       this.props.navigate("LocationScreen", {}, true);
@@ -100,9 +97,11 @@ class Launcher extends React.Component {
       //l'utente ha gia l'app e ha fatto l'intro
       //controllo nello storage se ha selezionato i preferiti
       //se l'ha gia' fatto in precedenza, allora:
-      const alreadySetFavorite = AsyncStorage.getItem(ALREADY_SET_FAVORITE);
+      const alreadySetFavorite = await AsyncStorage.getItem(ALREADY_SET_FAVORITE);
+
       if (alreadySetFavorite) {
         const permissionState = await Permissions.check('location');
+
         if (permissionState !== "authorized") {
           self.props.navigate("LocationScreen", {}, true);
         } else {

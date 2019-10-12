@@ -9,20 +9,20 @@ const coinsImg = require("../../assets/img/coins.png");
 const EarningMethodCard = (props) => {
 
   const { method } = props;
-  const { image, title, tag, subtitle, profit } = method;
+  const { image, title, tag, subtitle, icon, profit, active } = method;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { opacity: active ? 1 : 0.4 }]}>
       <Touchable style={styles.innerTouchable}>
         <View style={styles.innerContainer}>
-          <View>
-            <Image resizeMode={'cover'} style={styles.methodImg} source={{uri: image}}/>
+          <View style={styles.imageView}>
+            {icon ? icon : <Image resizeMode={'cover'} style={styles.methodImg} source={{uri: image}}/>}
           </View>
           <View style={styles.textView}>
             <Typography style={styles.title} variant={"title"}>{title}</Typography>
-            <Typography style={styles.tag} variant={"title"}>{tag}</Typography>
+            {tag && <Typography style={styles.tag} variant={"title"}>{tag}</Typography>}
             <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-              <Typography variant={"caption"} style={styles.moreInfoText}>maggiori info</Typography>
+              <Typography variant={"caption"} style={styles.moreInfoText}>{subtitle}</Typography>
               <View style={{flexDirection: "row"}}>
                 <Image source={coinsImg} style={styles.coinsImg}/>
                 <Typography style={styles.profitText}>{profit}</Typography>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     borderRadius: themes.base.borderRadius*2,
     overflow: 'hidden',
-    opacity: 0.4
+
   },
   innerTouchable: {
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -56,8 +56,13 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64
   },
+  imageView: {
+    flexBasis: 54,
+    flexGrow: 0,
+  },
   textView: {
-    marginLeft: 16
+    marginLeft: 16,
+    flexGrow: 2,
   },
   title: {
     fontSize: 18,
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
     color: themes.base.colors.accent.default
   },
   moreInfoText: {
+    flex: 1,
     color: 'yellow',
     fontFamily: Fonts.LatoItalic,
 

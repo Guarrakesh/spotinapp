@@ -33,7 +33,6 @@ const BackgroundPattern = require('../assets/img/no_location_gradient.png');
 const deviceHeight = themes.base.deviceDimensions.height;
 const deviceWidth = themes.base.deviceDimensions.width;
 
-
 class LocationScreen extends React.Component {
 
 

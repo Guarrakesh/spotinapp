@@ -25,7 +25,7 @@ const deviceWidth = themes.base.deviceDimensions.width;
 const deviceHeight = themes.base.deviceDimensions.height;
 
 const BackgroundPattern = require('../../assets/img/wave_pattern.png');
-
+// TODO: Inserire un ti ricontatteremo al {email/phone) per far ricontrollare il dato all'utente
 class ContactUsScreen extends React.Component{
 
   constructor() {

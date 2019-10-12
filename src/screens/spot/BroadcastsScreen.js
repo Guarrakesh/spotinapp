@@ -17,7 +17,10 @@ import { coordsSelector } from "../../reducers/location";
 
 const Fonts = themes.base.fonts;
 const HEADER_HEIGHT = 100;
-moment.locale(DeviceInfo.getDeviceLocale());
+moment.locale(DeviceInfo.getDeviceLocale())
+
+
+// TODO: Piazzare tasto mappa in alto a destra e al posto della mappa un link al modulo contattaci
 class BroadcastsScreen extends React.Component {
 
   state = {
