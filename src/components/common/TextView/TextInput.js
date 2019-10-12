@@ -10,7 +10,7 @@ const TextInput = React.forwardRef((props, ref) => {
   return (
       <View style={[
         styles.inputOuterContainer,
-        hasError ? { borderColor: themes.base.colors.danger.light, borderWidth: 1 } : {},
+        hasError ? { borderColor: themes.base.colors.danger.light, borderWidth: 2 } : {},
         containerStyle,
       ]}>
         {prepend}

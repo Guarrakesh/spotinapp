@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Alert, ActivityIndicator} from "react-native";
-import {verticalScale} from "react-native-size-matters";
+import {scale, verticalScale} from "react-native-size-matters";
 import BottomSheet from 'reanimated-bottom-sheet';
 import AnimateNumber from 'react-native-animate-number';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from "react-redux";
 import {Typography, View} from "../../components/common";
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,9 +33,10 @@ class GameScreen extends React.Component {
     super(props);
 
     this.state = {
-      code: "",
+      code: null,
       coinRain: false,
-      couponError: "",
+      couponError: null,
+
       showError: false
     };
 
@@ -58,7 +59,7 @@ class GameScreen extends React.Component {
       }
       else {
         const error = this.props.usedCoupon[this.props.usedCoupon.length - 1].errorCode;
-        this.codeInput.shake();
+
         this.setState({couponError: this.couponErrorHandler(error), showError: true})
       }
     }
@@ -88,7 +89,8 @@ class GameScreen extends React.Component {
         nextProps.isLoggedIn !== this.props.isLoggedIn ||
         nextState.coinRain !== this.state.coinRain ||
         nextState.couponError !== this.state.couponError ||
-        nextState.showError !== this.state.showError
+        nextState.showError !== this.state.showError ||
+        nextState.code !== this.state.code
     ){
       return true;
     }
@@ -113,14 +115,11 @@ class GameScreen extends React.Component {
     );
   };
 
-  handleUseCoupon() {
-    console.log("INPUT: ", this.codeInput);
-    //this.codeInput.shake();
+  handleUseCoupon = () => {
     this.props.useCoupon(this.state.code);
-
   }
 
-  handleInsertCode() {
+  handleInsertCode = () => {
     if(this.props.isLoggedIn) {
       this.bottomSheetRef.snapTo(1);
     }
@@ -130,41 +129,42 @@ class GameScreen extends React.Component {
   }
 
   inputRightIcon = () => {
+    const { code, showError } = this.state;
+    const disabled = !code || code === '';
     return (
-        <Touchable   onPress={() => this.handleUseCoupon()}>
-        <Icon
+        <Touchable
 
-            name={"ios-arrow-dropright"}
-            style={{marginRight: 8, verticalAlignment: 'middle', alignSelf: 'center', justifySelf: 'center'}}
-            color={greenColor}
+            disabled={disabled || showError}
+            style={[styles.inputIcon, {
+              backgroundColor: disabled ?
+                  themes.base.colors.text.default : (showError ? themes.base.colors.danger.light : themes.base.colors.accent.default)}]}
+            onPress={this.handleUseCoupon}>
+        <Icon
+            color={themes.base.colors.white.light}
+            name={!showError ? "check" : "exclamation"}
             size={40}/>
         </Touchable>
     )
   };
 
   handleInputChangeText = (text) => {
-    if(this.state.couponError !== ""){
-      this.setState({code: text.toUpperCase(), couponError: ""})
-    }
-    else {
-      this.setState({code: text.toUpperCase()});
-    }
+    this.setState({ code: text.toUpperCase(), showError: false });
   };
 
   bottomSheetContent = () => {
+
     return(
         <View style={styles.bottomSheetContentContainer}>
           <Typography variant={"title"} style={styles.receiveAward}>Ricevi il tuo premio!</Typography>
           <Typography variant={"caption"} style={styles.insertCode}>inserisci codice coupon:</Typography>
           <TextInput
-
-              errorMessage={this.state.couponError!=="" && this.state.couponError}
-              showError={!!this.state.couponError}
+              hasError={this.state.showError}
+              value={this.state.code}
               ref={ref => this.codeInput = ref}
-              //textTransform={"uppercase"}
+              autoCapitalize="characters"
               //shake={true}
-              onChangeText={(text) => this.handleInputChangeText(text)}
-              containerStyle={{marginTop: verticalScale(16), height: 55 }}
+              onChangeText={this.handleInputChangeText}
+              containerStyle={{marginTop: verticalScale(16), height: 55, paddingRight: 0, paddingTop: 0, paddingBottom: 0} }
               style={[styles.codeInputText, { height: 55 }]}
               fontWeight={"900"}
               append={this.inputRightIcon()}
@@ -196,7 +196,9 @@ class GameScreen extends React.Component {
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
     return(
         <React.Fragment>
-          <FormErrorBox errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>
+          <FormErrorBox
+              autoHideDuration={3000}
+              errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>
           <View style={styles.container}>
             <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={{flex: 1}}>
               <ScrollView bounces={false}>
@@ -360,7 +362,9 @@ const styles = StyleSheet.create({
   codeInputText: {
     fontSize: 100,
     borderColor: 'transparent',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    marginVertical: scale(16),
+    marginRight: scale(16),
 
   },
   moreSpotCoin: {
@@ -388,6 +392,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: Fonts.LatoItalic,
     marginTop: themes.base.deviceDimensions.height/25
+  },
+  inputIcon: {
+    position: 'absolute',
+    top: -2,
+    width: 80,
+    right: -2,
+    backgroundColor: themes.base.colors.accent.default,
+    flex: 1,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    flexBasis: scale(50   ),
   }
 });
 

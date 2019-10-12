@@ -14,7 +14,7 @@ import themes from "../../../styleTheme";
 const deviceHeight = themes.base.deviceDimensions.height;
 const deviceWidth = themes.base.deviceDimensions.width;
 
-const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
+const FormErrorBox = ({ t, errors, show, onSwipeAway, autoHideDuration, title }) => {
 
   // 0 close, 1 show, 2 reset
   const [status, setStatus] = useState(0);
@@ -28,7 +28,7 @@ const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
 
   }, [cancelled]);
   useEffect(() => {
-    console.log(status, previousShow, show);
+
     if (status === 0) {
       if (!previousShow && show)  {
         open();
@@ -41,7 +41,7 @@ const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
       if (onSwipeAway && previousShow) {
         onSwipeAway()
       }
-      console.log("swiped");
+
       if (!previousShow && show) {
         open();
       }
@@ -59,6 +59,12 @@ const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
       dragY.setValue(0);
       setStatus(1);
     });
+    if (autoHideDuration) {
+       setTimeout(() => {
+        close(true);
+
+      }, autoHideDuration)
+    }
   };
   const close = (reset) => {
     dragY.flattenOffset();
@@ -116,7 +122,7 @@ const FormErrorBox = ({ t, errors, show, onSwipeAway }) => {
             ]}
         >
           <View style={styles.line}></View>
-          <Text style={styles.title}>{t("common.errors.wait")}</Text>
+          <Text style={styles.title}>{title || t("common.errors.wait")}</Text>
           {errors.map(error => (
                   <Text style={styles.text}>{error}</Text>
 
@@ -163,6 +169,7 @@ FormErrorBox.defaultProps = {
   show: false,
 };
 FormErrorBox.propTypes = {
+  title: PropTypes.string,
   onSwipeAway: PropTypes.func.required,
   show: PropTypes.boolean,
   errors: PropTypes.arrayOf(PropTypes.string).required,
