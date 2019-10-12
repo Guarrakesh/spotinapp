@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image} from 'react-native';
 
-import {addNavigationHelpers, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
+import {createAppContainer, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 
 import AuthNavigator from './AuthNavigator';
 import Images from '../assets/images';
@@ -28,7 +28,7 @@ export const MainNavigation = createBottomTabNavigator(
   },
   {
     lazy: false,
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
 
         const { routeName } = navigation.state;
@@ -68,7 +68,7 @@ export const MainNavigation = createBottomTabNavigator(
   }
 );
 
-const RootNavigator = createStackNavigator(
+const RootNavigator = (createStackNavigator(
   {
     Launcher: Launcher,
 
@@ -76,7 +76,7 @@ const RootNavigator = createStackNavigator(
 
     Main: {
       screen: MainNavigation,
-      navigationOptions: {
+      defaultNavigationOptions: {
         gesturesEnabled: false,
 
       },
@@ -85,7 +85,7 @@ const RootNavigator = createStackNavigator(
     },
     Auth: {
       screen: AuthNavigator,
-      navigationOptions: {
+      defaultNavigationOptions: {
         gesturesEnabled: false,
 
 
@@ -105,7 +105,7 @@ const RootNavigator = createStackNavigator(
     mode: "modal",
     initialRouteName: 'Launcher',
   }
-);
+));
 
 
 

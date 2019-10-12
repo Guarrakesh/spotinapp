@@ -77,7 +77,7 @@ export const SpotStack = createStackNavigator({
         screen: CompetitionsScreen,
 
         navigationOptions: ({navigation}) => ({
-          ...navigation.navigationOptions,
+          ...navigation.defaultNavigationOptions,
           headerBackTitle: null,
           headerTitleStyle: {
             width: '100%',
@@ -92,7 +92,7 @@ export const SpotStack = createStackNavigator({
       Events: {
         screen: EventScreen,
         navigationOptions: ({navigation}) => ({
-          ...navigation.navigationOptions,
+          ...navigation.defaultNavigationOptions,
           title: navigation.state.params.title || "Spot In",
           headerBackTitle: null,
           headerTitleStyle: {
@@ -130,7 +130,7 @@ export const SpotStack = createStackNavigator({
     },{
       cardStyle: { backgroundColor: themes.base.backgroundColor },
 
-      navigationOptions: {
+      defaultNavigationOptions: {
         headerBackTitle: "",
         headerBackImage: (<Icon
             color={themes.base.colors.text.default}

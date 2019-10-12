@@ -165,8 +165,8 @@ class EditProfileScreen extends React.Component{
 
     return(
 
-      <ImageBackground source={BackgroundPattern} style={styles.container}>
         <KeyboardAwareScrollView
+            contentContainerStyle={styles.container}
           keyboardShouldPersistTaps={"handled"}
           bounces={false}
         >
@@ -182,7 +182,7 @@ class EditProfileScreen extends React.Component{
             </ImageBackground>
           </Touchable>
           <View style={styles.middleContainerStyle}>
-            <Typography block variant="caption" style={{marginLeft: 16}} gutterBottom  uppercase h4>Username</Typography>
+            <Typography color="white" block variant="caption" style={{marginLeft: 16}} gutterBottom  uppercase h4>Username</Typography>
             <Input
               value={name}
               onEndEditing={() => this.handleBlur('name')}
@@ -199,7 +199,7 @@ class EditProfileScreen extends React.Component{
             />
 
 
-            <Typography variant="caption" block align={"left"} style={{marginLeft: 16}} gutterBottom uppercase h4>Password</Typography>
+            <Typography color="white" variant="caption" block align={"left"} style={{marginLeft: 16}} gutterBottom uppercase h4>Password</Typography>
             <Input
               value={password}
               placeholder={i18n.t("profile.settings.editProfileScreen.insertNewPassword")}
@@ -244,13 +244,12 @@ class EditProfileScreen extends React.Component{
               disabled={loading || !canSubmit}
               round
 
-              variant="primary"
+              variant="default"
               onPress={() => {this.updateProfile()}}
             >{i18n.t("common.update")}</Button>
           </View>
         </KeyboardAwareScrollView>
 
-      </ImageBackground>
 
     )
   }
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex:1,
-    backgroundColor: themes.base.backgroundColor,
+    backgroundColor: themes.base.colors.accent.default,
     flexDirection: 'column',
     justifyContent: 'center',
 

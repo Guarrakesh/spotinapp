@@ -4,8 +4,11 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {Typography, View} from "../../components/common";
 import AwardCard from "../../components/GameComponents/AwardCard";
+import useSimpleListController from '../../helpers/hooks/useSimpleListController';
 import EarningMethodCard from "../../components/GameComponents/EarningMethodCard";
 import themes from "../../newTheme";
+import ActivtyIndicator from '../../components/ActivityIndicator/ActivityIndicator';
+import * as Animatable from 'react-native-animatable';
 
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
@@ -85,47 +88,59 @@ const earningMethods = [
     tag: "@spotin_sport",
     subtitle: "maggiori info",
     profit: 25
-  },
-
-
+  }
 ];
 
+const CatalogList = () => {
+
+  const { isLoading, data } = useSimpleListController('prizes');
+
+
+  // Memoize dei dati, viene calcolato solo quando cambia isLoading
+  // const [leftAwards, rightAwards] = React.useMemo(() => {
+  //   const leftAwards = [];
+  //   const rightAwards = [];
+  //   for(let i = 0; i < data.length; i++){
+  //     if (i % 2 === 0){
+  //       leftAwards.push(data[i]);
+  //     }
+  //     else {
+  //       rightAwards.push((data[i]));
+  //     }
+  //   }
+  //   return [leftAwards, rightAwards];
+  // }, [isLoading]);
+  // console.log(leftAwards, rightAwards);
+  return(
+    <View style={styles.catalogView}>
+      {isLoading && <ActivtyIndicator color='#fff' />}
+
+        {data.map((item, index) => (
+            <Animatable.View
+                style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
+                delay={32*index + 1}
+                animation="fadeInLeft" useNativeDriver >
+          <AwardCard award={item}/>
+            </Animatable.View>
+        ))}
+
+    </View>
+  )
+};
+
+
+const CatalogScreen = (props) => {
+  const [navState, setNavState] = React.useState({
+    index: 0,
+    routes: [
+      { key: 'first', title: 'Catalogo' },
+      { key: 'second', title: 'Come guadagnare' },
+    ],
+  });
 
 
 
-class CatalogScreen extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      index: 0,
-      routes: [
-        { key: 'first', title: 'Catalogo' },
-        { key: 'second', title: 'Come guadagnare' },
-      ],
-    };
-
-  }
-
-  componentDidMount(): void {
-
-
-  }
-
-  renderTabBar(props) {
-    return (
-      <TabBar
-        style={{backgroundColor: 'transparent'}}
-        labelStyle={styles.catalog}
-        textTransform={'none'}
-        {...props}
-        indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
-        navigationState={this.state}/>
-    );
-  }
-
-  howToEarn = (props) => {
+  const howToEarn = (props) => {
 
     if (this.props.navigation.state.params && this.props.navigation.state.params.method) {
       console.log("Catalog props: ", props);
@@ -133,82 +148,61 @@ class CatalogScreen extends React.Component {
     }
 
     return(
-      <View>
-        <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
-        <ScrollView style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
-          {
-            earningMethods.map((item, index) => (
-              <EarningMethodCard method={item}/>
-            ))
-          }
-
-        </ScrollView>
-      </View>
-    )
-  };
-
-  catalogList = (props) => {
-
-    const leftAwards = [];
-    const rightAwards = [];
-
-    for(let i = 0; i < awards.length; i++){
-      if (i % 2 === 0){
-        leftAwards.push(awards[i]);
-      }
-      else {
-        rightAwards.push((awards[i]));
-      }
-    }
-
-
-    return(
-      <View style={styles.catalogView}>
         <View>
-          {leftAwards.map((item, index) => (
-            <AwardCard award={item}/>
-          ))}
+          <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
+          <ScrollView style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
+            {
+              earningMethods.map((item, index) => (
+                  <EarningMethodCard method={item}/>
+              ))
+            }
+
+          </ScrollView>
         </View>
-        <View style={{marginTop: 32}}>
-          {rightAwards.map((item, index) => (
-            <AwardCard award={item}/>
-          ))}
-        </View>
-      </View>
     )
   };
 
-
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-
-
+  const renderTabBar = (props) => {
     return (
+        <TabBar
+            style={{backgroundColor: 'transparent'}}
+            labelStyle={styles.catalog}
+            textTransform={'none'}
+            {...props}
+            indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
+            navigationState={navState}/>
+    );
+  };
+
+
+
+
+  return (
       <View style={styles.container}>
         <View style={styles.topView}>
           <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
           <Icon
-            onPress={() => this.props.navigation.goBack()}
-            color={themes.base.colors.white.light}
-            name="ios-arrow-round-back"
-            style={styles.backArrow}
-            size={48}/>
+              onPress={() => props.navigation.goBack()}
+              color={themes.base.colors.white.light}
+              name="ios-arrow-round-back"
+              style={styles.backArrow}
+              size={48}/>
         </View>
         <View style={styles.bottomView}/>
         <TabView
-          style={styles.tabView}
-          activeColor={'red'}
-          indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
-          indicatorContainerStyle={{ backgroundColor: 'red' }}
-          onIndexChange={index => this.setState({ index })}
-          renderScene={SceneMap({
-            first: this.catalogList,
-            second: this.howToEarn,
-          })}
-          renderTabBar={(props) => this.renderTabBar(props)}
-          navigationState={this.state}/>
+            style={styles.tabView}
+            activeColor={'red'}
+            indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
+            indicatorContainerStyle={{ backgroundColor: 'red' }}
+            onIndexChange={index => setNavState({...navState,  index })}
+            renderScene={SceneMap({
+              first: CatalogList,
+              second: howToEarn,
+            })}
+            renderTabBar={(props) => renderTabBar(props)}
+            navigationState={navState}/>
       </View>
-    );
-  }
+  );
 }
 
 const styles = StyleSheet.create({
@@ -256,6 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   catalogView: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: themes.base.deviceDimensions.height/30
@@ -274,6 +269,12 @@ const styles = StyleSheet.create({
   methodsListContainer: {
     alignItems: "center",
     paddingBottom: themes.base.deviceDimensions.height/10
+    paddingRight: 32
+  },
+  gridItem: {
+    margin: 16,
+    borderRadius: themes.base.borderRadius*3,
+    flexBasis: themes.base.deviceDimensions.width / 2 - scale(16+16) // margini laterali + margini singoli
   }
 });
 

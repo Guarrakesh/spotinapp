@@ -184,7 +184,7 @@ const  ContactUsScreen = (props) => {
       if (isAuth) {
         await auth.check();
         const token = await auth.getAuthToken();
-        fetchOptions.Authorization = `Bearer ${token.accessToken}`;
+        fetchOptions.headers.Authorization = `Bearer ${token.accessToken}`;
       }
       try {
         const response = await fetch(fetchUrl, fetchOptions);

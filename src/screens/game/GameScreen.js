@@ -1,13 +1,14 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Alert, ActivityIndicator} from "react-native";
-import {Input} from "react-native-elements";
+import {scale, verticalScale} from "react-native-size-matters";
 import BottomSheet from 'reanimated-bottom-sheet';
 import * as Animatable from 'react-native-animatable';
 import AnimateNumber from 'react-native-animate-number';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from "react-redux";
 import {Typography, View} from "../../components/common";
 import LinearGradient from 'react-native-linear-gradient';
+import TextInput from "../../components/common/TextView/TextInput";
 import themes from "../../newTheme";
 import {Fonts} from "../../components/common/Fonts";
 import Button from "../../components/common/Button";
@@ -16,7 +17,7 @@ import i18n from "../../i18n/i18n";
 import {useCoupon} from "../../actions/coupon";
 import MakeItRain from "../../components/GameComponents/MakeItRain";
 import FormErrorBox from "../../components/common/FormError/FormErrorBox";
-
+import Touchable from '../../components/common/Touchable';
 const rugbyMascotte = require("../../assets/img/mascots/rugby/Rugby.png");
 const soccerMascotte = require("../../assets/img/mascots/soccer/Soccer.png");
 const gameMascotte = require("../../assets/img/mascots/gameMascotte/gameMascotte.png");
@@ -34,11 +35,11 @@ class GameScreen extends React.Component {
     super(props);
 
     this.state = {
-      code: "",
+      code: null,
       coinRain: false,
-      couponError: "",
-      showError: false,
+      couponError: null,
       showCongratulation: false
+      showError: false
     };
 
     this.handleDiscoverHowPress = this.handleDiscoverHowPress.bind(this);
@@ -63,8 +64,8 @@ class GameScreen extends React.Component {
       }
       else {
         const error = this.props.usedCoupon[this.props.usedCoupon.length - 1].errorCode;
-        this.codeInput.shake();
-        this.setState({couponError: this.couponErrorHandler(error), showError: true});
+
+        this.setState({couponError: this.couponErrorHandler(error), showError: true})
       }
     }
   }
@@ -90,39 +91,30 @@ class GameScreen extends React.Component {
 
   shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
 
-    return nextProps.spotCoins !== this.props.spotCoins ||
-      nextProps.usedCoupon !== this.props.usedCoupon ||
-      nextProps.isLoading !== this.props.isLoading ||
-      nextProps.isLoggedIn !== this.props.isLoggedIn ||
-      nextState.coinRain !== this.state.coinRain ||
-      nextState.couponError !== this.state.couponError ||
-      nextState.showError !== this.state.showError;
+    if(
+        nextProps.spotCoins !== this.props.spotCoins ||
+        nextProps.usedCoupon !== this.props.usedCoupon ||
+        nextProps.isLoading !== this.props.isLoading ||
+        nextProps.isLoggedIn !== this.props.isLoggedIn ||
+        nextState.coinRain !== this.state.coinRain ||
+        nextState.couponError !== this.state.couponError ||
+        nextState.showError !== this.state.showError ||
+        nextState.code !== this.state.code
+    ){
+      return true;
+    }
+    else
+      return false;
 
   }
 
-  showAlert = () => {
-    Alert.alert(
-      `Hai ricevuto ${this.props.usedCoupon[this.props.usedCoupon.length - 1].value} Spot Coins!`,
-      'My Alert Msg',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => this.setState({coinRain: false})},
-      ],
-      {cancelable: false},
-    );
-  };
 
-  handleUseCoupon() {
 
+  handleUseCoupon = () => {
     this.props.useCoupon(this.state.code);
-
   }
 
-  handleInsertCode() {
+  handleInsertCode = () => {
     if(this.props.isLoggedIn) {
       this.bottomSheetRef.snapTo(1);
     }
@@ -132,33 +124,26 @@ class GameScreen extends React.Component {
   }
 
   inputRightIcon = () => {
-    if (this.props.isLoading){
-      return (
-        <ActivityIndicator
-          style={{marginRight: 8, alignSelf: 'center', justifySelf: 'center'}}
-          color={greenColor}
-        />
-      )
-    }
-    else {
-      return (
+    const { code, showError } = this.state;
+    const disabled = !code || code === '';
+    return (
+        <Touchable
+
+            disabled={disabled || showError}
+            style={[styles.inputIcon, {
+              backgroundColor: disabled ?
+                  themes.base.colors.text.default : (showError ? themes.base.colors.danger.light : themes.base.colors.accent.default)}]}
+            onPress={this.handleUseCoupon}>
         <Icon
-          onPress={() => this.handleUseCoupon()}
-          name={"ios-arrow-round-forward"}
-          style={{marginRight: 8, alignSelf: 'center', justifySelf: 'center'}}
-          color={greenColor}
-          size={40}/>
-      )
-    }
+            color={themes.base.colors.white.light}
+            name={!showError ? "check" : "exclamation"}
+            size={40}/>
+        </Touchable>
+    )
   };
 
   handleInputChangeText = (text) => {
-    if(this.state.couponError !== ""){
-      this.setState({code: text.toUpperCase(), couponError: ""})
-    }
-    else {
-      this.setState({code: text.toUpperCase()});
-    }
+    this.setState({ code: text.toUpperCase(), showError: false });
   };
 
   handleDiscoverHowPress = () => {
@@ -172,17 +157,17 @@ class GameScreen extends React.Component {
         <Animatable.View style={{}} ref={ref => this.bottomSheetContentRef = ref}>
           <Typography variant={"title"} style={styles.receiveAward}>{i18n.t("game.gameScreen.bottomSheet.receiveAward")}</Typography>
           <Typography variant={"caption"} style={styles.insertCode}>{i18n.t("game.gameScreen.bottomSheet.insertCoupon")}</Typography>
-          <Input
-            errorMessage={this.state.couponError!=="" && this.state.couponError}
-            errorStyle={{marginTop: 16}}
-            ref={ref => this.codeInput = ref}
-            textTransform={"uppercase"}
-            shake={true}
-            onChangeText={(text) => this.handleInputChangeText(text)}
-            inputContainerStyle={styles.codeInputText}
-            containerStyle={styles.codeInputContainer}
-            fontWeight={"900"}
-            rightIcon={() => this.inputRightIcon()}
+          <TextInput
+              hasError={this.state.showError}
+              value={this.state.code}
+              ref={ref => this.codeInput = ref}
+              autoCapitalize="characters"
+              //shake={true}
+              onChangeText={this.handleInputChangeText}
+              containerStyle={{marginTop: verticalScale(16), height: 55, paddingRight: 0, paddingTop: 0, paddingBottom: 0} }
+              style={[styles.codeInputText, { height: 55 }]}
+              fontWeight={"900"}
+              append={this.inputRightIcon()}
           />
           <Typography variant={"heading"} style={styles.moreSpotCoin}>{i18n.t("game.gameScreen.bottomSheet.receiveMore")}</Typography>
           <Button
@@ -231,9 +216,9 @@ class GameScreen extends React.Component {
   bottomSheetHeader = () => {
 
     return(
-      <View style={styles.bottomSheetHeaderContainer}>
-        <Image source={logoImg} style={styles.logoImg} resizeMode={'contain'}/>
-      </View>
+        <View style={styles.bottomSheetHeaderContainer}>
+          <Image source={logoImg} style={styles.logoImg} resizeMode={'contain'}/>
+        </View>
     )
 
   };
@@ -243,8 +228,9 @@ class GameScreen extends React.Component {
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
     return(
       <React.Fragment>
-        <FormErrorBox errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>
-        <View style={styles.container}>
+        <FormErrorBox
+            autoHideDuration={3000}
+            errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>        <View style={styles.container}>
           <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={{flex: 1}}>
             <ScrollView bounces={false}>
               <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
@@ -405,19 +391,13 @@ const styles = StyleSheet.create({
     color: themes.base.colors.white.light,
     marginTop: 16
   },
-  codeInputContainer: {
-    backgroundColor: themes.base.colors.white.light,
-    borderRadius: themes.base.borderRadius,
-    width: '100%',
-    padding: 5,
-    height: themes.base.deviceDimensions.height/15,
-    marginTop: 16,
-    borderWidth: 0
-  },
   codeInputText: {
     fontSize: 100,
     borderColor: 'transparent',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    marginVertical: scale(16),
+    marginRight: scale(16),
+
   },
   moreSpotCoin: {
     color: themes.base.colors.white.light,
@@ -465,6 +445,20 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 16,
     color: themes.base.colors.white.light
+  },
+  inputIcon: {
+    position: 'absolute',
+    top: -2,
+    width: 80,
+    right: -2,
+    backgroundColor: themes.base.colors.accent.default,
+    flex: 1,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 4,
+    borderBottomRightRadius: 4,
+    flexBasis: scale(50   ),
   }
 });
 

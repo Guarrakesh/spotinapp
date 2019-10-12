@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform, TouchableHighlight } from 'react-native';
 
-import { FluidNavigator } from 'react-navigation-fluid-transitions';
 
 import { Icon } from 'react-native-vector-icons/MaterialIcons'
 import { createStackNavigator }  from 'react-navigation';
@@ -39,7 +38,7 @@ const AuthNavigator = createStackNavigator(
       // SignUp: {
       //   screen: SignupScreen,
       //
-      //   navigationOptions: ({navigation}) => ({
+      //   defaultNavigationOptions: ({navigation}) => ({
       //     title: i18n.t("auth.register.title").toUpperCase(),
       //     headerTitleStyle: {
       //       fontFamily: themes.base.fonts.LatoMedium,

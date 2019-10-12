@@ -1,44 +1,30 @@
 import React, {Component} from 'react';
-import {Button} from "react-native-elements";
-import { compose } from 'recompose';
-import { Provider, connect } from 'react-redux';
-import { AppState, Alert, View, BackHandler, Text } from 'react-native';
-import auth from '../src/api/auth';
-
-
+/* Internationalization */
+import {I18nextProvider, withNamespaces} from 'react-i18next';
+import {BackHandler, Text, View} from 'react-native';
 /* CodePush */
 import codePush from 'react-native-code-push';
 /* RN Config */
 import Config from 'react-native-config';
+/* React Navigation with Redux */
+import {createReduxContainer} from 'react-navigation-redux-helpers';
+import {connect, Provider} from 'react-redux';
+import {compose} from 'recompose';
+import {registerResource, unregisterResource} from './actions/entities';
+import EnvironmentBar from './components/common/EnvironmentBar';
+/* Root components */
+import Notification from './components/Notification/Notification';
+/* Firebase */
+import {FirebaseProvider} from './firebase';
+import i18n from './i18n/i18n'
+/* Navigators */
+import RootNavigator from './navigators/AppNavigator';
+import NavigationService from './navigators/NavigationService';
+/* Store, navigation and actions */
+import createStore from './store';
 /* Redux Persist */
 
 //import { PersistGate } from "redux-persist/lib/integration/react";
-
-
-/* React Navigation with Redux */
-import { reduxifyNavigator } from 'react-navigation-redux-helpers';
-
-/* Internationalization */
-import { I18nextProvider, withNamespaces } from 'react-i18next';
-import Example from "./components/common/FormError/default";
-import FormErrorBox from "./components/common/FormError/FormErrorBox";
-import i18n from './i18n/i18n'
-
-/* Store, navigation and actions */
-import createStore from './store';
-import NavigationService from './navigators/NavigationService';
-import { registerResource, unregisterResource } from './actions/entities';
-
-/* Root components */
-import Notification from './components/Notification/Notification';
-import EnvironmentBar from './components/common/EnvironmentBar';
-/* Navigators */
-import RootNavigator from './navigators/AppNavigator';
-
-/* Firebase */
-import { FirebaseProvider } from './firebase';
-
-import themes from "./styleTheme";
 
 
 /* Redux Store */
@@ -46,7 +32,7 @@ const { store } = createStore();
 
 
 const ReduxifiedNavigator = connect(
-    (state, props) => ({state: state.navigation}))(reduxifyNavigator(RootNavigator, "root"));
+    (state, props) => ({state: state.navigation}))(createReduxContainer(RootNavigator, "root"));
 
 console.disableYellowBox = true;
 
@@ -58,7 +44,7 @@ class ResourceInitializer extends Component {
 
 
   resources = ['sports', 'competitions', 'competitors',
-    'events', 'broadcasts', 'businesses', 'reservations'];
+    'events', 'broadcasts', 'businesses', 'reservations', 'prizes'];
   componentWillMount() {
     this.resources.map(res => this.props.register({name: res}));
   }

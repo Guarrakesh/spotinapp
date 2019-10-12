@@ -46,7 +46,7 @@ const sagaMiddleware = createSagaMiddleware();
 export default function configureStore(initialState) {
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const navMiddleware = createReactNavigationReduxMiddleware("root", state => state.navigation);
+  const navMiddleware = createReactNavigationReduxMiddleware(state => state.navigation, 'root');
 
   const firebaseBeaconMiddleware = createMiddleware(eventsMap, BeaconFirebaseTarget());
   const activityBeaconMiddleware = createMiddleware(eventsMap, BeaconActivityTarget());

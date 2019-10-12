@@ -24,7 +24,7 @@ class FavoriteSportsScreen extends React.Component {
     }
   }
 
-  static navigationOptions = ({navigation}) => {
+  static defaultdefaultNavigationOptions = ({navigation}) => {
     return {
       header: null,
 
