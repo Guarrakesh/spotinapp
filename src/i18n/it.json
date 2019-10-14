@@ -32,8 +32,8 @@
       "insertEmailPhone": "Inserisci la tua mail o il numero di cellulare",
       "insertEmailHelperText": "Non appena troveremo un locale adatto a te, ti ricontatteremo con maggiori dettagli",
       "doneText": "Riceverai notizie al più presto dal nostro team!",
-      "doneTextWithEmail": "Grazie! Sarai ricontattato alla mail {{email}} per ulteriori dettagli. Tieni d'occhio la tua casella!",
-      "doneTextWithPhone": "Grazie! Sarai ricontattato al numero {{phone}} per ulteriori dettagli. Tieni d'occhio i tuoi messaggi!",
+      "doneTextWithEmail": "Grazie! Sarai ricontattato su {{email}} per ulteriori dettagli. Tieni d'occhio la tua casella!",
+      "doneTextWithPhone": "Grazie! Sarai ricontattato su {{phone}} per ulteriori dettagli. Tieni d'occhio i tuoi messaggi!",
 
       "contactUs"         : "Contattaci",
       "whichBusinessType" : "Che tipo di locale desideri?",
