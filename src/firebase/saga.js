@@ -177,7 +177,7 @@ export function* initFcm() {
 export default function* root() {
 
   yield take(FCM_INIT);
-  /* TODO: Notifiche disabilitate per iOS al momento */
+
   if (Platform.OS === "ios") {
     while(true){
       yield take(FCM_IOS_PERMISSION_INIT);

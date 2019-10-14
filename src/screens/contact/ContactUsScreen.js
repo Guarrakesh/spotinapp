@@ -303,8 +303,7 @@ const  ContactUsScreen = (props) => {
             <SlidingView visible={index === 1} style={{ position: 'absolute'}}>
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.label}>
-                  Inserisci la tua mail o il
-                  numero di cellulare
+                  {t("browse.noBroadcasts.insertEmailPhone")}
                 </Text>
                 <View style={[
                     styles.inputOuterContainer,
@@ -356,7 +355,9 @@ const  ContactUsScreen = (props) => {
               }>
             <Mascotte sport={event.sport.slug} width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>
             <Text style={styles.doneTitle}>{t("common.done")}</Text>
-            <Text style={styles.doneText}>{t("browse.noBroadcasts.doneText")}</Text>
+            <Text style={styles.doneText}>
+              {isPhoneNumber(state.email) ? t("browse.noBroadcasts.doneTextWithEmail", { email: state.email }) : t("browse.noBroadcasts.doneTextWithPhone", { phone: state.email })}
+            </Text>
             <Button
                 onPress={() => props.navigation.navigate('Main')}
                 round block containerStyle={{marginTop: deviceHeight * 0.1}}>{t("common.close")}</Button>

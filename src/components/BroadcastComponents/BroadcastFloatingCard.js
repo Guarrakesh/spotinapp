@@ -27,7 +27,7 @@ const BroadcastFloatingCard = ({
                                  t
                                }) => {
 
-  if (!broadcast) return null;
+  if (!broadcast || !broadcast.dist) return null;
   const { business, offer, dist, newsfeed } = broadcast;
   const hasOffer = offer && (offer.value || offer.value === 0);
 

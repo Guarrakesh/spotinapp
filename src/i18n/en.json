@@ -33,8 +33,12 @@
         "businessTypeRequired": "Choose which restaurant you want to go to",
         "emailOrPhoneNotValid": "Please insert a valid email or phone number"
       },
+      "insertEmailPhone": "Type your email or your phone number",
       "insertEmailHelperText": "As soon as we find a restaurant that maches your needs, we will contact you back with more details",
       "doneText": "You will be contacted back soon!",
+      "doneTextWithEmail": "Thank you! You'll be contacted back at {{email}} for further details. Keep an eye on your inbox!",
+      "doneTextWithPhone": "Thank you! You'll be contacted back at {{phone}} for further details. Keep an eye on your inbox!",
+
       "contactUs"         : "Contact Us",
       "weOrganizeForYou"  : "If you didn't find a place to follow {{eventName}} don't worry, we will do it for you!",
       "whereToWatch"      : "Where would you like to watch this?",

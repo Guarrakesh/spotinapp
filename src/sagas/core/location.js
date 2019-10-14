@@ -7,7 +7,12 @@ import Permissions from 'react-native-permissions';
 
 import NavigationService from '../../navigators/NavigationService'
 
-import {LOCATION_REQUEST, LOCATION_SET_ERROR, LOCATION_SET_POSITION} from "../../actions/location";
+import {
+  LOCATION_REQUEST,
+  LOCATION_SET_ERROR,
+  LOCATION_SET_POSITION,
+  LOCATION_USE_DEVICE_LOCATION
+} from "../../actions/location";
 
 import {FOREGROUND} from '../../actions/appstate';
 import {REFRESH_SCREEN} from '../../actions/integrity';
@@ -97,6 +102,7 @@ function* watchPosition() {
 
 
         locationChannel.put({type: LOCATION_SET_POSITION, position});
+        locationChannel.put({type: LOCATION_USE_DEVICE_LOCATION });
       },
       (error) => {
         locationChannel.put({type: LOCATION_SET_ERROR, error})

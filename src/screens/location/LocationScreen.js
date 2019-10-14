@@ -12,6 +12,7 @@ import Images from '../../assets/images';
 import {Touchable, View} from '../../components/common';
 import Button from "../../components/common/Button";
 import i18n from "../../i18n/i18n";
+import NavigationService from "../../navigators/NavigationService";
 import themes from "../../styleTheme";
 import {GOOGLE_API_KEY} from "../../vars";
 import styles from './locationScreenStyles';
@@ -63,7 +64,7 @@ class LocationScreen extends React.Component {
           cityName: this.state.cityName
         };
         this.props.useAddress(position);
-        this.props.navigation.navigate('Main');
+        this.props.showMainScreen()
         this.setState({loading: false});
       });
     })
@@ -81,7 +82,7 @@ class LocationScreen extends React.Component {
       this.state.iconY.stopAnimation();
 
     } else if (!nextProps.deviceLocation.fetching && nextProps.deviceLocation.position) {
-      this.props.navigation.navigate('Main');
+      this.props.showMainScreen();
       this.state.iconY.stopAnimation();
       this.setState({loading: false})
     }
@@ -137,7 +138,7 @@ class LocationScreen extends React.Component {
 
   render() {
 
-    const { t, isLoading }  = this.props;
+    const { t, isLoading, location }  = this.props;
 
     return (
         <KeyboardAwareScrollView
@@ -219,11 +220,15 @@ class LocationScreen extends React.Component {
                 name='arrow-right'
                 size={21}/></Touchable>
 
-            { /* TODO: Togliere il close quando non c'è la poisizione e gestire su Android il back button  */ }
-            <Touchable style={styles.close} onPress={() => this.props.navigation.navigate('Main')}>
+            {location.currentLocation &&
+            <Touchable style={styles.close} onPress={() => this.props.showMainScreen()}>
               <Text>{t("location.close").toUpperCase()}</Text>
             </Touchable>
+
+            }
           </View>
+
+
 
         </KeyboardAwareScrollView>
     )
@@ -239,10 +244,12 @@ const mapStateToProps = (state) => {
     isLoggedIn: state.auth.isLoggedin,
     isLoading: state.loading > 0,
     deviceLocation: state.location.device,
+    location: state.location,
   })
 };
 export default connect(mapStateToProps, {
   locationPermission,
   useAddress,
   useDeviceLocation,
+  showMainScreen: () => NavigationService.navigate('Main', null, true),
 })(withNamespaces()(LocationScreen));

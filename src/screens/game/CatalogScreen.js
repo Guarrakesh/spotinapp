@@ -84,19 +84,19 @@ const CatalogList = () => {
   // }, [isLoading]);
   // console.log(leftAwards, rightAwards);
   return(
-    <View style={styles.catalogView}>
-      {isLoading && <ActivtyIndicator color='#fff' />}
-
-        {data.map((item, index) => (
-            <Animatable.View
-                style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
-                delay={32*index + 1}
-                animation="fadeInLeft" useNativeDriver >
-          <AwardCard award={item}/>
-            </Animatable.View>
-        ))}
-
-    </View>
+      <View style={styles.catalogView}>
+        {isLoading
+            ? <ActivtyIndicator color='#fff'/>
+            : data.map((item, index) => (
+                <Animatable.View
+                    style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
+                    delay={32 * index + 1}
+                    animation="fadeInLeft" useNativeDriver>
+                  <AwardCard award={item}/>
+                </Animatable.View>
+            ))
+        }
+      </View>
   )
 };
 

@@ -29,8 +29,11 @@
         "subtitle"          : "Organizziamolo insieme!",
         "buttonTitle"       : "Continua"
       },
+      "insertEmailPhone": "Inserisci la tua mail o il numero di cellulare",
       "insertEmailHelperText": "Non appena troveremo un locale adatto a te, ti ricontatteremo con maggiori dettagli",
       "doneText": "Riceverai notizie al più presto dal nostro team!",
+      "doneTextWithEmail": "Grazie! Sarai ricontattato alla mail {{email}} per ulteriori dettagli. Tieni d'occhio la tua casella!",
+      "doneTextWithPhone": "Grazie! Sarai ricontattato al numero {{phone}} per ulteriori dettagli. Tieni d'occhio i tuoi messaggi!",
 
       "contactUs"         : "Contattaci",
       "whichBusinessType" : "Che tipo di locale desideri?",
@@ -38,7 +41,7 @@
       "formErrors": {
         "maxDistanceRequired": "Indica quanto sei disposto a spostarti",
         "businessTypeRequired": "Scegli in che tipo di locale vuoi andare",
-        "emailOrPhoneNotValid": "Inserire una email o un numero di telefono valido",
+        "emailOrPhoneNotValid": "Inserire una email o un numero di telefono valido"
       },
       "weOrganizeForYou"  : "Se non hai trovato un luogo dove poter seguire {{eventName}} non preoccuparti, lo faremo noi per te!",
       "whereToWatch"      : "Dove vuoi guardare l'evento?",

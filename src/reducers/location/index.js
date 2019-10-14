@@ -58,7 +58,7 @@ function userAddressReducer(state = {position: null}, action) {
 
 // Se l'utente si geolocalizza o aggiorna la posizione, utilizza "device", altriment
 // se inserisce un indirizzo, utilizza "address"
-function currentLocationReducer(state = 'device', action) {
+function currentLocationReducer(state = null, action) {
   if (action.type === LOCATION_SET_USER_ADDRESS) {
     return 'address'
   } else if (action.type === LOCATION_USE_DEVICE_LOCATION) {
@@ -73,6 +73,7 @@ function currentLocationReducer(state = 'device', action) {
 export const positionSelector = (state) => {
   // Seleziona le coordinate in base al currentLocation
   const currentLocation = state.location.currentLocation;
+  if (!currentLocation) return undefined;
   if (state.location[currentLocation].position) {
     return state.location[currentLocation].position;
   }
@@ -80,6 +81,7 @@ export const positionSelector = (state) => {
 };
 export const coordsSelector = state => {
   const subState = state.location.currentLocation;
+  if (!subState) return null;
   return {
     latitude: get(state.location[subState], 'position.coords.latitude'),
     longitude: get(state.location[subState], 'position.coords.longitude')
