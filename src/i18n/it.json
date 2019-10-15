@@ -146,6 +146,7 @@
       "contactUs": "Contattaci",
       "visitWebSite": "Visita il sito",
       "rateUs": "Lascia una recensione",
+      "contactUsOnWA": "Contattaci su WhatsApp",
       "logout": "Esci",
       "logoutConfirm": "Vuoi uscire dal tuo account?",
       "no": "No",
@@ -251,13 +252,31 @@
         "insertCoupon": "inserisci codice coupon:",
         "receiveMore": "Vuoi ricevere altri\nSpot Coin?",
         "discoverHow": "Scopri come",
-        "regulation": "regolamento"
+        "regulation": "regolamento",
+        "congratulation": "CONGRATULAZIONI!",
+        "youWon": "Hai vinto ",
+        "spotCoins": " Spot Coin!"
       },
       "couponErrors": {
         "notValid": "Coupon non valido",
         "alreadyUsed": "Coupon già utilizzato",
         "notExist": "Coupon non esistente",
         "expired": "Coupon scaduto"
+      }
+    },
+    "catalogScreen": {
+      "catalog": "Catalogo",
+      "howToEarn": "Come guadagnare",
+      "earnSpotCoins": "Guadagna Spot Coin"
+    },
+    "prizeDetailScreen": {
+      "information": "informazioni",
+      "valueInSpot": "Valore in Spot Coin",
+      "yourSpot": "I tuoi Spot Coin",
+      "requestPrize": "Richiedi Premio",
+      "confirmBottomSheet": {
+        "processRequest": "Elaboreremo la tua richiesta nelle prossime ",
+        "hours": " ore"
       }
     }
   },

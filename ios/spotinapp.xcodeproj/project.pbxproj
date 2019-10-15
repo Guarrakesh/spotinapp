@@ -54,17 +54,6 @@
 		81759FC22180784D002650B7 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81759FC12180784D002650B7 /* SnapshotHelper.swift */; };
 		818D20F4218D1EDD009D2B70 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 818D20F3218D1EC5009D2B70 /* libReactNativeConfig.a */; };
 		81A11DB421502C4B006E574D /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81A11DB321502C4B006E574D /* Lato-Bold.ttf */; };
-		81C46991210F31C6007DD095 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46961210F31C6007DD095 /* Octicons.ttf */; };
-		81C46992210F31C6007DD095 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46962210F31C6007DD095 /* Feather.ttf */; };
-		81C46993210F31C6007DD095 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46963210F31C6007DD095 /* Entypo.ttf */; };
-		81C46994210F31C6007DD095 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46964210F31C6007DD095 /* MaterialCommunityIcons.ttf */; };
-		81C46995210F31C6007DD095 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46965210F31C6007DD095 /* Foundation.ttf */; };
-		81C46996210F31C6007DD095 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46966210F31C6007DD095 /* Ionicons.ttf */; };
-		81C46997210F31C6007DD095 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46967210F31C6007DD095 /* FontAwesome.ttf */; };
-		81C46998210F31C6007DD095 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46968210F31C6007DD095 /* Zocial.ttf */; };
-		81C46999210F31C6007DD095 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C46969210F31C6007DD095 /* EvilIcons.ttf */; };
-		81C4699A210F31C6007DD095 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C4696A210F31C6007DD095 /* SimpleLineIcons.ttf */; };
-		81C4699B210F31C6007DD095 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C4696B210F31C6007DD095 /* MaterialIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87E2ED847A4A4A689B927BCA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9269E26719234350B124311A /* Zocial.ttf */; };
 		89C20DCED7014AC08D4CA76A /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 094B90F497964054A447CF36 /* Lato-Heavy.ttf */; };
@@ -1569,17 +1558,6 @@
 			files = (
 				C46B0AC8233AAAD30059DA09 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				81C46999210F31C6007DD095 /* EvilIcons.ttf in Resources */,
-				81C46995210F31C6007DD095 /* Foundation.ttf in Resources */,
-				81C46998210F31C6007DD095 /* Zocial.ttf in Resources */,
-				81C4699B210F31C6007DD095 /* MaterialIcons.ttf in Resources */,
-				81C46996210F31C6007DD095 /* Ionicons.ttf in Resources */,
-				81C4699A210F31C6007DD095 /* SimpleLineIcons.ttf in Resources */,
-				81C46991210F31C6007DD095 /* Octicons.ttf in Resources */,
-				81C46992210F31C6007DD095 /* Feather.ttf in Resources */,
-				81C46997210F31C6007DD095 /* FontAwesome.ttf in Resources */,
-				81C46993210F31C6007DD095 /* Entypo.ttf in Resources */,
-				81C46994210F31C6007DD095 /* MaterialCommunityIcons.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				ACCC09B827DC4965841529F5 /* Entypo.ttf in Resources */,
 				5ED354CFDC24499EA629AEBF /* EvilIcons.ttf in Resources */,
@@ -1690,6 +1668,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -16,9 +16,10 @@ import Modal from "react-native-modal";
 import i18n from '../../i18n/i18n';
 import { Touchable } from "../../components/common";
 import themes from "../../styleTheme";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import { userCheck, userLogout } from "../../actions/authActions";
 import { updateSettings } from "../../actions/profile";
+import {PHONE_NUMBER} from "../../vars";
 
 class SettingsScreen extends React.Component {
 
@@ -63,6 +64,10 @@ class SettingsScreen extends React.Component {
 
   static handleRateUs(){
     Linking.openURL(Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=it.spotin" : "https://itunes.apple.com/it/app/spot-in/id1439906179")
+  }
+
+  static handleContactUs() {
+    Linking.openURL(`https://wa.me/${PHONE_NUMBER}`);
   }
 
   handleTerms() {
@@ -136,6 +141,9 @@ class SettingsScreen extends React.Component {
         <View style={styles.sectionView}>*/}
           <Touchable onPress={() => SettingsScreen.handleRateUs()}>
             <Text style={styles.itemText}>{i18n.t("profile.settings.rateUs")}</Text>
+          </Touchable>
+          <Touchable onPress={() => SettingsScreen.handleContactUs()}>
+            <Text style={styles.itemText}>{i18n.t("profile.settings.contactUsOnWA")}</Text>
           </Touchable>
           {
             isAuth ?
@@ -213,4 +221,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps, { userCheck, userLogout, updateSettings})(SettingsScreen);;
+export default connect(mapStateToProps, { userCheck, userLogout, updateSettings })(SettingsScreen);

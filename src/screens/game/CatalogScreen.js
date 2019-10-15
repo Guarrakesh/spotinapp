@@ -1,13 +1,15 @@
 import React from 'react';
 import {Image, StyleSheet, ScrollView, Platform} from "react-native";
+import { SocialIcon } from 'react-native-elements'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { scale, verticalScale } from 'react-native-size-matters';
 import {Typography, View} from "../../components/common";
-import AwardCard from "../../components/GameComponents/AwardCard";
+import PrizeCard from "../../components/GameComponents/PrizeCard";
 import useSimpleListController from '../../helpers/hooks/useSimpleListController';
 import EarningMethodCard from "../../components/GameComponents/EarningMethodCard";
 import themes from "../../newTheme";
+import i18n from "../../i18n/i18n";
 import ActivtyIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import * as Animatable from 'react-native-animatable';
 
@@ -36,7 +38,10 @@ const awards = [
 const earningMethods = [
   {
     image: "https://seeklogo.net/wp-content/uploads/2016/09/facebook-icon-preview-1-400x400.png",
-    icon: <Icon name="md-camera" color="#fff" size={48}/>,
+    //icon: <Icon name="md-camera" color="#fff" size={48}/>,
+    icon: <SocialIcon
+      type='instagram'
+    />,
     title: "Scatta una foto",
     //tag: "@spotin",
     active: true,
@@ -63,52 +68,64 @@ const earningMethods = [
 
 ];
 
-const CatalogList = () => {
-
-  const { isLoading, data } = useSimpleListController('prizes');
-
-
-  // Memoize dei dati, viene calcolato solo quando cambia isLoading
-  // const [leftAwards, rightAwards] = React.useMemo(() => {
-  //   const leftAwards = [];
-  //   const rightAwards = [];
-  //   for(let i = 0; i < data.length; i++){
-  //     if (i % 2 === 0){
-  //       leftAwards.push(data[i]);
-  //     }
-  //     else {
-  //       rightAwards.push((data[i]));
-  //     }
-  //   }
-  //   return [leftAwards, rightAwards];
-  // }, [isLoading]);
-  // console.log(leftAwards, rightAwards);
-  return(
-      <View style={styles.catalogView}>
-        {isLoading
-            ? <ActivtyIndicator color='#fff'/>
-            : data.map((item, index) => (
-                <Animatable.View
-                    style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
-                    delay={32 * index + 1}
-                    animation="fadeInLeft" useNativeDriver>
-                  <AwardCard award={item}/>
-                </Animatable.View>
-            ))
-        }
-      </View>
-  )
-};
 
 
 const CatalogScreen = (props) => {
   const [navState, setNavState] = React.useState({
     index: 0,
     routes: [
-      { key: 'first', title: 'Catalogo' },
-      { key: 'second', title: 'Come guadagnare' },
+      { key: 'first', title: i18n.t("game.catalogScreen.catalog") },
+      { key: 'second', title: i18n.t("game.catalogScreen.howToEarn") },
     ],
   });
+
+  const CatalogList = () => {
+
+    const { isLoading, data } = useSimpleListController('prizes');
+
+    //ordino i premi per valore in SpotCoin
+    const sortedAwards = data.sort(function(a, b){return a.cost - b.cost});
+
+
+    // Memoize dei dati, viene calcolato solo quando cambia isLoading
+    // const [leftAwards, rightAwards] = React.useMemo(() => {
+    //   const leftAwards = [];
+    //   const rightAwards = [];
+    //   for(let i = 0; i < data.length; i++){
+    //     if (i % 2 === 0){
+    //       leftAwards.push(data[i]);
+    //     }
+    //     else {
+    //       rightAwards.push((data[i]));
+    //     }
+    //   }
+    //   return [leftAwards, rightAwards];
+    // }, [isLoading]);
+    // console.log(leftAwards, rightAwards);
+
+    // const handlePrizePress = (props) => {
+    //   props.navigation.navigate("PrizeDetailScreen");
+    // };
+
+
+    return(
+      <View style={styles.catalogView}>
+        {isLoading
+          ? <ActivtyIndicator color='#fff'/>
+          : sortedAwards.map((item, index) => (
+            <Animatable.View
+              style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
+              delay={32 * index + 1}
+              animation="fadeInLeft" useNativeDriver>
+              <PrizeCard
+                onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
+                award={item}/>
+            </Animatable.View>
+          ))
+        }
+      </View>
+    )
+  };
 
 
 
@@ -118,13 +135,14 @@ const CatalogScreen = (props) => {
     React.useEffect(() => {
       if (props.navigation.state.params && props.navigation.state.params.method) {
         setTimeout(() => _props.jumpTo('second'), 500);
+        props.navigation.setParams({method: false});
       }
 
-    }, []);
+    });
 
     return(
         <View>
-          <Typography variant={"display1"} style={styles.howToEarn}>Guadagna Spot Coin</Typography>
+          <Typography variant={"display1"} style={styles.howToEarn}>{i18n.t("game.catalogScreen.earnSpotCoins")}</Typography>
           <ScrollView
 
               style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
@@ -170,7 +188,7 @@ const CatalogScreen = (props) => {
             style={styles.tabView}
             // activeColor={'red'}
             // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
-            indicatorContainerStyle={{ backgroundColor: 'red' }}
+            //indicatorContainerStyle={{ backgroundColor: 'red' }}
             onIndexChange={index => setNavState({...navState,  index })}
             renderScene={SceneMap({
               first: CatalogList,
@@ -180,12 +198,11 @@ const CatalogScreen = (props) => {
             navigationState={navState}/>
       </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red'
   },
   logoGame: {
     width: themes.base.deviceDimensions.width/2,

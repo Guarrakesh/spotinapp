@@ -10,12 +10,16 @@ const imageSize = {
   height: themes.base.deviceDimensions.width / 3,
   width: themes.base.deviceDimensions.width / 3,
 };
-const AwardCard = (props) => {
+const PrizeCard = (props) => {
 
   const {name, image} = props.award;
+  const {onPress, disabled} = props;
 
   return(
-      <Touchable style={styles.innerTouchable} activeOpacity={.7}>
+      <Touchable
+        disabled={disabled}
+        style={styles.innerTouchable}
+        activeOpacity={.7} onPress={onPress}>
         <View style={styles.innerContainer}>
           {image && image.versions ?
               <Fragment>
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
   }
 });
 
-AwardCard.propTypes = {
+PrizeCard.propTypes = {
   award: PropTypes.shape({
     name: PropTypes.string,
     cost: PropTypes.number,
@@ -63,5 +67,5 @@ AwardCard.propTypes = {
     slug: PropTypes.string,
     description: PropTypes.description,
   }).isRequired,
-}
-export default AwardCard;
+};
+export default PrizeCard;

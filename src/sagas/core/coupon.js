@@ -30,7 +30,6 @@ function* handleUseCoupon(action) {
 
     } else {
       //Coupon gia' usato o non valido
-      console.log("REsponse: ", response);
       yield put(setCouponError(response.code, response.message.code));
       yield put(requestError(response));
     }
