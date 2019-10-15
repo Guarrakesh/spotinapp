@@ -71,6 +71,9 @@ const addRecords = (newRecords = [], oldRecords) => {
   return records;
 };
 
+const addRecordsWithCache =  (newRecords = [], oldRecords) => {
+  return addRecordsFactory(getFetchedAt)(newRecords, oldRecords);
+};
 const initialState = {};
 Object.defineProperty(initialState, 'fetchedAt', { value: {} }); // non enumerable by default
 
@@ -83,13 +86,13 @@ export default (previousState = initialState, { type, payload, meta = {} }) => {
 
   if (type === CRUD_UPDATE_OPTIMISTIC) {
     const updatedRecord = { ...previousState[payload.id], ...payload.data };
-    return addRecords([updatedRecord], previousState);
+    return addRecordsWithCache([updatedRecord], previousState);
   }
   if (type === CRUD_UPDATE_MANY_OPTIMISTIC) {
     const updatedRecords = payload.ids
         .reduce((records, id) => records.concat(previousState[id]), [])
         .map(record => ({ ...record, ...payload.data }));
-    return addRecords(updatedRecords, previousState);
+    return addRecordsWithCache(updatedRecords, previousState);
   }
   if (type === CRUD_DELETE_MANY_OPTIMISTIC) {
     const newState = Object.entries(previousState)
@@ -104,7 +107,7 @@ export default (previousState = initialState, { type, payload, meta = {} }) => {
   }
   if (meta && meta.optimisticData && meta.fetch && [CREATE, UPDATE].includes(meta.fetch)) {
     const record = { ...previousState[payload.id], ...meta.optimisticData };
-    return addRecords([record], previousState);
+    return addRecordsWithCache([record], previousState);
   }
 
   if (!meta || !meta.fetchResponse || meta.fetchStatus !== FETCH_END) {
@@ -114,14 +117,20 @@ export default (previousState = initialState, { type, payload, meta = {} }) => {
     case GET_LIST:
     case GET_MANY:
     case GET_MANY_REFERENCE:
-      return addRecords(payload.data, previousState);
+      return addRecordsWithCache(payload.data, previousState);
     case GET_ONE:
     case UPDATE:
     case CREATE:
-      return addRecords([payload.data], previousState);
+      return addRecordsWithCache([payload.data], previousState);
     default:
       return previousState;
   }
 };
 
 export const getRecord = (state, id) => state[id];
+
+
+//export const selectedCachedData
+export const fetchedAtEqualityFn = (state, prevState) => {
+  console.log()
+};

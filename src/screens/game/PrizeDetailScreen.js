@@ -9,7 +9,6 @@ import themes from "../../newTheme";
 import PrizeCard from "../../components/GameComponents/PrizeCard";
 import NewButton from "../../components/common/NewButton";
 import i18n from "../../i18n/i18n";
-
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
@@ -61,8 +60,9 @@ function PrizeDetailScreen(props) {
         <PrizeCard disabled award={award}/>
       </View>
       <View style={styles.bottomView}>
-        <Typography variant={'heading'} style={styles.info}>
-          {i18n.t("game.prizeDetailScreen.information")}
+        <Typography variant={'subheading'} style={styles.info}>
+          { award.description }
+          {/*{i18n.t("game.prizeDetailScreen.information")}*/}
         </Typography>
         <View style={styles.awardInfoContainer}>
           <View style={styles.awardInfoRow}>
@@ -140,7 +140,12 @@ const styles = StyleSheet.create({
   },
   info: {
     color: themes.base.colors.white.light,
-    marginTop: verticalScale(100)
+    marginTop: verticalScale(100),
+    width: '80%',
+    paddingBottom: verticalScale(8),
+    borderBottomWidth: 1,
+    borderBottomColor: themes.base.colors.text.light,
+
   },
   awardInfoContainer: {
     marginTop: verticalScale(50)

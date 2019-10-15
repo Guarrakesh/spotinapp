@@ -81,10 +81,11 @@ const CatalogScreen = (props) => {
 
   const CatalogList = () => {
 
-    const { isLoading, data } = useSimpleListController('prizes');
+    const { isLoading, data } = useSimpleListController('prizes', { id: 'prize_list'});
 
     //ordino i premi per valore in SpotCoin
     const sortedAwards = data.sort(function(a, b){return a.cost - b.cost});
+
 
 
     // Memoize dei dati, viene calcolato solo quando cambia isLoading
@@ -113,14 +114,15 @@ const CatalogScreen = (props) => {
         {isLoading
           ? <ActivtyIndicator color='#fff'/>
           : sortedAwards.map((item, index) => (
-            <Animatable.View
+            <View
               style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
-              delay={32 * index + 1}
-              animation="fadeInLeft" useNativeDriver>
+             // delay={32 * index + 1}
+             // animation="fadeInLeft" useNativeDrive
+                >
               <PrizeCard
                 onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
                 award={item}/>
-            </Animatable.View>
+            </View>
           ))
         }
       </View>
@@ -129,7 +131,7 @@ const CatalogScreen = (props) => {
 
 
 
-  const howToEarn = (_props) => {
+  const HowToEarn = (_props) => {
 
 
     React.useEffect(() => {
@@ -190,10 +192,15 @@ const CatalogScreen = (props) => {
             // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
             //indicatorContainerStyle={{ backgroundColor: 'red' }}
             onIndexChange={index => setNavState({...navState,  index })}
-            renderScene={SceneMap({
-              first: CatalogList,
-              second: howToEarn,
-            })}
+            renderScene={({ route }) => {
+              switch (route.key) {
+                case 'first':
+                  return <CatalogList/>;
+                case 'second':
+                  return <HowToEarn/>;
+              }
+
+            }}
             renderTabBar={(props) => renderTabBar(props)}
             navigationState={navState}/>
       </View>
