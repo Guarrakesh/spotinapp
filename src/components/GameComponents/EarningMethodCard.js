@@ -13,20 +13,20 @@ const EarningMethodCard = (props) => {
 
   return (
     <View style={[styles.container, { opacity: active ? 1 : 0.4 }]}>
-      <Touchable style={styles.innerTouchable}>
+      <Touchable disabled style={styles.innerTouchable}>
         <View style={styles.innerContainer}>
           <View style={styles.imageView}>
             {icon ? icon : <Image resizeMode={'cover'} style={styles.methodImg} source={{uri: image}}/>}
+            <View style={{flexDirection: "row", justifyContent: 'center'}}>
+              <Image source={coinsImg} style={styles.coinsImg}/>
+              <Typography style={styles.profitText}>{profit}</Typography>
+            </View>
           </View>
           <View style={styles.textView}>
             <Typography style={styles.title} variant={"title"}>{title}</Typography>
             {tag && <Typography style={styles.tag} variant={"title"}>{tag}</Typography>}
             <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
               <Typography variant={"caption"} style={styles.moreInfoText}>{subtitle}</Typography>
-              <View style={{flexDirection: "row"}}>
-                <Image source={coinsImg} style={styles.coinsImg}/>
-                <Typography style={styles.profitText}>{profit}</Typography>
-              </View>
             </View>
           </View>
         </View>
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   imageView: {
     flexBasis: 54,
     flexGrow: 0,
+    alignItems: 'center'
   },
   textView: {
     marginLeft: 16,

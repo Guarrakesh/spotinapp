@@ -16,24 +16,24 @@ import * as Animatable from 'react-native-animatable';
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
-const awards = [
-  {
-    name: "Birra",
-    image: require("../../assets/img/awards/Birra.png")
-  },
-  {
-    name: "2 Birre",
-    image: require("../../assets/img/awards/BirraX2.png")
-  },
-  {
-    name: "Panino",
-    image: require("../../assets/img/awards/Panino.png")
-  },
-  {
-    name: "Ticket",
-    image: require("../../assets/img/awards/Ticket.png")
-  }
-];
+// const awards = [
+//   {
+//     name: "Birra",
+//     image: require("../../assets/img/awards/Birra.png")
+//   },
+//   {
+//     name: "2 Birre",
+//     image: require("../../assets/img/awards/BirraX2.png")
+//   },
+//   {
+//     name: "Panino",
+//     image: require("../../assets/img/awards/Panino.png")
+//   },
+//   {
+//     name: "Ticket",
+//     image: require("../../assets/img/awards/Ticket.png")
+//   }
+// ];
 
 const earningMethods = [
   {
@@ -41,11 +41,14 @@ const earningMethods = [
     //icon: <Icon name="md-camera" color="#fff" size={48}/>,
     icon: <SocialIcon
       type='instagram'
+      //light
+      style={{backgroundColor: 'rgba(185,45,92,1)'}}
+      //underlayColor={'rgba(223,33,74,1)'}
     />,
-    title: "Scatta una foto",
+    title: i18n.t("game.catalogScreen.earningMethods.instagramStory.title"),
     //tag: "@spotin",
     active: true,
-    subtitle: "Scatta una foto nel tuo locale preferito e tagga @spotin_sport su una Instagram Story",
+    subtitle: i18n.t("game.catalogScreen.earningMethods.instagramStory.subtitle"),
     profit: 25
   },
   {
