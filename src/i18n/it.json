@@ -267,7 +267,13 @@
     "catalogScreen": {
       "catalog": "Catalogo",
       "howToEarn": "Come guadagnare",
-      "earnSpotCoins": "Guadagna Spot Coin"
+      "earnSpotCoins": "Guadagna Spot Coin",
+      "earningMethods": {
+        "instagramStory": {
+          "title": "Scatta una foto!",
+          "subtitle": "Scatta una foto che inquadri cibo nel tuo locale preferito e tagga @spotin_sport in una Instagram Story"
+        }
+      }
     },
     "prizeDetailScreen": {
       "information": "informazioni",
