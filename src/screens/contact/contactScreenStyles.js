@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    width: '100%',
+
     paddingLeft: scale(32),
     paddingRight: scale(32),
     flex: 6,
@@ -197,6 +197,10 @@ const styles = StyleSheet.create({
     paddingBottom: verticalScale(16),
     alignItems: 'center',
     justifyContent: 'center',
+
+
+
+    width: '100%',
   },
 
   title: {
@@ -275,6 +279,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     position: 'absolute',
+    zIndex: 8,
   },
   doneTitle: {
 

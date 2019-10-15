@@ -230,7 +230,7 @@ const  ContactUsScreen = (props) => {
             styles.content,
             { transform: [{ translateY: animatedDone.interpolate({ inputRange: [0, 1], outputRange: [0, deviceHeight] }) }] }
           ]}>
-            <SlidingView visible={index === 0} style={{ position: 'absolute'}}>
+            <SlidingView visible={index === 0} style={{ zIndex: 10, position: 'absolute'}}>
               <Text style={styles.title}>{t("browse.noBroadcasts.weOrganizeForYou", { eventName: event.name})}</Text>
 
               <Text style={styles.label}>{t("browse.noBroadcasts.howMuchTravel")}</Text>
@@ -300,7 +300,7 @@ const  ContactUsScreen = (props) => {
                   onPress={submitFirstForm}>{t("browse.noBroadcasts.continue")}</Button>
 
             </SlidingView>
-            <SlidingView visible={index === 1} style={{ position: 'absolute'}}>
+            <SlidingView visible={index === 1} style={{ zIndex: 11, position: 'absolute'}}>
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.label}>
                   {t("browse.noBroadcasts.insertEmailPhone")}
@@ -350,7 +350,9 @@ const  ContactUsScreen = (props) => {
 
               style={[
                 styles.doneContainer,
-                { opacity: animatedDone, transform: [{ scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0, 1] }) }] }
+                { opacity: animatedDone, transform: [
+                    { scale: animatedDone.interpolate({ inputRange: [0,1], outputRange: [0, 1] }) }] },
+                { translateY: animatedDone.interpolate({ inputRange: [0,1], outputRange: [deviceWidth, 0]})}
               ]
               }>
             <Mascotte sport={event.sport.slug} width={deviceHeight * 0.2} height={deviceHeight * 0.2}/>

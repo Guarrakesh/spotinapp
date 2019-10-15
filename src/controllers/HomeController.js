@@ -23,9 +23,7 @@ export class HomeController extends Component {
   }
   componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
     // TODO: Questo controllo bisognerebbe farlo in un parent più in alto in modo da prendere tutta la navigation
-    if (!nextProps.coords) {
-      this.props.showLocationScreen();
-    }
+
   }
 
   render() {
