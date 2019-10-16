@@ -41,31 +41,33 @@ const earningMethods = [
     //icon: <Icon name="md-camera" color="#fff" size={48}/>,
     icon: <SocialIcon
       type='instagram'
-      //light
       style={{backgroundColor: 'rgba(185,45,92,1)'}}
-      //underlayColor={'rgba(223,33,74,1)'}
     />,
     title: i18n.t("game.catalogScreen.earningMethods.instagramStory.title"),
     //tag: "@spotin",
     active: true,
     subtitle: i18n.t("game.catalogScreen.earningMethods.instagramStory.subtitle"),
-    profit: 25
+    profit: 100
   },
   {
-    icon: <Icon name="logo-facebook" color="#fff" size={48}/>,
-    title: "Seguici su Instagram",
+    icon: <SocialIcon
+      type='instagram'
+      style={{backgroundColor: 'rgba(185,45,92,1)'}}
+    />,
+    title: i18n.t("game.catalogScreen.earningMethods.followInstagram.title"),
     tag: "@spotin_sport",
     active: false,
-
-    subtitle: "maggiori info",
+    subtitle: i18n.t("game.catalogScreen.earningMethods.followInstagram.subtitle"),
     profit: 25
   },
   {
-    icon: <Icon name="logo-instagram" color="#fff" size={48}/>,
-    title: "Seguici su Facebook",
-    tag: "@spotin",
+    icon: <SocialIcon
+      type='facebook'
+    />,
+    title: i18n.t("game.catalogScreen.earningMethods.followFb.title"),
+    tag: "Spot In",
     active: false,
-    subtitle: "maggiori info",
+    subtitle: i18n.t("game.catalogScreen.earningMethods.followFb.subtitle"),
     profit: 25
   },
 
@@ -137,6 +139,7 @@ const CatalogScreen = (props) => {
   const HowToEarn = (_props) => {
 
 
+    console.log("PROPS: ", props);
     React.useEffect(() => {
       if (props.navigation.state.params && props.navigation.state.params.method) {
         setTimeout(() => _props.jumpTo('second'), 500);
@@ -195,15 +198,10 @@ const CatalogScreen = (props) => {
             // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
             //indicatorContainerStyle={{ backgroundColor: 'red' }}
             onIndexChange={index => setNavState({...navState,  index })}
-            renderScene={({ route }) => {
-              switch (route.key) {
-                case 'first':
-                  return <CatalogList/>;
-                case 'second':
-                  return <HowToEarn/>;
-              }
-
-            }}
+            renderScene={SceneMap({
+              first: CatalogList,
+              second: HowToEarn,
+            })}
             renderTabBar={(props) => renderTabBar(props)}
             navigationState={navState}/>
       </View>

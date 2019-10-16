@@ -270,6 +270,14 @@
         "instagramStory": {
           "title": "Take a picture!",
           "subtitle": "Take a picture of food in your favorite pub and tag @spotin_sport in an Instagram Story"
+        },
+        "followFb": {
+          "title": "Follow us on Facebook",
+          "subtitle": "available soon"
+        },
+        "followInstagram": {
+          "title": "Follow us on Instagram",
+          "subtitle": "available soon"
         }
       }
     },
