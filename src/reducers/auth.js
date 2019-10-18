@@ -10,7 +10,7 @@ import {
   OAUTH_LOGIN_FAILURE,
   USER_REGISTER_FAILURE,
   USER_LOGOUT,
-  AUTH_CHECKING,
+  AUTH_CHECKING, OAUTH_LOGIN_LOADING, USER_LOGIN_LOADING,
 
 } from '../actions/authActions';
 
@@ -29,6 +29,7 @@ import {
 
 let initialState = {
 
+  loading: false,
   isLoggedIn: false,
   token: null,
   profile: {},
@@ -39,12 +40,17 @@ let initialState = {
 
 export default function authReducer(state = initialState, { payload, type, error }) {
   switch (type) {
+    case OAUTH_LOGIN_LOADING:
+    case USER_LOGIN_LOADING: {
+      return { ...state, loading: true }
+    }
+
     case USER_LOGIN_SUCCESS:
     case OAUTH_LOGIN_SUCCESS:
-      return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, loginError: null };
+      return { ...state, isLoggedIn: true, loading: false, token: payload.token, profile: payload.user, loginError: null };
 
     case USER_REGISTER_SUCCESS:
-      return { ...state, isLoggedIn: true, token: payload.token, profile: payload.user, registerError: null};
+      return { ...state, isLoggedIn: true, loading: false, token: payload.token, profile: payload.user, registerError: null};
     case PROFILE_GET_INFO_SUCCESS:
     case PROFILE_UPDATE:
     case PROFILE_UPDATE_SUCCESS:
@@ -53,13 +59,13 @@ export default function authReducer(state = initialState, { payload, type, error
       return { ...state, isLoggedIn: false, token: null, profile: {}};
 
     case AUTH_CHECKING:
-      return { ...state, checking: payload.checking};
+      return { ...state, checking: payload.checking };
 
     case USER_LOGIN_FAILURE:
     case OAUTH_LOGIN_FAILURE:
-      return { ...state, loginError: error };
+      return { ...state, loginError: error, loading: false };
     case USER_REGISTER_FAILURE:
-      return { ...state, registerError: error };
+      return { ...state, registerError: error, loading: false  };
     case SET_COUPON:
       return { ...state, profile: {
           ...state.profile,

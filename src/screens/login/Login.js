@@ -4,6 +4,7 @@ import {verticalScale} from "react-native-size-matters";
 import {G, Path, Svg} from "react-native-svg";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler, SafeAreaView,} from 'react-native';
+import ActivityIndicator from "../../components/ActivityIndicator/ActivityIndicator";
 
 import {View, Touchable} from "../../components/common";
 import Button from "../../components/common/NewButton";
@@ -27,6 +28,7 @@ const Login = ({
                  onSignUp,
                  onPasswordForgot,
                  facebookLogin,
+                 loading,
                }) => {
 
   const [onBottom, setOnBottom] = useState(false);
@@ -135,58 +137,66 @@ const Login = ({
           opacity,
           transform: [ { translateY: y }]
         }]}>
+          {loading
+              ? <ActivityIndicator color="#fff"/>
+              : (
+                  <React.Fragment>
+                    <Button
+                        elevation={0}
+                        disabled={onBottom}
+                        block
+                        uppercase
+                        containerStyle={[{backgroundColor: themes.commonColors.facebook},
+                          {borderRadius: 12, paddingTop: 8, paddingBottom: 8, marginBottom: 24}]}
+                        titleStyle={{color: '#fff'}}
+                        onPress={facebookLogin}
+                        icon={<Icon
+                            name='facebook'
+                            size={18}
+                            color='white'
+                        />
+                        }
+                        iconContainerStyle={{alignSelf: 'flex-start'}}
+                    >{t("auth.login.facebookSignIn")}</Button>
+                    <Button
+                        disabled={onBottom}
+                        block
+                        uppercase
+                        round
+                        containerStyle={{ marginBottom: 14 }}
+                        buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
+                        onPress={() => { setOnBottom(!onBottom); setSignType('signin') }}
+                        iconContainerStyle={{alignSelf: 'flex-start'}}
+                    >{t("auth.login.signIn")}</Button>
+                    <Button
+                        disabled={onBottom}
+                        block
+                        uppercase
+                        round
+                        titleStyle={{color: '#fff'}}
+                        onPress={() => { setOnBottom(!onBottom); setSignType('signup') }}
+                        containerStyle={[
+                          { backgroundColor: 'transparent' ,
+                            borderWidth: 2,
+                            borderColor: '#fff',
+                          }
+                        ]}
 
-          <Button
-              elevation={0}
-              disabled={onBottom}
-              block
-              uppercase
-              containerStyle={[{backgroundColor: themes.commonColors.facebook},
-                {borderRadius: 12, paddingTop: 8, paddingBottom: 8, marginBottom: 24}]}
-              titleStyle={{color: '#fff'}}
-              onPress={facebookLogin}
-              icon={<Icon
-                  name='facebook'
-                  size={18}
-                  color='white'
-              />
-              }
-              iconContainerStyle={{alignSelf: 'flex-start'}}
-          >{t("auth.login.facebookSignIn")}</Button>
-          <Button
-              disabled={onBottom}
-              block
-              uppercase
-              round
-              containerStyle={{ marginBottom: 14 }}
-              buttonStyle={{ borderRadius: 12, backgroundColor: 'red'}}
-              onPress={() => { setOnBottom(!onBottom); setSignType('signin') }}
-              iconContainerStyle={{alignSelf: 'flex-start'}}
-          >{t("auth.login.signIn")}</Button>
-          <Button
-              disabled={onBottom}
-              block
-              uppercase
-              round
-              titleStyle={{color: '#fff'}}
-              onPress={() => { setOnBottom(!onBottom); setSignType('signup') }}
-              containerStyle={[
-                { backgroundColor: 'transparent' ,
-                  borderWidth: 2,
-                  borderColor: '#fff',
-                }
-              ]}
+                        iconContainerStyle={{alignSelf: 'flex-start'}}
+                    >{t("auth.login.register")}</Button>
+                    <Button
+                        block
+                        clear
+                        containerStyle={{marginTop: 24}}
+                        onPress={() => goBack()}
+                        titleStyle={{ color: '#fff'}}
+                    > {t("auth.login.later").toString().toUpperCase()}
+                    </Button>
+                  </React.Fragment>
+              )
 
-              iconContainerStyle={{alignSelf: 'flex-start'}}
-          >{t("auth.login.register")}</Button>
-          <Button
-              block
-              clear
-              containerStyle={{marginTop: 24}}
-              onPress={() => goBack()}
-              titleStyle={{ color: '#fff'}}
-          > {t("auth.login.later").toString().toUpperCase()}
-          </Button>
+          }
+
         </AnimatedView>
       </SafeAreaView>
   )

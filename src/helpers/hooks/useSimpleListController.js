@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {crudGetList} from '../../actions/dataActions';
-import { initList } from "../../actions/listActions";
+import {initList, refreshList} from "../../actions/listActions";
+import usePrevious from "./usePrevious";
 
 const equalFn = (state, prevState) => {
   // Re-render solo quando cambia isLoading
 
-  return state.data.fetchedAt === prevState.data.fetchedAt ;
-};
-
+  return state.data.fetchedAt === prevState.data.fetchedAt;
+}
 
 const getListId = (resource, props = {}) => props.id || `${resource}_list`;
 
@@ -32,9 +32,18 @@ const useSimpleListController = (resource, props = {}) => {
     id,
 
   } = props;
-  const derivedState = useSelector(mapStateToProps({resource, ...props}), equalFn);
+  const derivedState = useSelector(mapStateToProps({resource, ...props}));
   const dispatch = useDispatch();
-  const fetch = () => dispatch(crudGetList(resource, getListId(resource, props), { page: 0, perPage: 20 }, {}));
+  const fetch = (refresh = false) => dispatch(crudGetList(
+      resource, getListId(resource, props),
+      { page: 0, perPage: 20 },
+      {}, null, null,
+      null, refresh)
+  );
+  const refresh = () => {
+    fetch(true);
+    dispatch(refreshList(resource, getListId(resource, props)));
+  };
   useEffect(() => {
 
     if (!derivedState.list) {
@@ -43,11 +52,12 @@ const useSimpleListController = (resource, props = {}) => {
     }
   }, []);
 
-
   return {
-    data: derivedState.ids.map(id => derivedState.data[id]),
+    ids: derivedState.ids,
+    data: derivedState.data,
     isLoading: derivedState.isLoading,
-    reload: fetch,
+    refresh: refresh,
+    refreshing: !!derivedState.list ? derivedState.list.refreshing : false,
 
   };
 };

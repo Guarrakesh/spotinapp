@@ -66,16 +66,15 @@ class LoginScreen extends React.Component {
   }
   render() {
 
-    const {isLoggedIn, errorMessage, t, navigation, isLoading }  = this.props;
+    const {loginLoading}  = this.props;
 
-    const { email: emailError, password: passwordError } = this.state.formErrors;
 
 
 
     return (
 
         <Login
-
+            loading={loginLoading}
             facebookLogin={this.facebookLogin.bind(this)}
             onSignIn={this.userLogin.bind(this)}
             onPasswordForgot={this.forgotPassword.bind(this)}
@@ -106,10 +105,12 @@ const mapStateToProps = (state) => {
   if (loginError && [401,400].includes(loginError.status)) {
     errorMessage = "Credenziali errate";
   }
+  console.log(state.auth.loading);
   return ({
     errorMessage,
     isLoggedIn: state.auth.isLoggedin,
-    isLoading: state.loading > 0
+    isLoading: state.loading > 0,
+    loginLoading: state.auth.loading,
   });
 };
 export default connect(mapStateToProps, {

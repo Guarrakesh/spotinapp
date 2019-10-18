@@ -1,17 +1,14 @@
 import React from 'react';
-import {Image, StyleSheet, ScrollView, Platform, SafeAreaView, StatusBar} from "react-native";
-import { SocialIcon } from 'react-native-elements'
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import {Image, SafeAreaView, ScrollView, StatusBar, StyleSheet} from "react-native";
+import {SocialIcon} from 'react-native-elements'
+import {scale} from 'react-native-size-matters';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
-import { scale, verticalScale } from 'react-native-size-matters';
 import {Typography, View} from "../../components/common";
-import PrizeCard from "../../components/GameComponents/PrizeCard";
-import useSimpleListController from '../../helpers/hooks/useSimpleListController';
 import EarningMethodCard from "../../components/GameComponents/EarningMethodCard";
-import themes from "../../newTheme";
 import i18n from "../../i18n/i18n";
-import ActivtyIndicator from '../../components/ActivityIndicator/ActivityIndicator';
-import * as Animatable from 'react-native-animatable';
+import themes from "../../newTheme";
+import PrizeList from "./PrizeList";
 
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
@@ -84,55 +81,7 @@ const CatalogScreen = (props) => {
     ],
   });
 
-  const CatalogList = () => {
 
-    const { isLoading, data } = useSimpleListController('prizes', { id: 'prize_list'});
-
-    //ordino i premi per valore in SpotCoin
-    const sortedAwards = data.sort(function(a, b){return a.cost - b.cost});
-
-
-
-    // Memoize dei dati, viene calcolato solo quando cambia isLoading
-    // const [leftAwards, rightAwards] = React.useMemo(() => {
-    //   const leftAwards = [];
-    //   const rightAwards = [];
-    //   for(let i = 0; i < data.length; i++){
-    //     if (i % 2 === 0){
-    //       leftAwards.push(data[i]);
-    //     }
-    //     else {
-    //       rightAwards.push((data[i]));
-    //     }
-    //   }
-    //   return [leftAwards, rightAwards];
-    // }, [isLoading]);
-    // console.log(leftAwards, rightAwards);
-
-    // const handlePrizePress = (props) => {
-    //   props.navigation.navigate("PrizeDetailScreen");
-    // };
-
-
-    return(
-      <View style={styles.catalogView}>
-        {isLoading
-          ? <ActivtyIndicator color='#fff'/>
-          : sortedAwards.map((item, index) => (
-            <View
-              style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
-             // delay={32 * index + 1}
-             // animation="fadeInLeft" useNativeDrive
-                >
-              <PrizeCard
-                onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
-                award={item}/>
-            </View>
-          ))
-        }
-      </View>
-    )
-  };
 
 
 
@@ -201,7 +150,7 @@ const CatalogScreen = (props) => {
             //indicatorContainerStyle={{ backgroundColor: 'red' }}
             onIndexChange={index => setNavState({...navState,  index })}
             renderScene={SceneMap({
-              first: CatalogList,
+              first: PrizeList,
               second: HowToEarn,
             })}
             renderTabBar={(props) => renderTabBar(props)}
@@ -254,12 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center'
   },
-  catalogView: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: themes.base.deviceDimensions.height/30
-  },
+
   howToEarn: {
     alignSelf: 'center',
     color: 'yellow',
@@ -277,11 +221,7 @@ const styles = StyleSheet.create({
     paddingBottom: themes.base.deviceDimensions.height/10,
 
   },
-  gridItem: {
-    margin: 16,
-    borderRadius: themes.base.borderRadius*3,
-    flexBasis: themes.base.deviceDimensions.width / 2 - scale(16+16) // margini laterali + margini singoli
-  }
+
 });
 
 export default CatalogScreen;

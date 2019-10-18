@@ -18,6 +18,7 @@ export const CRUD_GET_LIST_SUCCESS = 'CRUD_GET_LIST_SUCCESS';
 export const crudGetList = (resource, listId, pagination,
                             sort, filter, basePath,
                             accumulateResults = false,
+                            refreshing = false,
                             ) => ({
   type: CRUD_GET_LIST,
   payload: { pagination, sort, filter },
@@ -26,6 +27,7 @@ export const crudGetList = (resource, listId, pagination,
     resource,
     basePath,
     listId,
+    refreshing,
     fetch: GET_LIST,
     accumulateResults,
     /*onFailure: {
