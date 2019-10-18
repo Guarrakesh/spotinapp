@@ -89,7 +89,7 @@ function* watchPosition() {
     } catch (err) {
       //console.log(err);
       locationChannel.put({type: LOCATION_SET_ERROR, error: err });
-      yield put(NavigationService.navigate('LocationScreen', null, true))
+      yield put(NavigationService.navigate('LocationScreen', null, true));
       return;
     }
   }

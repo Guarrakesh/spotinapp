@@ -2,6 +2,12 @@
 import {Dimensions, Platform} from 'react-native';
 import {Fonts} from "./components/common/Fonts";
 
+export const purpleColor = {
+  light: '#7C4DFF',
+  extraLight: '#B47CFF',
+  default: '#3F18AF',
+  dark: '#3F18AF',
+};
 export const primaryColor = {
   default: '#3498db',
   light: '#3498db',
@@ -107,6 +113,7 @@ const themes = {
       warning: warningColor,
       activityIndicator: accentColor,
       black: blackColor,
+      purple: purpleColor,
     },
     elevations: {
       depth1: {

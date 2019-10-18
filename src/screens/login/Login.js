@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {withNamespaces} from "react-i18next";
+import {verticalScale} from "react-native-size-matters";
 import {G, Path, Svg} from "react-native-svg";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler,} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, Animated, BackHandler, SafeAreaView,} from 'react-native';
 
 import {View, Touchable} from "../../components/common";
 import Button from "../../components/common/NewButton";
@@ -79,7 +80,7 @@ const Login = ({
 //   leave: { opacity: 0 },
 // });
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
 
         <AnimatedImage
             source={Logo}
@@ -99,7 +100,7 @@ const Login = ({
 
         <Animated.View style={{
           position: 'absolute',
-          top: 60,
+          top:themes.base.deviceDimensions.height / 6,
           height: height - height/5,
           width: '100%',
           opacity: Animated.subtract(1, opacity),
@@ -187,7 +188,7 @@ const Login = ({
           > {t("auth.login.later").toString().toUpperCase()}
           </Button>
         </AnimatedView>
-      </View>
+      </SafeAreaView>
   )
 };
 
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: height - 130,
+    bottom: height / 6,
     left: 'auto',
     zIndex: 100,
 

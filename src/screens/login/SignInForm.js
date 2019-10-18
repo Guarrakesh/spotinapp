@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {withNamespaces} from "react-i18next";
-import {Text, TextInput, View} from 'react-native';
+import {SafeAreaView, Text, TextInput, View} from 'react-native';
 import * as Animatable from "react-native-animatable";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {connect} from "react-redux";

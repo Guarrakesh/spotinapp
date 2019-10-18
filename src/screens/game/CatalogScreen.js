@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, ScrollView, Platform} from "react-native";
+import {Image, StyleSheet, ScrollView, Platform, SafeAreaView, StatusBar} from "react-native";
 import { SocialIcon } from 'react-native-elements'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -181,7 +181,9 @@ const CatalogScreen = (props) => {
 
 
   return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={"light-content"}/>
+
         <View style={styles.topView}>
           <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
           <Icon
@@ -204,13 +206,14 @@ const CatalogScreen = (props) => {
             })}
             renderTabBar={(props) => renderTabBar(props)}
             navigationState={navState}/>
-      </View>
+      </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#3A169E',
   },
   logoGame: {
     width: themes.base.deviceDimensions.width/2,
@@ -244,7 +247,7 @@ const styles = StyleSheet.create({
   },
   tabView: {
     position: 'absolute',
-    top: themes.base.deviceDimensions.width/8,
+    top: themes.base.deviceDimensions.width/4,
     bottom: 0,
     left: 0,
     right: 0,

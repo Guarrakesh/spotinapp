@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-
+    height: '100%',
     paddingLeft: scale(32),
     paddingRight: scale(32),
     flex: 6,

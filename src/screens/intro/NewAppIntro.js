@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Image } from "react-native";
+import {StyleSheet, View, Image, SafeAreaView} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { withNamespaces } from "react-i18next";
+import {verticalScale} from "react-native-size-matters";
 import { Typography, Button } from "../../components/common";
 import themes from '../../newTheme';
 import Images from '../../assets/images';
@@ -83,7 +84,8 @@ class NewAppIntro extends React.Component {
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
     return (
-      <View style={styles.container}>
+
+      <SafeAreaView style={styles.container}>
         <View style={styles.gradientContainer}>
           <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={styles.backgroundGradient}>
             <Image source={logoImg} style={styles.logoImg} resizeMode={'contain'}/>
@@ -100,7 +102,7 @@ class NewAppIntro extends React.Component {
             activeDotStyle={styles.activeDot}
           />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -121,6 +123,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   logoImg: {
+    position: 'absolute',
+    top: verticalScale(40),
     width: themes.base.deviceDimensions.width/4,
     height: 50
   },

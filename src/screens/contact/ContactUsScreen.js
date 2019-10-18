@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, {useEffect, useState} from "react";
 import {withNamespaces} from 'react-i18next';
-import {Animated, Dimensions, Platform, Text, TextInput, TouchableOpacity} from "react-native";
+import {Animated, Dimensions, Platform, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity} from "react-native";
 import {Slider} from "react-native-elements";
 import {scale} from "react-native-size-matters";
 import {connect} from "react-redux";
@@ -218,6 +218,8 @@ const  ContactUsScreen = (props) => {
                       show={state.errors.length > 0}
                       onSwipeAway={() => setState({...state, errors: []})}/>
 
+        <StatusBar barStyle="light-content"/>
+        <SafeAreaView style={{ backgroundColor: colors.accent.default}}/>
         <View style={styles.container}>
 
           <View style={styles.header}>
