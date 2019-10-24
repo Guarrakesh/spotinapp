@@ -37,6 +37,9 @@ export const infoColor = {
 export const blackColor = {
   default: "#000000"
 };
+export const yellowColor = {
+  default: "#F4D35E"
+};
 
 const themes = {
   old: {
@@ -107,6 +110,7 @@ const themes = {
       warning: warningColor,
       activityIndicator: accentColor,
       black: blackColor,
+      yellow: yellowColor
     },
     elevations: {
       depth1: {

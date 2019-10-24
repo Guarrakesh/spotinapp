@@ -31,6 +31,7 @@ const greenColor = themes.base.colors.accent.default;
 const gradientFirstColor = "#3A169E";
 const gradientSecondColor = "#500F98";
 const pointsBackground = "#6314BF";
+const yellowColor = themes.base.colors.yellow.default;
 
 class GameScreen extends React.Component {
 
@@ -200,7 +201,7 @@ class GameScreen extends React.Component {
             <Typography variant={"title"} style={styles.congratulationText}>{i18n.t("game.gameScreen.bottomSheet.congratulation")}</Typography>
             <Typography variant={"heading"} style={styles.youWonText}>
               {i18n.t("game.gameScreen.bottomSheet.youWon")}
-              <Typography variant={"title"} style={{color: 'yellow'}}>
+              <Typography variant={"title"} style={{color: yellowColor}}>
                 {this.props.usedCoupon ? this.props.usedCoupon[this.props.usedCoupon.length - 1].value : 0}
               </Typography>
               {i18n.t("game.gameScreen.bottomSheet.spotCoins")}
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
     fontWeight: "900"
   },
   moreInfo: {
-    color: 'yellow',
+    color: yellowColor,
     fontFamily: Fonts.LatoBoldItalic,
     marginTop: 8
 
@@ -380,7 +381,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   seeCatalog: {
-    color: 'yellow',
+    color: yellowColor,
     alignSelf: 'center',
     marginTop: 8,
     marginBottom: 16,
@@ -440,7 +441,7 @@ const styles = StyleSheet.create({
     fontWeight: "900"
   },
   regulationText: {
-    color: 'yellow',
+    color: yellowColor,
     alignSelf: 'center',
     fontFamily: Fonts.LatoItalic,
     marginTop: themes.base.deviceDimensions.height/25

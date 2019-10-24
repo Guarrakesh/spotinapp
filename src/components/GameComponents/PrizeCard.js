@@ -1,6 +1,7 @@
 import React, { Fragment } from "react"
 import { StyleSheet, Image } from "react-native";
 import { View, Touchable } from "../common";
+import { moderateScale } from "react-native-size-matters";
 import themes from "../../newTheme";
 import PropTypes from 'prop-types';
 import VersionedImage from '../../components/common/VersionedImageField';
@@ -40,6 +41,7 @@ const PrizeCard = (props) => {
 
 const styles = StyleSheet.create({
   innerTouchable: {
+    margin: moderateScale(12),
     backgroundColor: themes.base.colors.white.default,
     borderRadius: themes.base.borderRadius *3,
   },

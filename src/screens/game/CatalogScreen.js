@@ -1,9 +1,9 @@
 import React from 'react';
-import {Image, StyleSheet, ScrollView, Platform, SafeAreaView, StatusBar} from "react-native";
+import {Image, StyleSheet, ScrollView, ActivityIndicator, SafeAreaView, StatusBar} from "react-native";
 import { SocialIcon } from 'react-native-elements'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/Ionicons'
-import { scale, verticalScale } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 import {Typography, View} from "../../components/common";
 import PrizeCard from "../../components/GameComponents/PrizeCard";
 import useSimpleListController from '../../helpers/hooks/useSimpleListController';
@@ -15,6 +15,8 @@ import * as Animatable from 'react-native-animatable';
 
 const topViewColor = "#3A169E";
 const bottomViewColor = "#500F98";
+const yellowColor = themes.base.colors.yellow.default;
+
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
 // const awards = [
 //   {
@@ -94,43 +96,44 @@ const CatalogScreen = (props) => {
 
 
     // Memoize dei dati, viene calcolato solo quando cambia isLoading
-    // const [leftAwards, rightAwards] = React.useMemo(() => {
-    //   const leftAwards = [];
-    //   const rightAwards = [];
-    //   for(let i = 0; i < data.length; i++){
-    //     if (i % 2 === 0){
-    //       leftAwards.push(data[i]);
-    //     }
-    //     else {
-    //       rightAwards.push((data[i]));
-    //     }
-    //   }
-    //   return [leftAwards, rightAwards];
-    // }, [isLoading]);
-    // console.log(leftAwards, rightAwards);
+      const leftAwards = [];
+      const rightAwards = [];
 
-    // const handlePrizePress = (props) => {
-    //   props.navigation.navigate("PrizeDetailScreen");
-    // };
+      for(let i = 0; i < sortedAwards.length; i++){
+        if (i % 2 === 0){
+          leftAwards.push(sortedAwards[i]);
+        }
+        else {
+          rightAwards.push((sortedAwards[i]));
+        }
+      }
+
 
 
     return(
-      <View style={styles.catalogView}>
+      <ScrollView bounces={false} style={{flex: 1}}>
         {isLoading
-          ? <ActivtyIndicator color='#fff'/>
-          : sortedAwards.map((item, index) => (
-            <View
-              style={[styles.gridItem, {marginTop: index % 2 !== 0 ? verticalScale(32) : 0}]}
-             // delay={32 * index + 1}
-             // animation="fadeInLeft" useNativeDrive
-                >
-              <PrizeCard
-                onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
-                award={item}/>
+          ? <ActivityIndicator color='#fff' style={styles.catalogActivityIndicator}/>
+          :
+          <View style={styles.catalogView}>
+            <View>
+              {leftAwards.map((item, index) => (
+                <PrizeCard
+                  onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
+                  award={item}/>
+              ))}
             </View>
-          ))
+            <View style={{marginTop: 32}}>
+              {rightAwards.map((item, index) => (
+                <PrizeCard
+                  onPress={() => props.navigation.navigate("PrizeDetailScreen", { award: item })}
+                  award={item}/>
+              ))}
+            </View>
+          </View>
+
         }
-      </View>
+      </ScrollView>
     )
   };
 
@@ -138,8 +141,6 @@ const CatalogScreen = (props) => {
 
   const HowToEarn = (_props) => {
 
-
-    console.log("PROPS: ", props);
     React.useEffect(() => {
       if (props.navigation.state.params && props.navigation.state.params.method) {
         setTimeout(() => _props.jumpTo('second'), 500);
@@ -149,31 +150,31 @@ const CatalogScreen = (props) => {
     });
 
     return(
-        <View>
-          <Typography variant={"display1"} style={styles.howToEarn}>{i18n.t("game.catalogScreen.earnSpotCoins")}</Typography>
-          <ScrollView
+      <View>
+        <Typography variant={"display1"} style={styles.howToEarn}>{i18n.t("game.catalogScreen.earnSpotCoins")}</Typography>
+        <ScrollView
 
-              style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
-            {
-              earningMethods.map((item, index) => (
-                  <EarningMethodCard method={item}/>
-              ))
-            }
+          style={styles.methodsList} contentContainerStyle={styles.methodsListContainer}>
+          {
+            earningMethods.map((item, index) => (
+              <EarningMethodCard method={item}/>
+            ))
+          }
 
-          </ScrollView>
-        </View>
+        </ScrollView>
+      </View>
     )
   };
 
   const renderTabBar = (props) => {
     return (
-        <TabBar
-            style={{backgroundColor: 'transparent'}}
-            labelStyle={styles.catalog}
-            textTransform={'none'}
-            {...props}
-            indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
-            navigationState={navState}/>
+      <TabBar
+        style={{backgroundColor: 'transparent'}}
+        labelStyle={styles.catalog}
+        textTransform={'none'}
+        {...props}
+        indicatorStyle={{backgroundColor: themes.base.colors.white.light, height: 2.5}}
+        navigationState={navState}/>
     );
   };
 
@@ -181,32 +182,32 @@ const CatalogScreen = (props) => {
 
 
   return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle={"light-content"}/>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={"light-content"}/>
 
-        <View style={styles.topView}>
-          <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
-          <Icon
-              onPress={() => props.navigation.goBack()}
-              color={themes.base.colors.white.light}
-              name="ios-arrow-round-back"
-              style={styles.backArrow}
-              size={48}/>
-        </View>
-        <View style={styles.bottomView}/>
-        <TabView
-            style={styles.tabView}
-            // activeColor={'red'}
-            // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
-            //indicatorContainerStyle={{ backgroundColor: 'red' }}
-            onIndexChange={index => setNavState({...navState,  index })}
-            renderScene={SceneMap({
-              first: CatalogList,
-              second: HowToEarn,
-            })}
-            renderTabBar={(props) => renderTabBar(props)}
-            navigationState={navState}/>
-      </SafeAreaView>
+      <View style={styles.topView}>
+        <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
+        <Icon
+          onPress={() => props.navigation.goBack()}
+          color={themes.base.colors.white.light}
+          name="ios-arrow-round-back"
+          style={styles.backArrow}
+          size={48}/>
+      </View>
+      <View style={styles.bottomView}/>
+      <TabView
+        style={styles.tabView}
+        // activeColor={'red'}
+        // indicatorStyle={{ color: 'red', backgroundColor: 'red'}}
+        //indicatorContainerStyle={{ backgroundColor: 'red' }}
+        onIndexChange={index => setNavState({...navState,  index })}
+        renderScene={SceneMap({
+          first: CatalogList,
+          second: HowToEarn,
+        })}
+        renderTabBar={(props) => renderTabBar(props)}
+        navigationState={navState}/>
+    </SafeAreaView>
   );
 };
 
@@ -255,14 +256,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   catalogView: {
-    flexWrap: 'wrap',
+    //flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: themes.base.deviceDimensions.height/30
   },
   howToEarn: {
     alignSelf: 'center',
-    color: 'yellow',
+    color: yellowColor,
     marginTop: 16,
   },
   methodsList: {
@@ -281,6 +282,9 @@ const styles = StyleSheet.create({
     margin: 16,
     borderRadius: themes.base.borderRadius*3,
     flexBasis: themes.base.deviceDimensions.width / 2 - scale(16+16) // margini laterali + margini singoli
+  },
+  catalogActivityIndicator: {
+    alignSelf: 'center'
   }
 });
 

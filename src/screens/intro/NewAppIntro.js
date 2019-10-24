@@ -17,6 +17,7 @@ const greenColor = themes.base.colors.accent.default;
 const gradientFirstColor = "#3A169E";
 const gradientSecondColor = "#500F98";
 const bottomViewBackground = "#6314BF";
+const yellowColor = themes.base.colors.yellow.default;
 
 const slides = ({t}) => [
   {
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     backgroundColor: themes.base.colors.white.light
   },
   activeDot: {
-    backgroundColor: 'yellow'
+    backgroundColor: yellowColor
   }
 });
 

@@ -87,7 +87,6 @@ public class MainApplication extends Application implements ReactApplication {
 
             new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
-          //  new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
             new AndroidOpenSettingsPackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebaseNotificationsPackage(),

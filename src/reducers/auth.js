@@ -69,7 +69,7 @@ export default function authReducer(state = initialState, { payload, type, error
         }
       };
     case SET_SPOTCOINS:
-      return { ...state, profile: { ...state.profile, spotCoins: state.profile.spotCoins + payload.data.value}};
+      return { ...state, profile: { ...state.profile, spotCoins: (state.profile.spotCoins ? state.profile.spotCoins : 0) + payload.data.value}};
     case SET_COUPON_ERROR:
       return { ...state, profile: {
           ...state.profile,

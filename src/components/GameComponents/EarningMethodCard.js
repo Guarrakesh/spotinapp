@@ -5,6 +5,7 @@ import themes from "../../newTheme";
 import {Fonts} from "../common/Fonts";
 
 const coinsImg = require("../../assets/img/coins.png");
+const yellowColor = themes.base.colors.yellow.default;
 
 const EarningMethodCard = (props) => {
 
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   moreInfoText: {
     flex: 1,
-    color: 'yellow',
+    color: yellowColor,
     fontFamily: Fonts.LatoItalic,
 
   },
