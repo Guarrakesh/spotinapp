@@ -99,7 +99,7 @@ function PrizeDetailScreen(props) {
       </ScrollView>
       <BottomSheet
         ref={bottomSheet}
-        snapPoints={[0, themes.base.deviceDimensions.height]}
+        snapPoints={[-100, themes.base.deviceDimensions.height]}
         renderContent={bottomSheetContent}
         renderHeader={null}
         enabledGestureInteraction={false}
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
   },
   bottomSheetContainer: {
     width: themes.base.deviceDimensions.width,
-    height: themes.base.deviceDimensions.height,
+    height: themes.base.deviceDimensions.height+100,
     backgroundColor: themes.old.colors.accent.dark,
     paddingLeft: scale(32),
     paddingRight: scale(32),

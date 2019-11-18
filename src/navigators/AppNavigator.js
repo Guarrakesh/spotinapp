@@ -64,7 +64,6 @@ export const MainNavigation = createBottomTabNavigator(
     animationEnabled: false,
     swipeEnabled: false,
 
-
   }
 );
 
@@ -104,6 +103,9 @@ const RootNavigator = (createStackNavigator(
     headerMode: 'none',
     mode: "modal",
     initialRouteName: 'Launcher',
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 ));
 

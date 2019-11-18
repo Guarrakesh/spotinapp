@@ -120,6 +120,8 @@ PODS:
   - Protobuf (3.10.0)
   - React (0.59.10):
     - React/Core (= 0.59.10)
+  - react-native-blur (0.8.0):
+    - React
   - react-native-fbsdk (0.10.3):
     - React
     - react-native-fbsdk/Core (= 0.10.3)
@@ -201,6 +203,7 @@ DEPENDENCIES:
   - Firebase/Messaging (~> 6.3.0)
   - GoogleIDFASupport (~> 3.14.0)
   - GoogleMaps
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-google-maps (from `../node_modules/react-native-maps/`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
@@ -257,6 +260,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-code-push"
   React:
     :path: "../node_modules/react-native"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
   react-native-google-maps:
@@ -306,6 +311,7 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
+  react-native-blur: c35c1f6c2c76db7108bde7ed343bd2b01d64e0c0
   react-native-fbsdk: 9c84b11439158111513f8642987eb06beb7d788c
   react-native-google-maps: 8a4742668243022bd67d29c9d221bf83c6843f02
   react-native-image-picker: f42de90075c5b1af53417af927631d909a1a746e
@@ -320,6 +326,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 139d2e1589839a315784afeaa3640a440171cefd
+PODFILE CHECKSUM: 96ecdffabf765b1fc3e85bb53062dfb322373ddc
 
 COCOAPODS: 1.5.3

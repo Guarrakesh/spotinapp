@@ -10,7 +10,8 @@ export const GameStack = createStackNavigator({
   GameScreen: {
     screen: GameScreen,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false,
     },
     defaultNavigationOptions: {
       gesturesEnabled: false,
@@ -20,7 +21,8 @@ export const GameStack = createStackNavigator({
   CatalogScreen: {
     screen: CatalogScreen,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false,
     },
     defaultNavigationOptions: {
       gesturesEnabled: false,
@@ -30,7 +32,7 @@ export const GameStack = createStackNavigator({
   PrizeDetailScreen: {
     screen: PrizeDetailScreen,
     navigationOptions: {
-      header: null
+      header: null,
     },
     defaultNavigationOptions: {
       gesturesEnabled: false,

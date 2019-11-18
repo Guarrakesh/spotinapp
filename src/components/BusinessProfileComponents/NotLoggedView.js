@@ -6,6 +6,7 @@ import MCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Button, Typography } from "../common"
 import themes from "../../styleTheme";
 import Images from '../../assets/images'
+import {scale} from "react-native-size-matters";
 
 const NotLoggedView = (props) => {
 
@@ -13,9 +14,7 @@ const NotLoggedView = (props) => {
 
   return (
     <View elevation={2} style={styles.container}>
-      <View style={{flexDirection: "row", marginBottom: 16}}>
-       <Image source={Images.icons.mascotte.waterpolo} resizeMode="contain" style={{height: 128}}/>
-      </View>
+      <Image source={Images.icons.sports.together} resizeMode="contain" style={{width: scale(300)}}/>
       <Typography variant={"heading"}>{i18n.t("auth.notLogged.title")}</Typography>
       <Typography variant={"body"}>{i18n.t("auth.login.subtitle")}</Typography>
       <Button

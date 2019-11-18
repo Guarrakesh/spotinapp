@@ -88,7 +88,6 @@ const CompetitorsList = ({
             {content}
           </Grid>
         </ScrollView>
-
       </View>
   );
 };

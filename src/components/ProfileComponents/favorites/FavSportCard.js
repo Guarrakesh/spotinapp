@@ -10,8 +10,9 @@ const FavSportCard = (props) => {
   const {isSelected, isDisabled, index} = props;
 
   return (
-    <View style={isSelected ? styles.outerSelected : styles.outer}>
-
+    <View
+      elevation={2}
+      style={isSelected ? styles.outerSelected : styles.outer}>
       <FloatingCard
         index={index}
         onPress={isDisabled ? null : props.onPress}
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     margin: 8,
     backgroundColor: 'transparent',
     borderRadius: themes.base.borderRadius/2,
+    elevation: 2
   },
   outerSelected: {
     flex:1,

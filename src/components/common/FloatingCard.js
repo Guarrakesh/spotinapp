@@ -13,14 +13,14 @@ const FloatingCard = (props) => {
 
     <AnimatedTouchable
       useNativeDriver={true}
-      duration={500}
-      delay={ 300 + (100*props.index) }
+      duration={500 + (props.index * 100)}
+      //delay={300} //su iOS fa sparire la card al primo press
       easing={"ease-in-cubic"}
       animation={"fadeIn"}
       style={
       [styles.card,
         props.containerStyle && props.containerStyle,
-        { elevation: 1, ...themes.base.elevations.depth2}]}
+        { elevation: 1, ...themes.base.elevations.depth2 }]}
                onPress={props.onPress}
                disabled={props.disabled}
     >

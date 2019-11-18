@@ -1,10 +1,11 @@
 import React from 'react';
-import {Image, Keyboard, SafeAreaView, ScrollView, StatusBar, StyleSheet} from "react-native";
+import {Image, Keyboard, SafeAreaView, ScrollView, StatusBar, StyleSheet, Platform} from "react-native";
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-
+import Animated from 'react-native-reanimated'
 import {scale, verticalScale} from "react-native-size-matters";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { BlurView, VibrancyView } from "@react-native-community/blur";
 import {connect} from "react-redux";
 import BottomSheet from 'reanimated-bottom-sheet';
 import {useCoupon} from "../../actions/coupon";
@@ -27,10 +28,12 @@ const logoGame = require("../../assets/img/logo-game/logo-game.png");
 const coinsImg = require("../../assets/img/coins.png");
 const logoImg = require('../../assets/img/logo-white/logo-white.png');
 
+const IMAGE_BLUR = 3;
+
 const greenColor = themes.base.colors.accent.default;
-const gradientFirstColor = "#3A169E";
-const gradientSecondColor = "#500F98";
-const pointsBackground = "#6314BF";
+const gradientFirstColor = themes.base.colors.purple.dark;
+const gradientSecondColor = themes.base.colors.purple.default;
+const pointsBackground = themes.base.colors.purple.default;
 const yellowColor = themes.base.colors.yellow.default;
 
 class GameScreen extends React.Component {
@@ -161,7 +164,7 @@ class GameScreen extends React.Component {
   bottomSheetContent = () => {
     return(
         <View style={styles.bottomSheetContentContainer}>
-          <Animatable.View style={{}} ref={ref => this.bottomSheetContentRef = ref}>
+          <Animatable.View ref={ref => this.bottomSheetContentRef = ref}>
             <Typography variant={"title"} style={styles.receiveAward}>{i18n.t("game.gameScreen.bottomSheet.receiveAward")}</Typography>
             <Typography variant={"caption"} style={styles.insertCode}>{i18n.t("game.gameScreen.bottomSheet.insertCoupon")}</Typography>
             <TextInput
@@ -237,19 +240,35 @@ class GameScreen extends React.Component {
   };
 
 
+  fall = new Animated.Value(1);
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+
     return(
         <React.Fragment>
           <FormErrorBox
               autoHideDuration={3000}
               errors={[this.state.couponError]} show={this.state.showError} onSwipeAway={() => this.setState({showError: false})}/>
           <SafeAreaView style={styles.container}>
+            <Animated.View
+              pointerEvents={'none'}
+              style={[styles.topContainerOverview,
+                {opacity: Animated.add(1, Animated.multiply(-1, this.fall))}]}>
+              <BlurView style={{flex: 1}} blurType={"dark"} blurAmount={3}/>
+            </Animated.View>
             <StatusBar barStyle={"light-content"}/>
             <LinearGradient colors={[gradientFirstColor, gradientSecondColor]} style={{flex: 1}}>
-              <ScrollView bounces={false}>
-                <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
-                <Image style={styles.gameMascotte} source={gameMascotte} resizeMode={'contain'}/>
+              <ScrollView bounces={false} style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.1)' }}>
+                <Image
+                  source={logoGame}
+                  resizeMode={'contain'}
+                  style={styles.logoGame}
+                  />
+                <Image
+                  style={styles.gameMascotte}
+                  source={gameMascotte}
+                  resizeMode={'contain'}
+                  />
                 <View style={styles.titleContainer}>
                   <Typography style={styles.aNewWay}>{i18n.t("game.gameScreen.aNewWay")}</Typography>
                   <Typography style={styles.toSeeSport}>{i18n.t("game.gameScreen.toSeeSport")}</Typography>
@@ -278,12 +297,13 @@ class GameScreen extends React.Component {
             </LinearGradient>
             <BottomSheet
                 ref={ref => this.bottomSheetRef = ref}
-                snapPoints={[0, themes.base.deviceDimensions.height*(3/4)]}
+                snapPoints={[-100, themes.base.deviceDimensions.height*(3/4)]}
                 renderContent={this.bottomSheetContent}
                 renderHeader={this.bottomSheetHeader}
                 enabledContentTapInteraction={false}
                 enabledInnerScrolling={false}
                 enabledGestureInteraction={!this.state.showCongratulation}
+                callbackNode={this.fall}
             />
             {this.state.coinRain ? <MakeItRain/> : null}
             <ModalWebView
@@ -301,7 +321,7 @@ class GameScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3A169E'
+    backgroundColor: themes.base.colors.purple.dark
   },
   logoGame: {
     marginTop: 8,
@@ -320,6 +340,15 @@ const styles = StyleSheet.create({
     //paddingTop: themes.base.deviceDimensions.height/13,
     paddingBottom: themes.base.deviceDimensions.height/50,
     alignItems: 'center'
+  },
+  topContainerOverview: {
+    position: 'absolute',
+    zIndex: 100,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   aNewWay: {
     color: themes.base.colors.white.light,
@@ -480,6 +509,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     flexBasis: scale(50   ),
+  },
+  bottomContainerOverview: {
+    flex: 1,
+    backgroundColor: 'red',
   }
 });
 

@@ -13,7 +13,7 @@ import {ALREADY_SET_FAVORITE} from "../sagas/core/favorite";
 import themes from "../styleTheme";
 
 const Logo = require('../assets/img/logo-text-white/logo-text.png');
-const Mascotte = require('../assets/img/mascotte/pallanuoto/POLPO_PALLANUOTO.png');
+const Mascotte = require('../assets/img/mascots/together/Together.png');
 
 class Launcher extends React.Component {
 
@@ -153,13 +153,13 @@ class Launcher extends React.Component {
                             position: 'absolute',
                             marginTop: 12,
                             height: 32,
-                            transform: [{ translateY: Animated.multiply(this.state.logoY, -1) }]
+                            transform: [{ translateY: Animated.multiply(this.state.logoY, -0.5) }]
                           }}/>
 
           <Animated.Image source={Mascotte}
                           style={{
-                            marginTop: 12,
-                            transform: [ { scale: this.state.logoY.interpolate({ inputRange: [0, 200], outputRange: [0.5, 1]})}],
+                            //marginTop: 12,
+                            transform: [ { scale: this.state.logoY.interpolate({ inputRange: [0, 600], outputRange: [0.5, 1]})}],
                             opacity : this.state.logoY.interpolate({ inputRange: [0, 180, 200], outputRange: [0, 0.2, 1] }),
                           }}/>
           {isLoading && <ActivityIndicator size="large" color={themes.base.colors.activityIndicator.default}/>}

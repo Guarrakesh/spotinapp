@@ -59,7 +59,8 @@ const FavSportList = ({
         {data[id].active ?
           <FavSportCard
             index={index + idx*index}
-            key={id} onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
+            key={id}
+            onPress={() => onItemPress(id, data[id].name, data[id].has_competitors)}
             isSelected={isSelected(data[id]._id)}
             icon={<Image source={Images.icons.sports[Helpers.sportSlugIconMap(data[id].slug)]} style={{width: 72, height: 72}}/>}
             {...data[id]}/> : null
@@ -69,17 +70,22 @@ const FavSportList = ({
 
 
   return (
-    <ScrollView style={{marginTop: Platform.OS === "ios" ? marginTop : 0}}>
-      <Typography
-        style={{margin: 8, color: '000',fontWeight: '900'}}
-        align="center"
-        uppercase
-        gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
-      </Typography>
-      <Grid>
-        {content}
-      </Grid>
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <ScrollView
+        style={{flex: 1, paddingTop: Platform.OS === "ios" ? marginTop : 0}}
+        contentContainerStyle={{paddingBottom: 100}}
+      >
+        <Typography
+          style={{margin: 8, color: '000',fontWeight: '900'}}
+          align="center"
+          uppercase
+          gutterBottom>{t("profile.settings.favorite.selectFavoriteSports")}
+        </Typography>
+        <Grid>
+          {content}
+        </Grid>
+      </ScrollView>
+    </View>
   );
 
 };

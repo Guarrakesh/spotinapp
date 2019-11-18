@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 
 const Mascotte = ({ classes, sport, width, height, className = '', ...rest} : Props) => {
   return (
-      <Image source={Images.icons.mascotte[sport]}
+      <Image source={Images.icons.sports[sport]}
 
            style={{ width, height }}
            {...rest}

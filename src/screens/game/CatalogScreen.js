@@ -57,7 +57,7 @@ const earningMethods = [
       style={{backgroundColor: 'rgba(185,45,92,1)'}}
     />,
     title: i18n.t("game.catalogScreen.earningMethods.followInstagram.title"),
-    tag: "@spotin_sport",
+    tag: "@spotin.sport",
     active: false,
     subtitle: i18n.t("game.catalogScreen.earningMethods.followInstagram.subtitle"),
     profit: 25

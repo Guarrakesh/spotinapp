@@ -43,9 +43,9 @@ class FavoriteSportsScreen extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const newFavCompetitors = this.props.navigation.state.params.favCompetitors;
     if(prevState.favCompetitors &&
-        newFavCompetitors &&
-        prevState.favCompetitors !== newFavCompetitors &&
-        prevState.favSports === this.state.favSports
+      newFavCompetitors &&
+      prevState.favCompetitors !== newFavCompetitors &&
+      prevState.favSports === this.state.favSports
     ){
       this.setState({favCompetitors: newFavCompetitors});
       this.props.navigation.state.params.favCompetitors = null; //resetto la navigazione
@@ -113,45 +113,48 @@ class FavoriteSportsScreen extends React.Component {
 
   render() {
     return (
-        <React.Fragment>
-          <ListController
-              id="sport_screen_list"
-              resource="sports"
-              perPage={20}
-              sort={{field: '_id', order: 'asc'}}
+      <React.Fragment>
+        <ListController
+          id="sport_screen_list"
+          resource="sports"
+          perPage={20}
+          sort={{field: '_id', order: 'asc'}}
+        >
+          { controllerProps =>
+            <View style={{flex: 1}}>
+              <FavSportList
+                onItemPress={this.handleItemPress}
+                favCompetitors={this.state.favCompetitors}
+                favSports={this.state.favSports}
+                {...controllerProps} />
+            </View>
+          }
+
+        </ListController>
+        <View elevation={1} style={styles.actions}>
+          <Button
+            round
+            uppercase
+            clear
+            titleStyle={{ color: themes.base.colors.white.default}}
+            onPress={this.handleCancelPress}
+            containerStyle={{width: '30%'}}
+
           >
-            { controllerProps =>
-                <FavSportList
-                    onItemPress={this.handleItemPress}
-                    favCompetitors={this.state.favCompetitors}
-                    favSports={this.state.favSports}
-                    {...controllerProps} />}
-
-          </ListController>
-          <View elevation={1} style={styles.actions}>
-            <Button
-                round
-                uppercase
-                clear
-                titleStyle={{ color: themes.base.colors.white.default}}
-                onPress={this.handleCancelPress}
-                containerStyle={{width: '30%'}}
-
-            >
             {i18n.t("common.skip")}
-            </Button>
-            <Button
-                size="big"
-                round
-                onPress={this.handleDonePress}
-                containerStyle={{width: '70%'}}
-                uppercase
-            >
-             {i18n.t("profile.settings.favorite.done")}
-            </Button>
+          </Button>
+          <Button
+            size="big"
+            round
+            onPress={this.handleDonePress}
+            containerStyle={{width: '70%'}}
+            uppercase
+          >
+            {i18n.t("profile.settings.favorite.done")}
+          </Button>
 
-          </View>
-        </React.Fragment>
+        </View>
+      </React.Fragment>
     )
   }
 }

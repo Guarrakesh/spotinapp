@@ -29,6 +29,7 @@ const images = {
       waterpolo: require('./img/mascots/waterpolo/Waterpolo.png'),
       hockey: require('./img/hockey/Hockey.png'),
       baseball: require('./img/baseball/Baseball.png'),
+      together: require('./img/mascots/together/Together.png')
     },
     intro: {
       sportsIcon: require('./img/intro/sports.png'),
@@ -42,20 +43,6 @@ const images = {
       beer: require('./img/beer/beer.png'),
       location: require('./img/icons/location_pin/location_pin.png'),
       link: require('./img/icons/link/link.png'),
-    },
-
-    mascotte: {
-      waterpolo: require('./img/mascotte/pallanuoto/POLPO_PALLANUOTO.png'),
-      soccer: require('./img/mascotte/soccer/BIRRA_CALCIO.png'),
-      basket: require('./img/mascotte/basket/HOTDOG_BASKET.png'),
-      tennis: require('./img/mascotte/tennis/BROCCOLO_TENNIS.png'),
-      martial: require('./img/mascotte/martial/POLLO_BOXE.png'),
-      volley: require('./img/mascotte/volley/BANANA_PALLAVOLO.png'),
-      football: require('./img/mascotte/football/PIZZA_FOOTBALL.png'),
-      motori: require('./img/mascotte/motori/ENERGY_MOTORI.png'),
-      rugby: require('./img/mascotte/rugby/HAMBURGER_RUGBY.png'),
-
-
     }
   }
 };

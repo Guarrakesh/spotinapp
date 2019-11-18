@@ -5,7 +5,7 @@ import {Fonts} from "./components/common/Fonts";
 export const purpleColor = {
   light: '#7C4DFF',
   extraLight: '#B47CFF',
-  default: '#3F18AF',
+  default: '#6514BF',
   dark: '#3F18AF',
 };
 export const primaryColor = {

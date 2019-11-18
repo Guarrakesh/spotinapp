@@ -13,8 +13,11 @@ const CompetitorCard = props => {
   return (
       <Animatable.View
           useNativeDriver={true}
-
-          duration={500} delay={300 + 50 * index } animation="fadeIn" style={isSelected ? styles.outerSelected : styles.outer}>
+          elevation={2}
+          duration={500}
+          delay={300 + 50 * index }
+          animation="fadeIn"
+          style={isSelected ? styles.outerSelected : styles.outer}>
         <FloatingCard
             onPress={isDisabled ? null : props.onPress}
             contentStyle={styles.cardContent}
@@ -43,6 +46,7 @@ const styles = StyleSheet.create({
     margin: 8,
     backgroundColor: themes.base.colors.white.light,
     borderRadius: themes.base.borderRadius/2,
+    elevation: 2
   },
   outerSelected: {
     flex:1,

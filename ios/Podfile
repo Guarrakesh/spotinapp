@@ -57,6 +57,8 @@ target 'spotinapp' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
+
 end
 post_install do |installer|
     installer.pods_project.targets.each do |target|
