@@ -60,12 +60,13 @@ android {
         applicationId "it.spotin"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 16
-        versionName "0.6.6"
+        versionCode 17
+        versionName "0.6.7"
         multiDexEnabled true
         resValue "string", "build_config_package", "it.spotin"
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
+        resConfigs "en", "US", "it"
     }
     signingConfigs {
             release {
