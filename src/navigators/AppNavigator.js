@@ -17,7 +17,7 @@ import Launcher from '../screens/Launcher';
 import AppIntro from "../screens/intro/NewAppIntro"
 
 import i18n from '../i18n/i18n';
-import themes from '../styleTheme';
+import themes from '../newTheme';
 
 export const MainNavigation = createBottomTabNavigator(
   {
@@ -53,13 +53,15 @@ export const MainNavigation = createBottomTabNavigator(
       },
       title: i18n.t(`common.${navigation.state.routeName}`)
     }),
-
     initialRouteName: "Home",
     //tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     tabBarOptions: {
-      activeTintColor: themes.base.colors.accent.default,
+      activeTintColor: themes.base.colors.purple.default,
       inactiveTintColor: 'grey',  //da definire colore nei themes
+      style: {
+        backgroundColor: 'rgba(255,255,255,0.1)',
+      }
     },
     animationEnabled: false,
     swipeEnabled: false,

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment } from "react";
 import { StyleSheet, Image } from "react-native";
 import { View, Touchable } from "../common";
 import { moderateScale } from "react-native-size-matters";
@@ -11,6 +11,7 @@ const imageSize = {
   height: themes.base.deviceDimensions.width / 3,
   width: themes.base.deviceDimensions.width / 3,
 };
+
 const PrizeCard = (props) => {
 
   const {name, image} = props.award;
@@ -51,7 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: themes.base.borderRadius*3,
-
     padding: 16
   },
   imgStyle: {

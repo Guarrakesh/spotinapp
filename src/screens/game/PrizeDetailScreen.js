@@ -1,28 +1,30 @@
 import React, {useRef} from 'react';
 import {connect} from "react-redux";
 import {Image, StyleSheet, SafeAreaView, ScrollView} from "react-native";
-import { scale, verticalScale } from 'react-native-size-matters';
+import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
 import BottomSheet from 'reanimated-bottom-sheet';
 import {Button, Typography, VersionedImageField, View} from "../../components/common";
 import Icon from "react-native-vector-icons/Ionicons";
 import themes from "../../newTheme";
-import PrizeCard from "../../components/GameComponents/PrizeCard";
+import PrizeCircle from "../../components/GameComponents/PrizeCircle";
 import NewButton from "../../components/common/NewButton";
 import i18n from "../../i18n/i18n";
+import LinearGradient from "react-native-linear-gradient";
+import HexagonCoins from "../../components/GameComponents/HexagonCoins";
 const logoGame = require("../../assets/img/logo-game/logo-game.png");
-const topViewColor = "#3A169E";
-const bottomViewColor = "#500F98";
+
 const yellowColor = themes.base.colors.yellow.default;
 
 function PrizeDetailScreen(props) {
 
   const award = props.navigation.state.params.award;
   const buttonDisabled = props.spotCoins < award.cost;
-
   const bottomSheet = useRef();
 
-  console.log("AWARD: ", award);
-  console.log("PROPS: ", props);
+  const handleRequestPrizePress = () => {
+    //bottomSheet.current.snapTo(1);
+    props.navigation.navigate("BusinessRequestScreen", {award});
+  };
 
   const bottomSheetContent = () => (
     <View style={styles.bottomSheetContainer}>
@@ -48,55 +50,79 @@ function PrizeDetailScreen(props) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView bounces={false} style={{flex: 1}}>
-        <View style={styles.container}>
-          <View style={styles.topView}>
-            <Image source={logoGame} resizeMode={'contain'} style={styles.logoGame}/>
-            <Icon
-              onPress={() => props.navigation.goBack()}
-              color={themes.base.colors.white.light}
-              name="ios-arrow-round-back"
-              style={styles.backArrow}
-              size={48}/>
-            <View style={styles.awardCard}>
-              <PrizeCard disabled award={award}/>
-            </View>
-          </View>
-          <View style={styles.bottomView}>
-            <Typography variant={'subheading'} style={styles.info}>
-              { award.description }
-              {/*{i18n.t("game.prizeDetailScreen.information")}*/}
-            </Typography>
-            <View style={styles.awardInfoContainer}>
-              <View style={styles.awardInfoRow}>
-                <Typography variant={"heading"} style={styles.infoRight}>
-                  {i18n.t("game.prizeDetailScreen.valueInSpot")}
-                </Typography>
-                <Typography variant={"heading"} style={styles.infoLeft}>
-                  {award.cost}
-                </Typography>
-              </View>
-              <View style={styles.awardInfoRow}>
-                <Typography variant={"heading"} style={styles.infoRight}>
-                  {i18n.t("game.prizeDetailScreen.yourSpot")}
-                </Typography>
-                <Typography variant={"heading"} style={styles.infoLeft}>
-                  {props.spotCoins}
+      <LinearGradient
+        colors={[themes.base.colors.purple.dark, themes.base.colors.purple.default]}
+        style={{flex: 1}}
+      >
+        <ScrollView bounces={false} style={{flex: 1}}>
+          <View style={styles.container}>
+            <View style={styles.topView}>
+              <Image
+                source={logoGame}
+                resizeMode={'contain'}
+                style={styles.logoGame}
+              />
+              <Icon
+                onPress={() => props.navigation.goBack()}
+                color={themes.base.colors.white.light}
+                name="ios-arrow-round-back"
+                style={styles.backArrow}
+                size={48}/>
+              <View style={styles.awardCard}>
+                <PrizeCircle disabled award={award}/>
+                <View style={{marginTop: verticalScale(-24)}}>
+                  <HexagonCoins
+                    number={award.cost}
+                    size={moderateScale(70)}
+                  />
+                </View>
+                <Typography
+                  variant={"heading"}
+                  style={styles.awardName}
+                >
+                  {award.name}
                 </Typography>
               </View>
             </View>
-            <Button
-              disabled={buttonDisabled}
-              disabledStyle={{borderRadius: themes.base.borderRadius}}
-              titleStyle={styles.awardRequestButtonTitle}
-              containerStyle={styles.awardRequestButtonContainer}
-              onPress={() => bottomSheet.current.snapTo(1)}
-            >
-              {i18n.t("game.prizeDetailScreen.requestPrize")}
-            </Button>
+            <View style={styles.bottomView}>
+              <Typography variant={'body'} style={styles.info}>
+                { award.description }
+              </Typography>
+              <View style={styles.awardInfoContainer}>
+                <View style={styles.awardInfoRow}>
+                  <Typography variant={"body"} style={styles.infoRight}>
+                    {i18n.t("game.prizeDetailScreen.valueInSpot")}
+                  </Typography>
+                  <Typography variant={"subheading"} style={styles.infoLeft}>
+                    {award.cost}
+                  </Typography>
+                </View>
+                <View
+                  style={[styles.awardInfoRow, { marginTop: verticalScale(8)}]}
+                >
+                  <Typography variant={"body"} style={styles.infoRight}>
+                    {i18n.t("game.prizeDetailScreen.yourSpot")}
+                  </Typography>
+                  <Typography
+                    variant={"heading"}
+                    style={[styles.infoLeft, { color: themes.base.colors.accent.default}]}>
+                    {props.spotCoins}
+                  </Typography>
+                </View>
+              </View>
+              <Button
+                disabled={buttonDisabled}
+                disabledStyle={{borderRadius: themes.base.borderRadius}}
+                titleStyle={styles.awardRequestButtonTitle}
+                containerStyle={styles.awardRequestButtonContainer}
+                onPress={() => handleRequestPrizePress()}
+              >
+                {i18n.t("game.prizeDetailScreen.requestPrize")}
+              </Button>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </LinearGradient>
       <BottomSheet
         ref={bottomSheet}
         snapPoints={[-100, themes.base.deviceDimensions.height]}
@@ -113,7 +139,7 @@ function PrizeDetailScreen(props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#3A169E'
+    backgroundColor: themes.base.colors.purple.dark
   },
   container: {
     flex: 1,
@@ -122,7 +148,6 @@ const styles = StyleSheet.create({
     width: themes.base.deviceDimensions.width/2,
     height: themes.base.deviceDimensions.width/11,
     alignSelf: 'center',
-    position: 'absolute',
     top: 8
   },
   backArrow: {
@@ -131,34 +156,36 @@ const styles = StyleSheet.create({
     left: 16
   },
   topView: {
-    zIndex: 1,
-    height: themes.base.deviceDimensions.height/4,
-    backgroundColor: topViewColor,
     justifyContent: 'center',
     alignItems: 'center'
   },
   bottomView: {
-    height: '100%',
     alignItems: 'center',
-    backgroundColor: bottomViewColor,
-    paddingBottom: verticalScale(16)
+    paddingBottom: verticalScale(16),
+    paddingTop: verticalScale(24)
   },
   awardCard: {
-    zIndex: 1,
     alignSelf: 'center',
-    marginBottom: verticalScale(-150)
+    alignItems: 'center',
+    marginTop: verticalScale(32)
+  },
+  awardName: {
+    color: themes.base.colors.white.light,
+    marginTop: verticalScale(24)
   },
   info: {
     color: themes.base.colors.white.light,
-    marginTop: verticalScale(100),
     width: '80%',
+    lineHeight: verticalScale(20),
     paddingBottom: verticalScale(8),
-    borderBottomWidth: 1,
-    borderBottomColor: themes.base.colors.text.light,
+    fontWeight: '900',
+    textAlign: 'center',
 
   },
   awardInfoContainer: {
-    marginTop: verticalScale(50)
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    padding: verticalScale(16),
+    marginTop: verticalScale(24)
   },
   awardInfoRow: {
     flexDirection: 'row',
@@ -170,11 +197,12 @@ const styles = StyleSheet.create({
 
   },
   infoRight: {
-    color: themes.base.colors.accent.default,
-    fontSize: 18
+    color: themes.base.colors.white.light,
+    fontWeight: '900'
   },
   infoLeft: {
-    color: themes.base.colors.white.light,
+    color: themes.base.colors.yellow.default,
+    fontWeight: '900'
   },
   awardRequestButtonTitle: {
     color: themes.base.colors.white.light,
