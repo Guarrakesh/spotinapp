@@ -97,7 +97,7 @@
   },
 
   "profile": {
-    "bookedOffers"           : "Booked offers",
+    "bookedOffers"           : "Your check-ins",
     "favoriteEvents"         : "Favorites",
     "favoriteEvent": {
       "alertDelete"          : "Do you want to remove this event from the favorites list?",
@@ -339,6 +339,7 @@
       "noAccount"           : "No account yet?",
       "register"            : "Sign Up",
       "later"               : "Maybe later",
+      "loadingText"         : "Setting up your account...",
       "helpText"            : "Insert your login credentials",
       "formError": {
         "title"             : "Wait, we have a problem:",

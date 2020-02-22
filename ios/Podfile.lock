@@ -47,11 +47,11 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
-  - FirebaseAnalyticsInterop (1.4.0)
+  - FirebaseAnalyticsInterop (1.5.0)
   - FirebaseCore (6.0.3):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseInstanceID (4.2.5):
+  - FirebaseInstanceID (4.2.7):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
@@ -92,32 +92,32 @@ PODS:
   - GoogleMaps/Base (3.1.0)
   - GoogleMaps/Maps (3.1.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (6.3.1):
+  - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.3.1)
-  - GoogleUtilities/Logger (6.3.1):
+  - GoogleUtilities/Environment (6.5.1)
+  - GoogleUtilities/Logger (6.5.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.3.1):
+  - GoogleUtilities/MethodSwizzler (6.5.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.3.1):
+  - GoogleUtilities/Network (6.5.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.3.1)"
-  - GoogleUtilities/Reachability (6.3.1):
+  - "GoogleUtilities/NSData+zlib (6.5.1)"
+  - GoogleUtilities/Reachability (6.5.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.3.1):
+  - GoogleUtilities/UserDefaults (6.5.1):
     - GoogleUtilities/Logger
-  - JWT (3.0.0-beta.11):
+  - JWT (3.0.0-beta.12):
     - Base64 (~> 1.1.2)
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
-  - Protobuf (3.10.0)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - Protobuf (3.11.2)
   - React (0.59.10):
     - React/Core (= 0.59.10)
   - react-native-blur (0.8.0):
@@ -298,18 +298,18 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 0d8c4cfd5c1f185d5f9c26d79758b141086e1251
   Firebase: 8432d732974498afd5987e9001a05f90f1a3d625
   FirebaseAnalytics: 470ddab7253b21ad5a40bebd4a9903d7ae19386a
-  FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
+  FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
   FirebaseCore: 68f8a7f50cdae542715d4e86afa37c4067217dcb
-  FirebaseInstanceID: 550df9be1f99f751d8fcde3ac342a1e21a0e6c42
+  FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseMessaging: 6bb0bdaf64c55fef7a219b7bb1e94e94a0855ced
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
   GoogleAppMeasurement: a35a645835bae31b6bdc0576396bc23908f12a22
   GoogleIDFASupport: aaf8c10bd429abb1c15349d5252244f5eda8ead1
   GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
-  GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
-  JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
+  JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
   react-native-blur: c35c1f6c2c76db7108bde7ed343bd2b01d64e0c0
   react-native-fbsdk: 9c84b11439158111513f8642987eb06beb7d788c

@@ -98,7 +98,7 @@
   },
 
   "profile": {
-    "bookedOffers"           : "Offerte prenotate",
+    "bookedOffers"           : "I tuoi check-in",
     "favoriteEvents"         : "Preferiti",
     "favoriteEvent": {
       "alertDelete"          : "Vuoi rimuoverlo dagli eventi preferiti?",
@@ -344,6 +344,7 @@
       "usedEmail"           : "Questa email è già stata usata",
       "later"               : "Più tardi",
       "helpText"            : "Inserisci le tue credenziali d'accesso",
+      "loadingText"         : "Preparo il tuo account...",
       "formError": {
         "title"             : "Aspetta, abbiamo un problema:",
         "emailRequired"     : "^Inserisci la tua email",

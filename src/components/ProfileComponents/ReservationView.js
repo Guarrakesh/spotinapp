@@ -1,21 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {get, isEmpty} from "lodash";
-import {Text, StyleSheet, ImageBackground, Image, Alert} from "react-native";
-import { withNamespaces } from 'react-i18next';
-import DeviceInfo from 'react-native-device-info';
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import moment from "moment";
 import "moment/min/moment-with-locales";
+import PropTypes from "prop-types";
+import React from "react";
+import {withNamespaces} from 'react-i18next';
+import {Alert, Image, StyleSheet, Text} from "react-native";
+import DeviceInfo from 'react-native-device-info';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import {useSocket} from "../../api/hooks/useSocket";
+import Images from "../../assets/images";
+import Helpers from "../../helpers";
+import themes from "../../styleTheme";
 
-import { Button, View, Typography } from "../common";
+import {Button, Typography, View} from "../common";
 
 import ReferenceField from "../common/ReferenceField";
 import VersionedImageField from "../common/VersionedImageField";
-import Images from "../../assets/images";
-import themes from "../../styleTheme";
-import Helpers from "../../helpers";
-
 
 
 const colors = themes.base.colors;
@@ -25,6 +24,14 @@ const coverWidth = themes.base.deviceDimensions.width - 16;
 moment.locale(DeviceInfo.getDeviceLocale());
 const ReservationView = ({reservation, onCancel, t}) => {
 
+
+  const { connected, socket } = useSocket();
+
+  if (connected) {
+    socket.on('message', (data) => {
+      alert(data)
+    })
+  }
   const { broadcast, created_at, peopleNum } = reservation;
   const { offer, newsfeed } = broadcast;
   const description = offer.description ? offer.description.replace(/\\n/g, '\n') : null;
