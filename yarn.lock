@@ -2096,7 +2096,7 @@ color-support@^1.1.3:
 
 colors@0.5.x:
   version "0.5.1"
-  resolved "http://registry.npmjs.org/colors/-/colors-0.5.1.tgz#7d0023eaeb154e8ee9fce75dcb923d0ed1667774"
+  resolved "https://registry.npmjs.org/colors/-/colors-0.5.1.tgz#7d0023eaeb154e8ee9fce75dcb923d0ed1667774"
 
 colors@0.6.x:
   version "0.6.2"
@@ -2264,7 +2264,7 @@ cross-spawn@^6.0.0:
 
 css-select@~1.2.0:
   version "1.2.0"
-  resolved "http://registry.npmjs.org/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
+  resolved "https://registry.npmjs.org/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
   dependencies:
     boolbase "~1.0.0"
     css-what "2.1"
@@ -2488,11 +2488,11 @@ domelementtype@1:
 
 domelementtype@^1.3.0:
   version "1.3.0"
-  resolved "http://registry.npmjs.org/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
+  resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
 
 domelementtype@~1.1.1:
   version "1.1.3"
-  resolved "http://registry.npmjs.org/domelementtype/-/domelementtype-1.1.3.tgz#bd28773e2642881aec51544924299c5cd822185b"
+  resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-1.1.3.tgz#bd28773e2642881aec51544924299c5cd822185b"
 
 domexception@^1.0.1:
   version "1.0.1"
@@ -3506,8 +3506,9 @@ i18next@^12.0.0:
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-12.0.0.tgz#27c1494219dde0451a8d714d5bfc19bf055d51bb"
 
 i@0.3.x:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/i/-/i-0.3.6.tgz#d96c92732076f072711b6b10fd7d4f65ad8ee23d"
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/i/-/i-0.3.7.tgz#2a7437a923d59c14b17243dc63a549af24d85799"
+  integrity sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==
 
 iconv-lite@0.4.23:
   version "0.4.23"
@@ -7750,7 +7751,7 @@ yargs-parser@^9.0.2:
 
 yargs@^11.0.0:
   version "11.1.0"
-  resolved "http://registry.npmjs.org/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-11.1.0.tgz#90b869934ed6e871115ea2ff58b03f4724ed2d77"
   dependencies:
     cliui "^4.0.0"
     decamelize "^1.1.1"
